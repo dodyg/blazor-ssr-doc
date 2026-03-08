@@ -1,98 +1,63 @@
 ---
-title: Blazor SSR Documentation
-description: Comprehensive guide to Blazor Server-Side Rendering (Static Rendering) - Build fast, SEO-friendly web applications with Blazor
+title: Blazor Static SSR Documentation
+description: Comprehensive guide to Blazor Static Server-Side Rendering - Build fast, SEO-friendly web applications with Blazor
 layout: index
 ---
 
-# Welcome to Blazor SSR Documentation
+# Welcome to Blazor Static SSR Documentation
 
-> Your comprehensive guide to **Blazor Server-Side Rendering (SSR)**, also known as static rendering.
+> Your comprehensive guide to **Blazor Static Server-Side Rendering (Static SSR)**.
 
-## What is Blazor SSR?
+## What is Blazor Static SSR?
 
-Blazor SSR (Server-Side Rendering) is a hosting model for Blazor applications where components are rendered on the server and delivered as static HTML to the browser. This approach offers:
+Blazor Static SSR (Static Server-Side Rendering) is a rendering mode for Blazor applications where components are rendered on the server and delivered as static HTML to the browser with **no interactivity over SignalR**. This approach offers:
 
 - **Fast Initial Load**: HTML is rendered server-side and delivered immediately
 - **SEO-Friendly**: Content is available to search engines without JavaScript execution
 - **Full .NET Runtime**: Access to complete .NET APIs on the server
 - **Low Client Requirements**: Works on any browser without WebAssembly support
+- **Simple Deployment**: No circuit management, scales like traditional web apps
 
-## Two Types of SSR
-
-### 1. Static SSR (Non-Interactive)
-
-Components are rendered to static HTML with **no interactivity**. Perfect for:
-
-- Content-focused websites
-- Blogs and documentation sites
-- Marketing pages
-- SEO-critical pages
-
-```razor
-@page "/about"
-@attribute [RenderMode.Static]
-
-<h1>About Us</h1>
-<p>This page is rendered as static HTML.</p>
-```
-
-### 2. Interactive SSR (Server-Side)
-
-Components are rendered with **full interactivity** via SignalR. Ideal for:
-
-- Interactive web applications
-- Real-time updates
-- Complex forms and workflows
-- Dashboards
-
-```razor
-@page "/counter"
-@attribute [RenderMode.InteractiveServer]
-@rendermode InteractiveServer
-
-<h1>Counter</h1>
-<p>Current count: @currentCount</p>
-<button @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-    
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-}
-```
-
-## Why Choose Blazor SSR?
+## Why Choose Static SSR?
 
 ### Advantages
 
 ✅ **Fast Time to First Byte (TTFB)** - HTML is rendered on the server  
 ✅ **Excellent SEO** - Content available immediately to crawlers  
 ✅ **Full .NET API Access** - Use any .NET library server-side  
-✅ **Small Payload** - No WebAssembly runtime to download  
+✅ **Small Payload** - No WebAssembly runtime or SignalR connection to maintain  
 ✅ **Thin Client Support** - Works on low-powered devices  
 ✅ **Code Security** - Application logic stays on the server  
+✅ **Simple Scaling** - No circuit state to manage, scales like any ASP.NET Core app  
 
 ### Considerations
 
-⚠️ **Server Resources** - Requires server-side processing  
-⚠️ **Network Latency** - User interactions require server round-trip  
+⚠️ **Server Resources** - Requires server-side processing for each request  
+⚠️ **No Real-time Interactivity** - User interactions require form posts or page navigation  
 ⚠️ **No Offline Support** - Requires active server connection  
+
+## When to Use Static SSR
+
+Static SSR is ideal for:
+
+- **Content-focused websites** - Blogs, documentation, marketing pages
+- **SEO-critical applications** - E-commerce product pages, public content
+- **Form-based applications** - CRUD operations, data entry, surveys
+- **Applications requiring .NET server APIs** - Direct database access, file system operations
+- **Simple scaling requirements** - Traditional web app scaling patterns
 
 ## Quick Start
 
 ### Prerequisites
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) or later
 - Your favorite code editor (Visual Studio, VS Code, etc.)
 
-### Create Your First Blazor SSR App
+### Create Your First Blazor Static SSR App
 
 ```bash
-# Create a new Blazor Web App (includes SSR support)
-dotnet new blazor -o MyBlazorApp --interactivity Server
+# Create a new Blazor Web App without interactivity
+dotnet new blazor -o MyBlazorApp
 
 # Navigate to the project
 cd MyBlazorApp
@@ -101,59 +66,65 @@ cd MyBlazorApp
 dotnet run
 ```
 
-Open your browser to `https://localhost:5001` to see your Blazor SSR app in action!
+Open your browser to `https://localhost:5001` to see your Blazor Static SSR app!
 
-### Understanding Render Modes
+### Understanding Static SSR
 
-In your `_Imports.razor` file, you can set default render modes:
+In Static SSR, components are rendered to HTML on the server for each request. User interactions are handled through traditional form posts and navigation:
 
 ```razor
-@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@page "/about"
 
-// For static SSR (no interactivity)
-@attribute [rendermode: Static]
+<h1>About Us</h1>
+<p>This page is rendered as static HTML.</p>
 
-// For interactive SSR
-@attribute [rendermode: InteractiveServer]
-
-// Per-page override
-@page "/mypage"
-@rendermode InteractiveServer
+<p>Current time: @DateTime.Now</p>
 ```
+
+## Static SSR vs Interactive Rendering
+
+| Feature | Static SSR | Interactive SSR/WebAssembly |
+|---------|-----------|---------------------------|
+| Rendering | Server per request | Server/client with circuit |
+| Interactivity | Form posts, navigation | Real-time events, callbacks |
+| Scaling | Traditional web app | Requires circuit management |
+| SEO | Excellent | Requires prerendering |
+| Initial load | Fast | Depends on mode |
+| Use case | Content, forms, CRUD | Real-time, interactive UIs |
 
 ## Documentation Sections
 
 ### 🚀 [Getting Started](/getting-started/)
-Learn the basics of Blazor SSR and get up and running quickly.
+Learn the basics of Blazor Static SSR and get up and running quickly.
 
 **Topics:**
-- [What is Blazor SSR?](/getting-started/what-is-ssr)
-- [Quick Start Guide](/getting-started/quick-start)
-- [SSR vs WebAssembly vs Hybrid](/getting-started/comparison)
+- [Project Structure](/getting-started/project-structure)
+- [Tooling](/getting-started/tooling)
+- [Supported Platforms](/getting-started/supported-platforms)
 
 ### 📚 [Fundamentals](/fundamentals/)
-Understand core concepts and architecture of Blazor SSR.
+Understand core concepts and architecture of Blazor Static SSR.
 
 **Topics:**
-- [Render Modes](/fundamentals/render-modes) - Static vs Interactive
+- [Render Modes](/fundamentals/render-modes) - Understanding Static SSR
 - [Routing](/fundamentals/routing) - Navigation and URL handling
 - [Dependency Injection](/fundamentals/dependency-injection) - Service management
 - [Configuration](/fundamentals/configuration) - App settings
 
 ### 🧩 [Components](/components/)
-Deep dive into Razor components and how they work in SSR.
+Deep dive into Razor components and how they work in Static SSR.
 
 **Topics:**
 - [Component Basics](/components/index) - Structure and syntax
-- [Render Modes](/components/render-modes) - Component-level control
+- [Rendering](/components/rendering) - How components render in Static SSR
 - [Lifecycle](/components/lifecycle) - Component events
 - [Prerendering](/components/prerender) - Optimization techniques
 
 ### 📝 [Forms](/forms/)
-Handle user input with forms and validation in SSR.
+Handle user input with forms and validation in Static SSR.
 
 ### 🔒 [Security](/security/)
-Implement authentication and authorization for your SSR apps.
+Implement authentication and authorization for your Static SSR apps.
 
 ### ⚡ [Advanced](/advanced/)
 Performance optimization, deployment, and advanced scenarios.
@@ -162,7 +133,7 @@ Performance optimization, deployment, and advanced scenarios.
 
 ```razor
 @page "/products"
-@attribute [RenderMode.Static]
+@inject ProductService ProductService
 
 <h1>Products</h1>
 
@@ -189,58 +160,62 @@ else
     
     protected override async Task OnInitializedAsync()
     {
-        // Runs on the server during rendering
         products = await ProductService.GetProductsAsync();
     }
 }
 ```
 
-## Example: Interactive SSR Component
+## Example: Form with Static SSR
 
 ```razor
-@page "/todos"
-@rendermode InteractiveServer
-@inject TodoService TodoService
+@page "/contact"
+@inject EmailService EmailService
 
-<h1>Todo List (@todos.Count(t => !t.IsComplete))</h1>
+<h1>Contact Us</h1>
 
-<ul>
-    @foreach (var todo in todos)
-    {
-        <li>
-            <input type="checkbox" @bind="todo.IsComplete" />
-            <span>@todo.Title</span>
-            <button @onclick="() => DeleteTodo(todo)">Delete</button>
-        </li>
-    }
-</ul>
+<EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit" FormName="ContactForm">
+    <DataAnnotationsValidator />
+    <AntiforgeryToken />
+    
+    <div>
+        <label for="name">Name:</label>
+        <InputText id="name" @bind-Value="contactForm.Name" />
+        <ValidationMessage For="@(() => contactForm.Name)" />
+    </div>
+    
+    <div>
+        <label for="email">Email:</label>
+        <InputText id="email" @bind-Value="contactForm.Email" />
+        <ValidationMessage For="@(() => contactForm.Email)" />
+    </div>
+    
+    <button type="submit">Send Message</button>
+</EditForm>
 
-<input @bind="newTodoTitle" placeholder="Add todo..." />
-<button @onclick="AddTodo">Add</button>
+@if (messageSent)
+{
+    <p>Thank you! Your message has been sent.</p>
+}
 
 @code {
-    private List<Todo> todos = new();
-    private string newTodoTitle = "";
-    
-    protected override async Task OnInitializedAsync()
+    private ContactForm contactForm = new();
+    private bool messageSent = false;
+
+    private async Task HandleSubmit()
     {
-        todos = await TodoService.GetTodosAsync();
+        await EmailService.SendAsync(contactForm);
+        messageSent = true;
     }
-    
-    private async Task AddTodo()
+
+    public class ContactForm
     {
-        if (!string.IsNullOrWhiteSpace(newTodoTitle))
-        {
-            var todo = await TodoService.AddTodoAsync(newTodoTitle);
-            todos.Add(todo);
-            newTodoTitle = "";
-        }
-    }
-    
-    private async Task DeleteTodo(Todo todo)
-    {
-        await TodoService.DeleteTodoAsync(todo.Id);
-        todos.Remove(todo);
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; } = "";
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
     }
 }
 ```
@@ -256,7 +231,6 @@ else
 - [Blazor University](https://blazor-university.com/) - Community tutorials
 
 ### Community
-- [Blazor Gitter](https://gitter.im/aspnet/Blazor) - Chat with the community
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/blazor) - Q&A
 - [Reddit r/blazor](https://reddit.com/r/blazor) - Community discussions
 
@@ -278,10 +252,10 @@ Documentation content is sourced from Microsoft's ASP.NET Core Documentation und
 
 ## Get Started Now!
 
-Ready to build your first Blazor SSR application?
+Ready to build your first Blazor Static SSR application?
 
 <div class="call-to-action">
 
-[**🚀 Quick Start Guide**](/getting-started/quick-start) | [**📖 Full Documentation**](/getting-started/)
+[**🚀 Quick Start Guide**](/getting-started/) | [**📖 Full Documentation**](/fundamentals/)
 
 </div>

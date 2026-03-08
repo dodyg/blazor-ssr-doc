@@ -1,205 +1,231 @@
 ---
-title: Prerender ASP.NET Core Razor components
-description: Learn about Razor component prerendering in ASP.NET Core Blazor apps.
+title: Prerendering and Streaming Rendering
+description: Learn about prerendering and streaming rendering in Blazor Static SSR.
 layout: page
 section: Components
 toc: true
 ---
 
-# Prerender ASP.NET Core Razor components
+# Prerendering and Streaming Rendering
 
+This article explains prerendering and streaming rendering for Blazor Static SSR applications.
 
-<!--
-    NOTE: The console output block quotes in this topic use a double-space 
-    at the ends of lines to generate a bare return in block quote output.
--->
+## What is Prerendering?
 
-This article explains Razor component prerendering scenarios for server-rendered components in Blazor Web Apps and Blazor Server apps.
+Prerendering is the process of rendering page content on the server to deliver HTML to the browser as quickly as possible. In Static SSR, prerendering is the default behavior - components are rendered on every request.
 
-*Prerendering* is the process of statically rendering page content from the server to deliver HTML to the browser as quickly as possible. After the prerendered content is quickly displayed to the user, interactive content with active event handlers are rendered, replacing any content that was rendered previously. Prerendering can also improve [Search Engine Optimization (SEO)](https://developer.mozilla.org/docs/Glossary/SEO) by rendering content for the initial HTTP response that search engines use to calculate page rank.
+Prerendering provides:
 
+- **Fast initial load**: Users see content immediately
+- **SEO benefits**: Search engines can index the fully rendered content
+- **Progressive enhancement**: Content is available before JavaScript loads
 
-Prerendering is enabled by default for interactive components.
+## Streaming Rendering
 
-Internal navigation with interactive routing doesn't use prerendering because the page is already interactive. For more information, see [Static versus interactive routing](/fundamentals/routing#static-versus-interactive-routing) and [Interactive routing and prerendering](https://learn.microsoft.com/aspnet/core/blazor/state-management/prerendered-state-persistence#interactive-routing-and-prerendering).
+Streaming rendering improves the user experience for pages that perform long-running asynchronous operations. Instead of waiting for all data to load before sending any content, streaming rendering sends initial content immediately and streams updates as data becomes available.
 
-[`OnAfterRender{Async}` component lifecycle events](https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#after-component-render-onafterrenderasync) aren't called when prerendering, only after the component renders interactively.
+### Enable Streaming Rendering
 
-## Disable prerendering
-
-<!-- UPDATE 11.0 Tracking ...
-
-                 "prerender: false" is ignored in child components
-                 https://github.com/dotnet/aspnetcore/issues/55635
-
-                 ... for .NET 11 work in the following area. -->
-
-Prerendering can complicate an app because the app's Razor components must render twice: once for prerendering and once for setting up interactivity. If the components are set up to run on WebAssembly, then you also must design your components so that they can run from both the server and the client.
-
-To disable prerendering for a *component instance*, pass the `prerender` flag with a value of `false` to the render mode:
-
-* `<... @rendermode="new InteractiveServerRenderMode(prerender: false)" />`
-* `<... @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />`
-* `<... @rendermode="new InteractiveAutoRenderMode(prerender: false)" />`
-
-To disable prerendering in a *component definition*:
-
-* `@rendermode @(new InteractiveServerRenderMode(prerender: false))`
-* `@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))`
-* `@rendermode @(new InteractiveAutoRenderMode(prerender: false))`
-
-To disable prerendering for the entire app, indicate the render mode at the highest-level interactive component in the app's component hierarchy that isn't a root component.
-
-For apps based on the Blazor Web App project template, a render mode assigned to the entire app is specified where the `Routes` component is used in the `App` component (`Components/App.razor`). The following example sets the app's render mode to Interactive Server with prerendering disabled:
+Add the `[StreamRendering]` attribute to your component:
 
 ```razor
-<Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
-```
+@page "/weather"
+@attribute [StreamRendering]
+@inject WeatherService WeatherService
 
-Also, disable prerendering for the [`HeadOutlet` component](https://learn.microsoft.com/aspnet/core/blazor/components/control-head-content#headoutlet-component) in the `App` component:
+<h1>Weather Forecast</h1>
 
-```razor
-<HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender: false)" />
-```
-
-Making a root component, such as the `App` component, interactive with the `@rendermode` directive at the top of the root component's definition file (`.razor`) isn't supported. Therefore, prerendering can't be disabled directly by the `App` component.
-
-Disabling prerendering using the preceding techniques only takes effect for top-level render modes. If a parent component specifies a render mode, the prerendering settings of its children are ignored.
-
-
-## Persist prerendered state
-
-Without persisting prerendered state, state used during prerendering is lost and must be recreated when the app is fully loaded. If any state is created asynchronously, the UI may flicker as the prerendered UI is replaced when the component is rerendered. For guidance on how to persist state during prerendering, see [prerendered-state-persistence](https://learn.microsoft.com/aspnet/core/blazor/state-management/prerendered-state-persistence).
-
-
-## Client-side services fail to resolve during prerendering
-
-Assuming that prerendering isn't disabled for a component or for the app, a component in the `.Client` project is prerendered on the server. Because the server doesn't have access to registered client-side Blazor services, it isn't possible to inject these services into a component without receiving an error that the service can't be found during prerendering.
-
-For example, consider the following `Home` component in the `.Client` project in a Blazor Web App with [global Interactive WebAssembly or Interactive Auto rendering](/fundamentals/render-modes#apply-a-render-mode-to-the-entire-app). The component attempts to inject [Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment) to obtain the environment's name.
-
-```razor
-@page "/"
-@inject IWebAssemblyHostEnvironment Environment
-
-<PageTitle>Home</PageTitle>
-
-<h1>Home</h1>
-
-<p>
-    Environment: @Environment.Environment
-</p>
-```
-
-No compile time error occurs, but a runtime error occurs during prerendering:
-
-> :::no-loc text="Cannot provide a value for property 'Environment' on type 'BlazorSample.Client.Pages.Home'. There is no registered service of type 'Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment'.":::
-
-This error occurs because the component must compile and execute on the server during prerendering, but [Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment) isn't a registered service on the server.
-
-Consider any of the following approaches to address this scenario:
-
-* [Register the service on the server in addition to the client](#register-the-service-on-the-server-in-addition-to-the-client)
-* [Inject a service that the app can use during prerendering](#inject-a-service-that-the-app-can-use-during-prerendering)
-* [Make the service optional](#make-the-service-optional)
-* [Create a service abstraction](#create-a-service-abstraction)
-* [Disable prerendering for the component](#disable-prerendering-for-the-component)
-
-### Register the service on the server in addition to the client
-
-If the service supports server execution, register the service on the server in addition to the client so that it's available during prerendering. For an example of this scenario, see the guidance for [System.Net.Http.HttpClient](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient) services in the [Blazor Web App external web APIs](https://learn.microsoft.com/aspnet/core/blazor/call-web-api#blazor-web-app-external-web-apis) section of the *Call web API* article.
-
-### Inject a service that the app can use during prerendering
-
-In some cases, the app can use a service on the server during prerendering and a different service on the client.
-
-For example, the following code obtains the app's environment whether the code is running on the server or on the client by injecting [Microsoft.Extensions.Hosting.IHostEnvironment](https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostenvironment) from the [`Microsoft.Extensions.Hosting.Abstractions` NuGet package](https://www.nuget.org/packages/Microsoft.Extensions.Hosting.Abstractions):
-
-```csharp
-private string? environmentName;
-
-public Home(IHostEnvironment? serverEnvironment = null, 
-    IWebAssemblyHostEnvironment? wasmEnvironment = null)
+@if (forecasts == null)
 {
-    environmentName = serverEnvironment?.EnvironmentName;
-    environmentName ??= wasmEnvironment?.Environment;
+    <p><em>Loading weather data...</em></p>
 }
-```
-
-However, this approach adds an additional dependency to the client project that isn't needed.
-
-### Make the service optional
-
-Make the service optional if it isn't required during prerendering using either of the following approaches.
-
-The following example uses constructor injection of [Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment):
-
-```csharp
-private string? environmentName;
-
-public Home(IWebAssemblyHostEnvironment? env = null)
+else
 {
-    environmentName = env?.Environment;
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-```
-
-Alternatively, inject [System.IServiceProvider](https://learn.microsoft.com/dotnet/api/system.iserviceprovider) to optionally obtain the service if it's available:
-
-```razor
-@page "/"
-@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
-@inject IServiceProvider Services
-
-<PageTitle>Home</PageTitle>
-
-<h1>Home</h1>
-
-<p>
-    <b>Environment:</b> @environmentName
-</p>
 
 @code {
-    private string? environmentName;
+    private WeatherForecast[]? forecasts;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (Services.GetService<IWebAssemblyHostEnvironment>() is { } env)
-        {
-            environmentName = env.Environment;
-        }
+        // Simulate a long-running operation
+        await Task.Delay(2000);
+        forecasts = await WeatherService.GetForecastAsync();
     }
 }
 ```
 
-### Create a service abstraction
+### How Streaming Rendering Works
 
-If a different service implementation is needed on the server, create a service abstraction and create implementations for the service in the server and client projects. Register the services in each project. Inject the custom service abstraction into components where needed. The component then depends solely on the custom service abstraction.
+1. **Initial Response**: The server sends the initial HTML with the "Loading..." message
+2. **Async Operation**: The `OnInitializedAsync` method executes
+3. **Streaming Update**: When data is available, the server streams the updated content
+4. **DOM Update**: The browser patches the new content into the page
 
-In the case of [Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment), we can reuse the existing interface instead of creating a new one:
+### When to Use Streaming Rendering
 
-`ServerHostEnvironment.cs`:
+Use streaming rendering when your component:
 
-```csharp
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components;
+- Performs database queries
+- Calls external APIs
+- Has significant async initialization
+- Would benefit from showing placeholder content
 
-public class ServerHostEnvironment(IWebHostEnvironment env, NavigationManager nav) : 
-    IWebAssemblyHostEnvironment
+## Static SSR Rendering Patterns
+
+### Per-Request Rendering
+
+In Static SSR, components are rendered for each HTTP request:
+
+```razor
+@page "/time"
+
+<h1>Current Time</h1>
+<p>The server time is: @DateTime.Now</p>
+```
+
+Each time a user navigates to this page, the server renders a fresh response with the current time.
+
+### Data Loading
+
+Load data during initialization for Static SSR:
+
+```razor
+@page "/products"
+@inject ProductService ProductService
+
+<h1>Products</h1>
+
+@if (products == null)
 {
-    public string Environment => env.EnvironmentName;
-    public string BaseAddress => nav.BaseUri;
+    <p>Loading products...</p>
+}
+else if (products.Length == 0)
+{
+    <p>No products found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var product in products)
+        {
+            <li>@product.Name - $@product.Price</li>
+        }
+    </ul>
+}
+
+@code {
+    private Product[]? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
 }
 ```
 
-In the server project's `Program` file, register the service:
+### Streaming with Long-Running Operations
 
-```csharp
-builder.Services.TryAddScoped<IWebAssemblyHostEnvironment, ServerHostEnvironment>();
+For operations that take time, combine streaming rendering with a good loading UX:
+
+```razor
+@page "/search"
+@attribute [StreamRendering]
+@inject SearchService SearchService
+
+<h1>Search Results</h1>
+
+<EditForm Model="@searchModel" OnValidSubmit="@HandleSearch" FormName="SearchForm">
+    <AntiforgeryToken />
+    <InputText @bind-Value="searchModel.Query" placeholder="Search..." />
+    <button type="submit">Search</button>
+</EditForm>
+
+@if (results != null)
+{
+    @if (results.Length == 0)
+    {
+        <p>No results found for "@searchModel.Query"</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var result in results)
+            {
+                <li>
+                    <a href="@result.Url">@result.Title</a>
+                    <p>@result.Description</p>
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    private SearchModel searchModel = new();
+    private SearchResult[]? results;
+
+    [SupplyParameterFromForm]
+    private SearchModel? FormSearchModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (FormSearchModel != null)
+        {
+            searchModel = FormSearchModel;
+            await HandleSearch();
+        }
+    }
+
+    private async Task HandleSearch()
+    {
+        results = await SearchService.SearchAsync(searchModel.Query);
+    }
+
+    public class SearchModel
+    {
+        [Required]
+        public string Query { get; set; } = "";
+    }
+}
 ```
 
-At this point, the [Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment) service can be [injected into an interactive WebAssembly or Auto component that is also prerendered from the server](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/environments#read-the-environment-in-a-blazor-webassembly-app).
+## Limitations in Static SSR
 
-### Disable prerendering for the component
+Remember these limitations:
 
-Disable prerendering for the component or for the entire app. For more information, see the [Disable prerendering](#disable-prerendering) section.
+- **No `OnAfterRender`**: This lifecycle method is never called in Static SSR
+- **No JavaScript interop during render**: JS calls only work after the page loads
+- **No circuit state**: Each request is independent
 
+## Best Practices
+
+1. **Use streaming rendering** for long-running async operations
+2. **Show loading states** while data is being fetched
+3. **Handle null/empty states** gracefully
+4. **Keep async operations focused** to avoid long wait times
+5. **Consider caching** for frequently accessed data
+
+## Additional Resources
+
+- [ASP.NET Core Blazor component rendering](https://learn.microsoft.com/aspnet/core/blazor/components/rendering)
+- [ASP.NET Core Blazor fundamentals](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/)
