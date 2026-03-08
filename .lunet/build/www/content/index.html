@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>Blazor SSR Documentation - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="welcome-to-blazor-ssr-documentation">Welcome to Blazor SSR Documentation</h1>
+<blockquote>
+<p>Your comprehensive guide to <strong>Blazor Server-Side Rendering (SSR)</strong>, also known as static rendering.</p>
+</blockquote>
+<h2 id="what-is-blazor-ssr">What is Blazor SSR?</h2>
+<p>Blazor SSR (Server-Side Rendering) is a hosting model for Blazor applications where components are rendered on the server and delivered as static HTML to the browser. This approach offers:</p>
+<ul>
+<li><strong>Fast Initial Load</strong>: HTML is rendered server-side and delivered immediately</li>
+<li><strong>SEO-Friendly</strong>: Content is available to search engines without JavaScript execution</li>
+<li><strong>Full .NET Runtime</strong>: Access to complete .NET APIs on the server</li>
+<li><strong>Low Client Requirements</strong>: Works on any browser without WebAssembly support</li>
+</ul>
+<h2 id="two-types-of-ssr">Two Types of SSR</h2>
+<h3 id="1-static-ssr-non-interactive">1. Static SSR (Non-Interactive)</h3>
+<p>Components are rendered to static HTML with <strong>no interactivity</strong>. Perfect for:</p>
+<ul>
+<li>Content-focused websites</li>
+<li>Blogs and documentation sites</li>
+<li>Marketing pages</li>
+<li>SEO-critical pages</li>
+</ul>
+<pre><code class="language-razor">@page &quot;/about&quot;
+@attribute [RenderMode.Static]
+
+&lt;h1&gt;About Us&lt;/h1&gt;
+&lt;p&gt;This page is rendered as static HTML.&lt;/p&gt;
+</code></pre>
+<h3 id="2-interactive-ssr-server-side">2. Interactive SSR (Server-Side)</h3>
+<p>Components are rendered with <strong>full interactivity</strong> via SignalR. Ideal for:</p>
+<ul>
+<li>Interactive web applications</li>
+<li>Real-time updates</li>
+<li>Complex forms and workflows</li>
+<li>Dashboards</li>
+</ul>
+<pre><code class="language-razor">@page &quot;/counter&quot;
+@attribute [RenderMode.InteractiveServer]
+@rendermode InteractiveServer
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+&lt;p&gt;Current count: @currentCount&lt;/p&gt;
+&lt;button @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+
+@code {
+    private int currentCount = 0;
+    
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
+</code></pre>
+<h2 id="why-choose-blazor-ssr">Why Choose Blazor SSR?</h2>
+<h3 id="advantages">Advantages</h3>
+<p>✅ <strong>Fast Time to First Byte (TTFB)</strong> - HTML is rendered on the server<br />
+✅ <strong>Excellent SEO</strong> - Content available immediately to crawlers<br />
+✅ <strong>Full .NET API Access</strong> - Use any .NET library server-side<br />
+✅ <strong>Small Payload</strong> - No WebAssembly runtime to download<br />
+✅ <strong>Thin Client Support</strong> - Works on low-powered devices<br />
+✅ <strong>Code Security</strong> - Application logic stays on the server</p>
+<h3 id="considerations">Considerations</h3>
+<p>⚠️ <strong>Server Resources</strong> - Requires server-side processing<br />
+⚠️ <strong>Network Latency</strong> - User interactions require server round-trip<br />
+⚠️ <strong>No Offline Support</strong> - Requires active server connection</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET 8.0 SDK</a> or later</li>
+<li>Your favorite code editor (Visual Studio, VS Code, etc.)</li>
+</ul>
+<h3 id="create-your-first-blazor-ssr-app">Create Your First Blazor SSR App</h3>
+<pre><code class="language-bash"># Create a new Blazor Web App (includes SSR support)
+dotnet new blazor -o MyBlazorApp --interactivity Server
+
+# Navigate to the project
+cd MyBlazorApp
+
+# Run the application
+dotnet run
+</code></pre>
+<p>Open your browser to <code>https://localhost:5001</code> to see your Blazor SSR app in action!</p>
+<h3 id="understanding-render-modes">Understanding Render Modes</h3>
+<p>In your <code>_Imports.razor</code> file, you can set default render modes:</p>
+<pre><code class="language-razor">@using static Microsoft.AspNetCore.Components.Web.RenderMode
+
+// For static SSR (no interactivity)
+@attribute [rendermode: Static]
+
+// For interactive SSR
+@attribute [rendermode: InteractiveServer]
+
+// Per-page override
+@page &quot;/mypage&quot;
+@rendermode InteractiveServer
+</code></pre>
+<h2 id="documentation-sections">Documentation Sections</h2>
+<h3 id="-getting-started">🚀 <a href="/getting-started">Getting Started</a></h3>
+<p>Learn the basics of Blazor SSR and get up and running quickly.</p>
+<p><strong>Topics:</strong></p>
+<ul>
+<li><a href="/getting-started/what-is-ssr">What is Blazor SSR?</a></li>
+<li><a href="/getting-started/quick-start">Quick Start Guide</a></li>
+<li><a href="/getting-started/comparison">SSR vs WebAssembly vs Hybrid</a></li>
+</ul>
+<h3 id="-fundamentals">📚 <a href="/fundamentals">Fundamentals</a></h3>
+<p>Understand core concepts and architecture of Blazor SSR.</p>
+<p><strong>Topics:</strong></p>
+<ul>
+<li><a href="/fundamentals/render-modes">Render Modes</a> - Static vs Interactive</li>
+<li><a href="/fundamentals/routing">Routing</a> - Navigation and URL handling</li>
+<li><a href="/fundamentals/dependency-injection">Dependency Injection</a> - Service management</li>
+<li><a href="/fundamentals/configuration">Configuration</a> - App settings</li>
+</ul>
+<h3 id="-components">🧩 <a href="/components">Components</a></h3>
+<p>Deep dive into Razor components and how they work in SSR.</p>
+<p><strong>Topics:</strong></p>
+<ul>
+<li><a href="/components/index">Component Basics</a> - Structure and syntax</li>
+<li><a href="/components/render-modes">Render Modes</a> - Component-level control</li>
+<li><a href="/components/lifecycle">Lifecycle</a> - Component events</li>
+<li><a href="/components/prerender">Prerendering</a> - Optimization techniques</li>
+</ul>
+<h3 id="-forms">📝 <a href="/forms">Forms</a></h3>
+<p>Handle user input with forms and validation in SSR.</p>
+<h3 id="-security">🔒 <a href="/security">Security</a></h3>
+<p>Implement authentication and authorization for your SSR apps.</p>
+<h3 id="-advanced">⚡ <a href="/advanced">Advanced</a></h3>
+<p>Performance optimization, deployment, and advanced scenarios.</p>
+<h2 id="example-static-ssr-page">Example: Static SSR Page</h2>
+<pre><code class="language-razor">@page &quot;/products&quot;
+@attribute [RenderMode.Static]
+
+&lt;h1&gt;Products&lt;/h1&gt;
+
+@if (products == null)
+{
+    &lt;p&gt;Loading...&lt;/p&gt;
+}
+else
+{
+    &lt;ul&gt;
+    @foreach (var product in products)
+    {
+        &lt;li&gt;
+            &lt;h2&gt;@product.Name&lt;/h2&gt;
+            &lt;p&gt;@product.Description&lt;/p&gt;
+            &lt;p&gt;Price: $@product.Price&lt;/p&gt;
+        &lt;/li&gt;
+    }
+    &lt;/ul&gt;
+}
+
+@code {
+    private Product[]? products;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // Runs on the server during rendering
+        products = await ProductService.GetProductsAsync();
+    }
+}
+</code></pre>
+<h2 id="example-interactive-ssr-component">Example: Interactive SSR Component</h2>
+<pre><code class="language-razor">@page &quot;/todos&quot;
+@rendermode InteractiveServer
+@inject TodoService TodoService
+
+&lt;h1&gt;Todo List (@todos.Count(t =&gt; !t.IsComplete))&lt;/h1&gt;
+
+&lt;ul&gt;
+    @foreach (var todo in todos)
+    {
+        &lt;li&gt;
+            &lt;input type=&quot;checkbox&quot; @bind=&quot;todo.IsComplete&quot; /&gt;
+            &lt;span&gt;@todo.Title&lt;/span&gt;
+            &lt;button @onclick=&quot;() =&gt; DeleteTodo(todo)&quot;&gt;Delete&lt;/button&gt;
+        &lt;/li&gt;
+    }
+&lt;/ul&gt;
+
+&lt;input @bind=&quot;newTodoTitle&quot; placeholder=&quot;Add todo...&quot; /&gt;
+&lt;button @onclick=&quot;AddTodo&quot;&gt;Add&lt;/button&gt;
+
+@code {
+    private List&lt;Todo&gt; todos = new();
+    private string newTodoTitle = &quot;&quot;;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await TodoService.GetTodosAsync();
+    }
+    
+    private async Task AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodoTitle))
+        {
+            var todo = await TodoService.AddTodoAsync(newTodoTitle);
+            todos.Add(todo);
+            newTodoTitle = &quot;&quot;;
+        }
+    }
+    
+    private async Task DeleteTodo(Todo todo)
+    {
+        await TodoService.DeleteTodoAsync(todo.Id);
+        todos.Remove(todo);
+    }
+}
+</code></pre>
+<h2 id="resources">Resources</h2>
+<h3 id="official-documentation">Official Documentation</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor">ASP.NET Core Blazor</a> - Complete official docs</li>
+<li><a href="https://github.com/dotnet/aspnetcore">Blazor GitHub Repository</a> - Source code and issues</li>
+</ul>
+<h3 id="learning-resources">Learning Resources</h3>
+<ul>
+<li><a href="https://github.com/dotnet-presentations/blazor-workshop/">Blazor Workshop</a> - Hands-on tutorial</li>
+<li><a href="https://blazor-university.com/">Blazor University</a> - Community tutorials</li>
+</ul>
+<h3 id="community">Community</h3>
+<ul>
+<li><a href="https://gitter.im/aspnet/Blazor">Blazor Gitter</a> - Chat with the community</li>
+<li><a href="https://stackoverflow.com/questions/tagged/blazor">Stack Overflow</a> - Q&amp;A</li>
+<li><a href="https://reddit.com/r/blazor">Reddit r/blazor</a> - Community discussions</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>This documentation is extracted from the <a href="https://github.com/dotnet/AspNetCore.Docs">official ASP.NET Core documentation</a>.</p>
+<p>To contribute to the source documentation:</p>
+<ol>
+<li>Visit the <a href="https://github.com/dotnet/AspNetCore.Docs">AspNetCore.Docs repository</a></li>
+<li>Fork the repository</li>
+<li>Make your changes</li>
+<li>Submit a pull request</li>
+</ol>
+<h2 id="license">License</h2>
+<p>Documentation content is sourced from Microsoft's ASP.NET Core Documentation under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International Public License</a>.</p>
+<hr />
+<h2 id="get-started-now">Get Started Now!</h2>
+<p>Ready to build your first Blazor SSR application?</p>
+<div class="call-to-action">
+<p><a href="/getting-started/quick-start"><strong>🚀 Quick Start Guide</strong></a> | <a href="/getting-started"><strong>📖 Full Documentation</strong></a></p>
+</div>
+  </body>
+</html>

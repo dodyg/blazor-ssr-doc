@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>ASP.NET Core Razor component lifecycle - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="aspnet-core-razor-component-lifecycle">ASP.NET Core Razor component lifecycle</h1>
+<p>This article explains the ASP.NET Core Razor component lifecycle and how to use lifecycle events.</p>
+<h2 id="lifecycle-events">Lifecycle events</h2>
+<p>The Razor component processes Razor component lifecycle events in a set of synchronous and asynchronous lifecycle methods. The lifecycle methods can be overridden to perform additional operations in components during component initialization and rendering.</p>
+<p>This article simplifies component lifecycle event processing in order to clarify complex framework logic and doesn't cover every change that was made over the years. You may need to access the <a href="https://github.com/dotnet/aspnetcore/blob/main/src/Components/Components/src/ComponentBase.cs"><code>ComponentBase</code> reference source</a> to integrate custom event processing with Blazor's lifecycle event processing. Code comments in the reference source include additional remarks on lifecycle event processing that don't appear in this article or in the <a href="/dotnet/api">API documentation</a>.</p>
+<p>The following simplified diagrams illustrate Razor component lifecycle event processing. The C# methods associated with the lifecycle events are defined with examples in the following sections of this article.</p>
+<p>Component lifecycle events:</p>
+<ol>
+<li>If the component is rendering for the first time on a request:
+<ul>
+<li>Create the component's instance.</li>
+<li>Perform property injection.</li>
+<li>Call <a href="#component-initialization-oninitializedasync"><code>OnInitialized{Async}</code></a>. If an incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> is returned, the <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> is awaited and then the component is rerendered. The synchronous method is called prior to the asynchronous method.</li>
+</ul>
+</li>
+<li>Call <a href="#after-parameters-are-set-onparameterssetasync"><code>OnParametersSet{Async}</code></a>. If an incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> is returned, the <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> is awaited and then the component is rerendered. The synchronous method is called prior to the asynchronous method.</li>
+<li>Render for all synchronous work and complete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>s.</li>
+</ol>
+<div class="markdown-alert markdown-alert-note lunet-alert-note">
+<div class='lunet-alert-note-heading'>
+<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
+</div><div class='lunet-alert-note-content'>
+<p>Asynchronous actions performed in lifecycle events might delay component rendering or displaying data. For more information, see the <a href="#handle-incomplete-asynchronous-actions-at-render">Handle incomplete asynchronous actions at render</a> section later in this article.</p>
+</div></div>
+<p>A parent component renders before its children components because rendering is what determines which children are present. If synchronous parent component initialization is used, the parent initialization is guaranteed to complete first. If asynchronous parent component initialization is used, the completion order of parent and child component initialization can't be determined because it depends on the initialization code running.</p>
+<p><img src="/components/lifecycle/_static/lifecycle1.png" alt="Component lifecycle events of a Razor component in Blazor" /></p>
+<p>DOM event processing:</p>
+<ol>
+<li>The event handler is run.</li>
+<li>If an incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> is returned, the <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> is awaited and then the component is rerendered.</li>
+<li>Render for all synchronous work and complete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>s.</li>
+</ol>
+<p><img src="/components/lifecycle/_static/lifecycle2.png" alt="DOM event processing" /></p>
+<p>The <code>Render</code> lifecycle:</p>
+<ol>
+<li>Avoid further rendering operations on the component when both of the following conditions are met:
+<ul>
+<li>It is not the first render.</li>
+<li><a href=""><code>ShouldRender</code></a> returns <code>false</code>.</li>
+</ul>
+</li>
+<li>Build the render tree diff (difference) and render the component.</li>
+<li>Await the DOM to update.</li>
+<li>Call <a href="#after-component-render-onafterrenderasync"><code>OnAfterRender{Async}</code></a>. The synchronous method is called prior to the asynchronous method.</li>
+</ol>
+<p><img src="/components/lifecycle/_static/lifecycle3.png" alt="Render lifecycle" /></p>
+<p>Developer calls to <a href="#state-changes-statehaschanged"><code>StateHasChanged</code></a> result in a rerender. For more information, see <a href=""></a>.</p>
+<h2 id="quiescence-during-prerendering">Quiescence during prerendering</h2>
+<p>In server-side Blazor apps, prerendering waits for <em>quiescence</em>, which means that a component doesn't render until all of the components in the render tree have finished rendering. Quiescence can lead to noticeable delays in rendering when a component performs long-running tasks during initialization and other lifecycle methods, leading to a poor user experience. For more information, see the <a href="#handle-incomplete-asynchronous-actions-at-render">Handle incomplete asynchronous actions at render</a> section later in this article.</p>
+<h2 id="when-parameters-are-set-setparametersasync">When parameters are set (<code>SetParametersAsync</code>)</h2>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*</a> sets parameters supplied by the component's parent in the render tree or from route parameters.</p>
+<p>The method's <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView" title="Microsoft.AspNetCore.Components.ParameterView">Microsoft.AspNetCore.Components.ParameterView</a> parameter contains the set of <a href="/components/index#component-parameters">component parameter</a> values for the component each time <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*</a> is called. By overriding the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*</a> method, developer code can interact directly with <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView" title="Microsoft.AspNetCore.Components.ParameterView">Microsoft.AspNetCore.Components.ParameterView</a>'s parameters.</p>
+<p>The default implementation of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*</a> sets the value of each property with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterAttribute"><code>[Parameter]</code></a> or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.CascadingParameterAttribute"><code>[CascadingParameter]</code> attribute</a> that has a corresponding value in the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView" title="Microsoft.AspNetCore.Components.ParameterView">Microsoft.AspNetCore.Components.ParameterView</a>. Parameters that don't have a corresponding value in <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView" title="Microsoft.AspNetCore.Components.ParameterView">Microsoft.AspNetCore.Components.ParameterView</a> are left unchanged.</p>
+<p>Generally, your code should call the base class method (<code>await base.SetParametersAsync(parameters);</code>) when overriding <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*</a>. In advanced scenarios, developer code can interpret the incoming parameters' values in any way required by not invoking the base class method. For example, there's no requirement to assign the incoming parameters to the properties of the class. However, you must refer to the <a href="https://github.com/dotnet/aspnetcore/blob/main/src/Components/Components/src/ComponentBase.cs"><code>ComponentBase</code> reference source</a> when structuring your code without calling the base class method because it calls other lifecycle methods and triggers rendering in a complex fashion.</p>
+<p>If you want to rely on the initialization and rendering logic of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*?displayProperty=nameWithType</a> but not process incoming parameters, you have the option of passing an empty <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView" title="Microsoft.AspNetCore.Components.ParameterView">Microsoft.AspNetCore.Components.ParameterView</a> to the base class method:</p>
+<pre><code class="language-csharp">await base.SetParametersAsync(ParameterView.Empty);
+</code></pre>
+<p>If event handlers are provided in developer code, unhook them on disposal. For more information, see <a href=""></a>.</p>
+<p>In the following example, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView.TryGetValue--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ParameterView.TryGetValue*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ParameterView.TryGetValue*?displayProperty=nameWithType</a> assigns the <code>Param</code> parameter's value to <code>value</code> if parsing a route parameter for <code>Param</code> is successful. When <code>value</code> isn't <code>null</code>, the value is displayed by the component.</p>
+<p>Although <a href="/fundamentals/routing#route-parameters">route parameter matching is case insensitive</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView.TryGetValue" title="Microsoft.AspNetCore.Components.ParameterView.TryGetValue*">Microsoft.AspNetCore.Components.ParameterView.TryGetValue*</a> only matches case-sensitive parameter names in the route template. The following example requires the use of <code>/{Param?}</code> in the route template in order to get the value with <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView.TryGetValue" title="Microsoft.AspNetCore.Components.ParameterView.TryGetValue*">Microsoft.AspNetCore.Components.ParameterView.TryGetValue*</a>, not <code>/{param?}</code>. If <code>/{param?}</code> is used in this scenario, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ParameterView.TryGetValue" title="Microsoft.AspNetCore.Components.ParameterView.TryGetValue*">Microsoft.AspNetCore.Components.ParameterView.TryGetValue*</a> returns <code>false</code> and <code>message</code> isn't set to either <code>message</code> string.</p>
+<p><code>SetParamsAsync.razor</code>:</p>
+<h2 id="component-initialization-oninitialized" Async="">Component initialization (`OnInitialized</h2>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitialized" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitialized*">Microsoft.AspNetCore.Components.ComponentBase.OnInitialized*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> are used exclusively to initialize a component for the entire lifetime of the component instance. Parameter values and parameter value changes shouldn't affect the initialization performed in these methods. For example, loading static options into a dropdown list that doesn't change for the lifetime of the component and that isn't dependent on parameter values is performed in one of these lifecycle methods. If parameter values or changes in parameter values affect component state, use <a href="#when-parameters-are-set-setparametersasync"><code>OnParametersSet{Async}</code></a> instead.</p>
+<p>These methods are invoked when the component is initialized after having received its initial parameters in <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*</a>. The synchronous method is called prior to the asynchronous method.</p>
+<p>If synchronous parent component initialization is used, the parent initialization is guaranteed to complete before child component initialization. If asynchronous parent component initialization is used, the completion order of parent and child component initialization can't be determined because it depends on the initialization code running.</p>
+<p>For a synchronous operation, override <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitialized" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitialized*">Microsoft.AspNetCore.Components.ComponentBase.OnInitialized*</a>:</p>
+<p><code>OnInit.razor</code>:</p>
+<p>To perform an asynchronous operation, override <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> and use the <a href="/dotnet/csharp/language-reference/operators/await"><code>await</code></a> operator:</p>
+<pre><code class="language-csharp">protected override async Task OnInitializedAsync()
+{
+    await ...
+}
+</code></pre>
+<p>If a custom <a href="/components/index#specify-a-base-class">base class</a> is used with custom initialization logic, call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> on the base class:</p>
+<pre><code class="language-csharp">protected override async Task OnInitializedAsync()
+{
+    await ...
+
+    await base.OnInitializedAsync();
+}
+</code></pre>
+<p>It isn't necessary to call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*?displayProperty=nameWithType</a> unless a custom base class is used with custom logic. For more information, see the <a href="#base-class-lifecycle-methods">Base class lifecycle methods</a> section.</p>
+<p>A component must ensure that it's in a valid state for rendering when <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> awaits a potentially incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>. If the method returns an incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>, the part of the method that completes synchronously must leave the component in a valid state for rendering. For more information, see the introductory remarks of <a href=""></a> and <a href=""></a>.</p>
+<p>Blazor apps that prerender their content on the server call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> <em>twice</em>:</p>
+<ul>
+<li>Once when the component is initially rendered statically as part of the page.</li>
+<li>A second time when the browser renders the component.</li>
+</ul>
+<p>To prevent developer code in <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> from running twice when prerendering, see the <a href="#stateful-reconnection-after-prerendering">Stateful reconnection after prerendering</a> section. The content in the section focuses on Blazor Web Apps and stateful SignalR <em>reconnection</em>. To preserve state during the execution of initialization code while prerendering, see <a href=""></a>.</p>
+<p>While a Blazor app is prerendering, certain actions, such as calling into JavaScript (JS interop), aren't possible. Components may need to render differently when prerendered. For more information, see the <a href="#prerendering-with-javascript-interop">Prerendering with JavaScript interop</a> section.</p>
+<p>If event handlers are provided in developer code, unhook them on disposal. For more information, see <a href=""></a>.</p>
+<div class="moniker"><p>Use <em>streaming rendering</em> with static server-side rendering (static SSR) or prerendering to improve the user experience for components that perform long-running asynchronous tasks in <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> to fully render. For more information, see the following resources:</p>
+<ul>
+<li><a href="#handle-incomplete-asynchronous-actions-at-render">Handle incomplete asynchronous actions at render</a> (this article)</li>
+<li><a href=""></a></li>
+</ul>
+<h2 id="after-parameters-are-set-onparametersset" Async="">After parameters are set (`OnParametersSet</h2>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSet" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSet*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSet*</a> or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*</a> are called:</p>
+<ul>
+<li><p>After the component is initialized in <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitialized" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitialized*">Microsoft.AspNetCore.Components.ComponentBase.OnInitialized*</a> or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a>.</p>
+</li>
+<li><p>When the parent component rerenders and supplies:</p>
+<ul>
+<li>Known or primitive immutable types when at least one parameter has changed.</li>
+<li>Complex-typed parameters. The framework can't know whether the values of a complex-typed parameter have mutated internally, so the framework always treats the parameter set as changed when one or more complex-typed parameters are present.</li>
+</ul>
+<p>For more information on rendering conventions, see <a href=""></a>.</p>
+</li>
+</ul>
+<p>The synchronous method is called prior to the asynchronous method.</p>
+<p>The methods can be invoked even if the parameter values haven't changed. This behavior underscores the need for developers to implement additional logic within the methods to check whether parameter values have indeed changed before re-initializing data or state dependent on those parameters.</p>
+<p>For the following example component, navigate to the component's page at a URL:</p>
+<ul>
+<li>With a start date that's received by <code>StartDate</code>: <code>/on-parameters-set/2021-03-19</code></li>
+<li>Without a start date, where <code>StartDate</code> is assigned a value of the current local time: <code>/on-parameters-set</code></li>
+</ul>
+<blockquote>
+<p>[!NOTE]
+In a component route, it isn't possible to both constrain a <a href="https://docs.microsoft.com/en-us/dotnet/api/System.DateTime" title="System.DateTime">System.DateTime</a> parameter with the <a href="/fundamentals/routing#route-constraints">route constraint <code>datetime</code></a> and <a href="/fundamentals/routing#route-parameters">make the parameter optional</a>. Therefore, the following <code>OnParamsSet</code> component uses two <a href=""><code>@page</code></a> directives to handle routing with and without a supplied date segment in the URL.</p>
+</blockquote>
+<p><code>OnParamsSet.razor</code>:</p>
+<p>Asynchronous work when applying parameters and property values must occur during the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*</a> lifecycle event:</p>
+<pre><code class="language-csharp">protected override async Task OnParametersSetAsync()
+{
+    await ...
+}
+</code></pre>
+<p>If a custom <a href="/components/index#specify-a-base-class">base class</a> is used with custom initialization logic, call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*</a> on the base class:</p>
+<pre><code class="language-csharp">protected override async Task OnParametersSetAsync()
+{
+    await ...
+
+    await base.OnParametersSetAsync();
+}
+</code></pre>
+<p>It isn't necessary to call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*?displayProperty=nameWithType</a> unless a custom base class is used with custom logic. For more information, see the <a href="#base-class-lifecycle-methods">Base class lifecycle methods</a> section.</p>
+<p>A component must ensure that it's in a valid state for rendering when <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*</a> awaits a potentially incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>. If the method returns an incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>, the part of the method that completes synchronously must leave the component in a valid state for rendering. For more information, see the introductory remarks of <a href=""></a> and <a href=""></a>.</p>
+<p>If event handlers are provided in developer code, unhook them on disposal. For more information, see <a href=""></a>.</p>
+<p>If a disposable component doesn't use a <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.CancellationToken" title="System.Threading.CancellationToken">System.Threading.CancellationToken</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSet" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSet*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSet*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*</a> should check if the component is disposed. If <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync*</a> returns an incomplete <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a>, the component must ensure that the part of the method that completes synchronously leaves the component in a valid state for rendering. For more information, see the introductory remarks of <a href=""></a> and <a href=""></a>.</p>
+<p>For more information on route parameters and constraints, see <a href="/fundamentals/routing">routing</a>.</p>
+<p>For an example of implementing <code>SetParametersAsync</code> manually to improve performance in some scenarios, see <a href=""></a>.</p>
+<h2 id="after-component-render-onafterrender" Async="">After component render (`OnAfterRender</h2>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a> are invoked after a component has rendered interactively and the UI has finished updating (for example, after elements are added to the browser DOM). Element and component references are populated at this point. Use this stage to perform additional initialization steps with the rendered content, such as JS interop calls that interact with the rendered DOM elements. The synchronous method is called prior to the asynchronous method.</p>
+<p>These methods aren't invoked during prerendering or static server-side rendering (static SSR) on the server because those processes aren't attached to a live browser DOM and are already complete before the DOM is updated.</p>
+<p>For <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a>, the component doesn't automatically rerender after the completion of any returned <code>Task</code> to avoid an infinite render loop.</p>
+<p>The <code>firstRender</code> parameter for <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a>:</p>
+<ul>
+<li>Is set to <code>true</code> the first time that the component instance is rendered.</li>
+<li>Can be used to ensure that initialization work is only performed once.</li>
+</ul>
+<p><code>AfterRender.razor</code>:</p>
+<p>The <code>AfterRender.razor</code> sample produces following output to console when the page is loaded and the button is selected:</p>
+<blockquote>
+<div class="no-loc">
+<div class="no-loc">
+<div class="no-loc"></div>
+</div>
+</div>
+</blockquote>
+<p>Asynchronous work immediately after rendering must occur during the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a> lifecycle event:</p>
+<pre><code class="language-csharp">protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    ...
+}
+</code></pre>
+<p>If a custom <a href="/components/index#specify-a-base-class">base class</a> is used with custom initialization logic, call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a> on the base class:</p>
+<pre><code class="language-csharp">protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    ...
+
+    await base.OnAfterRenderAsync(firstRender);
+}
+</code></pre>
+<p>It isn't necessary to call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*?displayProperty=nameWithType</a> unless a custom base class is used with custom logic. For more information, see the <a href="#base-class-lifecycle-methods">Base class lifecycle methods</a> section.</p>
+<p>Even if you return a <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> from <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a>, the framework doesn't schedule a further render cycle for your component once that task completes. This is to avoid an infinite render loop. This is different from the other lifecycle methods, which schedule a further render cycle once a returned <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task" title="System.Threading.Tasks.Task">System.Threading.Tasks.Task</a> completes.</p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a> <em>aren't called during the prerendering process on the server</em>. The methods are called when the component is rendered interactively after prerendering. When the app prerenders:</p>
+<ol>
+<li>The component executes on the server to produce some static HTML markup in the HTTP response. During this phase, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a> aren't called.</li>
+<li>When the Blazor script (<code>blazor.{server|webassembly|web}.js</code>) starts in the browser, the component is restarted in an interactive rendering mode. After a component is restarted, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRender*</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnAfterRenderAsync*</a> <strong>are</strong> called because the app isn't in the prerendering phase any longer.</li>
+</ol>
+<p>If event handlers are provided in developer code, unhook them on disposal. For more information, see <a href=""></a>.</p>
+<h2 id="base-class-lifecycle-methods">Base class lifecycle methods</h2>
+<p>When overriding Blazor's lifecycle methods, it isn't necessary to call base class lifecycle methods for <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase" title="Microsoft.AspNetCore.Components.ComponentBase">Microsoft.AspNetCore.Components.ComponentBase</a>. However, a component should call an overridden base class lifecycle method in the following situations:</p>
+<ul>
+<li>When overriding <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.SetParametersAsync*?displayProperty=nameWithType</a>, <code>await base.SetParametersAsync(parameters);</code> is usually invoked because the base class method calls other lifecycle methods and triggers rendering in a complex fashion. For more information, see the <a href="#when-parameters-are-set-setparametersasync">When parameters are set (<code>SetParametersAsync</code>)</a> section.</li>
+<li>If the base class method contains logic that must be executed. Library consumers usually call base class lifecycle methods when inheriting a base class because library base classes often have custom lifecycle logic to execute. If the app uses a base class from a library, consult the library's documentation for guidance.</li>
+</ul>
+<p>In the following example, <code>base.OnInitialized();</code> is called to ensure that the base class's <code>OnInitialized</code> method is executed. Without the call, <code>BlazorRocksBase2.OnInitialized</code> doesn't execute.</p>
+<p><code>BlazorRocks2.razor</code>:</p>
+<p><code>BlazorRocksBase2.cs</code>:</p>
+<div class="code">
+<div class="code">
+<div class="code">
+<div class="code">
+<div class="code">
+<div class="code"><h2 id="state-changes-statehaschanged">State changes (<code>StateHasChanged</code>)</h2>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged" title="Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*</a> notifies the component that its state has changed. When applicable, calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged" title="Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*</a> enqueues a rerender that occurs when the app's main thread is free.</p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged" title="Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*</a> is called automatically for <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback" title="Microsoft.AspNetCore.Components.EventCallback">Microsoft.AspNetCore.Components.EventCallback</a> methods. For more information on event callbacks, see <a href=""></a>.</p>
+<p>For more information on component rendering and when to call <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged" title="Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*</a>, including when to invoke it with <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.InvokeAsync--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.InvokeAsync*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.InvokeAsync*?displayProperty=nameWithType</a>, see <a href=""></a>.</p>
+<h2 id="handle-incomplete-asynchronous-actions-at-render">Handle incomplete asynchronous actions at render</h2>
+<p>Asynchronous actions performed in lifecycle events might not have completed before the component is rendered. Objects might be <code>null</code> or incompletely populated with data while the lifecycle method is executing. Provide rendering logic to confirm that objects are initialized. Render placeholder UI elements (for example, a loading message) while objects are <code>null</code>.</p>
+<p>In the following <code>Slow</code> component, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> is overridden to asynchronously execute a long-running task. While <code>isLoading</code> is <code>true</code>, a loading message is displayed to the user. After the <code>Task</code> returned by <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> completes, the component is rerendered with the updated state, showing the &quot;<code>Finished!</code>&quot; message.</p>
+<p><code>Slow.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/slow&quot;
+
+&lt;h2&gt;Slow Component&lt;/h2&gt;
+
+@if (isLoading)
+{
+    &lt;div&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/div&gt;
+}
+else
+{
+    &lt;div&gt;Finished!&lt;/div&gt;
+}
+
+@code {
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+        isLoading = false;
+    }
+
+    private Task LoadDataAsync()
+    {
+        return Task.Delay(10000);
+    }
+}
+</code></pre>
+<p>The preceding component uses an <code>isLoading</code> variable to display the loading message. A similar approach is used for a component that loads data into a collection and checks if the collection is <code>null</code> to present the loading message. The following example checks the <code>movies</code> collection for <code>null</code> to either display the loading message or display the collection of movies:</p>
+<pre><code class="language-razor">@if (movies == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    @* display movies *@
+}
+
+@code {
+    private Movies[]? movies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        movies = await GetMovies();
+    }
+}
+</code></pre>
+<p>Prerendering waits for <em>quiescence</em>, which means that a component doesn't render until all of the components in the render tree have finished rendering. This means that a loading message doesn't display while a child component's <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> method is executing a long-running task during prerendering. To demonstrate this behavior, place the preceding <code>Slow</code> component into a test app's <code>Home</code> component:</p>
+<pre><code class="language-razor">@page &quot;/&quot;
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your new app.
+
+&lt;Slow /&gt;
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+Although the examples in this section discuss the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync" title="Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*">Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*</a> lifecycle method, other lifecycle methods that execute during prerendering may delay final rendering of a component. Only <a href="#after-component-render-onafterrenderasync"><code>OnAfterRender{Async}</code></a> isn't executed during prerendering and is immune to delays due to quiescence.</p>
+</blockquote>
+<p>During prerendering, the <code>Home</code> component doesn't render until the <code>Slow</code> component is rendered, which takes ten seconds. The UI is blank during this ten-second period, and there's no loading message. After prerendering, the <code>Home</code> component renders, and the <code>Slow</code> component's loading message is displayed. After ten more seconds, the <code>Slow</code> component finally displays the finished message.</p>
+<p>As the preceding demonstration illustrates, quiescence during prerendering results in a poor user experience. To improve the user experience, begin by implementing <a href="">streaming rendering</a> to avoid waiting for the asynchronous task to complete while prerendering.</p>
+<p>Add the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.StreamRenderingAttribute"><code>[StreamRendering]</code> attribute</a> to the <code>Slow</code> component (use <code>[StreamRendering(true)]</code> in .NET 8):</p>
+<pre><code class="language-razor">@attribute [StreamRendering]
+</code></pre>
+<p>When the <code>Home</code> component is prerendering, the <code>Slow</code> component is quickly rendered with its loading message. The <code>Home</code> component doesn't wait for ten seconds for the <code>Slow</code> component to finish rendering. However, the finished message displayed at the end of prerendering is replaced by the loading message while the component finally renders, which is another ten-second delay. This occurs because the <code>Slow</code> component is rendering twice, along with <code>LoadDataAsync</code> executing twice. When a component is accessing resources, such as services and databases, double execution of service calls and database queries creates undesirable load on the app's resources.</p>
+<p>To address the double rendering of the loading message and the re-execution of service and database calls, persist prerendered state with <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.PersistentComponentState" title="Microsoft.AspNetCore.Components.PersistentComponentState">Microsoft.AspNetCore.Components.PersistentComponentState</a> for final rendering of the component, as seen in the following updates to the <code>Slow</code> component:</p>
+<pre><code class="language-razor">@page &quot;/slow&quot;
+@attribute [StreamRendering]
+
+&lt;h2&gt;Slow Component&lt;/h2&gt;
+
+@if (Data is null)
+{
+    &lt;div&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/div&gt;
+}
+else
+{
+    &lt;div&gt;@Data&lt;/div&gt;
+}
+
+@code {
+    [PersistentState]
+    public string? Data { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Data ??= await LoadDataAsync();
+    }
+
+    private async Task&lt;string&gt; LoadDataAsync()
+    {
+        await Task.Delay(5000);
+        return &quot;Finished!&quot;;
+    }
+}
+</code></pre>
+<pre><code class="language-razor">@page &quot;/slow&quot;
+@attribute [StreamRendering]
+@implements IDisposable
+@inject PersistentComponentState ApplicationState
+
+&lt;h2&gt;Slow Component&lt;/h2&gt;
+
+@if (data is null)
+{
+    &lt;div&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/div&gt;
+}
+else
+{
+    &lt;div&gt;@data&lt;/div&gt;
+}
+
+@code {
+    private string? data;
+    private PersistingComponentStateSubscription persistingSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!ApplicationState.TryTakeFromJson&lt;string&gt;(nameof(data), out var restored))
+        {
+            data = await LoadDataAsync();
+        }
+        else
+        {
+            data = restored!;
+        }
+
+        // Call at the end to avoid a potential race condition at app shutdown
+        persistingSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+    }
+
+    private Task PersistData()
+    {
+        ApplicationState.PersistAsJson(nameof(data), data);
+
+        return Task.CompletedTask;
+    }
+
+    private async Task&lt;string&gt; LoadDataAsync()
+    {
+        await Task.Delay(5000);
+        return &quot;Finished!&quot;;
+    }
+
+    void IDisposable.Dispose()
+    {
+        persistingSubscription.Dispose();
+    }
+}
+</code></pre>
+<p>By combining streaming rendering with persistent component state:</p>
+<ul>
+<li>Services and databases only require a single call for component initialization.</li>
+<li>Components render their UIs quickly with loading messages during long-running tasks for the best user experience.</li>
+</ul>
+<p>For more information, see the following resources:</p>
+<ul>
+<li><a href=""></a></li>
+<li><a href=""></a>.</li>
+</ul>
+<h2 id="handle-errors">Handle errors</h2>
+<p>For information on handling errors during lifecycle method execution, see <a href=""></a>.</p>
+<h2 id="stateful-reconnection-after-prerendering">Stateful reconnection after prerendering</h2>
+<p>When prerendering on the server, a component is initially rendered statically as part of the page. Once the browser establishes a SignalR connection back to the server, the component is rendered <em>again</em> and interactive. If the <a href="#component-initialization-oninitializedasync"><code>OnInitialized{Async}</code></a> lifecycle method for initializing the component is present, the method is executed <em>twice</em>:</p>
+<ul>
+<li>When the component is prerendered statically.</li>
+<li>After the server connection has been established.</li>
+</ul>
+<p>This can result in a noticeable change in the data displayed in the UI when the component is finally rendered. To avoid this behavior, pass in an identifier to cache the state during prerendering and to retrieve the state after prerendering.</p>
+<p>The following code demonstrates a <code>WeatherForecastService</code> that avoids the change in data display due to prerendering. The awaited <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task.Delay" title="System.Threading.Tasks.Task.Delay*">System.Threading.Tasks.Task.Delay*</a> (<code>await Task.Delay(...)</code>) simulates a short delay before returning data from the <code>GetForecastAsync</code> method.</p>
+<p>Add <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.Caching.Memory.IMemoryCache" title="Microsoft.Extensions.Caching.Memory.IMemoryCache">Microsoft.Extensions.Caching.Memory.IMemoryCache</a> services with <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddMemoryCache" title="Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddMemoryCache*">Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddMemoryCache*</a> on the service collection in the app's <code>Program</code> file:</p>
+<pre><code class="language-csharp">builder.Services.AddMemoryCache();
+</code></pre>
+<p><code>WeatherForecastService.cs</code>:</p>
+<div class="code">
+<div class="code">
+<div class="code">
+<div class="code">
+<div class="code">
+<div class="code"><p>For more information on the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Mvc.TagHelpers.ComponentTagHelper.RenderMode" title="Microsoft.AspNetCore.Mvc.TagHelpers.ComponentTagHelper.RenderMode">Microsoft.AspNetCore.Mvc.TagHelpers.ComponentTagHelper.RenderMode</a>, see <a href=""></a>.</p>
+<p>The content in this section focuses on Blazor Web Apps and stateful SignalR <em>reconnection</em>. To preserve state during the execution of initialization code while prerendering, see <a href=""></a>.</p>
+<h2 id="prerendering-with-javascript-interop">Prerendering with JavaScript interop</h2>
+<h2 id="cancelable-background-work">Cancelable background work</h2>
+<p>Components often perform long-running background work, such as making network calls (<a href="https://docs.microsoft.com/en-us/dotnet/api/System.Net.Http.HttpClient" title="System.Net.Http.HttpClient">System.Net.Http.HttpClient</a>) and interacting with databases. It's desirable to stop the background work to conserve system resources in several situations. For example, background asynchronous operations don't automatically stop when a user navigates away from a component.</p>
+<p>Other reasons why background work items might require cancellation include:</p>
+<ul>
+<li>An executing background task was started with faulty input data or processing parameters.</li>
+<li>The current set of executing background work items must be replaced with a new set of work items.</li>
+<li>The priority of currently executing tasks must be changed.</li>
+<li>The app must be shut down for server redeployment.</li>
+<li>Server resources become limited, necessitating the rescheduling of background work items.</li>
+</ul>
+<p>To implement a cancelable background work pattern in a component:</p>
+<ul>
+<li>Use a <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.CancellationTokenSource" title="System.Threading.CancellationTokenSource">System.Threading.CancellationTokenSource</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.CancellationToken" title="System.Threading.CancellationToken">System.Threading.CancellationToken</a>.</li>
+<li>Upon <a href="">disposal of the component</a> and at any point cancellation is desired by manually canceling the token, call <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.CancellationTokenSource.Cancel"><code>CancellationTokenSource.Cancel</code></a> to signal that the background work should be cancelled.</li>
+<li>After the asynchronous call returns, call <a href="https://docs.microsoft.com/en-us/dotnet/api/System.Threading.CancellationToken.ThrowIfCancellationRequested" title="System.Threading.CancellationToken.ThrowIfCancellationRequested*">System.Threading.CancellationToken.ThrowIfCancellationRequested*</a> on the token.</li>
+</ul>
+<p>In the following example:</p>
+<ul>
+<li><code>await Task.Delay(10000, cts.Token);</code> represents long-running asynchronous background work.</li>
+<li><code>BackgroundResourceMethod</code> represents a long-running background method that shouldn't start if the <code>Resource</code> is disposed before the method is called.</li>
+</ul>
+<p><code>BackgroundWork.razor</code>:</p>
+<p>To display a loading indicator while the background work is taking place, use the following approach.</p>
+<p>Create a loading indicator component with a <code>Loading</code> parameter that can display child content in a <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.RenderFragment" title="Microsoft.AspNetCore.Components.RenderFragment">Microsoft.AspNetCore.Components.RenderFragment</a>. For the <code>Loading</code> parameter:</p>
+<ul>
+<li>When <code>true</code>, display a loading indicator.</li>
+<li>When <code>false</code>, render the component's content (<code>ChildContent</code>). For more information, see <a href="/components/index#child-content-render-fragments">Child content render fragments</a>.</li>
+</ul>
+<p><code>ContentLoading.razor</code>:</p>
+<pre><code class="language-razor">@if (Loading)
+{
+    &lt;progress id=&quot;loadingIndicator&quot; aria-label=&quot;Content loading…&quot;&gt;&lt;/progress&gt;
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Loading { get; set; }
+}
+</code></pre>
+<p>To load CSS styles for the indicator, add the styles to <code>&lt;head&gt;</code> content with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.HeadContent" title="Microsoft.AspNetCore.Components.Web.HeadContent">Microsoft.AspNetCore.Components.Web.HeadContent</a> component. For more information, see <a href=""></a>.</p>
+<pre><code class="language-razor">@if (Loading)
+{
+    &lt;!-- OPTIONAL ...
+    &lt;HeadContent&gt;
+        &lt;style&gt;
+            ...
+        &lt;/style&gt;
+    &lt;/HeadContent&gt;
+    --&gt;
+    &lt;progress id=&quot;loadingIndicator&quot; aria-label=&quot;Content loading…&quot;&gt;&lt;/progress&gt;
+}
+else
+{
+    @ChildContent
+}
+
+...
+</code></pre>
+<p>Wrap the component's Razor markup with the <code>ContentLoading</code> component and pass a value in a C# field to the <code>Loading</code> parameter when initialization work is performed by the component:</p>
+<pre><code class="language-razor">&lt;ContentLoading Loading=&quot;@loading&quot;&gt;
+    ...
+&lt;/ContentLoading&gt;
+
+@code {
+    private bool loading = true;
+    ...
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LongRunningWork().ContinueWith(_ =&gt; loading = false);
+    }
+
+    ...
+}
+</code></pre>
+<h2 id="blazor-server-reconnection-events">Blazor Server reconnection events</h2>
+<p>The component lifecycle events covered in this article operate separately from <a href="">server-side reconnection event handlers</a>. When the SignalR connection to the client is lost, only UI updates are interrupted. UI updates are resumed when the connection is re-established. For more information on circuit handler events and configuration, see <a href=""></a>.</p>
+<h2 id="additional-resources">Additional resources</h2>
+<p><a href="">Handle caught exceptions outside of a Razor component's lifecycle</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  </body>
+</html>

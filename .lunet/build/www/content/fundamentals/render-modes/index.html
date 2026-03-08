@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>ASP.NET Core Blazor render modes - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="aspnet-core-blazor-render-modes">ASP.NET Core Blazor render modes</h1>
+<p>This article explains control of Razor component rendering in Blazor Web Apps, either at compile time or runtime.</p>
+<p>This guidance doesn't apply to standalone Blazor WebAssembly apps. Blazor WebAssembly apps only render on the client via a client-side WebAssembly-based runtime and have no concept of a <em>render mode</em>. If a render mode is applied to a component in a Blazor WebAssembly app, the render mode designation has no influence on rendering the component.</p>
+<h2 id="render-modes">Render modes</h2>
+<p>Every component in a Blazor Web App adopts a <em>render mode</em> to determine the hosting model that it uses, where it's rendered, and whether or not it's interactive. <em>Interactivity</em> makes it possible for users to interact with rendered components. This includes app responses to <a href="https://developer.mozilla.org/docs/Web/API/Document_Object_Model/Introduction">Document Object Model (DOM)</a> events and state changes tied to C# members via Blazor's event handlers and binding.</p>
+<p>The following table shows the available render modes for rendering Razor components in a Blazor Web App. To apply a render mode to a component use the <code>@rendermode</code> directive on the component instance or on the component definition. Later in this article, examples are shown for each render mode scenario.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th style="text-align: center;">Render location</th>
+<th style="text-align: center;">Interactive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static Server</td>
+<td>Static server-side rendering (static SSR)</td>
+<td style="text-align: center;">Server</td>
+<td style="text-align: center;"><span aria-hidden="true">❌</span><span class="visually-hidden">No</span></td>
+</tr>
+<tr>
+<td>Interactive Server</td>
+<td>Interactive server-side rendering (interactive SSR) using Blazor Server.</td>
+<td style="text-align: center;">Server</td>
+<td style="text-align: center;"><span aria-hidden="true">✔️</span><span class="visually-hidden">Yes</span></td>
+</tr>
+<tr>
+<td>Interactive WebAssembly</td>
+<td>Client-side rendering (CSR) using Blazor WebAssembly†.</td>
+<td style="text-align: center;">Client</td>
+<td style="text-align: center;"><span aria-hidden="true">✔️</span><span class="visually-hidden">Yes</span></td>
+</tr>
+<tr>
+<td>Interactive Auto</td>
+<td>Interactive SSR using Blazor Server initially and then CSR on subsequent visits after the Blazor bundle is downloaded.</td>
+<td style="text-align: center;">Server, then client</td>
+<td style="text-align: center;"><span aria-hidden="true">✔️</span><span class="visually-hidden">Yes</span></td>
+</tr>
+</tbody>
+</table>
+<p>†Client-side rendering (CSR) is assumed to be interactive. &quot;<em>Interactive</em> client-side rendering&quot; and &quot;<em>interactive</em> CSR&quot; aren't used by the industry or in the Blazor documentation.</p>
+<p>Prerendering is enabled by default for interactive components. Guidance on controlling prerendering is provided later in this article. For general industry terminology on client and server rendering concepts, see <a href=""></a>.</p>
+<p>The following examples demonstrate setting the component's render mode with a few basic Razor component features.</p>
+<p>To test the render mode behaviors locally, you can place the following components in an app created from the <em>Blazor Web App</em> project template. When you create the app, select options from dropdown menus (Visual Studio) or apply the CLI options (.NET CLI) to enable both server-side and client-side interactivity. For guidance on how to create a Blazor Web App, see <a href=""></a>.</p>
+<h2 id="enable-support-for-interactive-render-modes">Enable support for interactive render modes</h2>
+<p>A Blazor Web App must be configured to support interactive render modes. The following extensions are automatically applied to apps created from the <em>Blazor Web App</em> project template during app creation. Individual components are still required to declare their render mode per the <a href="#render-modes"><em>Render modes</em></a> section after the component services and endpoints are configured in the app's <code>Program</code> file.</p>
+<p>Services for Razor components are added by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents" title="Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*">Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*</a>.</p>
+<p>Component builder extensions:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents" title="Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents*">Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents*</a> adds services to support rendering Interactive Server components.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents" title="Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents*">Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents*</a> adds services to support rendering Interactive WebAssembly components.</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents" title="Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*">Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*</a> discovers available components and specifies the root component for the app (the first component loaded), which by default is the <code>App</code> component (<code>App.razor</code>).</p>
+<p>Endpoint convention builder extensions:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode" title="Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode*">Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode*</a> configures interactive server-side rendering (interactive SSR) for the app.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode" title="Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode*">Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode*</a> configures the Interactive WebAssembly render mode for the app.</li>
+</ul>
+<div class="markdown-alert markdown-alert-note lunet-alert-note">
+<div class='lunet-alert-note-heading'>
+<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
+</div><div class='lunet-alert-note-content'>
+<p>For orientation on the placement of the API in the following examples, inspect the <code>Program</code> file of an app generated from the Blazor Web App project template. For guidance on how to create a Blazor Web App, see <a href=""></a>.</p>
+</div></div>
+<p>Example 1: The following <code>Program</code> file API adds services and configuration for enabling interactive SSR:</p>
+<pre><code class="language-csharp">builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+</code></pre>
+<pre><code class="language-csharp">app.MapRazorComponents&lt;App&gt;()
+    .AddInteractiveServerRenderMode();
+</code></pre>
+<p>Example 2: The following <code>Program</code> file API adds services and configuration for enabling the Interactive WebAssembly render mode:</p>
+<pre><code class="language-csharp">builder.Services.AddRazorComponents()
+    .AddInteractiveWebAssemblyComponents();
+</code></pre>
+<pre><code class="language-csharp">app.MapRazorComponents&lt;App&gt;()
+    .AddInteractiveWebAssemblyRenderMode();
+</code></pre>
+<p>Example 3: The following <code>Program</code> file API adds services and configuration for enabling the Interactive Server, Interactive WebAssembly, and Interactive Auto render modes:</p>
+<pre><code class="language-csharp">builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
+</code></pre>
+<pre><code class="language-csharp">app.MapRazorComponents&lt;App&gt;()
+    .AddInteractiveServerRenderMode()
+    .AddInteractiveWebAssemblyRenderMode();
+</code></pre>
+<p>Blazor uses the Blazor WebAssembly hosting model to download and execute components that use the Interactive WebAssembly render mode. A separate client project is required to set up Blazor WebAssembly hosting for these components. The client project contains the startup code for the Blazor WebAssembly host and sets up the .NET runtime for running in a browser. The Blazor Web App template adds this client project for you when you select the option to enable WebAssembly interactivity. Any components using the Interactive WebAssembly render mode should be built from the client project, so they get included in the downloaded app bundle.</p>
+<h2 id="apply-a-render-mode-to-a-component-instance">Apply a render mode to a component instance</h2>
+<p>To apply a render mode to a component instance use the <a href=""><code>@rendermode</code> Razor directive attribute</a> where the component is used.</p>
+<p>In the following example, interactive server-side rendering (interactive SSR) is applied to the <code>Dialog</code> component instance:</p>
+<pre><code class="language-razor">&lt;Dialog @rendermode=&quot;InteractiveServer&quot; /&gt;
+</code></pre>
+<div class="markdown-alert markdown-alert-note lunet-alert-note">
+<div class='lunet-alert-note-heading'>
+<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
+</div><div class='lunet-alert-note-content'>
+<p>Blazor templates include a static <code>using</code> directive for <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode" title="Microsoft.AspNetCore.Components.Web.RenderMode">Microsoft.AspNetCore.Components.Web.RenderMode</a> in the app's <code>_Imports</code> file (<code>Components/_Imports.razor</code>) for shorter <code>@rendermode</code> syntax:</p>
+<pre><code class="language-razor">@using static Microsoft.AspNetCore.Components.Web.RenderMode
+</code></pre>
+<p>Without the preceding directive, components must specify the static <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode" title="Microsoft.AspNetCore.Components.Web.RenderMode">Microsoft.AspNetCore.Components.Web.RenderMode</a> class in <code>@rendermode</code> syntax:</p>
+<pre><code class="language-razor">&lt;Dialog @rendermode=&quot;RenderMode.InteractiveServer&quot; /&gt;
+</code></pre>
+</div></div>
+<p>You can also reference custom render mode instances instantiated directly with custom configuration. For more information, see the <a href="#custom-shorthand-render-modes">Custom shorthand render modes</a> section later in this article.</p>
+<h2 id="apply-a-render-mode-to-a-component-definition">Apply a render mode to a component definition</h2>
+<p>To specify the render mode for a component as part of its definition, use the <a href=""><code>@rendermode</code> Razor directive</a> and the corresponding render mode attribute.</p>
+<pre><code class="language-razor">@page &quot;...&quot;
+@rendermode InteractiveServer
+</code></pre>
+<p>Applying a render mode to a component definition is commonly used when applying a render mode to a specific page. Routable pages use the same render mode as the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component that rendered the page.</p>
+<p>Technically, <code>@rendermode</code> is both a Razor <em>directive</em> and a Razor <em>directive attribute</em>. The semantics are similar, but there are differences. The <code>@rendermode</code> directive is on the component definition, so the referenced render mode instance must be static. The <code>@rendermode</code> directive attribute can take any render mode instance.</p>
+<div class="markdown-alert markdown-alert-note lunet-alert-note">
+<div class='lunet-alert-note-heading'>
+<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
+</div><div class='lunet-alert-note-content'>
+<p>Component authors should avoid coupling a component's implementation to a specific render mode. Instead, component authors should typically design components to support any render mode or hosting model. A component's implementation should avoid assumptions on where it's running (server or client) and should degrade gracefully when rendered statically. Specifying the render mode in the component definition may be needed if the component isn't instantiated directly (such as with a routable page component) or to specify a render mode for all component instances.</p>
+</div></div>
+<h2 id="apply-a-render-mode-to-the-entire-app">Apply a render mode to the entire app</h2>
+<p>To set the render mode for the entire app, indicate the render mode at the highest-level interactive component in the app's component hierarchy that isn't a root component.</p>
+<div class="markdown-alert markdown-alert-note lunet-alert-note">
+<div class='lunet-alert-note-heading'>
+<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
+</div><div class='lunet-alert-note-content'>
+<p>Making a root component interactive, such as the <code>App</code> component, isn't supported. Therefore, the render mode for the entire app can't be set directly by the <code>App</code> component.</p>
+</div></div>
+<p>For apps based on the Blazor Web App project template, a render mode assigned to the entire app is typically specified where the <code>Routes</code> component is used in the <code>App</code> component (<code>Components/App.razor</code>):</p>
+<pre><code class="language-razor">&lt;Routes @rendermode=&quot;InteractiveServer&quot; /&gt;
+</code></pre>
+<p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component propagates its render mode to the pages it routes.</p>
+<p>You also typically must set the same interactive render mode on the <a href=""><code>HeadOutlet</code> component</a>, which is also found in the <code>App</code> component of a Blazor Web App generated from the project template:</p>
+<pre><code class="language-razor">&lt;HeadOutlet @rendermode=&quot;InteractiveServer&quot; /&gt;
+</code></pre>
+<p>For apps that adopt an interactive client-side (WebAssembly or Auto) rendering mode and enable the render mode for the entire app via the <code>Routes</code> component:</p>
+<ul>
+<li>Place or move the layout and navigation files of the server app's <code>Components/Layout</code> folder into the <code>.Client</code> project's <code>Layout</code> folder. Create a <code>Layout</code> folder in the <code>.Client</code> project if it doesn't exist.</li>
+<li>Place or move the components of the server app's <code>Components/Pages</code> folder into the <code>.Client</code> project's <code>Pages</code> folder. Create a <code>Pages</code> folder in the <code>.Client</code> project if it doesn't exist.</li>
+<li>Place or move the <code>Routes</code> component of the server app's <code>Components</code> folder into the <code>.Client</code> project's root folder.</li>
+</ul>
+<p>To enable global interactivity when creating a Blazor Web App:</p>
+<ul>
+<li>Visual Studio: Set the <strong>Interactivity location</strong> dropdown list to <strong>Global</strong>.</li>
+<li>.NET CLI: Use the <code>-ai|--all-interactive</code> option.</li>
+</ul>
+<p>For more information, see <a href=""></a>.</p>
+<h2 id="apply-a-render-mode-programmatically">Apply a render mode programmatically</h2>
+<p>Properties and fields can assign a render mode.</p>
+<p>The second approach described in this section, setting the render mode by component instance, is especially useful when your app specification calls for one or more components to adopt static SSR in an otherwise interactive app. This scenario is covered in the <a href="#static-ssr-pages-in-an-interactive-app">Static SSR pages in an interactive app</a> section later in this article.</p>
+<h3 id="set-the-render-mode-by-component-definition">Set the render mode by component definition</h3>
+<p>A component definition can define a render mode via a private field:</p>
+<pre><code class="language-razor">@rendermode pageRenderMode
+
+...
+
+@code {
+    private static IComponentRenderMode pageRenderMode = InteractiveServer;
+}
+</code></pre>
+<h3 id="set-the-render-mode-by-component-instance">Set the render mode by component instance</h3>
+<p>The following example applies interactive server-side rendering (interactive SSR) to any request.</p>
+<pre><code class="language-razor">&lt;Routes @rendermode=&quot;PageRenderMode&quot; /&gt;
+
+...
+
+@code {
+    private IComponentRenderMode? PageRenderMode =&gt; InteractiveServer;
+}
+</code></pre>
+<p>Additional information on render mode propagation is provided in the <a href="#render-mode-propagation">Render mode propagation</a> section later in this article. The <a href="#static-ssr-pages-in-an-interactive-app">Static SSR pages in an interactive app</a> section shows how to use the preceding approach to adopt static SSR in an otherwise interactive app.</p>
+<h2 id="blazor-documentation-examples-for-blazor-web-apps">Blazor documentation examples for Blazor Web Apps</h2>
+<p>When using a Blazor Web App, most of the Blazor documentation example components <em><strong>require</strong></em> interactivity to function and demonstrate the concepts covered by the articles. When you test an example component provided by an article, make sure that either the app adopts global interactivity or the component adopts an interactive render mode.</p>
+<h2 id="prerendering">Prerendering</h2>
+<p>Interactive render modes (Interactive Server, Interactive WebAssembly, Interactive Auto) support prerendering by default, which initially renders the page content statically from the server to improve the initial load experience. For more information, see <a href=""></a>.</p>
+<div class="moniker"><h2 id="detect-rendering-location-interactivity-and-assigned-render-mode-at-runtime">Detect rendering location, interactivity, and assigned render mode at runtime</h2>
+<p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.RendererInfo-displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.RendererInfo?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.RendererInfo?displayProperty=nameWithType</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode-displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode?displayProperty=nameWithType">Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode?displayProperty=nameWithType</a> properties permit the app to detect details about the location, interactivity, and assigned render mode of a component:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.RendererInfo.Name-displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.RendererInfo.Name?displayProperty=nameWithType">Microsoft.AspNetCore.Components.RendererInfo.Name?displayProperty=nameWithType</a> returns the location where the component is executing:
+<ul>
+<li><code>Static</code>: On the server (SSR) and incapable of interactivity.</li>
+<li><code>Server</code>: On the server (SSR) and capable of interactivity after prerendering.</li>
+<li><code>WebAssembly</code>: On the client (CSR) and capable of interactivity after prerendering.</li>
+<li><code>WebView</code>: On the native device and capable of interactivity after prerendering.</li>
+</ul>
+</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.RendererInfo.IsInteractive-displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.RendererInfo.IsInteractive?displayProperty=nameWithType">Microsoft.AspNetCore.Components.RendererInfo.IsInteractive?displayProperty=nameWithType</a> indicates if the component supports interactivity at the time of rendering. The value is <code>true</code> when rendering interactively or <code>false</code> when prerendering or for static SSR (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.RendererInfo.Name-displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.RendererInfo.Name?displayProperty=nameWithType">Microsoft.AspNetCore.Components.RendererInfo.Name?displayProperty=nameWithType</a> of <code>Static</code>).</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode" title="Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode">Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode</a> exposes the component's assigned render mode:
+<ul>
+<li><code>InteractiveServerRenderMode</code> for Interactive Server.</li>
+<li><code>InteractiveAutoRenderMode</code> for Interactive Auto.</li>
+<li><code>InteractiveWebAssemblyRenderMode</code> for Interactive WebAssembly.</li>
+<li><code>null</code> if a render mode isn't assigned.</li>
+</ul>
+</li>
+</ul>
+<p>Components use these properties to render content depending on their location or interactivity status. The following examples demonstrate typical use cases.</p>
+<p>Display content until a component is interactive:</p>
+<pre><code class="language-razor">@if (!RendererInfo.IsInteractive)
+{
+    &lt;p&gt;Connecting to the assistant...&lt;/p&gt;
+}
+else
+{
+    ...
+}
+</code></pre>
+<p>Disable a button until a component is interactive:</p>
+<pre><code class="language-razor">&lt;button @onclick=&quot;Send&quot; disabled=&quot;@(!RendererInfo.IsInteractive)&quot;&gt;
+    Send
+&lt;/button&gt;
+</code></pre>
+<p>Disable a form during prerendering and enable the form when the component is interactive:</p>
+<pre><code class="language-razor">&lt;EditForm Model=&quot;Movie&quot; ...&gt;
+    &lt;fieldset disabled=&quot;@disabled&quot;&gt;
+        
+        ...
+
+        &lt;button type=&quot;submit&quot; &gt;Save&lt;/button&gt;
+    &lt;/fieldset&gt;
+&lt;/EditForm&gt;
+
+@code {
+    private bool disabled = true;
+
+    [SupplyParameterFromForm]
+    private Movie? Movie { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Movie ??= await ...;
+
+        if (RendererInfo.IsInteractive)
+        {
+            disabled = false;
+        }
+    }
+}
+</code></pre>
+<p>Render markup to support performing a regular HTML action if the component is statically rendered:</p>
+<pre><code class="language-razor">@if (AssignedRenderMode is null)
+{
+    // The render mode is Static Server
+    &lt;form action=&quot;/movies&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;titleFilter&quot; /&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Search&quot; /&gt;
+    &lt;/form&gt;
+}
+else
+{
+    // The render mode is Interactive Server, WebAssembly, or Auto
+    &lt;input @bind=&quot;titleFilter&quot; /&gt;
+    &lt;button @onclick=&quot;FilterMovies&quot;&gt;Search&lt;/button&gt;
+}
+</code></pre>
+<p>In the preceding example:</p>
+<ul>
+<li>When the value of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode" title="Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode">Microsoft.AspNetCore.Components.ComponentBase.AssignedRenderMode</a> is <code>null</code>, the component adopts static SSR. Blazor event handling isn't functional in a browser with static SSR, so the component submits a form (GET request) with a <code>titleFilter</code> query string set to the user's <code>&lt;input&gt;</code> value. The <code>Movie</code> component (<code>/movie</code>) can read the query string and process the value of <code>titleFilter</code> to render the component with the filtered results.</li>
+<li>Otherwise, the render mode is any of <code>InteractiveServer</code>, <code>InteractiveWebAssembly</code>, or <code>InteractiveAuto</code>. The component is capable of using an event handler delegate (<code>FilterMovies</code>) and the value bound to the <code>&lt;input&gt;</code> element (<code>titleFilter</code>) to filter movies interactively over the background SignalR connection.</li>
+</ul>
+<div class="moniker-end"><h2 id="static-server-side-rendering-static-ssr">Static server-side rendering (static SSR)</h2>
+<p>Components use static server-side rendering (static SSR). The component renders to the response stream and interactivity isn't enabled.</p>
+<p>In the following example, there's no designation for the component's render mode, so the component inherits its render mode from its parent. Since no ancestor component specifies a render mode, the following component is <em>statically rendered</em> on the server. The button isn't interactive and doesn't call the <code>UpdateMessage</code> method when selected. The value of <code>message</code> doesn't change, and the component isn't rerendered in response to UI events.</p>
+<p><code>RenderMode1.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-1&quot;
+
+&lt;button @onclick=&quot;UpdateMessage&quot;&gt;Click me&lt;/button&gt; @message
+
+@code {
+    private string message = &quot;Not updated yet.&quot;;
+
+    private void UpdateMessage()
+    {
+        message = &quot;Somebody updated me!&quot;;
+    }
+}
+</code></pre>
+<p>If using the preceding component locally in a Blazor Web App, place the component in the server project's <code>Components/Pages</code> folder. The server project is the solution's project with a name that doesn't end in <code>.Client</code>. When the app is running, navigate to <code>/render-mode-1</code> in the browser's address bar.</p>
+<div class="moniker"><p>During static SSR, Razor component page requests are processed by server-side ASP.NET Core middleware pipeline request processing for authorization. Dedicated Blazor features for authorization aren't operational because Razor components aren't rendered during server-side request processing. Blazor router features in the <code>Routes</code> component that aren't available during static SSR include displaying <a href="/security/index#authorizeview-component">Not Authorized content (<code>&lt;NotAuthorized&gt;...&lt;/NotAuthorized&gt;</code>)</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView.NotAuthorized" title="Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView.NotAuthorized">Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView.NotAuthorized</a>). Blazor Web Apps typically process unauthorized requests on the server by <a href="">customizing the behavior of Authorization Middleware</a>.</p>
+<div class="moniker-end">
+<div class="moniker"><p>During static SSR, Razor component page requests are processed by server-side ASP.NET Core middleware pipeline request processing for routing and authorization. Dedicated Blazor features for routing and authorization aren't operational because Razor components aren't rendered during server-side request processing. Blazor router features in the <code>Routes</code> component that aren't available during static SSR include displaying:</p>
+<ul>
+<li><p><a href="/security/index#authorizeview-component">Not Authorized content (<code>&lt;NotAuthorized&gt;...&lt;/NotAuthorized&gt;</code>)</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView.NotAuthorized" title="Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView.NotAuthorized">Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView.NotAuthorized</a>): Blazor Web Apps typically process unauthorized requests on the server by <a href="">customizing the behavior of Authorization Middleware</a>.</p>
+</li>
+<li><p><a href="/fundamentals/routing#provide-custom-content-when-content-isnt-found">Not Found content (<code>&lt;NotFound&gt;...&lt;/NotFound&gt;</code>)</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router.NotFound" title="Microsoft.AspNetCore.Components.Routing.Router.NotFound">Microsoft.AspNetCore.Components.Routing.Router.NotFound</a>): Blazor Web Apps typically process bad URL requests on the server by either displaying the browser's built-in 404 UI or returning a custom 404 page (or other response) via ASP.NET Core middleware (for example, <a href=""><code>UseStatusCodePagesWithRedirects</code></a> / <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePagesWithRedirects">API documentation</a>).</p>
+</li>
+</ul>
+<div class="moniker-end"><p>If the app exhibits root-level interactivity, server-side ASP.NET Core request processing isn't involved after the initial static SSR, which means that the preceding Blazor features work as expected.</p>
+<p><a href="">Enhanced navigation</a> with static SSR requires special attention when loading JavaScript. For more information, see <a href=""></a>.</p>
+<h2 id="interactive-server-side-rendering-interactive-ssr">Interactive server-side rendering (interactive SSR)</h2>
+<p>Interactive server-side rendering (interactive SSR) renders the component interactively from the server using Blazor Server. User interactions are handled over a real-time connection with the browser. The circuit connection is established when the Server component is rendered.</p>
+<p>In the following example, the render mode is set interactive SSR by adding <code>@rendermode InteractiveServer</code> to the component definition. The button calls the <code>UpdateMessage</code> method when selected. The value of <code>message</code> changes, and the component is rerendered to update the message in the UI.</p>
+<p><code>RenderMode2.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-2&quot;
+@rendermode InteractiveServer
+
+&lt;button @onclick=&quot;UpdateMessage&quot;&gt;Click me&lt;/button&gt; @message
+
+@code {
+    private string message = &quot;Not updated yet.&quot;;
+
+    private void UpdateMessage()
+    {
+        message = &quot;Somebody updated me!&quot;;
+    }
+}
+</code></pre>
+<p>If using the preceding component in a Blazor Web App, place the component in the server project's <code>Components/Pages</code> folder. The server project is the solution's project with a name that doesn't end in <code>.Client</code>. When the app is running, navigate to <code>/render-mode-2</code> in the browser's address bar.</p>
+<h2 id="client-side-rendering-csr">Client-side rendering (CSR)</h2>
+<p>Client-side rendering (CSR) renders the component interactively on the client using Blazor WebAssembly. The .NET runtime and app bundle are downloaded and cached when the WebAssembly component is initially rendered. Components using CSR must be built from a separate client project that sets up the Blazor WebAssembly host.</p>
+<p>In the following example, the render mode is set to CSR with <code>@rendermode InteractiveWebAssembly</code>. The button calls the <code>UpdateMessage</code> method when selected. The value of <code>message</code> changes, and the component is rerendered to update the message in the UI.</p>
+<p><code>RenderMode3.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-3&quot;
+@rendermode InteractiveWebAssembly
+
+&lt;button @onclick=&quot;UpdateMessage&quot;&gt;Click me&lt;/button&gt; @message
+
+@code {
+    private string message = &quot;Not updated yet.&quot;;
+
+    private void UpdateMessage()
+    {
+        message = &quot;Somebody updated me!&quot;;
+    }
+}
+</code></pre>
+<p>If using the preceding component locally in a Blazor Web App, place the component in the client project's <code>Pages</code> folder. The client project is the solution's project with a name that ends in <code>.Client</code>. When the app is running, navigate to <code>/render-mode-3</code> in the browser's address bar.</p>
+<h2 id="automatic-auto-rendering">Automatic (Auto) rendering</h2>
+<p>Automatic (Auto) rendering determines how to render the component at runtime. The component is initially rendered with interactive server-side rendering (interactive SSR) using the Blazor Server hosting model. The .NET runtime and app bundle are downloaded to the client in the background and cached so that they can be used on future visits.</p>
+<p>The Auto render mode never dynamically changes the render mode of a component already on the page. The Auto render mode makes an initial decision about which type of interactivity to use for a component, then the component keeps that type of interactivity for as long as it's on the page. One factor in this initial decision is considering whether components already exist on the page with WebAssembly/Server interactivity. Auto mode prefers to select a render mode that matches the render mode of existing interactive components. The reason that the Auto mode prefers to use an existing interactivity mode is to avoid introducing a new interactive runtime that doesn't share state with the existing runtime.</p>
+<p>Components using the Auto render mode must be built from a separate client project that sets up the Blazor WebAssembly host.</p>
+<p>In the following example, the component is interactive throughout the process. The button calls the <code>UpdateMessage</code> method when selected. The value of <code>message</code> changes, and the component is rerendered to update the message in the UI. Initially, the component is rendered interactively from the server, but on subsequent visits it's rendered from the client after the .NET runtime and app bundle are downloaded and cached.</p>
+<p><code>RenderMode4.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-4&quot;
+@rendermode InteractiveAuto
+
+&lt;button @onclick=&quot;UpdateMessage&quot;&gt;Click me&lt;/button&gt; @message
+
+@code {
+    private string message = &quot;Not updated yet.&quot;;
+
+    private void UpdateMessage()
+    {
+        message = &quot;Somebody updated me!&quot;;
+    }
+}
+</code></pre>
+<p>If using the preceding component locally in a Blazor Web App, place the component in the client project's <code>Pages</code> folder. The client project is the solution's project with a name that ends in <code>.Client</code>. When the app is running, navigate to <code>/render-mode-4</code> in the browser's address bar.</p>
+<h2 id="render-mode-propagation">Render mode propagation</h2>
+<p>Render modes propagate down the component hierarchy.</p>
+<p>Rules for applying render modes:</p>
+<ul>
+<li>The default render mode is Static.</li>
+<li>The Interactive Server (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer</a>), Interactive WebAssembly (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly</a>), and Interactive Auto (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto</a>) render modes can be used from a component, including using different render modes for sibling components.</li>
+<li>You can't switch to a different interactive render mode in a child component. For example, a Server component can't be a child of a WebAssembly component.</li>
+<li>Parameters passed to an interactive child component from a Static parent must be JSON serializable. This means that you can't pass render fragments or child content from a Static parent component to an interactive child component.</li>
+</ul>
+<p>The following examples use a non-routable, non-page <code>SharedMessage</code> component. The render mode agnostic <code>SharedMessage</code> component doesn't apply a render mode with an <a href=""><code>@attribute</code> directive</a>. If you're testing these scenarios with a Blazor Web App, place the following component in the app's <code>Components</code> folder.</p>
+<p><code>SharedMessage.razor</code>:</p>
+<pre><code class="language-razor">&lt;p&gt;@Greeting&lt;/p&gt;
+
+&lt;button @onclick=&quot;UpdateMessage&quot;&gt;Click me&lt;/button&gt; @message
+
+&lt;p&gt;@ChildContent&lt;/p&gt;
+
+@code {
+    private string message = &quot;Not updated yet.&quot;;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Greeting { get; set; } = &quot;Hello!&quot;;
+
+    private void UpdateMessage()
+    {
+        message = &quot;Somebody updated me!&quot;;
+    }
+}
+</code></pre>
+<h3 id="render-mode-inheritance">Render mode inheritance</h3>
+<p>If the <code>SharedMessage</code> component is placed in a statically-rendered parent component, the <code>SharedMessage</code> component is also rendered statically and isn't interactive. The button doesn't call <code>UpdateMessage</code>, and the message isn't updated.</p>
+<p><code>RenderMode5.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-5&quot;
+
+&lt;SharedMessage /&gt;
+</code></pre>
+<p>If the <code>SharedMessage</code> component is placed in a component that defines the render mode, it inherits the applied render mode.</p>
+<p>In the following example, the <code>SharedMessage</code> component is interactive over a SignalR connection to the client. The button calls <code>UpdateMessage</code>, and the message is updated.</p>
+<p><code>RenderMode6.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-6&quot;
+@rendermode InteractiveServer
+
+&lt;SharedMessage /&gt;
+</code></pre>
+<h3 id="child-components-with-different-render-modes">Child components with different render modes</h3>
+<p>In the following example, both <code>SharedMessage</code> components are prerendered and appear when the page is displayed in the browser.</p>
+<ul>
+<li>The first <code>SharedMessage</code> component with interactive server-side rendering (interactive SSR) is interactive after Blazor's SignalR circuit is established.</li>
+<li>The second <code>SharedMessage</code> component with client-side rendering (CSR) is interactive <em>after</em> the Blazor app bundle is downloaded and the .NET runtime is active on the client.</li>
+</ul>
+<p><code>RenderMode7.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-7&quot;
+
+&lt;SharedMessage @rendermode=&quot;InteractiveServer&quot; /&gt;
+&lt;SharedMessage @rendermode=&quot;InteractiveWebAssembly&quot; /&gt;
+</code></pre>
+<h3 id="child-component-with-a-serializable-parameter">Child component with a serializable parameter</h3>
+<p>The following example demonstrates an interactive child component that takes a parameter. Parameters must be serializable.</p>
+<p><code>RenderMode8.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-8&quot;
+
+&lt;SharedMessage @rendermode=&quot;InteractiveServer&quot; Greeting=&quot;Welcome!&quot; /&gt;
+</code></pre>
+<p>Non-serializable component parameters, such as child content or a render fragment, aren't supported. In the following example, passing child content to the <code>SharedMessage</code> component results in a runtime error.</p>
+<p><code>RenderMode9.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-9&quot;
+
+&lt;SharedMessage @rendermode=&quot;InteractiveServer&quot;&gt;
+    Child content
+&lt;/SharedMessage&gt;
+</code></pre>
+<p><span aria-hidden="true">❌</span> <strong>Error</strong>:</p>
+<blockquote>
+<div class="no-loc"></div>
+</blockquote>
+<!-- UPDATE 11.0 Is https://github.com/dotnet/aspnetcore/issues/52768 addressed
+                 to resolve the following limitation? -->
+<p>The same thing happens if you attempt to adopt interactive rendering in a layout that inherits from <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.LayoutComponentBase" title="Microsoft.AspNetCore.Components.LayoutComponentBase">Microsoft.AspNetCore.Components.LayoutComponentBase</a>, such as the app's <code>MainLayout</code> component, in an app that adopts per-page/component rendering. For more information, see <a href=""></a>.</p>
+<p>To circumvent the preceding limitation, wrap the child component in another component that doesn't have the parameter. This is the approach taken in the Blazor Web App project template with the <code>Routes</code> component (<code>Components/Routes.razor</code>) to wrap the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component.</p>
+<p><code>WrapperComponent.razor</code>:</p>
+<pre><code class="language-razor">&lt;SharedMessage&gt;
+    Child content
+&lt;/SharedMessage&gt;
+</code></pre>
+<p><code>RenderMode10.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-10&quot;
+
+&lt;WrapperComponent @rendermode=&quot;InteractiveServer&quot; /&gt;
+</code></pre>
+<p>In the preceding example:</p>
+<ul>
+<li>The child content is passed to the <code>SharedMessage</code> component without generating a runtime error.</li>
+<li>The <code>SharedMessage</code> component renders interactively on the server.</li>
+</ul>
+<h3 id="child-component-with-a-different-render-mode-than-its-parent">Child component with a different render mode than its parent</h3>
+<p>Don't try to apply a different interactive render mode to a child component than its parent's render mode.</p>
+<p>The following component results in a runtime error when the component is rendered:</p>
+<p><code>RenderMode11.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/render-mode-11&quot;
+@rendermode InteractiveServer
+
+&lt;SharedMessage @rendermode=&quot;InteractiveWebAssembly&quot; /&gt;
+</code></pre>
+<p><span aria-hidden="true">❌</span> <strong>Error</strong>:</p>
+<blockquote>
+<div class="no-loc"></div>
+</blockquote>
+<h2 id="static-ssr-pages-in-an-interactive-app">Static SSR pages in an interactive app</h2>
+<p>There are cases where the app's specification calls for components to adopt static server-side rendering (static SSR) and only run on the server, while the rest of the app uses an interactive render mode.</p>
+<p>This approach is only useful when the app has specific pages that can't work with interactive Server or WebAssembly rendering. For example, adopt this approach for pages that depend on reading/writing HTTP cookies and can only work in a request/response cycle instead of interactive rendering. For pages that work with interactive rendering, you shouldn't force them to use static SSR, as it's less efficient and less responsive for the end user.</p>
+<div class="moniker"><p>Mark any Razor component page with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ExcludeFromInteractiveRoutingAttribute"><code>[ExcludeFromInteractiveRouting]</code> attribute</a> assigned with the <code>@attribute</code> Razor directive:</p>
+<pre><code class="language-razor">@attribute [ExcludeFromInteractiveRouting]
+</code></pre>
+<p>Applying the attribute causes navigation to the page to exit from <a href="/fundamentals/routing#static-versus-interactive-routing">interactive routing</a>. Inbound navigation is forced to perform a full-page reload instead resolving the page via interactive routing. The full-page reload forces the top-level root component, typically the <code>App</code> component (<code>App.razor</code>), to rerender from the server, allowing the app to switch to a different top-level render mode.</p>
+<p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.RazorComponentsEndpointHttpContextExtensions.AcceptsInteractiveRouting--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.Routing.RazorComponentsEndpointHttpContextExtensions.AcceptsInteractiveRouting*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.Routing.RazorComponentsEndpointHttpContextExtensions.AcceptsInteractiveRouting*?displayProperty=nameWithType</a> extension method allows the component to detect whether the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ExcludeFromInteractiveRoutingAttribute"><code>[ExcludeFromInteractiveRouting]</code> attribute</a> is applied to the current page.</p>
+<p>In the <code>App</code> component, use the pattern in the following example:</p>
+<ul>
+<li>Pages that aren't annotated with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ExcludeFromInteractiveRoutingAttribute"><code>[ExcludeFromInteractiveRouting]</code> attribute</a> default to the <code>InteractiveServer</code> render mode with global interactivity. You can replace <code>InteractiveServer</code> with <code>InteractiveWebAssembly</code> or <code>InteractiveAuto</code> to specify a different default global render mode.</li>
+<li>Pages annotated with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ExcludeFromInteractiveRoutingAttribute"><code>[ExcludeFromInteractiveRouting]</code> attribute</a> adopt static SSR (<code>PageRenderMode</code> is assigned <code>null</code>).</li>
+</ul>
+<pre><code class="language-razor">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    ...
+    &lt;HeadOutlet @rendermode=&quot;@PageRenderMode&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;Routes @rendermode=&quot;@PageRenderMode&quot; /&gt;
+    ...
+&lt;/body&gt;
+&lt;/html&gt;
+
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private IComponentRenderMode? PageRenderMode
+        =&gt; HttpContext.AcceptsInteractiveRouting() ? InteractiveServer : null;
+}
+</code></pre>
+<p>An alternative to using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.RazorComponentsEndpointHttpContextExtensions.AcceptsInteractiveRouting--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.Routing.RazorComponentsEndpointHttpContextExtensions.AcceptsInteractiveRouting*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.Routing.RazorComponentsEndpointHttpContextExtensions.AcceptsInteractiveRouting*?displayProperty=nameWithType</a> extension method is to read endpoint metadata manually using <code>HttpContext.GetEndpoint()?.Metadata</code>.</p>
+<div class="moniker-end">
+<div class="moniker"><p>There are two approaches that can be taken for fine control of render modes, each of which is described in the following subsections:</p>
+<ul>
+<li><p><a href="#area-folder-of-static-ssr-components">Area (folder) of static SSR components</a>: You have an area (folder) of the app with components that must adopt static SSR and share the same route path prefix. The app controls the render mode globally by setting the render mode on the <code>Routes</code> component in the <code>App</code> component based on the path to the folder.</p>
+</li>
+<li><p><a href="#static-ssr-components-spread-out-across-the-app">Static SSR components spread out across the app</a>: You have components spread around the app in various locations that must adopt static SSR and only run on the server. The static SSR-only components aren't in a single folder and don't share a common route path prefix. The app controls the render mode on a per-component basis by setting the render mode with the <code>@rendermode</code> directive in component instances. Reflection is used in the <code>App</code> component to set the render mode on the <code>Routes</code> component.</p>
+</li>
+</ul>
+<p>In both cases, the component that must adopt static SSR must also force a full-page reload.</p>
+<p>The following examples use the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Http.HttpContext" title="Microsoft.AspNetCore.Http.HttpContext">Microsoft.AspNetCore.Http.HttpContext</a> cascading parameter to determine if the page is statically-rendered. A <code>null</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Http.HttpContext" title="Microsoft.AspNetCore.Http.HttpContext">Microsoft.AspNetCore.Http.HttpContext</a> indicates that the component is rendering interactively, which is useful as a signal in app code to trigger a full-page reload.</p>
+<h3 id="area-folder-of-static-ssr-components">Area (folder) of static SSR components</h3>
+<p><em>For an example of the approach in this section, see the <a href="https://github.com/dotnet/blazor-samples/tree/main/9.0/BlazorWebAppAreaOfStaticSsrComponents"><code>BlazorWebAppAreaOfStaticSsrComponents</code> sample app</a>. The technique described in this section is most appropriate for .NET 8 Blazor Web Apps, but the sample is implemented in .NET 9 using Blazor features that simplify demonstrating how the approach works.</em></p>
+<p>The approach described in this subsection is used by the Blazor Web App project template with global interactivity.</p>
+<p>An area (folder) of the app contains the components that must adopt static SSR and only run on the server. The components in the folder share the same route path prefix. For example, the Identity Razor components of the Blazor Web App project template are in the <code>Components/Account/Pages</code> folder and share the root path prefix <code>/account</code>.</p>
+<p>The app also contains an <code>_Imports.razor</code> file automatically applied to static SSR components in the <code>Components</code> folder, which applies a custom layout.</p>
+<p><code>Components/Account/_Imports.razor</code>:</p>
+<pre><code class="language-razor">@using BlazorSample.Components.Account.Shared
+@layout AccountLayout
+</code></pre>
+<p>The <code>Shared</code> folder maintains the <code>AccountLayout</code> layout component. The component makes use of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Http.HttpContext" title="Microsoft.AspNetCore.Http.HttpContext">Microsoft.AspNetCore.Http.HttpContext</a> to determine if the component has adopted static SSR. For example, Identity components must render on the server with static SSR because they set Identity cookies. If the value of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Http.HttpContext" title="Microsoft.AspNetCore.Http.HttpContext">Microsoft.AspNetCore.Http.HttpContext</a> is <code>null</code>, the component is rendering interactively, and a full-page reload is performed by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.NavigationManager.Refresh--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.NavigationManager.Refresh*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.NavigationManager.Refresh*?displayProperty=nameWithType</a> with <code>forceLoad</code> set to <code>true</code>. This forces a full rerender of the page using static SSR.</p>
+<p><code>Components/Account/Shared/AccountLayout.razor</code>:</p>
+<pre><code class="language-razor">@inherits LayoutComponentBase
+@layout BlazorSample.Components.Layout.MainLayout
+@inject NavigationManager Navigation
+
+@if (HttpContext is null)
+{
+    &lt;p&gt;Loading...&lt;/p&gt;
+}
+else
+{
+    @Body
+}
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (HttpContext is null)
+        {
+            Navigation.Refresh(forceReload: true);
+        }
+    }
+}
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+In the Blazor Web App project template for authentication scenarios, there's a second layout file (<code>ManageLayout.razor</code> in the <code>Components/Account/Shared</code> folder) for Identity components in the <code>Components/Account/Pages/Manage</code> folder. The <code>Manage</code> folder has its own <code>_Imports.razor</code> file to apply to the <code>ManageLayout</code> to components in the folder. In your own apps, using nested <code>_Imports.razor</code> files is a useful approach for applying custom layouts to groups of pages.</p>
+</blockquote>
+<p>In the <code>App</code> component, any request for a component in the <code>Account</code> folder applies a <code>null</code> render mode, which enforces static SSR. Other component requests receive a global application of the interactive SSR render mode (<code>InteractiveServer</code>).</p>
+<blockquote>
+<p>[!IMPORTANT]
+Applying a <code>null</code> render mode doesn't always enforce static SSR. It just happens to behave that way using the approach shown in this section.</p>
+<p>A <code>null</code> render mode is effectively the same as not specifying a render mode, which results in the component inheriting its parent's render mode. In this case, the <code>App</code> component is rendered using static SSR, so a <code>null</code> render mode results in the <code>Routes</code> component inheriting static SSR from the <code>App</code> component. If a null render mode is specified for a child component whose parent uses an interactive render mode, the child inherits the same interactive render mode.</p>
+</blockquote>
+<p><code>Components/App.razor</code>:</p>
+<pre><code class="language-razor">&lt;Routes @rendermode=&quot;RenderModeForPage&quot; /&gt;
+
+...
+
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private IComponentRenderMode? RenderModeForPage =&gt; 
+        HttpContext.Request.Path.StartsWithSegments(&quot;/account&quot;)
+            ? null
+            : {INTERACTIVE RENDER MODE};
+}
+</code></pre>
+<p>In the preceding code, change the <code>{INTERACTIVE RENDER MODE}</code> placeholder to the appropriate value, depending on if the rest of the application should adopt global <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly</a>, or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto</a> rendering.</p>
+<p>The components that must adopt static SSR in the <code>Account</code> folder aren't required to set the layout, which is applied via the <code>_Imports.razor</code> file. The components don't set a render mode because they should render with static SSR. Nothing further must be done for the components in the <code>Account</code> folder to enforce static SSR.</p>
+<h3 id="static-ssr-components-spread-out-across-the-app">Static SSR components spread out across the app</h3>
+<p><em>For an example of the approach in this section, see the <a href="https://github.com/dotnet/blazor-samples/tree/main/9.0/BlazorWebAppSpreadOutStaticSsrComponents"><code>BlazorWebAppSpreadOutStaticSsrComponents</code> sample app</a>. The technique described in this section is most appropriate for .NET 8 Blazor Web Apps, but the sample is implemented in .NET 9 using Blazor features that simplify demonstrating how the approach works.</em></p>
+<p>In the <a href="#area-folder-of-static-ssr-components">preceding subsection</a>, the app controls the render mode of the components by setting the render mode globally in the <code>App</code> component. Alternatively, the <code>App</code> component can also adopt <em><strong>per-component</strong></em> render modes for setting the render mode, which permits components spread around the app to enforce adoption of static SSR. This subsection describes the approach.</p>
+<p>The app has a custom layout that can be applied to components around the app. Usually, a shared component for the app is placed in the <code>Components/Layout</code> folder. The component makes use of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Http.HttpContext" title="Microsoft.AspNetCore.Http.HttpContext">Microsoft.AspNetCore.Http.HttpContext</a> to determine if the component has adopted static SSR. If the value of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Http.HttpContext" title="Microsoft.AspNetCore.Http.HttpContext">Microsoft.AspNetCore.Http.HttpContext</a> is <code>null</code>, the component is rendering interactively, and a full-page reload is performed by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.NavigationManager.Refresh--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.NavigationManager.Refresh*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.NavigationManager.Refresh*?displayProperty=nameWithType</a> with <code>forceLoad</code> set to <code>true</code>. This triggers a request to the server for the component.</p>
+<p><code>Components/Layout/StaticSsrLayout.razor</code>:</p>
+<pre><code class="language-razor">@inherits LayoutComponentBase
+@layout MainLayout
+@inject NavigationManager Navigation
+
+@if (HttpContext is null)
+{
+    &lt;p&gt;Loading...&lt;/p&gt;
+}
+else
+{
+    @Body
+}
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (HttpContext is null)
+        {
+            Navigation.Refresh(forceReload: true);
+        }
+    }
+}
+</code></pre>
+<p>In the <code>App</code> component, reflection is used to set the render mode. Whatever render mode is assigned to the individual component definition file is applied to the <code>Routes</code> component.</p>
+<p><code>Components/App.razor</code>:</p>
+<pre><code class="language-razor">&lt;Routes @rendermode=&quot;RenderModeForPage&quot; /&gt;
+
+...
+
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private IComponentRenderMode? RenderModeForPage =&gt;
+        HttpContext.GetEndpoint()?.Metadata.GetMetadata&lt;RenderModeAttribute&gt;()?
+            .Mode;
+}
+</code></pre>
+<p>Each component that must adopt static SSR sets the custom layout and doesn't specify a render mode. Not specifying a render mode results in a <code>null</code> value of <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.RenderModeAttribute.Mode-displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.RenderModeAttribute.Mode?displayProperty=nameWithType">Microsoft.AspNetCore.Components.RenderModeAttribute.Mode?displayProperty=nameWithType</a> in the <code>App</code> component, which results in no render mode assigned to the <code>Routes</code> component instance and enforcement of static SSR.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Applying a <code>null</code> render mode doesn't always enforce static SSR. It just happens to behave that way using the approach shown in this section.</p>
+<p>A <code>null</code> render mode is effectively the same as not specifying a render mode, which results in the component inheriting its parent's render mode. In this case, the <code>App</code> component is rendered using static SSR, so a <code>null</code> render mode results in the <code>Routes</code> component inheriting static SSR from the <code>App</code> component. If a null render mode is specified for a child component whose parent uses an interactive render mode, the child inherits the same interactive render mode.</p>
+</blockquote>
+<p>Nothing further must be done for the components to enforce static SSR than applying the custom layout <em><strong>without setting an interactive render mode</strong></em>:</p>
+<pre><code class="language-razor">@layout BlazorSample.Components.Layout.StaticSsrLayout
+</code></pre>
+<p>Interactive components around the app <em><strong>avoid</strong></em> applying the custom static SSR layout and <em><strong>only set an appropriate interactive render mode</strong></em>, which upon reflection in the <code>App</code> component is applied to the <code>Routes</code> component:</p>
+<pre><code class="language-razor">@rendermode {INTERACTIVE RENDER MODE}
+</code></pre>
+<p>In the preceding code, change the <code>{INTERACTIVE RENDER MODE}</code> placeholder to the appropriate value, depending on if the component should adopt <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly</a>, or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto" title="Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto">Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto</a> rendering.</p>
+<div class="moniker-end"><h2 id="custom-shorthand-render-modes">Custom shorthand render modes</h2>
+<p>The <code>@rendermode</code> directive takes a single parameter that's a static instance of type <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.IComponentRenderMode" title="Microsoft.AspNetCore.Components.IComponentRenderMode">Microsoft.AspNetCore.Components.IComponentRenderMode</a>. The <code>@rendermode</code> directive attribute can take any render mode instance, static or not. The Blazor framework provides the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.RenderMode" title="Microsoft.AspNetCore.Components.Web.RenderMode">Microsoft.AspNetCore.Components.Web.RenderMode</a> static class with some predefined render modes for convenience, but you can create your own.</p>
+<p>Normally, a component uses the following <code>@rendermode</code> directive to <a href="">disable prerendering</a>:</p>
+<pre><code class="language-razor">@rendermode @(new InteractiveServerRenderMode(prerender: false))
+</code></pre>
+<p>However, consider the following example that creates a shorthand interactive server-side render mode without prerendering via the app's <code>_Imports</code> file (<code>Components/_Imports.razor</code>):</p>
+<pre><code class="language-csharp">public static IComponentRenderMode InteractiveServerWithoutPrerendering { get; } = 
+    new InteractiveServerRenderMode(prerender: false);
+</code></pre>
+<p>Use the shorthand render mode in components throughout the <code>Components</code> folder:</p>
+<pre><code class="language-razor">@rendermode InteractiveServerWithoutPrerendering
+</code></pre>
+<p>Alternatively, a single component instance can define a custom render mode via a private field:</p>
+<pre><code class="language-razor">@rendermode interactiveServerWithoutPrerendering
+
+...
+
+@code {
+    private static IComponentRenderMode interactiveServerWithoutPrerendering = 
+        new InteractiveServerRenderMode(prerender: false);
+}
+</code></pre>
+<p>At the moment, the shorthand render mode approach is probably only useful for reducing the verbosity of specifying the <code>prerender</code> flag. The shorthand approach might be more useful in the future if additional flags become available for interactive rendering and you would like to create shorthand render modes with different combinations of flags.</p>
+<h2 id="additional-resources">Additional resources</h2>
+<div class="moniker">
+<ul>
+<li>WebSocket compression
+<ul>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+</ul>
+</li>
+<li><a href=""></a></li>
+<li><a href="">Cascading values/parameters and render mode boundaries</a>: Also see the <a href="">Root-level cascading values</a> and <a href="">Root-level cascading values with notifications</a> sections earlier in the article.</li>
+<li><a href=""></a></li>
+<li><a href="/security/index#secure-data-in-blazor-web-apps-with-interactive-auto-rendering">Secure data in Blazor Web Apps with Interactive Auto rendering</a></li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li><a href=""></a></li>
+<li><a href="">Cascading values/parameters and render mode boundaries</a>: Also see the <a href="">Root-level cascading values</a> and <a href="">Root-level cascading values with notifications</a> sections earlier in the article.</li>
+<li><a href=""></a></li>
+<li><a href="/security/index#secure-data-in-blazor-web-apps-with-interactive-auto-rendering">Secure data in Blazor Web Apps with Interactive Auto rendering</a></li>
+</ul>
+<div class="moniker-end"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  </body>
+</html>

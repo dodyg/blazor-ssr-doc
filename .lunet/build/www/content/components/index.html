@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>Components - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="components">Components</h1>
+<p>Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your SSR applications.</p>
+<h2 id="topics">Topics</h2>
+<h3 id="component-basics"><a href="/components/index">Component Basics</a></h3>
+<p>Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements.</p>
+<h3 id="rendering"><a href="/components/rendering">Rendering</a></h3>
+<p>Understand how components are rendered in Blazor SSR. Learn about rendering concepts, optimization techniques, and best practices.</p>
+<h3 id="prerendering"><a href="/components/prerender">Prerendering</a></h3>
+<p>Improve perceived performance with prerendering. Learn how to pre-render components to static HTML before they become interactive.</p>
+<h3 id="lifecycle"><a href="/components/lifecycle">Lifecycle</a></h3>
+<p>Master the component lifecycle methods. Learn when to use OnInitialized, OnParametersSet, OnAfterRender, and other lifecycle events.</p>
+<h3 id="cascading-values-and-parameters"><a href="/components/cascading-values-and-parameters">Cascading Values and Parameters</a></h3>
+<p>Share data across the component hierarchy using cascading values and parameters.</p>
+<h3 id="event-handling"><a href="/components/event-handling">Event Handling</a></h3>
+<p>Handle user interactions in your components. Learn about event arguments, event callbacks, and how to handle DOM events.</p>
+<h3 id="data-binding"><a href="/components/data-binding">Data Binding</a></h3>
+<p>Bind data between your components and the UI. Learn about one-way and two-way binding patterns.</p>
+<h2 id="component-structure">Component Structure</h2>
+<p>A typical Razor component consists of:</p>
+<pre><code class="language-razor">@page &quot;/counter&quot;
+@rendermode InteractiveServer
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+
+&lt;p&gt;Current count: @currentCount&lt;/p&gt;
+
+&lt;button @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li><strong>Keep components small and focused</strong>: Each component should have a single responsibility</li>
+<li><strong>Use parameters for input</strong>: Pass data into components via parameters</li>
+<li><strong>Leverage cascading values</strong>: Share common data without prop drilling</li>
+<li><strong>Optimize rendering</strong>: Use <code>ShouldRender</code> and other optimization techniques when needed</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>After mastering components, explore <a href="/forms">Forms</a> to learn about handling user input with validation.</p>
+  </body>
+</html>

@@ -86,41 +86,23 @@ Although [route parameter matching is case insensitive](/fundamentals/routing#ro
 
 `SetParamsAsync.razor`:
 
-:::moniker range=">= aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/SetParamsAsync.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/SetParamsAsync.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/lifecycle/SetParamsAsync.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
-:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/lifecycle/SetParamsAsync.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
-:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/lifecycle/SetParamsAsync.razor":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
-:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/lifecycle/SetParamsAsync.razor":::
 
-:::moniker-end
 
 ## Component initialization (`OnInitialized{Async}`)
 
@@ -134,41 +116,23 @@ For a synchronous operation, override <xref:Microsoft.AspNetCore.Components.Comp
 
 `OnInit.razor`:
 
-:::moniker range=">= aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/OnInit.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/OnInit.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/lifecycle/OnInit.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
-:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/lifecycle/OnInit.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
-:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/lifecycle/OnInit.razor":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
-:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/lifecycle/OnInit.razor":::
 
-:::moniker-end
 
 To perform an asynchronous operation, override <xref:Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync%2A> and use the [`await`](/dotnet/csharp/language-reference/operators/await) operator:
 
@@ -215,7 +179,6 @@ Use *streaming rendering* with static server-side rendering (static SSR) or prer
 * [Handle incomplete asynchronous actions at render](#handle-incomplete-asynchronous-actions-at-render) (this article)
 * <xref:blazor/components/rendering#streaming-rendering>
 
-:::moniker-end
 
 ## After parameters are set (`OnParametersSet{Async}`)
 
@@ -239,50 +202,30 @@ For the following example component, navigate to the component's page at a URL:
 * With a start date that's received by `StartDate`: `/on-parameters-set/2021-03-19`
 * Without a start date, where `StartDate` is assigned a value of the current local time: `/on-parameters-set`
 
-:::moniker range=">= aspnetcore-5.0"
 
 > [!NOTE]
 > In a component route, it isn't possible to both constrain a <xref:System.DateTime> parameter with the [route constraint `datetime`](/fundamentals/routing#route-constraints) and [make the parameter optional](/fundamentals/routing#route-parameters). Therefore, the following `OnParamsSet` component uses two [`@page`](xref:mvc/views/razor#page) directives to handle routing with and without a supplied date segment in the URL.
 
-:::moniker-end
 
 `OnParamsSet.razor`:
 
-:::moniker range=">= aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/OnParamsSet.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/OnParamsSet.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/lifecycle/OnParamsSet.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
-:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/lifecycle/OnParamsSet.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
-:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/lifecycle/OnParamsSet.razor":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
-:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/lifecycle/OnParamsSet.razor":::
 
-:::moniker-end
 
 Asynchronous work when applying parameters and property values must occur during the <xref:Microsoft.AspNetCore.Components.ComponentBase.OnParametersSetAsync%2A> lifecycle event:
 
@@ -334,41 +277,23 @@ The `firstRender` parameter for <xref:Microsoft.AspNetCore.Components.ComponentB
 
 `AfterRender.razor`:
 
-:::moniker range=">= aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/AfterRender.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/AfterRender.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/lifecycle/AfterRender.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
-:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/lifecycle/AfterRender.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
-:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/lifecycle/AfterRender.razor":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
-:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/lifecycle/AfterRender.razor":::
 
-:::moniker-end
 
 The `AfterRender.razor` sample produces following output to console when the page is loaded and the button is selected:
 
@@ -418,79 +343,49 @@ In the following example, `base.OnInitialized();` is called to ensure that the b
 
 `BlazorRocks2.razor`:
 
-:::moniker range=">= aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/BlazorRocks2.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/BlazorRocks2.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/index/BlazorRocks2.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
-:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/index/BlazorRocks2.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
-:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/index/BlazorRocks2.razor":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
-:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/index/BlazorRocks2.razor":::
 
-:::moniker-end
 
 `BlazorRocksBase2.cs`:
 
-:::moniker range=">= aspnetcore-9.0"
 
 :::code language="csharp" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/BlazorRocksBase2.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
 :::code language="csharp" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/BlazorRocksBase2.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
 :::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/BlazorRocksBase2.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
 :::code language="csharp" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/BlazorRocksBase2.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
 :::code language="csharp" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/BlazorRocksBase2.cs":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
 :::code language="csharp" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/BlazorRocksBase2.cs":::
 
-:::moniker-end
 
 ## State changes (`StateHasChanged`)
 
@@ -593,7 +488,6 @@ When the `Home` component is prerendering, the `Slow` component is quickly rende
 To address the double rendering of the loading message and the re-execution of service and database calls, persist prerendered state with <xref:Microsoft.AspNetCore.Components.PersistentComponentState> for final rendering of the component, as seen in the following updates to the `Slow` component:
 
 
-:::moniker range=">= aspnetcore-10.0"
 
 ```razor
 @page "/slow"
@@ -627,9 +521,7 @@ else
 }
 ```
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-10.0"
 
 ```razor
 @page "/slow"
@@ -687,7 +579,6 @@ else
 }
 ```
 
-:::moniker-end
 
 By combining streaming rendering with persistent component state:
 
@@ -699,7 +590,6 @@ For more information, see the following resources:
 * <xref:blazor/components/rendering#streaming-rendering>
 * <xref:blazor/state-management/prerendered-state-persistence>.
 
-:::moniker-end
 
 
 ## Handle errors
@@ -725,41 +615,29 @@ builder.Services.AddMemoryCache();
 
 `WeatherForecastService.cs`:
 
-:::moniker range=">= aspnetcore-9.0"
 
 :::code language="csharp" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/WeatherForecastService.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
 :::code language="csharp" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/WeatherForecastService.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
 :::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_Server/lifecycle/WeatherForecastService.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
 :::code language="csharp" source="~/../blazor-samples/6.0/BlazorSample_Server/lifecycle/WeatherForecastService.cs":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
 :::code language="csharp" source="~/../blazor-samples/5.0/BlazorSample_Server/lifecycle/WeatherForecastService.cs":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
 :::code language="csharp" source="~/../blazor-samples/3.1/BlazorSample_Server/lifecycle/WeatherForecastService.cs":::
 
-:::moniker-end
 
 For more information on the <xref:Microsoft.AspNetCore.Mvc.TagHelpers.ComponentTagHelper.RenderMode>, see <xref:blazor/fundamentals/signalr#server-side-render-mode>.
 
@@ -796,41 +674,23 @@ In the following example:
 
 `BackgroundWork.razor`:
 
-:::moniker range=">= aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/BackgroundWork.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
 
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/BackgroundWork.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
 
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/lifecycle/BackgroundWork.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
 
-:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/lifecycle/BackgroundWork.razor":::
 
-:::moniker-end
 
-:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
 
-:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/lifecycle/BackgroundWork.razor":::
 
-:::moniker-end
 
-:::moniker range="< aspnetcore-5.0"
 
-:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/lifecycle/BackgroundWork.razor":::
 
-:::moniker-end
 
 To display a loading indicator while the background work is taking place, use the following approach.
 
@@ -860,7 +720,6 @@ else
 }
 ```
 
-:::moniker range=">= aspnetcore-6.0"
 
 To load CSS styles for the indicator, add the styles to `<head>` content with the <xref:Microsoft.AspNetCore.Components.Web.HeadContent> component. For more information, see <xref:blazor/components/control-head-content>.
 
@@ -884,7 +743,6 @@ else
 ...
 ```
 
-:::moniker-end
 
 Wrap the component's Razor markup with the `ContentLoading` component and pass a value in a C# field to the `Loading` parameter when initialization work is performed by the component:
 

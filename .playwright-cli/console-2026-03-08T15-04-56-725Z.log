@@ -1,0 +1,3 @@
+[      69ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4000/components/lifecycle/_static/lifecycle1.png:0
+[      69ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4000/components/lifecycle/_static/lifecycle2.png:0
+[      70ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4000/components/lifecycle/_static/lifecycle3.png:0

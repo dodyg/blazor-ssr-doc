@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>Fundamentals - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="fundamentals">Fundamentals</h1>
+<p>Learn the core concepts that power Blazor Server-Side Rendering applications.</p>
+<h2 id="topics">Topics</h2>
+<h3 id="render-modes"><a href="/fundamentals/render-modes">Render Modes</a></h3>
+<p>Understand the different render modes available in Blazor: Static SSR, Interactive Server, and Interactive Auto. Learn when to use each mode and how they affect your application's behavior.</p>
+<h3 id="routing"><a href="/fundamentals/routing">Routing</a></h3>
+<p>Master URL navigation and routing in Blazor SSR. Learn how to define routes, handle parameters, and navigate between pages.</p>
+<h3 id="dependency-injection"><a href="/fundamentals/dependency-injection">Dependency Injection</a></h3>
+<p>Learn how to use dependency injection in your Blazor SSR applications. Understand service lifetimes and how to inject services into components.</p>
+<h3 id="configuration"><a href="/fundamentals/configuration">Configuration</a></h3>
+<p>Configure your Blazor SSR application using appsettings.json, environment variables, and other configuration sources.</p>
+<h3 id="static-files"><a href="/fundamentals/static-files">Static Files</a></h3>
+<p>Serve static assets like CSS, JavaScript, and images in your Blazor SSR application.</p>
+<h2 id="core-concepts">Core Concepts</h2>
+<p>Blazor SSR is built on several fundamental concepts:</p>
+<h3 id="render-modes-1">Render Modes</h3>
+<p>Blazor components can be rendered in different modes:</p>
+<ul>
+<li><strong>Static SSR</strong>: Renders as static HTML with no interactivity</li>
+<li><strong>Interactive Server</strong>: Renders with full interactivity via SignalR</li>
+<li><strong>Interactive Auto</strong>: Chooses the best render mode based on capabilities</li>
+</ul>
+<h3 id="component-model">Component Model</h3>
+<p>Blazor uses Razor components (.razor files) that combine HTML markup with C# code. Components are the building blocks of your application.</p>
+<h3 id="server-side-execution">Server-Side Execution</h3>
+<p>In SSR mode, components execute on the server. HTML is generated and sent to the browser, providing fast initial load times and excellent SEO.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>After understanding the fundamentals, dive into <a href="/components">Components</a> to learn how to build interactive and reusable UI elements.</p>
+  </body>
+</html>

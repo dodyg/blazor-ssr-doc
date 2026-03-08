@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>Security - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="security">Security</h1>
+<p>Learn how to implement authentication and authorization in your Blazor SSR applications.</p>
+<h2 id="overview">Overview</h2>
+<p>Security is a critical aspect of any web application. Blazor SSR integrates seamlessly with ASP.NET Core's security features, providing:</p>
+<ul>
+<li><strong>Authentication</strong>: Identify who your users are</li>
+<li><strong>Authorization</strong>: Control what users can access</li>
+<li><strong>Anti-forgery Protection</strong>: Prevent CSRF attacks</li>
+<li><strong>Secure Communication</strong>: HTTPS and secure cookies</li>
+</ul>
+<h2 id="topics">Topics</h2>
+<h3 id="authentication">Authentication</h3>
+<p>Implement user authentication in your Blazor SSR applications:</p>
+<ul>
+<li><strong>Cookie-based Authentication</strong>: Traditional username/password authentication</li>
+<li><strong>JWT Authentication</strong>: Token-based authentication for APIs</li>
+<li><strong>External Login Providers</strong>: Google, Microsoft, Facebook, etc.</li>
+<li><strong>ASP.NET Core Identity</strong>: Full-featured identity management</li>
+</ul>
+<h3 id="authorization">Authorization</h3>
+<p>Control access to resources and components:</p>
+<ul>
+<li><strong>Role-based Authorization</strong>: Limit access based on user roles</li>
+<li><strong>Policy-based Authorization</strong>: Fine-grained access control with policies</li>
+<li><strong>Resource-based Authorization</strong>: Authorize access to specific resources</li>
+<li><strong>Component-level Authorization</strong>: Control component rendering based on permissions</li>
+</ul>
+<h2 id="basic-authentication-example">Basic Authentication Example</h2>
+<pre><code class="language-csharp">// Program.cs
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =&gt;
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.SlidingExpiration = true;
+    });
+
+builder.Services.AddAuthorization();
+</code></pre>
+<pre><code class="language-razor">@page &quot;/admin&quot;
+@attribute [Authorize(Roles = &quot;Admin&quot;)]
+
+&lt;h1&gt;Admin Dashboard&lt;/h1&gt;
+
+&lt;p&gt;Welcome, administrator!&lt;/p&gt;
+</code></pre>
+<h2 id="security-best-practices">Security Best Practices</h2>
+<ol>
+<li><strong>Always use HTTPS</strong> in production</li>
+<li><strong>Validate all user input</strong> on the server</li>
+<li><strong>Use anti-forgery tokens</strong> for forms</li>
+<li><strong>Implement proper authentication and authorization</strong></li>
+<li><strong>Keep dependencies updated</strong> to patch security vulnerabilities</li>
+<li><strong>Follow the principle of least privilege</strong></li>
+<li><strong>Log security-related events</strong> for auditing</li>
+</ol>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/security/">ASP.NET Core Security Documentation</a></li>
+<li><a href="https://owasp.org/">OWASP Security Guidelines</a></li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>After implementing security, explore <a href="/advanced">Advanced Topics</a> to learn about performance optimization and deployment.</p>
+  </body>
+</html>

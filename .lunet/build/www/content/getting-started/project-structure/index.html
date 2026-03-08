@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>ASP.NET Core Blazor project structure - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="aspnet-core-blazor-project-structure">ASP.NET Core Blazor project structure</h1>
+<p>This article describes the files and folders that make up a Blazor app generated from a Blazor project template.</p>
+<h2 id="blazor-web-app">Blazor Web App</h2>
+<p>Blazor Web App project template: <code>blazor</code></p>
+<p>The Blazor Web App project template provides a single starting point for using Razor components (<code>.razor</code>) to build any style of web UI, both server-side rendered and client-side rendered. It combines the strengths of Blazor Server and Blazor WebAssembly with server-side and client-side rendering, streaming rendering, enhanced navigation and form handling, and the ability to add interactivity using either Blazor Server or Blazor WebAssembly on a per-component basis.</p>
+<p>If both client-side rendering (CSR) and interactive server-side rendering (interactive SSR) are selected on app creation, the project template uses the Interactive Auto render mode. The automatic rendering mode initially uses interactive SSR while the .NET app bundle and runtime are downloaded to the browser. After the .NET WebAssembly runtime is activated, rendering switches to CSR.</p>
+<p>The Blazor Web App template enables both static and interactive server-side rendering using a single project. If you also enable Interactive WebAssembly rendering, the project includes an additional client project (<code>.Client</code>) for your WebAssembly-based components. The built output from the client project is downloaded to the browser and executed on the client. Components using the Interactive WebAssembly or Interactive Auto render modes must be located in the <code>.Client</code> project.</p>
+<p>The component folder structure of the <code>.Client</code> project differs from the Blazor Web App's main project folder structure because the main project is a standard ASP.NET Core project. The main project must take into account other assets for ASP.NET Core projects that are unrelated to Blazor. You're welcome to use whatever component folder structure you wish in the <code>.Client</code> project. You're free to mirror the component folder layout of the main project in the <code>.Client</code> project if you wish. Note that namespaces might require adjustments for such assets as layout files if you move components into different folders than the project template uses.</p>
+<p>More information on components and render modes is found in the <a href="/components/index">index</a> and <a href="/fundamentals/render-modes">render-modes</a> articles.</p>
+<p>Based on the interactive render mode selected at app creation, the <code>Layout</code> folder is either in the server project in the <code>Components</code> folder or at the root of the <code>.Client</code> project. The folder contains the following layout components and stylesheets:</p>
+<div class="moniker">
+<ul>
+<li>The <code>MainLayout</code> component (<code>MainLayout.razor</code>) is the app's <a href="">layout component</a>.</li>
+<li>The <code>MainLayout.razor.css</code> is the collocated (next to the component) stylesheet for the app's main layout.</li>
+<li>The <code>NavMenu</code> component (<code>NavMenu.razor</code>) implements sidebar navigation. The component includes <a href=""><code>NavLink</code> components</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which render navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component indicates to the user which component is currently displayed.</li>
+<li>The <code>NavMenu.razor.css</code> is the collocated stylesheet for the app's navigation menu.</li>
+<li>The <code>ReconnectModal</code> component reflects the server-side connection state in the UI and is included when the app's interactive render mode is either Interactive Server or Interactive Auto. For more information, see <a href=""></a>.</li>
+<li>The <code>ReconnectModal.razor.css</code> is the collocated stylesheet for the <code>ReconnectModal</code> component.</li>
+<li>The <code>ReconnectModal.razor.js</code> is the collocated JavaScript file for the <code>ReconnectModal</code> component.</li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li>The <code>MainLayout</code> component (<code>MainLayout.razor</code>) is the app's <a href="">layout component</a>.</li>
+<li>The <code>MainLayout.razor.css</code> is the collocated (next to the component) stylesheet for the app's main layout.</li>
+<li>The <code>NavMenu</code> component (<code>NavMenu.razor</code>) implements sidebar navigation. The component includes <a href=""><code>NavLink</code> components</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which render navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component indicates to the user which component is currently displayed.</li>
+<li>The <code>NavMenu.razor.css</code> is the collocated stylesheet for the app's navigation menu.</li>
+</ul>
+<div class="moniker-end"><p>The <code>Routes</code> component (<code>Routes.razor</code>) is either in the server project or the <code>.Client</code> project and sets up routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. For client-side interactive components, the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+<p>The <code>Components</code> folder of the server project holds the app's server-side Razor components. Shared components are often placed at the root of the <code>Components</code> folder, while layout and page components are usually placed in folders within the <code>Components</code> folder.</p>
+<p>The <code>Components/Pages</code> folder of the server project contains the app's routable server-side Razor components. The route for each page is specified using the <a href=""><code>@page</code></a> directive.</p>
+<div class="moniker"><p>The <code>NotFound</code> component (<code>NotFound.razor</code>) implements a Not Found page to display when content isn't found for a request path. For more information, see <a href=""></a>.</p>
+<div class="moniker-end"><p>The <code>App</code> component (<code>App.razor</code>) is the root component of the app with HTML <code>&lt;head&gt;</code> markup, the <code>Routes</code> component, and the Blazor <code>&lt;script&gt;</code> tag. The root component is the first component that the app loads.</p>
+<p>An <code>_Imports.razor</code> file in each of the server and <code>.Client</code> projects includes common Razor directives for Razor components of either project, such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+<p>The <code>Properties</code> folder of the server project holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+<blockquote>
+<p>[!NOTE]
+The <code>http</code> profile precedes the <code>https</code> profile in the <code>launchSettings.json</code> file. When an app is run with the .NET CLI, the app runs at an HTTP endpoint because the first profile found is <code>http</code>. The profile order eases the transition of adopting HTTPS for Linux and macOS users. If you prefer to start the app with the .NET CLI without having to pass the <code>-lp https</code> or <code>--launch-profile https</code> option to the <code>dotnet watch</code> (or <code>dotnet run</code>) command, simply place the <code>https</code> profile above the <code>http</code> profile in the file.</p>
+</blockquote>
+<p>The <code>wwwroot</code> folder of the server project is the <a href="">Web Root</a> folder for the server project that holds the app's public static assets.</p>
+<p>The <code>Program.cs</code> file of the server project is the project's entry point that sets up the ASP.NET Core web application <a href="">host</a> and contains the app's startup logic, including service registrations, configuration, logging, and request processing pipeline:</p>
+<ul>
+<li>Services for Razor components are added by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents" title="Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*">Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*</a>. <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents" title="Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents*">Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents*</a> adds services to support rendering Interactive Server components. <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents" title="Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents*">Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents*</a> adds services to support rendering Interactive WebAssembly components.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents" title="Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*">Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*</a> discovers available components and specifies the root component for the app (the first component loaded), which by default is the <code>App</code> component (<code>App.razor</code>). <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode" title="Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode*">Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode*</a> configures interactive server-side rendering (interactive SSR) for the app. <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode" title="Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode*">Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode*</a> configures the Interactive WebAssembly render mode for the app.</li>
+</ul>
+<p>The app settings files (<code>appsettings.Development.json</code>, <code>appsettings.json</code>) in either the server or <code>.Client</code> project provide <a href="/fundamentals/configuration">configuration settings</a>. In the server project, settings files are at the root of the project. In the <code>.Client</code> project, settings files are consumed from the <a href="">Web Root</a> folder, <code>wwwroot</code>.</p>
+<p>In the <code>.Client</code> project:</p>
+<ul>
+<li><p>The <code>Pages</code> folder contains routable client-side Razor components. The route for each page is specified using the <a href=""><code>@page</code></a> directive.</p>
+</li>
+<li><p>The <code>wwwroot</code> folder is the <a href="">Web Root</a> folder for the <code>.Client</code> project that holds the app's public static assets.</p>
+</li>
+<li><p>The <code>Program.cs</code> file is the project's entry point that sets up the WebAssembly <a href="">host</a> and contains the project's startup logic, including service registrations, configuration, logging, and request processing pipeline.</p>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor Web App project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker"><p>Blazor Server project templates: <code>blazorserver</code>, <code>blazorserver-empty</code></p>
+<p>The Blazor Server templates create the initial files and directory structure for a Blazor Server app:</p>
+<ul>
+<li>If the <code>blazorserver</code> template is used, the app is populated with the following:
+<ul>
+<li>Demonstration code for a <code>FetchData</code> component that loads data from a weather forecast service (<code>WeatherForecastService</code>) and user interaction with a <code>Counter</code> component.</li>
+<li><a href="https://getbootstrap.com/">Bootstrap</a> frontend toolkit.</li>
+</ul>
+</li>
+<li>If the <code>blazorserver-empty</code> template is used, the app is created without demonstration code and Bootstrap.</li>
+</ul>
+<p>Project structure:</p>
+<ul>
+<li><p><code>Data</code> folder: Contains the <code>WeatherForecast</code> class and implementation of the <code>WeatherForecastService</code> that provides example weather data to the app's <code>FetchData</code> component.</p>
+</li>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>) and the root Razor page of a Blazor Server app. The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following:</p>
+<ul>
+<li><code>_Host.cshtml</code>: The root page of the app implemented as a Razor Page:
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The Host page specifies where the root <code>App</code> component (<code>App.razor</code>) is rendered.</li>
+</ul>
+</li>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>Error</code> component (<code>Error.razor</code>): Rendered when an unhandled exception occurs in the app.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components and stylesheets:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets.</p>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>appsettings.json</code> and environmental app settings files: Provide <a href="/fundamentals/configuration">configuration settings</a> for the app.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the ASP.NET Core <a href="">host</a> and contains the app's startup logic, including service registrations and request processing pipeline configuration:</p>
+<ul>
+<li>Specifies the app's <a href="">dependency injection (DI)</a> services. Services are added by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor" title="Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*">Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*</a>, and the <code>WeatherForecastService</code> is added to the service container for use by the example <code>FetchData</code> component.</li>
+<li>Configures the app's request handling pipeline:
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub" title="Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*">Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*</a> is called to set up an endpoint for the real-time connection with the browser. The connection is created with <a href="https://learn.microsoft.com/aspnet/core/signalr/introduction">SignalR</a>, which is a framework for adding real-time web functionality to apps.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.RazorPagesEndpointRouteBuilderExtensions.MapFallbackToPage"><code>MapFallbackToPage(&quot;/_Host&quot;)</code></a> is called to set up the root page of the app (<code>Pages/_Host.cshtml</code>) and enable navigation.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker-end">
+<div class="moniker"><p>Blazor Server project template: <code>blazorserver</code></p>
+<p>The Blazor Server template creates the initial files and directory structure for a Blazor Server app. The app is populated with demonstration code for a <code>FetchData</code> component that loads data from a registered service, <code>WeatherForecastService</code>, and user interaction with a <code>Counter</code> component.</p>
+<ul>
+<li><p><code>Data</code> folder: Contains the <code>WeatherForecast</code> class and implementation of the <code>WeatherForecastService</code> that provides example weather data to the app's <code>FetchData</code> component.</p>
+</li>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>) and the root Razor page of a Blazor Server app. The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following:</p>
+<ul>
+<li><code>_Host.cshtml</code>: The root page of the app implemented as a Razor Page:
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The Host page specifies where the root <code>App</code> component (<code>App.razor</code>) is rendered.</li>
+</ul>
+</li>
+<li><code>_Layout.cshtml</code>: The layout page for the <code>_Host.cshtml</code> root page of the app.</li>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>Error</code> component (<code>Error.razor</code>): Rendered when an unhandled exception occurs in the app.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components and stylesheets:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets.</p>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>appsettings.json</code> and environmental app settings files: Provide <a href="/fundamentals/configuration">configuration settings</a> for the app.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the ASP.NET Core <a href="">host</a> and contains the app's startup logic, including service registrations and request processing pipeline configuration:</p>
+<ul>
+<li>Specifies the app's <a href="">dependency injection (DI)</a> services. Services are added by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor" title="Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*">Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*</a>, and the <code>WeatherForecastService</code> is added to the service container for use by the example <code>FetchData</code> component.</li>
+<li>Configures the app's request handling pipeline:
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub" title="Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*">Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*</a> is called to set up an endpoint for the real-time connection with the browser. The connection is created with <a href="https://learn.microsoft.com/aspnet/core/signalr/introduction">SignalR</a>, which is a framework for adding real-time web functionality to apps.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.RazorPagesEndpointRouteBuilderExtensions.MapFallbackToPage"><code>MapFallbackToPage(&quot;/_Host&quot;)</code></a> is called to set up the root page of the app (<code>Pages/_Host.cshtml</code>) and enable navigation.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker-end">
+<div class="moniker"><p>Blazor Server project template: <code>blazorserver</code></p>
+<p>The Blazor Server template creates the initial files and directory structure for a Blazor Server app. The app is populated with demonstration code for a <code>FetchData</code> component that loads data from a registered service, <code>WeatherForecastService</code>, and user interaction with a <code>Counter</code> component.</p>
+<ul>
+<li><p><code>Data</code> folder: Contains the <code>WeatherForecast</code> class and implementation of the <code>WeatherForecastService</code> that provides example weather data to the app's <code>FetchData</code> component.</p>
+</li>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>) and the root Razor page of a Blazor Server app. The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following:</p>
+<ul>
+<li><code>_Host.cshtml</code>: The root page of the app implemented as a Razor Page:
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The Host page specifies where the root <code>App</code> component (<code>App.razor</code>) is rendered.</li>
+</ul>
+</li>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>Error</code> component (<code>Error.razor</code>): Rendered when an unhandled exception occurs in the app.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components and stylesheets:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets.</p>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>appsettings.json</code> and environmental app settings files: Provide <a href="/fundamentals/configuration">configuration settings</a> for the app.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the ASP.NET Core <a href="">host</a>.</p>
+</li>
+<li><p><code>Startup.cs</code>: Contains the app's startup logic. The <code>Startup</code> class defines two methods:</p>
+<ul>
+<li><code>ConfigureServices</code>: Configures the app's <a href="">dependency injection (DI)</a> services. Services are added by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor" title="Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*">Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*</a>, and the <code>WeatherForecastService</code> is added to the service container for use by the example <code>FetchData</code> component.</li>
+<li><code>Configure</code>: Configures the app's request handling pipeline:
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub" title="Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*">Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*</a> is called to set up an endpoint for the real-time connection with the browser. The connection is created with <a href="https://learn.microsoft.com/aspnet/core/signalr/introduction">SignalR</a>, which is a framework for adding real-time web functionality to apps.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.RazorPagesEndpointRouteBuilderExtensions.MapFallbackToPage"><code>MapFallbackToPage(&quot;/_Host&quot;)</code></a> is called to set up the root page of the app (<code>Pages/_Host.cshtml</code>) and enable navigation.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker-end">
+<div class="moniker"><p>Blazor Server project template: <code>blazorserver</code></p>
+<p>The Blazor Server template creates the initial files and directory structure for a Blazor Server app. The app is populated with demonstration code for a <code>FetchData</code> component that loads data from a registered service, <code>WeatherForecastService</code>, and user interaction with a <code>Counter</code> component.</p>
+<ul>
+<li><p><code>Data</code> folder: Contains the <code>WeatherForecast</code> class and implementation of the <code>WeatherForecastService</code> that provides example weather data to the app's <code>FetchData</code> component.</p>
+</li>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>) and the root Razor page of a Blazor Server app. The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following:</p>
+<ul>
+<li><code>_Host.cshtml</code>: The root page of the app implemented as a Razor Page:
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The Host page specifies where the root <code>App</code> component (<code>App.razor</code>) is rendered.</li>
+</ul>
+</li>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>Error</code> component (<code>Error.razor</code>): Rendered when an unhandled exception occurs in the app.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets.</p>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>appsettings.json</code> and environmental app settings files: Provide <a href="/fundamentals/configuration">configuration settings</a> for the app.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the ASP.NET Core <a href="">host</a>.</p>
+</li>
+<li><p><code>Startup.cs</code>: Contains the app's startup logic. The <code>Startup</code> class defines two methods:</p>
+<ul>
+<li><code>ConfigureServices</code>: Configures the app's <a href="">dependency injection (DI)</a> services. Services are added by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor" title="Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*">Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor*</a>, and the <code>WeatherForecastService</code> is added to the service container for use by the example <code>FetchData</code> component.</li>
+<li><code>Configure</code>: Configures the app's request handling pipeline:
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub" title="Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*">Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub*</a> is called to set up an endpoint for the real-time connection with the browser. The connection is created with <a href="https://learn.microsoft.com/aspnet/core/signalr/introduction">SignalR</a>, which is a framework for adding real-time web functionality to apps.</li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Builder.RazorPagesEndpointRouteBuilderExtensions.MapFallbackToPage"><code>MapFallbackToPage(&quot;/_Host&quot;)</code></a> is called to set up the root page of the app (<code>Pages/_Host.cshtml</code>) and enable navigation.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker-end"><h2 id="standalone-blazor-webassembly">Standalone Blazor WebAssembly</h2>
+<p>Standalone Blazor WebAssembly project template: <code>blazorwasm</code></p>
+<p>The Blazor WebAssembly template creates the initial files and directory structure for a standalone Blazor WebAssembly app:</p>
+<ul>
+<li>If the <code>blazorwasm</code> template is used, the app is populated with the following:
+<ul>
+<li>Demonstration code for a <code>Weather</code> component that loads data from a static asset (<code>weather.json</code>) and user interaction with a <code>Counter</code> component.</li>
+<li><a href="https://getbootstrap.com/">Bootstrap</a> frontend toolkit.</li>
+</ul>
+</li>
+<li>The <code>blazorwasm</code> template can also be generated without sample pages and styling.</li>
+</ul>
+<p>Project structure:</p>
+<ul>
+<li><code>Layout</code> folder: Contains the following layout components and stylesheets:
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+</ul>
+</li>
+</ul>
+<div class="moniker">
+<ul>
+<li><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>). The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following components:
+<ul>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+<li><code>Weather</code> component (<code>Weather.razor</code>): Implements the Weather page.</li>
+<li><code>NotFound</code> component (<code>NotFound.razor</code>): Implements a Not Found page to display when content isn't found for a request path. For more information, see <a href=""></a>.</li>
+</ul>
+</li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>). The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following components:
+<ul>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+<li><code>Weather</code> component (<code>Weather.razor</code>): Implements the Weather page.</li>
+</ul>
+</li>
+</ul>
+<div class="moniker-end">
+<ul>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+<blockquote>
+<p>[!NOTE]
+The <code>http</code> profile precedes the <code>https</code> profile in the <code>launchSettings.json</code> file. When an app is run with the .NET CLI, the app runs at an HTTP endpoint because the first profile found is <code>http</code>. The profile order eases the transition of adopting HTTPS for Linux and macOS users. If you prefer to start the app with the .NET CLI without having to pass the <code>-lp https</code> or <code>--launch-profile https</code> option to the <code>dotnet watch</code> (or <code>dotnet run</code>) command, simply place the <code>https</code> profile above the <code>http</code> profile in the file.</p>
+</blockquote>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets, including <code>appsettings.json</code> and environmental app settings files for <a href="/fundamentals/configuration">configuration settings</a> and sample weather data (<code>sample-data/weather.json</code>). The <code>index.html</code> webpage is the root page of the app implemented as an HTML page:</p>
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The page specifies where the root <code>App</code> component is rendered. The component is rendered at the location of the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code>).</li>
+</ul>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the WebAssembly host:</p>
+<ul>
+<li>The <code>App</code> component is the root component of the app. The <code>App</code> component is specified as the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code> in <code>wwwroot/index.html</code>) to the root component collection (<code>builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;)</code>).</li>
+<li><a href="/fundamentals/dependency-injection">Services</a> are added and configured (for example, <code>builder.Services.AddSingleton&lt;IMyDependency, MyDependency&gt;()</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor WebAssembly project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker"><h2 id="blazor-webassembly">Blazor WebAssembly</h2>
+<p>Blazor WebAssembly project templates: <code>blazorwasm</code>, <code>blazorwasm-empty</code></p>
+<p>The Blazor WebAssembly templates create the initial files and directory structure for a Blazor WebAssembly app:</p>
+<ul>
+<li>If the <code>blazorwasm</code> template is used, the app is populated with the following:
+<ul>
+<li>Demonstration code for a <code>FetchData</code> component that loads data from a static asset (<code>weather.json</code>) and user interaction with a <code>Counter</code> component.</li>
+<li><a href="https://getbootstrap.com/">Bootstrap</a> frontend toolkit.</li>
+</ul>
+</li>
+<li>If the <code>blazorwasm-empty</code> template is used, the app is created without demonstration code and Bootstrap.</li>
+</ul>
+<p>Project structure:</p>
+<ul>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>). The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following components:</p>
+<ul>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components and stylesheets:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>) (<em>ASP.NET Core in .NET 7 or earlier</em>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets, including <code>appsettings.json</code> and environmental app settings files for <a href="/fundamentals/configuration">configuration settings</a>. The <code>index.html</code> webpage is the root page of the app implemented as an HTML page:</p>
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The page specifies where the root <code>App</code> component is rendered. The component is rendered at the location of the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code>).</li>
+</ul>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the WebAssembly host:</p>
+<ul>
+<li>The <code>App</code> component is the root component of the app. The <code>App</code> component is specified as the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code> in <code>wwwroot/index.html</code>) to the root component collection (<code>builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;)</code>).</li>
+<li><a href="/fundamentals/dependency-injection">Services</a> are added and configured (for example, <code>builder.Services.AddSingleton&lt;IMyDependency, MyDependency&gt;()</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor WebAssembly project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<div class="moniker-end">
+<div class="moniker"><p>A <em>hosted Blazor WebAssembly solution</em> includes the following ASP.NET Core projects:</p>
+<ul>
+<li>&quot;:<span>no-loc text=&quot;Client&quot;:&quot;: The Blazor WebAssembly app.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Server&quot;:&quot;: An app that serves the Blazor WebAssembly app and weather data to clients.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Shared&quot;:&quot;: A project that maintains common classes, methods, and resources.</span></li>
+</ul>
+<p>The solution is generated from the Blazor WebAssembly project template in Visual Studio with the <strong>ASP.NET Core Hosted</strong> checkbox selected or with the <code>-ho|--hosted</code> option using the .NET CLI's <code>dotnet new blazorwasm</code> command. For more information, see <a href=""></a>.</p>
+<p>The project structure of the client-side app in a hosted Blazor Webassembly solution (&quot;:<span>no-loc text=&quot;Client&quot;:&quot; project) is the same as the project structure for a standalone Blazor WebAssembly app. Additional files in a hosted Blazor WebAssembly solution:</span></p>
+<ul>
+<li>The &quot;:<span>no-loc text=&quot;Server&quot;:&quot; project includes a weather forecast controller at <code>Controllers/WeatherForecastController.cs</code> that returns weather data to the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; project's <code>FetchData</code> component.</span></span></li>
+<li>The &quot;:<span>no-loc text=&quot;Shared&quot;:&quot; project includes a weather forecast class at <code>WeatherForecast.cs</code> that represents weather data for the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; and &quot;:<span>no-loc text=&quot;Server&quot;:&quot; projects.</span></span></span></li>
+</ul>
+<div class="moniker-end">
+<div class="moniker"><h2 id="blazor-webassembly-1">Blazor WebAssembly</h2>
+<p>Blazor WebAssembly project template: <code>blazorwasm</code></p>
+<p>The Blazor WebAssembly template creates the initial files and directory structure for a Blazor WebAssembly app. The app is populated with demonstration code for a <code>FetchData</code> component that loads data from a static asset, <code>weather.json</code>, and user interaction with a <code>Counter</code> component.</p>
+<ul>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>). The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following components:</p>
+<ul>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components and stylesheets:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets, including <code>appsettings.json</code> and environmental app settings files for <a href="/fundamentals/configuration">configuration settings</a>. The <code>index.html</code> webpage is the root page of the app implemented as an HTML page:</p>
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The page specifies where the root <code>App</code> component is rendered. The component is rendered at the location of the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code>).</li>
+</ul>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the WebAssembly host:</p>
+<ul>
+<li>The <code>App</code> component is the root component of the app. The <code>App</code> component is specified as the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code> in <code>wwwroot/index.html</code>) to the root component collection (<code>builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;)</code>).</li>
+<li><a href="/fundamentals/dependency-injection">Services</a> are added and configured (for example, <code>builder.Services.AddSingleton&lt;IMyDependency, MyDependency&gt;()</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor WebAssembly project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<p>A <em>hosted Blazor WebAssembly solution</em> includes the following ASP.NET Core projects:</p>
+<ul>
+<li>&quot;:<span>no-loc text=&quot;Client&quot;:&quot;: The Blazor WebAssembly app.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Server&quot;:&quot;: An app that serves the Blazor WebAssembly app and weather data to clients.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Shared&quot;:&quot;: A project that maintains common classes, methods, and resources.</span></li>
+</ul>
+<p>The solution is generated from the Blazor WebAssembly project template in Visual Studio with the <strong>ASP.NET Core Hosted</strong> checkbox selected or with the <code>-ho|--hosted</code> option using the .NET CLI's <code>dotnet new blazorwasm</code> command. For more information, see <a href=""></a>.</p>
+<p>The project structure of the client-side app in a hosted Blazor Webassembly solution (&quot;:<span>no-loc text=&quot;Client&quot;:&quot; project) is the same as the project structure for a standalone Blazor WebAssembly app. Additional files in a hosted Blazor WebAssembly solution:</span></p>
+<ul>
+<li>The &quot;:<span>no-loc text=&quot;Server&quot;:&quot; project includes a weather forecast controller at <code>Controllers/WeatherForecastController.cs</code> that returns weather data to the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; project's <code>FetchData</code> component.</span></span></li>
+<li>The &quot;:<span>no-loc text=&quot;Shared&quot;:&quot; project includes a weather forecast class at <code>WeatherForecast.cs</code> that represents weather data for the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; and &quot;:<span>no-loc text=&quot;Server&quot;:&quot; projects.</span></span></span></li>
+</ul>
+<div class="moniker-end">
+<div class="moniker"><h2 id="blazor-webassembly-2">Blazor WebAssembly</h2>
+<p>Blazor WebAssembly project template: <code>blazorwasm</code></p>
+<p>The Blazor WebAssembly template creates the initial files and directory structure for a Blazor WebAssembly app. The app is populated with demonstration code for a <code>FetchData</code> component that loads data from a static asset, <code>weather.json</code>, and user interaction with a <code>Counter</code> component.</p>
+<ul>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>). The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following components:</p>
+<ul>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components and stylesheets:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>MainLayout.razor.css</code>: Stylesheet for the app's main layout.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>NavMenu.razor.css</code>: Stylesheet for the app's navigation menu.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets, including <code>appsettings.json</code> and environmental app settings files for <a href="/fundamentals/configuration">configuration settings</a>. The <code>index.html</code> webpage is the root page of the app implemented as an HTML page:</p>
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The page specifies where the root <code>App</code> component is rendered. The component is rendered at the location of the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code>).</li>
+</ul>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the WebAssembly host:</p>
+<ul>
+<li>The <code>App</code> component is the root component of the app. The <code>App</code> component is specified as the <code>div</code> DOM element with an <code>id</code> of <code>app</code> (<code>&lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;</code> in <code>wwwroot/index.html</code>) to the root component collection (<code>builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;)</code>).</li>
+<li><a href="/fundamentals/dependency-injection">Services</a> are added and configured (for example, <code>builder.Services.AddSingleton&lt;IMyDependency, MyDependency&gt;()</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor WebAssembly project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<p>A <em>hosted Blazor WebAssembly solution</em> includes the following ASP.NET Core projects:</p>
+<ul>
+<li>&quot;:<span>no-loc text=&quot;Client&quot;:&quot;: The Blazor WebAssembly app.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Server&quot;:&quot;: An app that serves the Blazor WebAssembly app and weather data to clients.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Shared&quot;:&quot;: A project that maintains common classes, methods, and resources.</span></li>
+</ul>
+<p>The solution is generated from the Blazor WebAssembly project template in Visual Studio with the <strong>ASP.NET Core Hosted</strong> checkbox selected or with the <code>-ho|--hosted</code> option using the .NET CLI's <code>dotnet new blazorwasm</code> command. For more information, see <a href=""></a>.</p>
+<p>The project structure of the client-side app in a hosted Blazor Webassembly solution (&quot;:<span>no-loc text=&quot;Client&quot;:&quot; project) is the same as the project structure for a standalone Blazor WebAssembly app. Additional files in a hosted Blazor WebAssembly solution:</span></p>
+<ul>
+<li>The &quot;:<span>no-loc text=&quot;Server&quot;:&quot; project includes a weather forecast controller at <code>Controllers/WeatherForecastController.cs</code> that returns weather data to the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; project's <code>FetchData</code> component.</span></span></li>
+<li>The &quot;:<span>no-loc text=&quot;Shared&quot;:&quot; project includes a weather forecast class at <code>WeatherForecast.cs</code> that represents weather data for the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; and &quot;:<span>no-loc text=&quot;Server&quot;:&quot; projects.</span></span></span></li>
+</ul>
+<div class="moniker-end">
+<div class="moniker"><h2 id="blazor-webassembly-3">Blazor WebAssembly</h2>
+<p>Blazor WebAssembly project template: <code>blazorwasm</code></p>
+<p>The Blazor WebAssembly template creates the initial files and directory structure for a Blazor WebAssembly app. The app is populated with demonstration code for a <code>FetchData</code> component that loads data from a static asset, <code>weather.json</code>, and user interaction with a <code>Counter</code> component.</p>
+<ul>
+<li><p><code>Pages</code> folder: Contains the Blazor app's routable Razor components (<code>.razor</code>). The route for each page is specified using the <a href=""><code>@page</code></a> directive. The template includes the following components:</p>
+<ul>
+<li><code>Counter</code> component (<code>Counter.razor</code>): Implements the Counter page.</li>
+<li><code>FetchData</code> component (<code>FetchData.razor</code>): Implements the Fetch data page.</li>
+<li><code>Index</code> component (<code>Index.razor</code>): Implements the Home page.</li>
+</ul>
+</li>
+<li><p><code>Properties</code> folder: Holds <a href="">development environment configuration</a> in the <code>launchSettings.json</code> file.</p>
+</li>
+<li><p><code>Shared</code> folder: Contains the following shared components:</p>
+<ul>
+<li><code>MainLayout</code> component (<code>MainLayout.razor</code>): The app's <a href="">layout component</a>.</li>
+<li><code>NavMenu</code> component (<code>NavMenu.razor</code>): Implements sidebar navigation. Includes the <a href=""><code>NavLink</code> component</a> (<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a>), which renders navigation links to other Razor components. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.NavLink" title="Microsoft.AspNetCore.Components.Routing.NavLink">Microsoft.AspNetCore.Components.Routing.NavLink</a> component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.</li>
+<li><code>SurveyPrompt</code> component (<code>SurveyPrompt.razor</code>): Blazor survey component.</li>
+</ul>
+</li>
+<li><p><code>wwwroot</code> folder: The <a href="">Web Root</a> folder for the app containing the app's public static assets, including <code>appsettings.json</code> and environmental app settings files for <a href="/fundamentals/configuration">configuration settings</a>. The <code>index.html</code> webpage is the root page of the app implemented as an HTML page:</p>
+<ul>
+<li>When any page of the app is initially requested, this page is rendered and returned in the response.</li>
+<li>The page specifies where the root <code>App</code> component is rendered. The component is rendered at the location of the <code>app</code> DOM element (<code>&lt;app&gt;Loading...&lt;/app&gt;</code>).</li>
+</ul>
+</li>
+<li><p><code>_Imports.razor</code>: Includes common Razor directives to include in the app's components (<code>.razor</code>), such as <a href=""><code>@using</code></a> directives for namespaces.</p>
+</li>
+<li><p><code>App.razor</code>: The root component of the app that sets up client-side routing using the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component. The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Routing.Router" title="Microsoft.AspNetCore.Components.Routing.Router">Microsoft.AspNetCore.Components.Routing.Router</a> component intercepts browser navigation and renders the page that matches the requested address.</p>
+</li>
+<li><p><code>Program.cs</code>: The app's entry point that sets up the WebAssembly host:</p>
+<ul>
+<li>The <code>App</code> component is the root component of the app. The <code>App</code> component is specified as the <code>app</code> DOM element (<code>&lt;app&gt;Loading...&lt;/app&gt;</code> in <code>wwwroot/index.html</code>) to the root component collection (<code>builder.RootComponents.Add&lt;App&gt;(&quot;app&quot;)</code>).</li>
+<li><a href="/fundamentals/dependency-injection">Services</a> are added and configured (for example, <code>builder.Services.AddSingleton&lt;IMyDependency, MyDependency&gt;()</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Additional files and folders may appear in an app produced from a Blazor WebAssembly project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.</p>
+<p>A <em>hosted Blazor WebAssembly solution</em> includes the following ASP.NET Core projects:</p>
+<ul>
+<li>&quot;:<span>no-loc text=&quot;Client&quot;:&quot;: The Blazor WebAssembly app.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Server&quot;:&quot;: An app that serves the Blazor WebAssembly app and weather data to clients.</span></li>
+<li>&quot;:<span>no-loc text=&quot;Shared&quot;:&quot;: A project that maintains common classes, methods, and resources.</span></li>
+</ul>
+<p>The solution is generated from the Blazor WebAssembly project template in Visual Studio with the <strong>ASP.NET Core Hosted</strong> checkbox selected or with the <code>-ho|--hosted</code> option using the .NET CLI's <code>dotnet new blazorwasm</code> command. For more information, see <a href=""></a>.</p>
+<p>The project structure of the client-side app in a hosted Blazor Webassembly solution (&quot;:<span>no-loc text=&quot;Client&quot;:&quot; project) is the same as the project structure for a standalone Blazor WebAssembly app. Additional files in a hosted Blazor WebAssembly solution:</span></p>
+<ul>
+<li>The &quot;:<span>no-loc text=&quot;Server&quot;:&quot; project includes a weather forecast controller at <code>Controllers/WeatherForecastController.cs</code> that returns weather data to the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; project's <code>FetchData</code> component.</span></span></li>
+<li>The &quot;:<span>no-loc text=&quot;Shared&quot;:&quot; project includes a weather forecast class at <code>WeatherForecast.cs</code> that represents weather data for the &quot;:<span>no-loc text=&quot;Client&quot;:&quot; and &quot;:<span>no-loc text=&quot;Server&quot;:&quot; projects.</span></span></span></li>
+</ul>
+<div class="moniker-end"><h2 id="location-of-the-blazor-script">Location of the Blazor script</h2>
+<div class="moniker"><p>The Blazor script is served as a static web asset with automatic compression and fingerprinting. For more information, see <a href=""></a>.</p>
+<p>In a Blazor Web App, the Blazor script is located in the <code>Components/App.razor</code> file:</p>
+<pre><code class="language-razor">&lt;script src=&quot;@Assets[&quot;_framework/blazor.web.js&quot;]&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>In a Blazor Server app, the Blazor script is located in the <code>Pages/_Host.cshtml</code> file:</p>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<div class="moniker-end">
+<div class="moniker"><p>The Blazor script is served from an embedded resource in the ASP.NET Core shared framework.</p>
+<p>In a Blazor Web App, the Blazor script is located in the <code>Components/App.razor</code> file:</p>
+<pre><code class="language-razor">&lt;script src=&quot;_framework/blazor.web.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>In a Blazor Server app, the Blazor script is located in the <code>Pages/_Host.cshtml</code> file:</p>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<div class="moniker-end">
+<div class="moniker"><p>The Blazor script is served from an embedded resource in the ASP.NET Core shared framework.</p>
+<p>In a Blazor Server app, the Blazor script is located in the <code>Pages/_Host.cshtml</code> file:</p>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<div class="moniker-end">
+<div class="moniker"><p>The Blazor script is served from an embedded resource in the ASP.NET Core shared framework.</p>
+<p>In a Blazor Server app, the Blazor script is located in the <code>Pages/_Layout.cshtml</code> file:</p>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<div class="moniker-end">
+<div class="moniker"><p>The Blazor script is served from an embedded resource in the ASP.NET Core shared framework.</p>
+<p>In a Blazor Server app, the Blazor script is located in the <code>Pages/_Host.cshtml</code> file:</p>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<div class="moniker-end"><p>For a Blazor Web App or a Blazor Server app, the project must contain at least one Razor component file (<code>.razor</code>) in order to automatically include the Blazor script when the app is published. If the project doesn't contain at least one Razor component, set the <code>RequiresAspNetWebAssets</code> MSBuild property to <code>true</code> in the app's project file to include the Blazor script:</p>
+<pre><code class="language-xml">&lt;RequiresAspNetWebAssets&gt;true&lt;/RequiresAspNetWebAssets&gt;
+</code></pre>
+<p>In a Blazor WebAssembly app, the Blazor script content is located in the <code>wwwroot/index.html</code> file:</p>
+<div class="moniker">
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.webassembly#[.{fingerprint}].js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>When the app is published, the <code>{fingerprint}</code> placeholder is automatically replaced with a unique hash for cache busting.</p>
+<div class="moniker-end">
+<div class="moniker">
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<div class="moniker-end"><h2 id="location-of-head-and-body-content">Location of <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> content</h2>
+<p>In a Blazor Web App, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> content is located in the <code>Components/App.razor</code> file.</p>
+<div class="moniker"><p>In a Blazor Server app, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> content is located in the <code>Pages/_Host.cshtml</code> file.</p>
+<div class="moniker-end">
+<div class="moniker"><p>In a Blazor Server app, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> content is located in the <code>Pages/_Layout.cshtml</code> file.</p>
+<div class="moniker-end">
+<div class="moniker"><p>In a Blazor Server app, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> content is located in the <code>Pages/_Host.cshtml</code> file.</p>
+<div class="moniker-end"><p>In a Blazor WebAssembly app, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> content is located in the <code>wwwroot/index.html</code> file.</p>
+<h2 id="additional-resources">Additional resources</h2>
+<div class="moniker">
+<ul>
+<li><a href=""></a></li>
+<li><a href="/getting-started/comparison">hosting-models</a></li>
+<li><a href=""></a></li>
+<li><a href="https://github.com/dotnet/blazor-samples">Blazor samples GitHub repository (<code>dotnet/blazor-samples</code>)</a> (<a href="">how to download</a>)</li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li><a href=""></a></li>
+<li><a href="/getting-started/comparison">hosting-models</a></li>
+<li><a href="https://github.com/dotnet/blazor-samples">Blazor samples GitHub repository (<code>dotnet/blazor-samples</code>)</a> (<a href="">how to download</a>)</li>
+</ul>
+<div class="moniker-end"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  </body>
+</html>

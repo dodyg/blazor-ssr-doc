@@ -1,0 +1,1083 @@
+- generic [active] [ref=e1]:
+  - heading "ASP.NET Core Blazor data binding" [level=1] [ref=e2]
+  - paragraph [ref=e3]: This article explains data binding features for Razor components and DOM elements in Blazor apps.
+  - heading "Binding features" [level=2] [ref=e4]
+  - paragraph [ref=e5]:
+    - text: Razor components provide data binding features with the
+    - link "@bind" [ref=e6] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e7]: "@bind"
+    - text: Razor directive attribute with a field, property, or Razor expression value.
+  - paragraph [ref=e8]: "The following example binds:"
+  - list [ref=e9]:
+    - listitem [ref=e10]:
+      - text: An
+      - code [ref=e11]: <input>
+      - text: element value to the C#
+      - code [ref=e12]: inputValue
+      - text: field.
+    - listitem [ref=e13]:
+      - text: A second
+      - code [ref=e14]: <input>
+      - text: element value to the C#
+      - code [ref=e15]: InputValue
+      - text: property.
+  - paragraph [ref=e16]:
+    - text: When an
+    - code [ref=e17]: <input>
+    - text: element loses focus, its bound field or property is updated.
+  - paragraph [ref=e18]:
+    - code [ref=e19]: Bind.razor
+    - text: ":"
+  - paragraph [ref=e20]: The text box is updated in the UI only when the component is rendered, not in response to changing the field's or property's value. Since components render themselves after event handler code executes, field and property updates are usually reflected in the UI immediately after an event handler is triggered.
+  - paragraph [ref=e21]:
+    - text: As a demonstration of how data binding composes in HTML, the following example binds the
+    - code [ref=e22]: InputValue
+    - text: property to the second
+    - code [ref=e23]: <input>
+    - text: element's
+    - code [ref=e24]: value
+    - text: and
+    - code [ref=e25]: onchange
+    - text: attributes (
+    - link "change" [ref=e26] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/API/HTMLElement/change_event
+      - code [ref=e27]: change
+    - text: ).
+    - emphasis [ref=e28]:
+      - text: The second
+      - code [ref=e29]: <input>
+      - text: element in the following example is a concept demonstration and isn't meant to suggest how you should bind data in Razor components.
+  - paragraph [ref=e30]:
+    - code [ref=e31]: BindTheory.razor
+    - text: ":"
+  - paragraph [ref=e32]:
+    - text: When the
+    - code [ref=e33]: BindTheory
+    - text: component is rendered, the
+    - code [ref=e34]: value
+    - text: of the HTML demonstration
+    - code [ref=e35]: <input>
+    - text: element comes from the
+    - code [ref=e36]: InputValue
+    - text: property. When the user enters a value in the text box and changes element focus, the
+    - code [ref=e37]: onchange
+    - text: event is fired and the
+    - code [ref=e38]: InputValue
+    - text: property is set to the changed value. In reality, code execution is more complex because
+    - link "@bind" [ref=e39] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e40]: "@bind"
+    - text: handles cases where type conversions are performed. In general,
+    - link "@bind" [ref=e41] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e42]: "@bind"
+    - text: associates the current value of an expression with the
+    - code [ref=e43]: value
+    - text: attribute of the
+    - code [ref=e44]: <input>
+    - text: and handles changes using the registered handler.
+  - paragraph [ref=e45]:
+    - text: Default binding with
+    - code [ref=e46]: "@bind"
+    - text: uses the
+    - link "change" [ref=e47] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/API/HTMLElement/change_event
+      - code [ref=e48]: change
+    - text: DOM event (
+    - code [ref=e49]: onchange
+    - text: ). Binding can also take place on the
+    - link "input" [ref=e50] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/API/HTMLElement/input_event
+      - code [ref=e51]: input
+    - text: DOM event using the
+    - code [ref=e52]: "@bind:event=\"{EVENT}\""
+    - text: attribute, where the
+    - code [ref=e53]: "{EVENT}"
+    - text: placeholder is either
+    - code [ref=e54]: oninput
+    - text: or
+    - code [ref=e55]: onchange
+    - text: (default).
+  - paragraph [ref=e56]:
+    - text: The following example binds the
+    - code [ref=e57]: InputValue
+    - text: property to the
+    - code [ref=e58]: <input>
+    - text: element's value when the element's
+    - code [ref=e59]: oninput
+    - text: event is triggered. Unlike the
+    - code [ref=e60]: onchange
+    - text: event, which fires when the element loses focus,
+    - code [ref=e61]: oninput
+    - text: fires when the value of the text box changes.
+  - paragraph [ref=e62]:
+    - code [ref=e63]: Page/BindEvent.razor
+    - text: ":"
+  - paragraph [ref=e64]: "To bind on other DOM events, use either of the following approaches:"
+  - list [ref=e65]:
+    - listitem [ref=e66]:
+      - link "Delegate event handlers" [ref=e67] [cursor=pointer]:
+        - /url: ""
+    - listitem [ref=e68]:
+      - link "Custom event arguments" [ref=e69] [cursor=pointer]:
+        - /url: ""
+  - paragraph [ref=e70]:
+    - text: To bind on other DOM events, use
+    - link "delegate event handlers" [ref=e71] [cursor=pointer]:
+      - /url: ""
+    - text: .
+  - paragraph [ref=e72]: "Razor attribute binding is case-sensitive:"
+  - list [ref=e73]:
+    - listitem [ref=e74]:
+      - code [ref=e75]: "@bind"
+      - text: and
+      - code [ref=e76]: "@bind:event"
+      - text: are valid.
+    - listitem [ref=e77]:
+      - code [ref=e78]: "@Bind"
+      - text: /
+      - code [ref=e79]: "@Bind:Event"
+      - text: (capital letters
+      - code [ref=e80]: B
+      - text: and
+      - code [ref=e81]: E
+      - text: ) or
+      - code [ref=e82]: "@BIND"
+      - text: /
+      - code [ref=e83]: "@BIND:EVENT"
+      - text: (all capital letters)
+      - strong [ref=e84]: are invalid
+      - text: .
+  - paragraph [ref=e85]:
+    - text: To execute asynchronous logic after binding, use
+    - code [ref=e86]: "@bind:after=\"{DELEGATE}\""
+    - text: ", where the"
+    - code [ref=e87]: "{DELEGATE}"
+    - text: placeholder is a C# delegate (method). An assigned C# delegate isn't executed until the bound value is assigned synchronously.
+  - paragraph [ref=e88]:
+    - text: Using an
+    - link "event callback parameter (EventCallback/EventCallback<T>)" [ref=e89] [cursor=pointer]:
+      - /url: ""
+      - text: event callback parameter (
+      - code [ref=e90]: EventCallback
+      - text: /
+      - code [ref=e91]: EventCallback<T>
+      - text: )
+    - text: with
+    - code [ref=e92]: "@bind:after"
+    - text: isn't supported. Instead, pass a method that returns an
+    - link "System.Action" [ref=e93] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Action
+    - text: or
+    - link "System.Threading.Tasks.Task" [ref=e94] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+    - text: to
+    - code [ref=e95]: "@bind:after"
+    - text: .
+  - paragraph [ref=e96]: "In the following example:"
+  - list [ref=e97]:
+    - listitem [ref=e98]:
+      - text: Each
+      - code [ref=e99]: <input>
+      - text: element's
+      - code [ref=e100]: value
+      - text: is bound to the
+      - code [ref=e101]: searchText
+      - text: field synchronously.
+    - listitem [ref=e102]:
+      - text: The
+      - code [ref=e103]: PerformSearch
+      - text: "method executes asynchronously:"
+      - list [ref=e104]:
+        - listitem [ref=e105]:
+          - text: When the first box loses focus (
+          - code [ref=e106]: onchange
+          - text: event) after the value is changed.
+        - listitem [ref=e107]:
+          - text: After each keystroke (
+          - code [ref=e108]: oninput
+          - text: event) in the second box.
+    - listitem [ref=e109]:
+      - code [ref=e110]: PerformSearch
+      - text: calls a service with an asynchronous method (
+      - code [ref=e111]: FetchAsync
+      - text: ) to return search results.
+  - code [ref=e113]: "@inject ISearchService SearchService <input @bind=\"searchText\" @bind:after=\"PerformSearch\" /> <input @bind=\"searchText\" @bind:event=\"oninput\" @bind:after=\"PerformSearch\" /> @code { private string? searchText; private string[]? searchResult; private async Task PerformSearch() => searchResult = await SearchService.FetchAsync(searchText); }"
+  - paragraph [ref=e114]: Additional examples
+  - paragraph [ref=e115]:
+    - code [ref=e116]: BindAfter.razor
+    - text: ":"
+  - code [ref=e118]: "@page \"/bind-after\" @using Microsoft.AspNetCore.Components.Forms <h1>Bind After Examples</h1> <h2>Elements</h2> <input type=\"text\" @bind=\"text\" @bind:after=\"() => { }\" /> <input type=\"text\" @bind=\"text\" @bind:after=\"After\" /> <input type=\"text\" @bind=\"text\" @bind:after=\"AfterAsync\" /> <h2>Components</h2> <InputText @bind-Value=\"text\" @bind-Value:after=\"() => { }\" /> <InputText @bind-Value=\"text\" @bind-Value:after=\"After\" /> <InputText @bind-Value=\"text\" @bind-Value:after=\"AfterAsync\" /> @code { private string text = \"\"; private void After() {} private Task AfterAsync() { return Task.CompletedTask; } }"
+  - paragraph [ref=e119]:
+    - text: For more information on the
+    - code [ref=e120]: InputText
+    - text: component, see
+    - link:
+      - /url: ""
+    - text: .
+  - paragraph [ref=e121]:
+    - text: Components support two-way data binding by defining a pair of
+    - code [ref=e122]: "@bind"
+    - text: attributes with either a
+    - code [ref=e123]: :get
+    - text: or
+    - code [ref=e124]: :set
+    - text: modifier. The
+    - code [ref=e125]: "{PARAMETER}"
+    - text: "placeholder in the following examples is used to bind a component parameter:"
+  - list [ref=e126]:
+    - listitem [ref=e127]:
+      - code [ref=e128]: "@bind:get"
+      - text: /
+      - code [ref=e129]: "@bind-{PARAMETER}:get"
+      - text: ": Specifies the value to bind."
+    - listitem [ref=e130]:
+      - code [ref=e131]: "@bind:set"
+      - text: /
+      - code [ref=e132]: "@bind-{PARAMETER}:set"
+      - text: ": Specifies a callback for when the value changes."
+  - paragraph [ref=e133]:
+    - text: The
+    - code [ref=e134]: :get
+    - text: /
+    - code [ref=e135]: :set
+    - text: modifiers are always used together.
+  - paragraph [ref=e136]:
+    - text: For binding to HTML elements, use
+    - code [ref=e137]: :get
+    - text: /
+    - code [ref=e138]: :set
+    - text: modifiers to ensure an
+    - code [ref=e139]: <input>
+    - text: "element stays synchronized with a bound value, even when the value is modified in the handler:"
+  - code [ref=e141]: <input @bind:get="inputValue" @bind:set="HandleValueChange" />
+  - generic [ref=e143]:
+    - paragraph [ref=e144]:
+      - text: The legacy approach prior to the release of .NET 7 used the
+      - code [ref=e145]: value
+      - text: attribute with
+      - code [ref=e146]: "@onchange"
+      - text: ":"
+    - code [ref=e148]: <input value="@inputValue" @onchange="HandleValueChange" />
+    - paragraph [ref=e149]:
+      - text: The preceding approach can cause synchronization errors, where the
+      - code [ref=e150]: <input>
+      - text: element displays a different value than the value held in the bound variable. Migrate to
+      - code [ref=e151]: :get
+      - text: /
+      - code [ref=e152]: :set
+      - text: modifiers to avoid this issue.
+  - paragraph [ref=e153]:
+    - text: For component parameters, the following syntaxes for a hypothetical
+    - code [ref=e154]: Child
+    - text: "component are functionally equivalent:"
+  - code [ref=e156]: <Child Value="@inputValue" ValueChanged="@(v => inputValue = v)" /> <Child @bind-Value:get="inputValue" @bind-Value:set="@(v => inputValue = v)" />
+  - paragraph [ref=e157]:
+    - text: With
+    - code [ref=e158]: :get
+    - text: /
+    - code [ref=e159]: :set
+    - text: modifier binding, you can react to a value change before it's applied to the DOM, and you can change the applied value, if necessary. Whereas with
+    - code [ref=e160]: "@bind:event=\"{EVENT}\""
+    - text: attribute binding, where the
+    - code [ref=e161]: "{EVENT}"
+    - text: placeholder is a DOM event, you receive the notification after the DOM is updated, and there's no capacity to modify the applied value while binding.
+  - paragraph [ref=e162]:
+    - text: The following
+    - code [ref=e163]: BindGetSet
+    - text: component demonstrates
+    - code [ref=e164]: :get
+    - text: /
+    - code [ref=e165]: :set
+    - text: syntax for
+    - code [ref=e166]: <input>
+    - text: elements and the
+    - link "InputText component" [ref=e167] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e168]: InputText
+      - text: component
+    - text: used by
+    - link "Blazor forms" [ref=e169] [cursor=pointer]:
+      - /url: /forms/index
+    - text: in synchronous (
+    - code [ref=e170]: Set
+    - text: ) and asynchronous (
+    - code [ref=e171]: SetAsync
+    - text: ) scenarios.
+  - paragraph [ref=e172]:
+    - code [ref=e173]: BindGetSet.razor
+    - text: ":"
+  - code [ref=e175]: "@page \"/bind-get-set\" @using Microsoft.AspNetCore.Components.Forms <h1>Bind Get Set Examples</h1> <h2>Elements</h2> <input type=\"text\" @bind:get=\"text\" @bind:set=\"(value) => { text = value; }\" /> <input type=\"text\" @bind:get=\"text\" @bind:set=\"Set\" /> <input type=\"text\" @bind:get=\"text\" @bind:set=\"SetAsync\" /> <h2>Components</h2> <InputText @bind-Value:get=\"text\" @bind-Value:set=\"(value) => { text = value; }\" /> <InputText @bind-Value:get=\"text\" @bind-Value:set=\"Set\" /> <InputText @bind-Value:get=\"text\" @bind-Value:set=\"SetAsync\" /> @code { private string text = string.Empty; private void Set(string value) { text = value; } private Task SetAsync(string value) { text = value; return Task.CompletedTask; } }"
+  - paragraph [ref=e176]:
+    - text: For more information on the
+    - code [ref=e177]: InputText
+    - text: component, see
+    - link:
+      - /url: ""
+    - text: .
+  - paragraph [ref=e178]:
+    - text: For another example use of
+    - code [ref=e179]: :get
+    - text: and
+    - code [ref=e180]: :set
+    - text: modifiers, see the
+    - link "Bind across more than two components" [ref=e181] [cursor=pointer]:
+      - /url: "#bind-across-more-than-two-components"
+    - text: section later in this article.
+  - paragraph [ref=e182]: "Razor attribute binding is case-sensitive:"
+  - list [ref=e183]:
+    - listitem [ref=e184]:
+      - code [ref=e185]: "@bind"
+      - text: ","
+      - code [ref=e186]: "@bind:event"
+      - text: ", and"
+      - code [ref=e187]: "@bind:after"
+      - text: are valid.
+    - listitem [ref=e188]:
+      - code [ref=e189]: "@Bind"
+      - text: /
+      - code [ref=e190]: "@bind:Event"
+      - text: /
+      - code [ref=e191]: "@bind:aftEr"
+      - text: (capital letters) or
+      - code [ref=e192]: "@BIND"
+      - text: /
+      - code [ref=e193]: "@BIND:EVENT"
+      - text: /
+      - code [ref=e194]: "@BIND:AFTER"
+      - text: (all capital letters)
+      - strong [ref=e195]: are invalid
+      - text: .
+  - heading "Use @bind:get/@bind:set modifiers and avoid event handlers for two-way data binding" [level=2] [ref=e196]:
+    - text: Use
+    - code [ref=e197]: "@bind:get"
+    - text: /
+    - code [ref=e198]: "@bind:set"
+    - text: modifiers and avoid event handlers for two-way data binding
+  - paragraph [ref=e199]:
+    - text: Two-way data binding isn't possible to implement with an event handler. Use
+    - code [ref=e200]: :get
+    - text: /
+    - code [ref=e201]: :set
+    - text: modifiers for two-way data binding.
+  - paragraph [ref=e202]:
+    - text: ❌ Consider the following
+    - emphasis [ref=e203]:
+      - strong [ref=e204]: dysfunctional approach
+    - text: "for two-way data binding using an event handler:"
+  - code [ref=e206]: "<p> <input value=\"@inputValue\" @oninput=\"OnInput\" /> </p> <p> <code>inputValue</code>: @inputValue </p> @code { private string? inputValue; private void OnInput(ChangeEventArgs args) { var newValue = args.Value?.ToString() ?? string.Empty; inputValue = newValue.Length > 4 ? \"Long!\" : newValue; } }"
+  - paragraph [ref=e207]:
+    - text: The
+    - code [ref=e208]: OnInput
+    - text: event handler updates the value of
+    - code [ref=e209]: inputValue
+    - text: to
+    - code [ref=e210]: Long!
+    - text: after a fourth character is provided. However, the user can continue adding characters to the element value in the UI. The value of
+    - code [ref=e211]: inputValue
+    - text: isn't bound back to the element's value with each keystroke. The preceding example is only capable of one-way data binding.
+  - paragraph [ref=e212]:
+    - text: The reason for this behavior is that Blazor isn't aware that your code intends to modify the value of
+    - code [ref=e213]: inputValue
+    - text: in the event handler. Blazor doesn't try to force DOM element values and .NET variable values to match unless they're bound with
+    - code [ref=e214]: "@bind"
+    - text: syntax. In earlier versions of Blazor, two-way data binding is implemented by
+    - link "binding the element to a property and controlling the property's value with its setter" [ref=e215] [cursor=pointer]:
+      - /url: "#binding-to-a-property-with-c-get-and-set-accessors"
+    - text: . In ASP.NET Core in .NET 7 or later,
+    - code [ref=e216]: :get
+    - text: /
+    - code [ref=e217]: :set
+    - text: modifier syntax is used to implement two-way data binding, as the next example demonstrates.
+  - paragraph [ref=e218]:
+    - text: ✔️ Consider the following
+    - emphasis [ref=e219]:
+      - strong [ref=e220]: correct approach
+    - text: using
+    - code [ref=e221]: :get
+    - text: /
+    - code [ref=e222]: :set
+    - text: "for two-way data binding:"
+  - code [ref=e224]: "<p> <input @bind:event=\"oninput\" @bind:get=\"inputValue\" @bind:set=\"OnInput\" /> </p> <p> <code>inputValue</code>: @inputValue </p> @code { private string? inputValue; private void OnInput(string value) { var newValue = value ?? string.Empty; inputValue = newValue.Length > 4 ? \"Long!\" : newValue; } }"
+  - paragraph [ref=e225]:
+    - text: Using
+    - code [ref=e226]: :get
+    - text: /
+    - code [ref=e227]: :set
+    - text: modifiers both controls the underlying value of
+    - code [ref=e228]: inputValue
+    - text: via
+    - code [ref=e229]: :set
+    - text: and binds the value of
+    - code [ref=e230]: inputValue
+    - text: to the element's value via
+    - code [ref=e231]: :get
+    - text: . The preceding example demonstrates the correct approach for implementing two-way data binding.
+  - heading "Binding to a property with C# get and set accessors" [level=2] [ref=e232]:
+    - text: Binding to a property with C#
+    - code [ref=e233]: get
+    - text: and
+    - code [ref=e234]: set
+    - text: accessors
+  - paragraph [ref=e235]:
+    - link "C# get and set accessors" [ref=e236] [cursor=pointer]:
+      - /url: /dotnet/csharp/programming-guide/classes-and-structs/using-properties
+      - text: C#
+      - code [ref=e237]: get
+      - text: and
+      - code [ref=e238]: set
+      - text: accessors
+    - text: can be used to create custom binding format behavior, as the following
+    - code [ref=e239]: DecimalBinding
+    - text: component demonstrates. The component binds a positive or negative decimal with up to three decimal places to an
+    - code [ref=e240]: <input>
+    - text: element by way of a
+    - code [ref=e241]: string
+    - text: property (
+    - code [ref=e242]: DecimalValue
+    - text: ).
+  - paragraph [ref=e243]:
+    - code [ref=e244]: DecimalBinding.razor
+    - text: ":"
+  - generic [ref=e246]:
+    - paragraph [ref=e247]:
+      - text: Across multiple components, two-way binding to a property with
+      - code [ref=e248]: get
+      - text: /
+      - code [ref=e249]: set
+      - text: accessors requires discarding the
+      - link "System.Threading.Tasks.Task" [ref=e250] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+      - text: returned by
+      - link "Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*?displayProperty=nameWithType" [ref=e251] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback.InvokeAsync--displayProperty-nameWithType
+      - text: in the property's setter. For two-way data binding, we recommend using
+      - code [ref=e252]: "@bind:get"
+      - text: /
+      - code [ref=e253]: "@bind:set"
+      - text: modifiers. For more information, see the
+      - link "@bind:get/@bind:set guidance" [ref=e254] [cursor=pointer]:
+        - /url: "#binding-features"
+        - code [ref=e255]: "@bind:get"
+        - text: /
+        - code [ref=e256]: "@bind:set"
+        - text: guidance
+      - text: earlier in this article.
+    - paragraph [ref=e257]:
+      - text: To see an example of how the
+      - link "System.Threading.Tasks.Task" [ref=e258] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+      - text: returned by
+      - link "Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*?displayProperty=nameWithType" [ref=e259] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback.InvokeAsync--displayProperty-nameWithType
+      - text: is discarded in .NET 6 or earlier before
+      - code [ref=e260]: "@bind:get"
+      - text: /
+      - code [ref=e261]: "@bind:set"
+      - text: modifiers became a framework feature, see
+      - link "the NestedChild component of the Bind across more than two components section in the .NET 6 version of this article" [ref=e262] [cursor=pointer]:
+        - /url: "?view=aspnetcore-6.0&preserve-view=true#bind-across-more-than-two-components"
+        - text: the
+        - code [ref=e263]: NestedChild
+        - text: component of the
+        - emphasis [ref=e264]: Bind across more than two components
+        - text: section in the .NET 6 version of this article
+      - text: .
+  - paragraph [ref=e267]:
+    - text: Two-way binding to a property with
+    - code [ref=e268]: get
+    - text: /
+    - code [ref=e269]: set
+    - text: accessors requires discarding the
+    - link "System.Threading.Tasks.Task" [ref=e270] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+    - text: returned by
+    - link "Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*?displayProperty=nameWithType" [ref=e271] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback.InvokeAsync--displayProperty-nameWithType
+    - text: . For an example, see
+    - link "the NestedChild component of the Bind across more than two components section" [ref=e272] [cursor=pointer]:
+      - /url: "#bind-across-more-than-two-components"
+      - text: the
+      - code [ref=e273]: NestedChild
+      - text: component of the
+      - emphasis [ref=e274]: Bind across more than two components
+      - text: section
+    - text: . For two-way data binding in .NET 7 or later, we recommend using
+    - code [ref=e275]: "@bind:get"
+    - text: /
+    - code [ref=e276]: "@bind:set"
+    - text: modifiers, which are described in .NET 7 or later versions of this article.
+  - heading "Multiple option selection with <select> elements" [level=2] [ref=e277]:
+    - text: Multiple option selection with
+    - code [ref=e278]: <select>
+    - text: elements
+  - paragraph [ref=e279]:
+    - text: Binding supports
+    - link "multiple" [ref=e280] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple
+      - code [ref=e281]: multiple
+    - text: option selection with
+    - code [ref=e282]: <select>
+    - text: elements. The
+    - link "@onchange" [ref=e283] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e284]: "@onchange"
+    - text: event provides an array of the selected elements via
+    - link "event arguments (ChangeEventArgs)" [ref=e285] [cursor=pointer]:
+      - /url: ""
+      - text: event arguments (
+      - code [ref=e286]: ChangeEventArgs
+      - text: )
+    - text: . The value must be bound to an array type.
+  - paragraph [ref=e287]:
+    - code [ref=e288]: BindMultipleInput.razor
+    - text: ":"
+  - code [ref=e290]: "@page \"/bind-multiple-input\" <h1>Bind Multiple <code>input</code>Example</h1> <p> <label> Select one or more cars: <select @onchange=\"SelectedCarsChanged\" multiple> <option value=\"audi\">Audi</option> <option value=\"jeep\">Jeep</option> <option value=\"opel\">Opel</option> <option value=\"saab\">Saab</option> <option value=\"volvo\">Volvo</option> </select> </label> </p> <p> Selected Cars: @string.Join(\", \", SelectedCars) </p> <p> <label> Select one or more cities: <select @bind=\"SelectedCities\" multiple> <option value=\"bal\">Baltimore</option> <option value=\"la\">Los Angeles</option> <option value=\"pdx\">Portland</option> <option value=\"sf\">San Francisco</option> <option value=\"sea\">Seattle</option> </select> </label> </p> <span> Selected Cities: @string.Join(\", \", SelectedCities) </span> @code { public string[] SelectedCars { get; set; } = []; public string[] SelectedCities { get; set; } = [ \"bal\", \"sea\" ]; private void SelectedCarsChanged(ChangeEventArgs e) { if (e.Value is not null) { SelectedCars = (string[])e.Value; } } }"
+  - code [ref=e292]: "@page \"/bind-multiple-input\" <h1>Bind Multiple <code>input</code>Example</h1> <p> <label> Select one or more cars: <select @onchange=\"SelectedCarsChanged\" multiple> <option value=\"audi\">Audi</option> <option value=\"jeep\">Jeep</option> <option value=\"opel\">Opel</option> <option value=\"saab\">Saab</option> <option value=\"volvo\">Volvo</option> </select> </label> </p> <p> Selected Cars: @string.Join(\", \", SelectedCars) </p> <p> <label> Select one or more cities: <select @bind=\"SelectedCities\" multiple> <option value=\"bal\">Baltimore</option> <option value=\"la\">Los Angeles</option> <option value=\"pdx\">Portland</option> <option value=\"sf\">San Francisco</option> <option value=\"sea\">Seattle</option> </select> </label> </p> <span> Selected Cities: @string.Join(\", \", SelectedCities) </span> @code { public string[] SelectedCars { get; set; } = new string[] { }; public string[] SelectedCities { get; set; } = new[] { \"bal\", \"sea\" }; private void SelectedCarsChanged(ChangeEventArgs e) { if (e.Value is not null) { SelectedCars = (string[])e.Value; } } }"
+  - paragraph [ref=e293]:
+    - text: For information on how empty strings and
+    - code [ref=e294]: "null"
+    - text: values are handled in data binding, see the
+    - link "Binding <select> element options to C# object null values" [ref=e295] [cursor=pointer]:
+      - /url: "#binding-select-element-options-to-c-object-null-values"
+      - text: Binding
+      - code [ref=e296]: <select>
+      - text: element options to C# object
+      - code [ref=e297]: "null"
+      - text: values
+    - text: section.
+  - heading "Binding <select> element options to C# object null values" [level=2] [ref=e298]:
+    - text: Binding
+    - code [ref=e299]: <select>
+    - text: element options to C# object
+    - code [ref=e300]: "null"
+    - text: values
+  - paragraph [ref=e301]:
+    - text: There's no sensible way to represent a
+    - code [ref=e302]: <select>
+    - text: element option value as a C# object
+    - code [ref=e303]: "null"
+    - text: "value, because:"
+  - list [ref=e304]:
+    - listitem [ref=e305]:
+      - text: HTML attributes can't have
+      - code [ref=e306]: "null"
+      - text: values. The closest equivalent to
+      - code [ref=e307]: "null"
+      - text: in HTML is absence of the HTML
+      - code [ref=e308]: value
+      - text: attribute from the
+      - code [ref=e309]: <option>
+      - text: element.
+    - listitem [ref=e310]:
+      - text: When selecting an
+      - code [ref=e311]: <option>
+      - text: with no
+      - code [ref=e312]: value
+      - text: attribute, the browser treats the value as the
+      - emphasis [ref=e313]: text content
+      - text: of that
+      - code [ref=e314]: <option>
+      - text: "'s element."
+  - paragraph [ref=e315]: "The Blazor framework doesn't attempt to suppress the default behavior because it would involve:"
+  - list [ref=e316]:
+    - listitem [ref=e317]: Creating a chain of special-case workarounds in the framework.
+    - listitem [ref=e318]: Breaking changes to current framework behavior.
+  - paragraph [ref=e319]:
+    - text: The most plausible
+    - code [ref=e320]: "null"
+    - text: equivalent in HTML is an
+    - emphasis [ref=e321]: empty string
+    - code [ref=e322]: value
+    - text: . The Blazor framework handles
+    - code [ref=e323]: "null"
+    - text: to empty string conversions for two-way binding to a
+    - code [ref=e324]: <select>
+    - text: "'s value."
+  - heading "Unparsable values" [level=2] [ref=e325]
+  - paragraph [ref=e326]: When a user provides an unparsable value to a data-bound element, the unparsable value is automatically reverted to its previous value when the bind event is triggered.
+  - paragraph [ref=e327]:
+    - text: Consider the following component, where an
+    - code [ref=e328]: <input>
+    - text: element is bound to an
+    - code [ref=e329]: int
+    - text: type with an initial value of
+    - code [ref=e330]: "123"
+    - text: .
+  - paragraph [ref=e331]:
+    - code [ref=e332]: UnparsableValues.razor
+    - text: ":"
+  - paragraph [ref=e333]:
+    - text: Binding applies to the element's
+    - code [ref=e334]: onchange
+    - text: event. If the user updates the value of the text box's entry to
+    - code [ref=e335]: "123.45"
+    - text: and changes the focus, the element's value is reverted to
+    - code [ref=e336]: "123"
+    - text: when
+    - code [ref=e337]: onchange
+    - text: fires. When the value
+    - code [ref=e338]: "123.45"
+    - text: is rejected in favor of the original value of
+    - code [ref=e339]: "123"
+    - text: ", the user understands that their value wasn't accepted."
+  - paragraph [ref=e340]:
+    - text: For the
+    - code [ref=e341]: oninput
+    - text: event (
+    - code [ref=e342]: "@bind:event=\"oninput\""
+    - text: ), a value reversion occurs after any keystroke that introduces an unparsable value. When targeting the
+    - code [ref=e343]: oninput
+    - text: event with an
+    - code [ref=e344]: int
+    - text: "-bound type, a user is prevented from typing a dot ("
+    - code [ref=e345]: .
+    - text: ) character. A dot (
+    - code [ref=e346]: .
+    - text: ) character is immediately removed, so the user receives immediate feedback that only whole numbers are permitted. There are scenarios where reverting the value on the
+    - code [ref=e347]: oninput
+    - text: event isn't ideal, such as when the user should be allowed to clear an unparsable
+    - code [ref=e348]: <input>
+    - text: "value. Alternatives include:"
+  - list [ref=e349]:
+    - listitem [ref=e350]:
+      - text: Don't use the
+      - code [ref=e351]: oninput
+      - text: event. Use the default
+      - code [ref=e352]: onchange
+      - text: event, where an invalid value isn't reverted until the element loses focus.
+    - listitem [ref=e353]:
+      - text: Bind to a nullable type, such as
+      - code [ref=e354]: int?
+      - text: or
+      - code [ref=e355]: string
+      - text: and either use
+      - code [ref=e356]: "@bind:get"
+      - text: /
+      - code [ref=e357]: "@bind:set"
+      - text: modifiers (described earlier in this article) or
+      - link "bind to a property with custom get and set accessor logic" [ref=e358] [cursor=pointer]:
+        - /url: "#binding-to-a-property-with-c-get-and-set-accessors"
+        - text: bind to a property with custom
+        - code [ref=e359]: get
+        - text: and
+        - code [ref=e360]: set
+        - text: accessor logic
+      - text: to handle invalid entries.
+    - listitem [ref=e361]:
+      - text: Use an
+      - link "input component" [ref=e362] [cursor=pointer]:
+        - /url: ""
+      - text: ", such as"
+      - 'link "Microsoft.AspNetCore.Components.Forms.InputNumber`1" [ref=e363] [cursor=pointer]':
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1
+      - text: or
+      - 'link "Microsoft.AspNetCore.Components.Forms.InputDate`1" [ref=e364] [cursor=pointer]':
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1
+      - text: ", with"
+      - link "form validation" [ref=e365] [cursor=pointer]:
+        - /url: /forms/validation
+      - text: ". Input components together with form validation components provide built-in support to manage invalid inputs:"
+      - list [ref=e366]:
+        - listitem [ref=e367]:
+          - text: Permit the user to provide invalid input and receive validation errors on the associated
+          - link "Microsoft.AspNetCore.Components.Forms.EditContext" [ref=e368] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext
+          - text: .
+        - listitem [ref=e369]: Display validation errors in the UI without interfering with the user entering additional webform data.
+  - heading "Format strings" [level=2] [ref=e370]
+  - paragraph [ref=e371]:
+    - text: Data binding works with a single
+    - link "System.DateTime" [ref=e372] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.DateTime
+    - text: format string using
+    - code [ref=e373]: "@bind:format=\"{FORMAT STRING}\""
+    - text: ", where the"
+    - code [ref=e374]: "{FORMAT STRING}"
+    - text: placeholder is the format string. Other format expressions, such as currency or number formats, aren't available at this time but might be added in a future release.
+  - paragraph [ref=e375]:
+    - code [ref=e376]: DateBinding.razor
+    - text: ":"
+  - paragraph [ref=e377]:
+    - text: In the preceding code, the
+    - code [ref=e378]: <input>
+    - text: element's field type (
+    - code [ref=e379]: type
+    - text: attribute) defaults to
+    - code [ref=e380]: text
+    - text: .
+  - paragraph [ref=e381]:
+    - text: Nullable
+    - link "System.DateTime?displayProperty=fullName" [ref=e382] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.DateTime-displayProperty-fullName
+    - text: and
+    - link "System.DateTimeOffset?displayProperty=fullName" [ref=e383] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.DateTimeOffset-displayProperty-fullName
+    - text: "are supported:"
+  - code [ref=e385]: private DateTime? date; private DateTimeOffset? dateOffset;
+  - paragraph [ref=e386]:
+    - text: Specifying a format for the
+    - code [ref=e387]: date
+    - text: field type isn't recommended because Blazor has built-in support to format dates. In spite of the recommendation, only use the
+    - code [ref=e388]: yyyy-MM-dd
+    - text: date format for binding to function correctly if a format is supplied with the
+    - code [ref=e389]: date
+    - text: "field type:"
+  - code [ref=e391]: <input type="date" @bind="startDate" @bind:format="yyyy-MM-dd">
+  - heading "Binding with component parameters" [level=2] [ref=e392]
+  - paragraph [ref=e393]:
+    - text: A common scenario is binding a property of a child component to a property in its parent component. This scenario is called a
+    - emphasis [ref=e394]: chained bind
+    - text: because multiple levels of binding occur simultaneously.
+  - paragraph [ref=e395]:
+    - text: You can't implement chained binds with
+    - link "@bind" [ref=e396] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e397]: "@bind"
+    - text: syntax in a child component. An event handler and value must be specified separately to support updating the property in the parent from the child component. The parent component still leverages
+    - link "@bind" [ref=e398] [cursor=pointer]:
+      - /url: ""
+      - code [ref=e399]: "@bind"
+    - text: syntax to set up data binding with the child component.
+  - paragraph [ref=e400]:
+    - text: The following
+    - code [ref=e401]: ChildBind
+    - text: component has a
+    - code [ref=e402]: Year
+    - text: component parameter and an
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e403] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: . By convention, the
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e404] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: for the parameter must be named as the component parameter name with a "
+    - code [ref=e405]: Changed
+    - text: "\" suffix. The naming syntax is"
+    - code [ref=e406]: "{PARAMETER NAME}Changed"
+    - text: ", where the"
+    - code [ref=e407]: "{PARAMETER NAME}"
+    - text: placeholder is the parameter name. In the following example, the
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e408] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: is named
+    - code [ref=e409]: YearChanged
+    - text: .
+  - paragraph [ref=e410]:
+    - link "Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*?displayProperty=nameWithType" [ref=e411] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback.InvokeAsync--displayProperty-nameWithType
+    - text: invokes the delegate associated with the binding with the provided argument and dispatches an event notification for the changed property.
+  - paragraph [ref=e412]:
+    - code [ref=e413]: ChildBind.razor
+    - text: ":"
+  - paragraph [ref=e414]:
+    - text: For more information on events and
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e415] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: ", see the"
+    - emphasis [ref=e416]: EventCallback
+    - text: section of the
+    - link:
+      - /url: ""
+    - text: article.
+  - paragraph [ref=e417]:
+    - text: In the following
+    - code [ref=e418]: Parent1
+    - text: component, the
+    - code [ref=e419]: year
+    - text: field is bound to the
+    - code [ref=e420]: Year
+    - text: parameter of the child component. The
+    - code [ref=e421]: Year
+    - text: parameter is bindable because it has a companion
+    - code [ref=e422]: YearChanged
+    - text: event that matches the type of the
+    - code [ref=e423]: Year
+    - text: parameter.
+  - paragraph [ref=e424]:
+    - code [ref=e425]: Parent1.razor
+    - text: ":"
+  - paragraph [ref=e426]:
+    - text: Component parameter binding can also trigger
+    - code [ref=e427]: "@bind:after"
+    - text: events. In the following example, the
+    - code [ref=e428]: YearUpdated
+    - text: method executes asynchronously after binding the
+    - code [ref=e429]: Year
+    - text: component parameter.
+  - code [ref=e431]: "<ChildBind @bind-Year=\"year\" @bind-Year:after=\"YearUpdated\" /> @code { ... private async Task YearUpdated() { ... = await ...; } }"
+  - paragraph [ref=e432]:
+    - text: By convention, a property can be bound to a corresponding event handler by including an
+    - code [ref=e433]: "@bind-{PROPERTY}:event"
+    - text: attribute assigned to the handler, where the
+    - code [ref=e434]: "{PROPERTY}"
+    - text: placeholder is the property.
+    - code [ref=e435]: <ChildBind @bind-Year="year" />
+    - text: "is equivalent to writing:"
+  - code [ref=e437]: <ChildBind @bind-Year="year" @bind-Year:event="YearChanged" />
+  - paragraph [ref=e438]:
+    - text: In a more sophisticated and real-world example, the following
+    - code [ref=e439]: PasswordEntry
+    - text: "component:"
+  - list [ref=e440]:
+    - listitem [ref=e441]:
+      - text: Sets an
+      - code [ref=e442]: <input>
+      - text: element's value to a
+      - code [ref=e443]: password
+      - text: field.
+    - listitem [ref=e444]:
+      - text: Exposes changes of a
+      - code [ref=e445]: Password
+      - text: property to a parent component with an
+      - link "EventCallback" [ref=e446] [cursor=pointer]:
+        - /url: ""
+        - code [ref=e447]: EventCallback
+      - text: that passes in the current value of the child's
+      - code [ref=e448]: password
+      - text: field as its argument.
+    - listitem [ref=e449]:
+      - text: Uses the
+      - code [ref=e450]: onclick
+      - text: event to trigger the
+      - code [ref=e451]: ToggleShowPassword
+      - text: method. For more information, see
+      - link:
+        - /url: ""
+      - text: .
+  - paragraph [ref=e452]:
+    - code [ref=e453]: PasswordEntry.razor
+    - text: ":"
+  - paragraph [ref=e454]:
+    - text: The
+    - code [ref=e455]: PasswordEntry
+    - text: component is used in another component, such as the following
+    - code [ref=e456]: PasswordBinding
+    - text: component example.
+  - paragraph [ref=e457]:
+    - code [ref=e458]: PasswordBinding.razor
+    - text: ":"
+  - paragraph [ref=e459]:
+    - text: When the
+    - code [ref=e460]: PasswordBinding
+    - text: component is initially rendered, the
+    - code [ref=e461]: password
+    - text: value of
+    - code [ref=e462]: Not set
+    - text: is displayed in the UI. After initial rendering, the value of
+    - code [ref=e463]: password
+    - text: reflects changes made to the
+    - code [ref=e464]: Password
+    - text: component parameter value in the
+    - code [ref=e465]: PasswordEntry
+    - text: component.
+  - paragraph [ref=e468]:
+    - text: The preceding example binds the password one-way from the child
+    - code [ref=e469]: PasswordEntry
+    - text: component to the parent
+    - code [ref=e470]: PasswordBinding
+    - text: component. Two-way binding isn't a requirement in this scenario if the goal is for the app to have a shared password entry component for reuse around the app that merely passes the password to the parent. For an approach that permits two-way binding without
+    - link "writing directly to the child component's parameter" [ref=e471] [cursor=pointer]:
+      - /url: ""
+    - text: ", see the"
+    - code [ref=e472]: NestedChild
+    - text: component example in the
+    - link "Bind across more than two components" [ref=e473] [cursor=pointer]:
+      - /url: "#bind-across-more-than-two-components"
+    - text: section of this article.
+  - paragraph [ref=e474]:
+    - text: Perform checks or trap errors in the handler. The following revised
+    - code [ref=e475]: PasswordEntry
+    - text: component provides immediate feedback to the user if a space is used in the password's value.
+  - paragraph [ref=e476]:
+    - code [ref=e477]: PasswordEntry.razor
+    - text: ":"
+  - paragraph [ref=e478]:
+    - text: In the following example, the
+    - code [ref=e479]: PasswordUpdated
+    - text: method executes asynchronously after binding the
+    - code [ref=e480]: Password
+    - text: "component parameter:"
+  - code [ref=e482]: <PasswordEntry @bind-Password="password" @bind-Password:after="PasswordUpdated" />
+  - heading "Bind across more than two components" [level=2] [ref=e483]
+  - paragraph [ref=e484]: "You can bind parameters through any number of nested components, but you must respect the one-way flow of data:"
+  - list [ref=e485]:
+    - listitem [ref=e486]:
+      - text: Change notifications
+      - emphasis [ref=e487]: flow up the hierarchy
+      - text: .
+    - listitem [ref=e488]:
+      - text: New parameter values
+      - emphasis [ref=e489]: flow down the hierarchy
+      - text: .
+  - paragraph [ref=e490]: A common and recommended approach is to only store the underlying data in the parent component to avoid any confusion about what state must be updated, as shown in the following example.
+  - paragraph [ref=e491]:
+    - code [ref=e492]: Parent2.razor
+    - text: ":"
+  - paragraph [ref=e493]:
+    - text: In the following
+    - code [ref=e494]: NestedChild
+    - text: component, the
+    - code [ref=e495]: NestedGrandchild
+    - text: "component:"
+  - list [ref=e496]:
+    - listitem [ref=e497]:
+      - text: Assigns the value of
+      - code [ref=e498]: ChildMessage
+      - text: to
+      - code [ref=e499]: GrandchildMessage
+      - text: with
+      - code [ref=e500]: "@bind:get"
+      - text: syntax.
+    - listitem [ref=e501]:
+      - text: Updates
+      - code [ref=e502]: GrandchildMessage
+      - text: when
+      - code [ref=e503]: ChildMessageChanged
+      - text: executes with
+      - code [ref=e504]: "@bind:set"
+      - text: syntax.
+  - paragraph [ref=e505]:
+    - text: Prior to the release of .NET 7, two-way binding across components uses
+    - code [ref=e506]: get
+    - text: /
+    - code [ref=e507]: set
+    - text: accessors with a third property that discards the
+    - link "System.Threading.Tasks.Task" [ref=e508] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+    - text: returned by
+    - link "Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*?displayProperty=nameWithType" [ref=e509] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback.InvokeAsync--displayProperty-nameWithType
+    - text: in its setter. To see an example of this approach for .NET 6 or earlier before
+    - code [ref=e510]: "@bind:get"
+    - text: /
+    - code [ref=e511]: "@bind:set"
+    - text: modifiers became a framework feature, see
+    - link "the NestedChild component of this section in the .NET 6 version of this article" [ref=e512] [cursor=pointer]:
+      - /url: "?view=aspnetcore-6.0&preserve-view=true#bind-across-more-than-two-components"
+      - text: the
+      - code [ref=e513]: NestedChild
+      - text: component of this section in the .NET 6 version of this article
+    - text: .
+  - paragraph [ref=e514]:
+    - text: The reason to avoid directly changing the value of a component parameter is that it effectively mutates the parent's state from the child component. This can interfere with Blazor's change detection process and trigger extra render cycles because parameters are meant to be
+    - emphasis [ref=e515]: inputs
+    - text: ", they're not meant to be mutable state. In chained scenarios where data is passed among components, directly writing to a component parameter can lead to unintended effects, such as infinite rerenders that hang the app."
+  - paragraph [ref=e516]:
+    - code [ref=e517]: "@bind:get"
+    - text: /
+    - code [ref=e518]: "@bind:set"
+    - text: "syntax allows you to:"
+  - list [ref=e519]:
+    - listitem [ref=e520]: Avoid creating an extra property that only exists to forward values and callbacks across chained components, which was required prior to the release of .NET 7.
+    - listitem [ref=e521]: Intercept and transform values before they're applied.
+    - listitem [ref=e522]: Keep the parameter immutable in the child, while still supporting two-way binding.
+  - paragraph [ref=e523]:
+    - text: A useful analogy is
+    - link "HTML's <input> element" [ref=e524] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/HTML/Reference/Elements/input
+      - text: HTML's
+      - code [ref=e525]: <input>
+      - text: element
+    - text: "that tracks the following value states:"
+  - list [ref=e526]:
+    - listitem [ref=e527]:
+      - code [ref=e528]: defaultValue
+      - text: ": Like a component parameter received from the parent."
+    - listitem [ref=e529]:
+      - code [ref=e530]: value
+      - text: ": Like the current state inside the component."
+  - paragraph [ref=e531]:
+    - text: If you mutate
+    - code [ref=e532]: defaultValue
+    - text: directly, you're breaking the contract. Instead, these states are kept separate, and only the
+    - code [ref=e533]: value
+    - text: is updated through controlled means after the initial render of the element. The same reasoning applies to component parameters, and using
+    - code [ref=e534]: "@bind:get"
+    - text: /
+    - code [ref=e535]: "@bind:set"
+    - text: syntax avoids potential unintended rendering effects associated with writing directly to component parameters.
+  - paragraph [ref=e536]:
+    - code [ref=e537]: NestedChild.razor
+    - text: ":"
+  - paragraph [ref=e540]:
+    - text: Generally, avoid creating components that write directly to their own component parameters. The preceding
+    - code [ref=e541]: NestedChild
+    - text: component makes use of a
+    - code [ref=e542]: BoundValue
+    - text: property instead of writing directly to its
+    - code [ref=e543]: ChildMessage
+    - text: parameter. For more information, see
+    - link:
+      - /url: ""
+    - text: .
+  - paragraph [ref=e544]:
+    - code [ref=e545]: NestedGrandchild.razor
+    - text: ":"
+  - paragraph [ref=e546]:
+    - text: For an alternative approach suited to sharing data in memory and across components that aren't necessarily nested, see
+    - link:
+      - /url: ""
+    - text: .
+  - heading "Bound field or property expression tree" [level=2] [ref=e547]
+  - paragraph [ref=e548]:
+    - text: To facilitate deeper interactions with a binding, Blazor allows you to capture of the
+    - link "expression tree" [ref=e549] [cursor=pointer]:
+      - /url: /dotnet/csharp/advanced-topics/expression-trees
+    - text: of a bound field or property. This is achieved by defining a property with the field or property name suffixed with
+    - code [ref=e550]: Expression
+    - text: . For any given field or property named
+    - code [ref=e551]: "{FIELD OR PROPERTY NAME}"
+    - text: ", the corresponding expression tree property is named"
+    - code [ref=e552]: "{FIELD OR PROPERTY NAME}Expression"
+    - text: .
+  - paragraph [ref=e553]:
+    - text: The following
+    - code [ref=e554]: ChildParameterExpression
+    - text: component identifies the
+    - code [ref=e555]: Year
+    - text: expression's model and field name. A
+    - link "Microsoft.AspNetCore.Components.Forms.FieldIdentifier" [ref=e556] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.FieldIdentifier
+    - text: ", which is used to obtain the model and field name, uniquely identifies a single field that can be edited. This may correspond to a property on a model object or can be any other named value. Use of a parameter's expression is useful when creating custom validation components, which isn't covered by the Microsoft Blazor documentation but is addressed by numerous third-party resources."
+  - paragraph [ref=e557]:
+    - code [ref=e558]: ChildParameterExpression.razor
+    - text: ":"
+  - paragraph [ref=e559]:
+    - code [ref=e560]: Parent3.razor
+    - text: ":"
+  - heading "Additional resources" [level=2] [ref=e561]
+  - list [ref=e562]:
+    - listitem [ref=e563]:
+      - link "Parameter change detection and additional guidance on Razor component rendering" [ref=e564] [cursor=pointer]:
+        - /url: ""
+    - listitem [ref=e565]:
+      - link "index" [ref=e566] [cursor=pointer]:
+        - /url: /forms/index
+    - listitem [ref=e567]:
+      - link "Binding to radio buttons in a form" [ref=e568] [cursor=pointer]:
+        - /url: ""
+    - listitem [ref=e569]:
+      - link "Binding InputSelect options to C# object null values" [ref=e570] [cursor=pointer]:
+        - /url: ""
+        - text: Binding
+        - code [ref=e571]: InputSelect
+        - text: options to C# object
+        - code [ref=e572]: "null"
+        - text: values
+    - listitem [ref=e573]:
+      - 'link "ASP.NET Core Blazor event handling: EventCallback section" [ref=e574] [cursor=pointer]':
+        - /url: ""
+        - text: "ASP.NET Core Blazor event handling:"
+        - code [ref=e575]: EventCallback
+        - text: section
+    - listitem [ref=e576]:
+      - link "Blazor samples GitHub repository (dotnet/blazor-samples)" [ref=e577] [cursor=pointer]:
+        - /url: https://github.com/dotnet/blazor-samples
+        - text: Blazor samples GitHub repository (
+        - code [ref=e578]: dotnet/blazor-samples
+        - text: )
+      - text: (
+      - link "how to download" [ref=e579] [cursor=pointer]:
+        - /url: ""
+      - text: )

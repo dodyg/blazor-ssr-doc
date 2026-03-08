@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>ASP.NET Core Blazor input components - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="aspnet-core-blazor-input-components">ASP.NET Core Blazor input components</h1>
+<p>This article describes Blazor's built-in input components.</p>
+<h2 id="input-components">Input components</h2>
+<p>The Blazor framework provides built-in input components to receive and validate user input. The built-in input components in the following table are supported in an <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditForm" title="Microsoft.AspNetCore.Components.Forms.EditForm">Microsoft.AspNetCore.Components.Forms.EditForm</a> with an <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext" title="Microsoft.AspNetCore.Components.Forms.EditContext">Microsoft.AspNetCore.Components.Forms.EditContext</a>.</p>
+<div class="moniker"><p>The components in the table are also supported outside of a form in Razor component markup. Inputs are validated when they're changed and when a form is submitted.</p>
+<div class="moniker-end">
+<div class="moniker">
+<table>
+<thead>
+<tr>
+<th>Input component</th>
+<th>Rendered as…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputCheckbox" title="Microsoft.AspNetCore.Components.Forms.InputCheckbox">Microsoft.AspNetCore.Components.Forms.InputCheckbox</a></td>
+<td><code>&lt;input type=&quot;checkbox&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1" title="Microsoft.AspNetCore.Components.Forms.InputDate`1">Microsoft.AspNetCore.Components.Forms.InputDate`1</a></td>
+<td><code>&lt;input type=&quot;date&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputFile" title="Microsoft.AspNetCore.Components.Forms.InputFile">Microsoft.AspNetCore.Components.Forms.InputFile</a></td>
+<td><code>&lt;input type=&quot;file&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1" title="Microsoft.AspNetCore.Components.Forms.InputNumber`1">Microsoft.AspNetCore.Components.Forms.InputNumber`1</a></td>
+<td><code>&lt;input type=&quot;number&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputRadio-1" title="Microsoft.AspNetCore.Components.Forms.InputRadio`1">Microsoft.AspNetCore.Components.Forms.InputRadio`1</a></td>
+<td><code>&lt;input type=&quot;radio&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputRadioGroup-1" title="Microsoft.AspNetCore.Components.Forms.InputRadioGroup`1">Microsoft.AspNetCore.Components.Forms.InputRadioGroup`1</a></td>
+<td>Group of child <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputRadio-1" title="Microsoft.AspNetCore.Components.Forms.InputRadio`1">Microsoft.AspNetCore.Components.Forms.InputRadio`1</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputSelect-1" title="Microsoft.AspNetCore.Components.Forms.InputSelect`1">Microsoft.AspNetCore.Components.Forms.InputSelect`1</a></td>
+<td><code>&lt;select&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputText" title="Microsoft.AspNetCore.Components.Forms.InputText">Microsoft.AspNetCore.Components.Forms.InputText</a></td>
+<td><code>&lt;input&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputTextArea" title="Microsoft.AspNetCore.Components.Forms.InputTextArea">Microsoft.AspNetCore.Components.Forms.InputTextArea</a></td>
+<td><code>&lt;textarea&gt;</code></td>
+</tr>
+<tr>
+<td><a href="#label-component"><code>Label&lt;TValue&gt;</code></a> (.NET 11 or later)</td>
+<td><code>&lt;label&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>For more information on the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputFile" title="Microsoft.AspNetCore.Components.Forms.InputFile">Microsoft.AspNetCore.Components.Forms.InputFile</a> component, see <a href=""></a>.</p>
+<div class="moniker-end">
+<div class="moniker">
+<table>
+<thead>
+<tr>
+<th>Input component</th>
+<th>Rendered as…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputCheckbox" title="Microsoft.AspNetCore.Components.Forms.InputCheckbox">Microsoft.AspNetCore.Components.Forms.InputCheckbox</a></td>
+<td><code>&lt;input type=&quot;checkbox&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1" title="Microsoft.AspNetCore.Components.Forms.InputDate`1">Microsoft.AspNetCore.Components.Forms.InputDate`1</a></td>
+<td><code>&lt;input type=&quot;date&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1" title="Microsoft.AspNetCore.Components.Forms.InputNumber`1">Microsoft.AspNetCore.Components.Forms.InputNumber`1</a></td>
+<td><code>&lt;input type=&quot;number&quot;&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputSelect-1" title="Microsoft.AspNetCore.Components.Forms.InputSelect`1">Microsoft.AspNetCore.Components.Forms.InputSelect`1</a></td>
+<td><code>&lt;select&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputText" title="Microsoft.AspNetCore.Components.Forms.InputText">Microsoft.AspNetCore.Components.Forms.InputText</a></td>
+<td><code>&lt;input&gt;</code></td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputTextArea" title="Microsoft.AspNetCore.Components.Forms.InputTextArea">Microsoft.AspNetCore.Components.Forms.InputTextArea</a></td>
+<td><code>&lt;textarea&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!NOTE]
+<a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputRadio-1" title="Microsoft.AspNetCore.Components.Forms.InputRadio`1">Microsoft.AspNetCore.Components.Forms.InputRadio`1</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputRadioGroup-1" title="Microsoft.AspNetCore.Components.Forms.InputRadioGroup`1">Microsoft.AspNetCore.Components.Forms.InputRadioGroup`1</a> components are available in .NET 5 or later. For more information, select a .NET 5 or later version of this article.</p>
+</blockquote>
+<div class="moniker-end"><p>All of the input components, including <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditForm" title="Microsoft.AspNetCore.Components.Forms.EditForm">Microsoft.AspNetCore.Components.Forms.EditForm</a>, support arbitrary attributes. Any attribute that doesn't match a component parameter is added to the rendered HTML element.</p>
+<p>Input components provide default behavior for validating when a field is changed:</p>
+<ul>
+<li>For input components in a form with an <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext" title="Microsoft.AspNetCore.Components.Forms.EditContext">Microsoft.AspNetCore.Components.Forms.EditContext</a>, the default validation behavior includes updating the field CSS class to reflect the field's state as valid or invalid with validation styling of the underlying HTML element.</li>
+<li>For controls that don't have an <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext" title="Microsoft.AspNetCore.Components.Forms.EditContext">Microsoft.AspNetCore.Components.Forms.EditContext</a>, the default validation reflects the valid or invalid state but doesn't provide validation styling to the underlying HTML element.</li>
+</ul>
+<p>Some components include useful parsing logic. For example, <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1" title="Microsoft.AspNetCore.Components.Forms.InputDate`1">Microsoft.AspNetCore.Components.Forms.InputDate`1</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1" title="Microsoft.AspNetCore.Components.Forms.InputNumber`1">Microsoft.AspNetCore.Components.Forms.InputNumber`1</a> handle unparseable values gracefully by registering unparseable values as validation errors. Types that can accept null values also support nullability of the target field (for example, <code>int?</code> for a nullable integer).</p>
+<div class="moniker"><p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1" title="Microsoft.AspNetCore.Components.Forms.InputNumber`1">Microsoft.AspNetCore.Components.Forms.InputNumber`1</a> component supports the <a href="https://developer.mozilla.org/docs/Web/HTML/Element/input/range"><code>type=&quot;range&quot;</code> attribute</a>, which creates a range input that supports model binding and form validation, typically rendered as a slider or dial control rather than a text box:</p>
+<pre><code class="language-razor">&lt;InputNumber @bind-Value=&quot;...&quot; max=&quot;...&quot; min=&quot;...&quot; step=&quot;...&quot; type=&quot;range&quot; /&gt;
+</code></pre>
+<div class="moniker-end">
+<div class="moniker"><p>For more information on the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputFile" title="Microsoft.AspNetCore.Components.Forms.InputFile">Microsoft.AspNetCore.Components.Forms.InputFile</a> component, see <a href=""></a>.</p>
+<div class="moniker-end"><h2 id="example-form">Example form</h2>
+<p>The following <code>Starship</code> type, which is used in several of this article's examples and examples in other <em>Forms</em> node articles, defines a diverse set of properties with data annotations:</p>
+<ul>
+<li><code>Id</code> is required because it's annotated with the <a href="https://docs.microsoft.com/en-us/dotnet/api/System.ComponentModel.DataAnnotations.RequiredAttribute" title="System.ComponentModel.DataAnnotations.RequiredAttribute">System.ComponentModel.DataAnnotations.RequiredAttribute</a>. <code>Id</code> requires a value of at least one character but no more than 16 characters using the <a href="https://docs.microsoft.com/en-us/dotnet/api/System.ComponentModel.DataAnnotations.StringLengthAttribute" title="System.ComponentModel.DataAnnotations.StringLengthAttribute">System.ComponentModel.DataAnnotations.StringLengthAttribute</a>.</li>
+<li><code>Description</code> is optional because it isn't annotated with the <a href="https://docs.microsoft.com/en-us/dotnet/api/System.ComponentModel.DataAnnotations.RequiredAttribute" title="System.ComponentModel.DataAnnotations.RequiredAttribute">System.ComponentModel.DataAnnotations.RequiredAttribute</a>.</li>
+<li><code>Classification</code> is required.</li>
+<li>The <code>MaximumAccommodation</code> property defaults to zero but requires a value from one to 100,000 per its <a href="https://docs.microsoft.com/en-us/dotnet/api/System.ComponentModel.DataAnnotations.RangeAttribute" title="System.ComponentModel.DataAnnotations.RangeAttribute">System.ComponentModel.DataAnnotations.RangeAttribute</a>.</li>
+<li><code>IsValidatedDesign</code> requires that the property have a <code>true</code> value, which matches a selected state when the property is bound to a checkbox in the UI (<code>&lt;input type=&quot;checkbox&quot;&gt;</code>).</li>
+<li><code>ProductionDate</code> is a <a href="https://docs.microsoft.com/en-us/dotnet/api/System.DateTime" title="System.DateTime">System.DateTime</a> and required.</li>
+</ul>
+<p><code>Starship.cs</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><p>The following form accepts and validates user input using:</p>
+<ul>
+<li>The properties and validation defined in the preceding <code>Starship</code> model.</li>
+<li>Several of Blazor's built-in input components.</li>
+</ul>
+<p>When the model property for the ship's classification (<code>Classification</code>) is set, the option matching the model is checked. For example, <code>checked=&quot;@(Model!.Classification == &quot;Exploration&quot;)&quot;</code> for the classification of an exploration ship. The reason for explicitly setting the checked option is that the value of a <code>&lt;select&gt;</code> element is only present in the browser. If the form is rendered on the server after it's submitted, any state from the client is overridden with state from the server, which doesn't ordinarily mark an option as checked. By setting the checked option from the model property, the classification always reflects the model's state. This preserves the classification selection across form submissions that result in the form rerendering on the server. In situations where the form isn't rerendered on the server, such as when the Interactive Server render mode is applied directly to the component, explicit assignment of the checked option from the model isn't necessary because Blazor preserves the state for the <code>&lt;select&gt;</code> element on the client.</p>
+<p><code>Starship3.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditForm" title="Microsoft.AspNetCore.Components.Forms.EditForm">Microsoft.AspNetCore.Components.Forms.EditForm</a> in the preceding example creates an <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext" title="Microsoft.AspNetCore.Components.Forms.EditContext">Microsoft.AspNetCore.Components.Forms.EditContext</a> based on the assigned <code>Starship</code> instance (<code>Model=&quot;...&quot;</code>) and handles a valid form. The next example demonstrates how to assign an <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext" title="Microsoft.AspNetCore.Components.Forms.EditContext">Microsoft.AspNetCore.Components.Forms.EditContext</a> to a form and validate when the form is submitted.</p>
+<p>In the following example:</p>
+<ul>
+<li>A shortened version of the earlier <code>Starfleet Starship Database</code> form (<code>Starship3</code> component) is used that only accepts a value for the starship's Id. The other <code>Starship</code> properties receive valid default values when an instance of the <code>Starship</code> type is created.</li>
+<li>The <code>Submit</code> method executes when the <strong><code>Submit</code></strong> button is selected.</li>
+<li>The form is validated by calling <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext.Validate--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.Forms.EditContext.Validate*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.Forms.EditContext.Validate*?displayProperty=nameWithType</a> in the <code>Submit</code> method.</li>
+<li>Logging is executed depending on the validation result.</li>
+</ul>
+<p><code>Starship4.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<blockquote>
+<p>[!NOTE]
+Changing the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.EditContext" title="Microsoft.AspNetCore.Components.Forms.EditContext">Microsoft.AspNetCore.Components.Forms.EditContext</a> after it's assigned is <strong>not</strong> supported.</p>
+</blockquote>
+<div class="moniker"><h2 id="multiple-option-selection-with-the-inputselect-component">Multiple option selection with the <code>InputSelect</code> component</h2>
+<p>Binding supports <a href="https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple"><code>multiple</code></a> option selection with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputSelect-1" title="Microsoft.AspNetCore.Components.Forms.InputSelect`1">Microsoft.AspNetCore.Components.Forms.InputSelect`1</a> component. The <a href=""><code>@onchange</code></a> event provides an array of the selected options via <a href="">event arguments (<code>ChangeEventArgs</code>)</a>. The value must be bound to an array type, which results in the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputSelect-1" title="Microsoft.AspNetCore.Components.Forms.InputSelect`1">Microsoft.AspNetCore.Components.Forms.InputSelect`1</a> component automatically adding the <a href="https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple"><code>multiple</code> attribute</a> to the <code>&lt;select&gt;</code> element when the component is rendered.</p>
+<p>In the following example, the user must select at least two starship classifications but no more than three classifications.</p>
+<p><code>Starship5.razor</code>:</p>
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<pre><code class="language-razor">@page &quot;/starship-5&quot;
+@using System.ComponentModel.DataAnnotations
+@inject ILogger&lt;Starship5&gt; Logger
+
+&lt;h1&gt;Bind Multiple &lt;code&gt;InputSelect&lt;/code&gt; Example&lt;/h1&gt;
+
+&lt;EditForm EditContext=&quot;editContext&quot; OnValidSubmit=&quot;Submit&quot;&gt;
+    &lt;DataAnnotationsValidator /&gt;
+    &lt;ValidationSummary /&gt;
+    &lt;div&gt;
+        &lt;label&gt;
+            Select classifications (Minimum: 2, Maximum: 3):
+            &lt;InputSelect @bind-Value=&quot;Model!.SelectedClassification&quot;&gt;
+                &lt;option value=&quot;@Classification.Exploration&quot;&gt;Exploration&lt;/option&gt;
+                &lt;option value=&quot;@Classification.Diplomacy&quot;&gt;Diplomacy&lt;/option&gt;
+                &lt;option value=&quot;@Classification.Defense&quot;&gt;Defense&lt;/option&gt;
+                &lt;option value=&quot;@Classification.Research&quot;&gt;Research&lt;/option&gt;
+            &lt;/InputSelect&gt;
+        &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/EditForm&gt;
+
+@if (Model?.SelectedClassification?.Length &gt; 0)
+{
+    &lt;div&gt;@string.Join(&quot;, &quot;, Model.SelectedClassification)&lt;/div&gt;
+}
+
+@code {
+    private EditContext? editContext;
+
+    private Starship? Model { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+        editContext = new(Model);
+    }
+
+    private void Submit()
+    {
+        Logger.LogInformation(&quot;Submit called: Processing the form&quot;);
+    }
+
+    private class Starship
+    {
+        [Required]
+        [MinLength(2, ErrorMessage = &quot;Select at least two classifications.&quot;)]
+        [MaxLength(3, ErrorMessage = &quot;Select no more than three classifications.&quot;)]
+        public Classification[]? SelectedClassification { get; set; } =
+            new[] { Classification.None };
+    }
+
+    private enum Classification { None, Exploration, Diplomacy, Defense, Research }
+}
+</code></pre>
+<!--
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/forms-and-validation/Starship5.razor":::
+-->
+<div class="moniker-end">
+<div class="moniker"><p>For information on how empty strings and <code>null</code> values are handled in data binding, see the <a href="#binding-inputselect-options-to-c-object-null-values">Binding <code>InputSelect</code> options to C# object <code>null</code> values</a> section.</p>
+<div class="moniker-end"><h2 id="binding-inputselect-options-to-c-object-null-values">Binding <code>InputSelect</code> options to C# object <code>null</code> values</h2>
+<p>For information on how empty strings and <code>null</code> values are handled in data binding, see <a href=""></a>.</p>
+<div class="moniker"><h2 id="display-name-support">Display name support</h2>
+<p>Several built-in components support display names with the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputBase-1.DisplayName--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*?displayProperty=nameWithType</a> parameter.</p>
+<p>In the <code>Starfleet Starship Database</code> form (<code>Starship3</code> component) of the <a href="#example-form">Example form</a> section, the production date of a new starship doesn't specify a display name:</p>
+<pre><code class="language-razor">&lt;label&gt;
+    Production Date:
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<p>If the field contains an invalid date when the form is submitted, the error message doesn't display a friendly name. The field name, &quot;<code>ProductionDate</code>&quot; doesn't have a space between &quot;<code>Production</code>&quot; and &quot;<code>Date</code>&quot; when it appears in the validation summary:</p>
+<blockquote>
+<p>The ProductionDate field must be a date.</p>
+</blockquote>
+<p>Set the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputBase-1.DisplayName" title="Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*">Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*</a> property to a friendly name with a space between the words &quot;<code>Production</code>&quot; and &quot;<code>Date</code>&quot;:</p>
+<pre><code class="language-razor">&lt;label&gt;
+    Production Date:
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; 
+        DisplayName=&quot;Production Date&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<p>The validation summary displays the friendly name when the field's value is invalid:</p>
+<blockquote>
+<p>The Production Date field must be a date.</p>
+</blockquote>
+<div class="moniker-end">
+<div class="moniker"><!-- UPDATE 11.0 - API cross-link 
+
+                   <xref:Microsoft.AspNetCore.Components.Forms.DisplayName%601>
+-->
+<p>The <code>DisplayName</code> component can be used to display property names from metadata attributes</p>
+<pre><code class="language-csharp">[Required, DisplayName(&quot;Production Date&quot;)]
+public DateTime ProductionDate { get; set; }
+</code></pre>
+<p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/System.ComponentModel.DataAnnotations.DisplayAttribute"><code>[Display]</code> attribute</a> on the model class property is supported:</p>
+<pre><code class="language-csharp">[Required, Display(Name = &quot;Production Date&quot;)]
+public DateTime ProductionDate { get; set; }
+</code></pre>
+<p>Between the two approaches, the <code>[Display]</code> attribute is recommended, which makes additional properties available. The <code>[Display]</code> attribute also enables assigning a resource type for localization. When both attributes are present, <code>[Display]</code> takes precedence over <code>[DisplayName]</code>. If neither attribute is present, the component falls back to the property name.</p>
+<p>Use the <code>DisplayName</code> component in labels or table headers:</p>
+<pre><code class="language-razor">&lt;label&gt;
+    &lt;DisplayName For=&quot;@(() =&gt; Model!.ProductionDate)&quot; /&gt;
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<div class="moniker-end">
+<div class="moniker"><h2 id="label-component"><code>Label</code> component</h2>
+<!-- UPDATE 11.0 - API cross-link 
+
+                   <xref:Microsoft.AspNetCore.Components.Forms.Label%601>
+-->
+<p>The <code>Label</code> component renders a <code>&lt;label&gt;</code> element that automatically extracts the display name from a model property using <code>[Display]</code> or <code>[DisplayName]</code> attributes. This simplifies form creation by eliminating the need to manually specify label text.</p>
+<h3 id="nested-pattern">Nested pattern</h3>
+<p>The nested pattern wraps the input component inside the label:</p>
+<pre><code class="language-razor">&lt;Label For=&quot;() =&gt; Model!.ProductionDate&quot;&gt;
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; /&gt;
+&lt;/Label&gt;
+</code></pre>
+<p>This renders:</p>
+<pre><code class="language-html">&lt;label&gt;Production Date&lt;input type=&quot;date&quot; ... /&gt;&lt;/label&gt;
+</code></pre>
+<h3 id="non-nested-pattern">Non-nested pattern</h3>
+<p>For accessibility requirements or styling flexibility, use the non-nested pattern where the label's <code>for</code> attribute references the input's <code>id</code>:</p>
+<pre><code class="language-razor">&lt;Label For=&quot;() =&gt; Model!.ProductionDate&quot; /&gt;
+&lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; /&gt;
+</code></pre>
+<p>This renders:</p>
+<pre><code class="language-html">&lt;label for=&quot;Model_ProductionDate&quot;&gt;Production Date&lt;/label&gt;
+&lt;input id=&quot;Model_ProductionDate&quot; type=&quot;date&quot; ... /&gt;
+</code></pre>
+<p>The <code>id</code> attribute is automatically sanitized to create a valid HTML id (dots are replaced with underscores to avoid CSS selector conflicts).</p>
+<p>Input components automatically generate an <code>id</code> attribute based on the bound expression. If an explicit <code>id</code> is provided, it takes precedence:</p>
+<pre><code class="language-razor">&lt;Label For=&quot;() =&gt; Model!.ProductionDate&quot; for=&quot;prod-date&quot; /&gt;
+&lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; id=&quot;prod-date&quot; /&gt;
+</code></pre>
+<div class="moniker-end"><h2 id="error-message-template-support">Error message template support</h2>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1" title="Microsoft.AspNetCore.Components.Forms.InputDate`1">Microsoft.AspNetCore.Components.Forms.InputDate`1</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1" title="Microsoft.AspNetCore.Components.Forms.InputNumber`1">Microsoft.AspNetCore.Components.Forms.InputNumber`1</a> support error message templates:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1.ParsingErrorMessage--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage*?displayProperty=nameWithType</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputNumber-1.ParsingErrorMessage--displayProperty-nameWithType" title="Microsoft.AspNetCore.Components.Forms.InputNumber`1.ParsingErrorMessage*?displayProperty=nameWithType">Microsoft.AspNetCore.Components.Forms.InputNumber`1.ParsingErrorMessage*?displayProperty=nameWithType</a></li>
+</ul>
+<div class="moniker"><p>In the <code>Starfleet Starship Database</code> form (<code>Starship3</code> component) of the <a href="#example-form">Example form</a> section with a <a href="#display-name-support">friendly display name</a> assigned, the <code>Production Date</code> field produces an error message using the following default error message template:</p>
+<pre><code class="language-css">The {0} field must be a date.
+</code></pre>
+<p>The position of the <code>{0}</code> placeholder is where the value of the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputBase-1.DisplayName" title="Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*">Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*</a> property appears when the error is displayed to the user.</p>
+<pre><code class="language-razor">&lt;label&gt;
+    Production Date:
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; 
+        DisplayName=&quot;Production Date&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<blockquote>
+<p>The Production Date field must be a date.</p>
+</blockquote>
+<p>Assign a custom template to <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1.ParsingErrorMessage" title="Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage*">Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage*</a> to provide a custom message:</p>
+<pre><code class="language-razor">&lt;label&gt;
+    Production Date:
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; 
+        DisplayName=&quot;Production Date&quot; 
+        ParsingErrorMessage=&quot;The {0} field has an incorrect date value.&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<blockquote>
+<p>The Production Date field has an incorrect date value.</p>
+</blockquote>
+<div class="moniker-end">
+<div class="moniker"><p>In the <code>Starfleet Starship Database</code> form (<code>Starship3</code> component) of the <a href="#example-form">Example form</a> section uses a default error message template:</p>
+<pre><code class="language-css">The {0} field must be a date.
+</code></pre>
+<p>The position of the <code>{0}</code> placeholder is where the value of the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputBase-1.DisplayName" title="Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*">Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName*</a> property appears when the error is displayed to the user.</p>
+<pre><code class="language-razor">&lt;label&gt;
+    Production Date:
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<blockquote>
+<p>The ProductionDate field must be a date.</p>
+</blockquote>
+<p>Assign a custom template to <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputDate-1.ParsingErrorMessage" title="Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage*">Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage*</a> to provide a custom message:</p>
+<pre><code class="language-razor">&lt;label&gt;
+    Production Date:
+    &lt;InputDate @bind-Value=&quot;Model!.ProductionDate&quot; 
+        ParsingErrorMessage=&quot;The {0} field has an incorrect date value.&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<blockquote>
+<p>The ProductionDate field has an incorrect date value.</p>
+</blockquote>
+<div class="moniker-end">
+<div class="moniker"><h2 id="inputhidden-component-to-handle-hidden-input-fields-in-forms"><code>InputHidden</code> component to handle hidden input fields in forms</h2>
+<p>The <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Forms.InputHidden"><code>InputHidden</code> component</a> provides a hidden input field for storing string values.</p>
+<p>In the following example, a hidden input field is created for the form's <code>Parameter</code> property. When the form is submitted, the value of the hidden field is displayed:</p>
+<pre><code class="language-razor">&lt;EditForm Model=&quot;Parameter&quot; OnValidSubmit=&quot;Submit&quot; FormName=&quot;InputHidden Example&quot;&gt;
+    &lt;InputHidden id=&quot;hidden&quot; @bind-Value=&quot;Parameter&quot; /&gt;
+    &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+&lt;/EditForm&gt;
+
+@if (submitted)
+{
+    &lt;p&gt;Hello @Parameter!&lt;/p&gt;
+}
+
+@code {
+    private bool submitted;
+
+    [SupplyParameterFromForm] 
+    public string Parameter { get; set; } = &quot;stranger&quot;;
+
+    private void Submit() =&gt; submitted = true;
+}
+</code></pre>
+<div class="moniker-end"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  </body>
+</html>

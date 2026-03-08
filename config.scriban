@@ -17,31 +17,8 @@
           "url": "/",
           "weight": 1
         },
-        {
-          "title": "Getting Started",
-          "url": "/getting-started/",
-          "weight": 2,
-          "items": [
-            { "title": "What is Blazor SSR?", "url": "/getting-started/what-is-ssr" },
-            { "title": "Quick Start", "url": "/getting-started/quick-start" },
-            { "title": "Comparison", "url": "/getting-started/comparison" },
-            { "title": "Project Structure", "url": "/getting-started/project-structure" },
-            { "title": "Tooling", "url": "/getting-started/tooling" },
-            { "title": "Supported Platforms", "url": "/getting-started/supported-platforms" }
-          ]
-        },
-        {
-          "title": "Fundamentals",
-          "url": "/fundamentals/",
-          "weight": 3,
-          "items": [
-            { "title": "Render Modes", "url": "/fundamentals/render-modes" },
-            { "title": "Routing", "url": "/fundamentals/routing" },
-            { "title": "Dependency Injection", "url": "/fundamentals/dependency-injection" },
-            { "title": "Configuration", "url": "/fundamentals/configuration" },
-            { "title": "Static Files", "url": "/fundamentals/static-files" }
-          ]
-        },
+
+
         {
           "title": "Components",
           "url": "/components/",

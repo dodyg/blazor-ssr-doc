@@ -1,0 +1,867 @@
+- generic [active] [ref=e1]:
+  - heading "ASP.NET Core Blazor event handling" [level=1] [ref=e2]
+  - paragraph [ref=e3]: This article explains Blazor's event handling features, including event argument types, event callbacks, and managing default browser events.
+  - heading "Delegate event handlers" [level=2] [ref=e4]
+  - paragraph [ref=e5]:
+    - text: Specify delegate event handlers in Razor component markup with
+    - 'link "@on{DOM EVENT}=\"{DELEGATE}\"" [ref=e6] [cursor=pointer]':
+      - /url: ""
+      - code [ref=e7]: "@on{DOM EVENT}=\"{DELEGATE}\""
+    - text: "Razor syntax:"
+  - list [ref=e8]:
+    - listitem [ref=e9]:
+      - text: The
+      - code [ref=e10]: "{DOM EVENT}"
+      - text: placeholder is a
+      - link "DOM event" [ref=e11] [cursor=pointer]:
+        - /url: https://developer.mozilla.org/docs/Web/Events
+      - text: (for example,
+      - code [ref=e12]: click
+      - text: ).
+    - listitem [ref=e13]:
+      - text: The
+      - code [ref=e14]: "{DELEGATE}"
+      - text: placeholder is the C# delegate event handler.
+  - paragraph [ref=e15]:
+    - text: For supported events, see
+    - link "Microsoft.AspNetCore.Components.Web.EventHandlers" [ref=e16] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.EventHandlers
+    - text: .
+  - paragraph [ref=e17]: "For event handling:"
+  - list [ref=e18]:
+    - listitem [ref=e19]:
+      - text: Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the
+      - code [ref=e20]: App
+      - text: component. For more information, see </fundamentals/render-modes#apply-a-render-mode-to-the-entire-app>.
+    - listitem [ref=e21]:
+      - text: Asynchronous delegate event handlers that return a
+      - link "System.Threading.Tasks.Task" [ref=e22] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+      - text: (
+      - code [ref=e23]: async Task
+      - text: ) are supported by Blazor and adopted by Blazor Web App and Blazor WebAssembly documentation examples.
+    - listitem [ref=e24]:
+      - text: Delegate event handlers automatically trigger a UI render, so there's no need to manually call
+      - link "StateHasChanged" [ref=e25] [cursor=pointer]:
+        - /url: ""
+        - code [ref=e26]: StateHasChanged
+      - text: .
+    - listitem [ref=e27]: Exceptions are logged.
+  - paragraph [ref=e30]:
+    - text: The Blazor framework doesn't track
+    - code [ref=e31]: void
+    - text: "-returning asynchronous methods ("
+    - code [ref=e32]: async
+    - text: ). As a result, the entire process fails when an exception isn't caught if
+    - code [ref=e33]: void
+    - text: is returned. Always return a
+    - link "System.Threading.Tasks.Task" [ref=e34] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+    - text: /
+    - link "System.Threading.Tasks.ValueTask" [ref=e35] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.ValueTask
+    - text: from asynchronous methods.
+  - paragraph [ref=e36]: "The following code:"
+  - list [ref=e37]:
+    - listitem [ref=e38]:
+      - text: Calls the
+      - code [ref=e39]: UpdateHeading
+      - text: method when the button is selected in the UI.
+    - listitem [ref=e40]:
+      - text: Calls the
+      - code [ref=e41]: CheckChanged
+      - text: method when the checkbox is changed in the UI.
+  - paragraph [ref=e42]:
+    - code [ref=e43]: EventHandler1.razor
+    - text: ":"
+  - paragraph [ref=e44]:
+    - code [ref=e45]: EventHandler1.razor
+    - text: ":"
+  - paragraph [ref=e46]:
+    - code [ref=e47]: EventHandlerExample1.razor
+    - text: ":"
+  - paragraph [ref=e48]:
+    - code [ref=e49]: EventHandlerExample1.razor
+    - text: ":"
+  - paragraph [ref=e50]:
+    - code [ref=e51]: EventHandlerExample1.razor
+    - text: ":"
+  - paragraph [ref=e52]:
+    - code [ref=e53]: EventHandlerExample1.razor
+    - text: ":"
+  - paragraph [ref=e54]:
+    - text: In the following example,
+    - code [ref=e55]: UpdateHeading
+    - text: ":"
+  - list [ref=e56]:
+    - listitem [ref=e57]: Is called asynchronously when the button is selected.
+    - listitem [ref=e58]: Waits two seconds before updating the heading.
+  - paragraph [ref=e59]:
+    - code [ref=e60]: EventHandler2.razor
+    - text: ":"
+  - paragraph [ref=e61]:
+    - code [ref=e62]: EventHandler2.razor
+    - text: ":"
+  - paragraph [ref=e63]:
+    - code [ref=e64]: EventHandlerExample2.razor
+    - text: ":"
+  - paragraph [ref=e65]:
+    - code [ref=e66]: EventHandlerExample2.razor
+    - text: ":"
+  - paragraph [ref=e67]:
+    - code [ref=e68]: EventHandlerExample2.razor
+    - text: ":"
+  - paragraph [ref=e69]:
+    - code [ref=e70]: EventHandlerExample2.razor
+    - text: ":"
+  - heading "Built-in event arguments" [level=2] [ref=e71]
+  - paragraph [ref=e72]:
+    - text: For events that support an event argument type, specifying an event parameter in the event method definition is only necessary if the event type is used in the method. In the following example,
+    - link "Microsoft.AspNetCore.Components.Web.MouseEventArgs" [ref=e73] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.MouseEventArgs
+    - text: is used in the
+    - code [ref=e74]: ReportPointerLocation
+    - text: method to set message text that reports the mouse coordinates when the user selects a button in the UI.
+  - paragraph [ref=e75]:
+    - code [ref=e76]: EventHandler3.razor
+    - text: ":"
+  - paragraph [ref=e77]:
+    - code [ref=e78]: EventHandler3.razor
+    - text: ":"
+  - paragraph [ref=e79]:
+    - code [ref=e80]: EventHandlerExample3.razor
+    - text: ":"
+  - paragraph [ref=e81]:
+    - code [ref=e82]: EventHandlerExample3.razor
+    - text: ":"
+  - paragraph [ref=e83]:
+    - code [ref=e84]: EventHandlerExample3.razor
+    - text: ":"
+  - paragraph [ref=e85]:
+    - code [ref=e86]: EventHandlerExample3.razor
+    - text: ":"
+  - paragraph [ref=e87]:
+    - text: Supported
+    - link "System.EventArgs" [ref=e88] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.EventArgs
+    - text: are shown in the following table.
+  - table [ref=e89]:
+    - rowgroup [ref=e90]:
+      - row "Event Class DOM notes" [ref=e91]:
+        - columnheader "Event" [ref=e92]
+        - columnheader "Class" [ref=e93]
+        - columnheader "DOM notes" [ref=e94]
+    - rowgroup [ref=e95]:
+      - row "Clipboard Microsoft.AspNetCore.Components.Web.ClipboardEventArgs" [ref=e96]:
+        - cell "Clipboard" [ref=e97]
+        - cell "Microsoft.AspNetCore.Components.Web.ClipboardEventArgs" [ref=e98]:
+          - link "Microsoft.AspNetCore.Components.Web.ClipboardEventArgs" [ref=e99] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.ClipboardEventArgs
+        - cell [ref=e100]
+      - row "Drag Microsoft.AspNetCore.Components.Web.DragEventArgs Microsoft.AspNetCore.Components.Web.DataTransfer and Microsoft.AspNetCore.Components.Web.DataTransferItem hold dragged item data. Implement drag and drop in Blazor apps using JS interop with HTML Drag and Drop API." [ref=e101]:
+        - cell "Drag" [ref=e102]
+        - cell "Microsoft.AspNetCore.Components.Web.DragEventArgs" [ref=e103]:
+          - link "Microsoft.AspNetCore.Components.Web.DragEventArgs" [ref=e104] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.DragEventArgs
+        - cell "Microsoft.AspNetCore.Components.Web.DataTransfer and Microsoft.AspNetCore.Components.Web.DataTransferItem hold dragged item data. Implement drag and drop in Blazor apps using JS interop with HTML Drag and Drop API." [ref=e105]:
+          - link "Microsoft.AspNetCore.Components.Web.DataTransfer" [ref=e106] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.DataTransfer
+          - text: and
+          - link "Microsoft.AspNetCore.Components.Web.DataTransferItem" [ref=e107] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.DataTransferItem
+          - text: hold dragged item data.
+          - text: Implement drag and drop in Blazor apps using
+          - link "JS interop" [ref=e108] [cursor=pointer]:
+            - /url: ""
+          - text: with
+          - link "HTML Drag and Drop API" [ref=e109] [cursor=pointer]:
+            - /url: https://developer.mozilla.org/docs/Web/API/HTML_Drag_and_Drop_API
+          - text: .
+      - row "Error Microsoft.AspNetCore.Components.Web.ErrorEventArgs" [ref=e110]:
+        - cell "Error" [ref=e111]
+        - cell "Microsoft.AspNetCore.Components.Web.ErrorEventArgs" [ref=e112]:
+          - link "Microsoft.AspNetCore.Components.Web.ErrorEventArgs" [ref=e113] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.ErrorEventArgs
+        - cell [ref=e114]
+      - row "Event System.EventArgs Microsoft.AspNetCore.Components.Web.EventHandlers holds attributes to configure the mappings between event names and event argument types." [ref=e115]:
+        - cell "Event" [ref=e116]
+        - cell "System.EventArgs" [ref=e117]:
+          - link "System.EventArgs" [ref=e118] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/System.EventArgs
+        - cell "Microsoft.AspNetCore.Components.Web.EventHandlers holds attributes to configure the mappings between event names and event argument types." [ref=e119]:
+          - link "Microsoft.AspNetCore.Components.Web.EventHandlers" [ref=e120] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.EventHandlers
+          - text: holds attributes to configure the mappings between event names and event argument types.
+      - row "Focus Microsoft.AspNetCore.Components.Web.FocusEventArgs Doesn't include support for relatedTarget." [ref=e121]:
+        - cell "Focus" [ref=e122]
+        - cell "Microsoft.AspNetCore.Components.Web.FocusEventArgs" [ref=e123]:
+          - link "Microsoft.AspNetCore.Components.Web.FocusEventArgs" [ref=e124] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.FocusEventArgs
+        - cell "Doesn't include support for relatedTarget." [ref=e125]:
+          - text: Doesn't include support for
+          - code [ref=e126]: relatedTarget
+          - text: .
+      - row "Input Microsoft.AspNetCore.Components.ChangeEventArgs" [ref=e127]:
+        - cell "Input" [ref=e128]
+        - cell "Microsoft.AspNetCore.Components.ChangeEventArgs" [ref=e129]:
+          - link "Microsoft.AspNetCore.Components.ChangeEventArgs" [ref=e130] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ChangeEventArgs
+        - cell [ref=e131]
+      - row "Keyboard Microsoft.AspNetCore.Components.Web.KeyboardEventArgs" [ref=e132]:
+        - cell "Keyboard" [ref=e133]
+        - cell "Microsoft.AspNetCore.Components.Web.KeyboardEventArgs" [ref=e134]:
+          - link "Microsoft.AspNetCore.Components.Web.KeyboardEventArgs" [ref=e135] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.KeyboardEventArgs
+        - cell [ref=e136]
+      - row "Mouse Microsoft.AspNetCore.Components.Web.MouseEventArgs" [ref=e137]:
+        - cell "Mouse" [ref=e138]
+        - cell "Microsoft.AspNetCore.Components.Web.MouseEventArgs" [ref=e139]:
+          - link "Microsoft.AspNetCore.Components.Web.MouseEventArgs" [ref=e140] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.MouseEventArgs
+        - cell [ref=e141]
+      - row "Mouse pointer Microsoft.AspNetCore.Components.Web.PointerEventArgs" [ref=e142]:
+        - cell "Mouse pointer" [ref=e143]
+        - cell "Microsoft.AspNetCore.Components.Web.PointerEventArgs" [ref=e144]:
+          - link "Microsoft.AspNetCore.Components.Web.PointerEventArgs" [ref=e145] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.PointerEventArgs
+        - cell [ref=e146]
+      - row "Mouse wheel Microsoft.AspNetCore.Components.Web.WheelEventArgs" [ref=e147]:
+        - cell "Mouse wheel" [ref=e148]
+        - cell "Microsoft.AspNetCore.Components.Web.WheelEventArgs" [ref=e149]:
+          - link "Microsoft.AspNetCore.Components.Web.WheelEventArgs" [ref=e150] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.WheelEventArgs
+        - cell [ref=e151]
+      - row "Progress Microsoft.AspNetCore.Components.Web.ProgressEventArgs" [ref=e152]:
+        - cell "Progress" [ref=e153]
+        - cell "Microsoft.AspNetCore.Components.Web.ProgressEventArgs" [ref=e154]:
+          - link "Microsoft.AspNetCore.Components.Web.ProgressEventArgs" [ref=e155] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.ProgressEventArgs
+        - cell [ref=e156]
+      - row "Touch Microsoft.AspNetCore.Components.Web.TouchEventArgs Microsoft.AspNetCore.Components.Web.TouchPoint represents a single contact point on a touch-sensitive device." [ref=e157]:
+        - cell "Touch" [ref=e158]
+        - cell "Microsoft.AspNetCore.Components.Web.TouchEventArgs" [ref=e159]:
+          - link "Microsoft.AspNetCore.Components.Web.TouchEventArgs" [ref=e160] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.TouchEventArgs
+        - cell "Microsoft.AspNetCore.Components.Web.TouchPoint represents a single contact point on a touch-sensitive device." [ref=e161]:
+          - link "Microsoft.AspNetCore.Components.Web.TouchPoint" [ref=e162] [cursor=pointer]:
+            - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.TouchPoint
+          - text: represents a single contact point on a touch-sensitive device.
+  - paragraph [ref=e163]: "For more information, see the following resources:"
+  - list [ref=e164]:
+    - listitem [ref=e165]:
+      - paragraph [ref=e166]:
+        - link "EventArgs classes in the ASP.NET Core reference source (dotnet/aspnetcore main branch)" [ref=e167] [cursor=pointer]:
+          - /url: https://github.com/dotnet/aspnetcore/tree/main/src/Components/Web/src/Web
+          - code [ref=e168]: EventArgs
+          - text: classes in the ASP.NET Core reference source (dotnet/aspnetcore
+          - code [ref=e169]: main
+          - text: branch)
+    - listitem [ref=e170]:
+      - paragraph [ref=e171]:
+        - link "Microsoft.AspNetCore.Components.Web.EventHandlers" [ref=e172] [cursor=pointer]:
+          - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.EventHandlers
+        - text: holds attributes to configure the mappings between event names and event argument types.
+  - heading "Custom event arguments" [level=2] [ref=e173]
+  - paragraph [ref=e174]: Blazor supports custom event arguments, which enable you to pass arbitrary data to .NET event handlers with custom events.
+  - heading "General configuration" [level=3] [ref=e175]
+  - paragraph [ref=e176]: Custom events with custom event arguments are generally enabled with the following steps.
+  - paragraph [ref=e177]: "In JavaScript, define a function for building the custom event argument object from the source event:"
+  - code [ref=e179]: "function eventArgsCreator(event) { return { customProperty1: 'any value for property 1', customProperty2: event.srcElement.id }; }"
+  - paragraph [ref=e180]:
+    - text: The
+    - code [ref=e181]: event
+    - text: parameter is a
+    - link "DOM Event" [ref=e182] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/API/Event
+    - text: .
+  - paragraph [ref=e183]:
+    - text: Register the custom event with the preceding handler in a
+    - link "JavaScript initializer" [ref=e184] [cursor=pointer]:
+      - /url: ""
+    - text: . Provide the appropriate browser event name to
+    - code [ref=e185]: browserEventName
+    - text: ", which for the example shown in this section is"
+    - code [ref=e186]: click
+    - text: for a button selection in the UI.
+  - paragraph [ref=e187]:
+    - code [ref=e188]: "wwwroot/{PACKAGE ID/ASSEMBLY NAME}.lib.module.js"
+    - text: (the
+    - code [ref=e189]: "{PACKAGE ID/ASSEMBLY NAME}"
+    - text: "placeholder is the package ID or assembly name of the app):"
+  - paragraph [ref=e190]: "For a Blazor Web App:"
+  - code [ref=e192]: "export function afterWebStarted(blazor) { blazor.registerCustomEventType('customevent', { browserEventName: 'click', createEventArgs: eventArgsCreator }); }"
+  - paragraph [ref=e193]: "For a Blazor Server or Blazor WebAssembly app:"
+  - code [ref=e195]: "export function afterStarted(blazor) { blazor.registerCustomEventType('customevent', { browserEventName: 'click', createEventArgs: eventArgsCreator }); }"
+  - paragraph [ref=e196]:
+    - text: The call to
+    - code [ref=e197]: registerCustomEventType
+    - text: is performed in a script only once per event.
+  - paragraph [ref=e198]:
+    - text: For the call to
+    - code [ref=e199]: registerCustomEventType
+    - text: ", use the"
+    - code [ref=e200]: blazor
+    - text: parameter (lowercase
+    - code [ref=e201]: b
+    - text: ) provided by the Blazor start event. Although the registration is valid when using the
+    - code [ref=e202]: Blazor
+    - text: object (uppercase
+    - code [ref=e203]: B
+    - text: ), the preferred approach is to use the parameter.
+  - paragraph [ref=e204]:
+    - text: The custom event name,
+    - code [ref=e205]: customevent
+    - text: in the preceding example, must not match a reserved Blazor event name. The reserved names can be found in the
+    - link "Blazor framework reference source (see the calls to the registerBuiltInEventType function)" [ref=e206] [cursor=pointer]:
+      - /url: https://github.com/dotnet/aspnetcore/blob/main/src/Components/Web.JS/src/Rendering/Events/EventTypes.ts
+      - text: Blazor framework reference source (see the calls to the
+      - code [ref=e207]: registerBuiltInEventType
+      - text: function)
+    - text: .
+  - paragraph [ref=e208]: "Define a class for the event arguments:"
+  - code [ref=e210]: "namespace BlazorSample.CustomEvents; public class CustomEventArgs : EventArgs { public string? CustomProperty1 {get; set;} public string? CustomProperty2 {get; set;} }"
+  - paragraph [ref=e211]:
+    - text: Wire up the custom event with the event arguments by adding an
+    - link "[EventHandler] attribute" [ref=e212] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventHandlerAttribute
+      - code [ref=e213]: "[EventHandler]"
+      - text: attribute
+    - text: "annotation for the custom event:"
+  - list [ref=e214]:
+    - listitem [ref=e215]:
+      - text: In order for the compiler to find the
+      - code [ref=e216]: "[EventHandler]"
+      - text: class, it must be placed into a C# class file (
+      - code [ref=e217]: .cs
+      - text: ), making it a normal top-level class.
+    - listitem [ref=e218]:
+      - text: Mark the class
+      - code [ref=e219]: public
+      - text: .
+    - listitem [ref=e220]: The class doesn't require members.
+    - listitem [ref=e221]:
+      - text: The class
+      - emphasis [ref=e222]: must
+      - text: be called "
+      - code [ref=e223]: EventHandlers
+      - text: "\" in order to be found by the Razor compiler."
+    - listitem [ref=e224]: Place the class under a namespace specific to your app.
+    - listitem [ref=e225]:
+      - text: Import the namespace into the Razor component (
+      - code [ref=e226]: .razor
+      - text: ) where the event is used.
+  - code [ref=e228]: "using Microsoft.AspNetCore.Components; namespace BlazorSample.CustomEvents; [EventHandler(\"oncustomevent\", typeof(CustomEventArgs), enableStopPropagation: true, enablePreventDefault: true)] public static class EventHandlers { }"
+  - paragraph [ref=e229]: "Register the event handler on one or more HTML elements. Access the data that was passed in from JavaScript in the delegate handler method:"
+  - code [ref=e231]: "@using BlazorSample.CustomEvents <button id=\"buttonId\" @oncustomevent=\"HandleCustomEvent\">Handle</button> @if (!string.IsNullOrEmpty(propVal1) && !string.IsNullOrEmpty(propVal2)) { <ul> <li>propVal1: @propVal1</li> <li>propVal2: @propVal2</li> </ul> } @code { private string? propVal1; private string? propVal2; private void HandleCustomEvent(CustomEventArgs eventArgs) { propVal1 = eventArgs.CustomProperty1; propVal2 = eventArgs.CustomProperty2; } }"
+  - paragraph [ref=e232]:
+    - text: If the
+    - code [ref=e233]: "@oncustomevent"
+    - text: attribute isn't recognized by
+    - link "IntelliSense" [ref=e234] [cursor=pointer]:
+      - /url: /visualstudio/ide/using-intellisense
+    - text: ", make sure that the component or the"
+    - code [ref=e235]: _Imports.razor
+    - text: file contains an
+    - code [ref=e236]: "@using"
+    - text: statement for the namespace containing the
+    - code [ref=e237]: EventHandler
+    - text: class.
+  - paragraph [ref=e238]: Whenever the custom event is fired on the DOM, the event handler is called with the data passed from the JavaScript.
+  - paragraph [ref=e239]:
+    - text: If you're attempting to fire a custom event,
+    - link "bubbles" [ref=e240] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/API/Event/bubbles
+      - code [ref=e241]: bubbles
+    - text: must be enabled by setting its value to
+    - code [ref=e242]: "true"
+    - text: . Otherwise, the event doesn't reach the Blazor handler for processing into the C# custom
+    - link "[EventHandler] attribute" [ref=e243] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventHandlerAttribute
+      - code [ref=e244]: "[EventHandler]"
+      - text: attribute
+    - text: class. For more information, see
+    - 'link "MDN Web Docs: Event bubbling" [ref=e245] [cursor=pointer]':
+      - /url: https://developer.mozilla.org/docs/Web/Guide/Events/Creating_and_triggering_events#event_bubbling
+    - text: .
+  - heading "Custom clipboard paste event example" [level=3] [ref=e246]
+  - paragraph [ref=e247]: The following example receives a custom clipboard paste event that includes the time of the paste and the user's pasted text.
+  - paragraph [ref=e248]:
+    - text: Declare a custom name (
+    - code [ref=e249]: oncustompaste
+    - text: ) for the event and a .NET class (
+    - code [ref=e250]: CustomPasteEventArgs
+    - text: ") to hold the event arguments for this event:"
+  - paragraph [ref=e251]:
+    - code [ref=e252]: CustomEvents.cs
+    - text: ":"
+  - code [ref=e254]: "using Microsoft.AspNetCore.Components; namespace BlazorSample.CustomEvents; [EventHandler(\"oncustompaste\", typeof(CustomPasteEventArgs), enableStopPropagation: true, enablePreventDefault: true)] public static class EventHandlers { } public class CustomPasteEventArgs : EventArgs { public DateTime EventTimestamp { get; set; } public string? PastedData { get; set; } }"
+  - paragraph [ref=e255]:
+    - text: Add JavaScript code to supply data for the
+    - link "System.EventArgs" [ref=e256] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.EventArgs
+    - text: subclass with the preceding handler in a
+    - link "JavaScript initializer" [ref=e257] [cursor=pointer]:
+      - /url: ""
+    - text: . The following example only handles pasting text, but you could use arbitrary JavaScript APIs to deal with users pasting other types of data, such as images.
+  - paragraph [ref=e258]:
+    - code [ref=e259]: "wwwroot/{PACKAGE ID/ASSEMBLY NAME}.lib.module.js"
+    - text: ":"
+  - paragraph [ref=e260]: "For a Blazor Web App:"
+  - code [ref=e262]: "export function afterWebStarted(blazor) { blazor.registerCustomEventType('custompaste', { browserEventName: 'paste', createEventArgs: event => { return { eventTimestamp: new Date(), pastedData: event.clipboardData.getData('text') }; } }); }"
+  - paragraph [ref=e263]: "For a Blazor Server or Blazor WebAssembly app:"
+  - code [ref=e265]: "export function afterStarted(blazor) { blazor.registerCustomEventType('custompaste', { browserEventName: 'paste', createEventArgs: event => { return { eventTimestamp: new Date(), pastedData: event.clipboardData.getData('text') }; } }); }"
+  - paragraph [ref=e266]:
+    - text: In the preceding example, the
+    - code [ref=e267]: "{PACKAGE ID/ASSEMBLY NAME}"
+    - text: placeholder of the file name represents the package ID or assembly name of the app.
+  - paragraph [ref=e270]:
+    - text: For the call to
+    - code [ref=e271]: registerCustomEventType
+    - text: ", use the"
+    - code [ref=e272]: blazor
+    - text: parameter (lowercase
+    - code [ref=e273]: b
+    - text: ) provided by the Blazor start event. Although the registration is valid when using the
+    - code [ref=e274]: Blazor
+    - text: object (uppercase
+    - code [ref=e275]: B
+    - text: ), the preferred approach is to use the parameter.
+  - paragraph [ref=e276]:
+    - text: The preceding code tells the browser that when a native
+    - link "paste" [ref=e277] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/API/Element/paste_event
+      - code [ref=e278]: paste
+    - text: "event occurs:"
+  - list [ref=e279]:
+    - listitem [ref=e280]:
+      - text: Raise a
+      - code [ref=e281]: custompaste
+      - text: event.
+    - listitem [ref=e282]:
+      - text: "Supply the event arguments data using the custom logic stated:"
+      - list [ref=e283]:
+        - listitem [ref=e284]:
+          - text: For the
+          - code [ref=e285]: eventTimestamp
+          - text: ", create a new date."
+        - listitem [ref=e286]:
+          - text: For the
+          - code [ref=e287]: pastedData
+          - text: ", get the clipboard data as text. For more information, see"
+          - 'link "MDN Web Docs: ClipboardEvent.clipboardData" [ref=e288] [cursor=pointer]':
+            - /url: https://developer.mozilla.org/docs/Web/API/ClipboardEvent/clipboardData
+          - text: .
+  - paragraph [ref=e289]: "Event name conventions differ between .NET and JavaScript:"
+  - list [ref=e290]:
+    - listitem [ref=e291]:
+      - text: In .NET, event names are prefixed with "
+      - code [ref=e292]: "on"
+      - text: "\"."
+    - listitem [ref=e293]: In JavaScript, event names don't have a prefix.
+  - paragraph [ref=e294]: In a Razor component, attach the custom handler to an element.
+  - paragraph [ref=e295]:
+    - code [ref=e296]: CustomPasteArguments.razor
+    - text: ":"
+  - code [ref=e298]: "@page \"/custom-paste-arguments\" @using BlazorSample.CustomEvents <label> Try pasting into the following text box: <input @oncustompaste=\"HandleCustomPaste\" /> </label> <p> @message </p> @code { private string? message; private void HandleCustomPaste(CustomPasteEventArgs eventArgs) { message = $\"At {eventArgs.EventTimestamp.ToShortTimeString()}, \" + $\"you pasted: {eventArgs.PastedData}\"; } }"
+  - heading "Lambda expressions" [level=2] [ref=e299]
+  - paragraph [ref=e300]:
+    - link "Lambda expressions" [ref=e301] [cursor=pointer]:
+      - /url: /dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions
+    - text: are supported as the delegate event handler.
+  - paragraph [ref=e302]:
+    - code [ref=e303]: EventHandler4.razor
+    - text: ":"
+  - paragraph [ref=e304]:
+    - code [ref=e305]: EventHandler4.razor
+    - text: ":"
+  - paragraph [ref=e306]:
+    - code [ref=e307]: EventHandlerExample4.razor
+    - text: ":"
+  - paragraph [ref=e308]:
+    - code [ref=e309]: EventHandlerExample4.razor
+    - text: ":"
+  - paragraph [ref=e310]:
+    - code [ref=e311]: EventHandlerExample4.razor
+    - text: ":"
+  - paragraph [ref=e312]:
+    - code [ref=e313]: EventHandlerExample4.razor
+    - text: ":"
+  - paragraph [ref=e314]:
+    - text: It's often convenient to close over additional values using C# method parameters, such as when iterating over a set of elements. The following example creates three buttons, each of which calls
+    - code [ref=e315]: UpdateHeading
+    - text: "and passes the following data:"
+  - list [ref=e316]:
+    - listitem [ref=e317]:
+      - text: An event argument (
+      - link "Microsoft.AspNetCore.Components.Web.MouseEventArgs" [ref=e318] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.MouseEventArgs
+      - text: ) in
+      - code [ref=e319]: e
+      - text: .
+    - listitem [ref=e320]:
+      - text: The button number in
+      - code [ref=e321]: buttonNumber
+      - text: .
+  - paragraph [ref=e322]:
+    - code [ref=e323]: EventHandler5.razor
+    - text: ":"
+  - paragraph [ref=e324]:
+    - code [ref=e325]: EventHandler5.razor
+    - text: ":"
+  - paragraph [ref=e326]:
+    - code [ref=e327]: EventHandlerExample5.razor
+    - text: ":"
+  - paragraph [ref=e328]:
+    - code [ref=e329]: EventHandlerExample5.razor
+    - text: ":"
+  - paragraph [ref=e330]:
+    - code [ref=e331]: EventHandlerExample5.razor
+    - text: ":"
+  - paragraph [ref=e332]:
+    - code [ref=e333]: EventHandlerExample5.razor
+    - text: ":"
+  - paragraph [ref=e334]:
+    - text: Creating a large number of event delegates in a loop may cause poor rendering performance. For more information, see
+    - link:
+      - /url: ""
+    - text: .
+  - paragraph [ref=e335]:
+    - text: Avoid using a loop variable directly in a lambda expression, such as
+    - code [ref=e336]: i
+    - text: in the preceding
+    - code [ref=e337]: for
+    - text: "loop example. Otherwise, the same variable is used by all lambda expressions, which results in use of the same value in all lambdas. Capture the variable's value in a local variable. In the preceding example:"
+  - list [ref=e338]:
+    - listitem [ref=e339]:
+      - text: The loop variable
+      - code [ref=e340]: i
+      - text: is assigned to
+      - code [ref=e341]: buttonNumber
+      - text: .
+    - listitem [ref=e342]:
+      - code [ref=e343]: buttonNumber
+      - text: is used in the lambda expression.
+  - paragraph [ref=e344]:
+    - text: Alternatively, use a
+    - code [ref=e345]: foreach
+    - text: loop with
+    - link "System.Linq.Enumerable.Range*?displayProperty=nameWithType" [ref=e346] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Linq.Enumerable.Range--displayProperty-nameWithType
+    - text: ", which doesn't suffer from the preceding problem:"
+  - code [ref=e348]: "@foreach (var buttonNumber in Enumerable.Range(1, 3)) { <p> <button @onclick=\"@(e => UpdateHeading(e, buttonNumber))\"> Button #@buttonNumber </button> </p> }"
+  - heading "EventCallback" [level=2] [ref=e349]
+  - paragraph [ref=e350]:
+    - text: A common scenario with nested components is executing a method in a parent component when a child component event occurs. An
+    - code [ref=e351]: onclick
+    - text: event occurring in the child component is a common use case. To expose events across components, use an
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e352] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: . A parent component can assign a callback method to a child component's
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e353] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: .
+  - paragraph [ref=e354]:
+    - text: The following
+    - code [ref=e355]: Child
+    - text: component demonstrates how a button's
+    - code [ref=e356]: onclick
+    - text: handler is set up to receive an
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e357] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: delegate from the sample's
+    - code [ref=e358]: ParentComponent
+    - text: . The
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e359] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: is typed with
+    - link "Microsoft.AspNetCore.Components.Web.MouseEventArgs" [ref=e360] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.Web.MouseEventArgs
+    - text: ", which is appropriate for an"
+    - code [ref=e361]: onclick
+    - text: event from a peripheral device.
+  - paragraph [ref=e362]:
+    - code [ref=e363]: Child.razor
+    - text: ":"
+  - paragraph [ref=e364]:
+    - text: The parent component sets the child's
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e365] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: (
+    - code [ref=e366]: OnClickCallback
+    - text: ) to its
+    - code [ref=e367]: ShowMessage
+    - text: method.
+  - paragraph [ref=e368]:
+    - code [ref=e369]: ParentChild.razor
+    - text: ":"
+  - paragraph [ref=e370]:
+    - code [ref=e371]: ParentChild.razor
+    - text: ":"
+  - paragraph [ref=e372]:
+    - code [ref=e373]: Parent.razor
+    - text: ":"
+  - paragraph [ref=e374]:
+    - code [ref=e375]: Parent.razor
+    - text: ":"
+  - paragraph [ref=e376]:
+    - code [ref=e377]: Parent.razor
+    - text: ":"
+  - paragraph [ref=e378]:
+    - code [ref=e379]: Parent.razor
+    - text: ":"
+  - paragraph [ref=e380]:
+    - text: When the button is selected in the
+    - code [ref=e381]: ChildComponent
+    - text: ":"
+  - list [ref=e382]:
+    - listitem [ref=e383]:
+      - text: The
+      - code [ref=e384]: Parent
+      - text: component's
+      - code [ref=e385]: ShowMessage
+      - text: method is called.
+      - code [ref=e386]: message
+      - text: is updated and displayed in the
+      - code [ref=e387]: Parent
+      - text: component.
+    - listitem [ref=e388]:
+      - text: A call to
+      - link "StateHasChanged" [ref=e389] [cursor=pointer]:
+        - /url: ""
+        - code [ref=e390]: StateHasChanged
+      - text: isn't required in the callback's method (
+      - code [ref=e391]: ShowMessage
+      - text: ).
+      - link "Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*" [ref=e392] [cursor=pointer]:
+        - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged
+      - text: is called automatically to rerender the
+      - code [ref=e393]: Parent
+      - text: component, just as child events trigger component rerendering in event handlers that execute within the child. For more information, see
+      - link:
+        - /url: ""
+      - text: .
+  - paragraph [ref=e394]:
+    - text: Use
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e395] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: and
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e396] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: for event handling and binding component parameters.
+  - paragraph [ref=e397]:
+    - text: Prefer the strongly typed
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e398] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: over
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e399] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: .
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e400] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: provides enhanced error feedback when an inappropriate type is used, guiding users of the component towards correct implementation. Similar to other UI event handlers, specifying the event parameter is optional. Use
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e401] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: when there's no value passed to the callback.
+  - paragraph [ref=e402]:
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e403] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: and
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e404] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: permit asynchronous delegates.
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e405] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: is weakly typed and allows passing any type argument in
+    - code [ref=e406]: InvokeAsync(Object)
+    - text: .
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e407] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: is strongly typed and requires passing a
+    - code [ref=e408]: T
+    - text: argument in
+    - code [ref=e409]: InvokeAsync(T)
+    - text: that's assignable to
+    - code [ref=e410]: TValue
+    - text: .
+  - paragraph [ref=e411]:
+    - text: Invoke an
+    - link "Microsoft.AspNetCore.Components.EventCallback" [ref=e412] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback
+    - text: or
+    - 'link "Microsoft.AspNetCore.Components.EventCallback`1" [ref=e413] [cursor=pointer]':
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback-1
+    - text: with
+    - link "Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*" [ref=e414] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.EventCallback.InvokeAsync
+    - text: and await the
+    - link "System.Threading.Tasks.Task" [ref=e415] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task
+    - text: ":"
+  - code [ref=e417]: "await OnClickCallback.InvokeAsync({ARGUMENT});"
+  - paragraph [ref=e418]:
+    - text: In the preceding example, the
+    - code [ref=e419]: "{ARGUMENT}"
+    - text: placeholder is an optional argument.
+  - paragraph [ref=e420]: The following parent-child example demonstrates the technique.
+  - paragraph [ref=e421]:
+    - code [ref=e422]: Child2.razor
+    - text: ":"
+  - code [ref=e424]: "<h3>Child2 Component</h3> <button @onclick=\"TriggerEvent\">Click Me</button> @code { [Parameter] public EventCallback<string> OnClickCallback { get; set; } private async Task TriggerEvent() { await OnClickCallback.InvokeAsync(\"Blaze It!\"); } }"
+  - paragraph [ref=e425]:
+    - code [ref=e426]: ParentChild2.razor
+    - text: ":"
+  - code [ref=e428]: "@page \"/parent-child-2\" <PageTitle>Parent Child 2</PageTitle> <h1>Parent Child 2 Example</h1> <div> <Child2 OnClickCallback=\"(value) => { message1 = value; }\" /> @message1 </div> <div> <Child2 OnClickCallback= \"async (value) => { await Task.Delay(2000); message2 = value; }\" /> @message2 </div> @code { private string message1 = string.Empty; private string message2 = string.Empty; }"
+  - paragraph [ref=e429]:
+    - text: The second occurrence of the
+    - code [ref=e430]: Child2
+    - text: component demonstrates an asynchronous callback, and the new
+    - code [ref=e431]: message2
+    - text: value is assigned and rendered with a delay of two seconds.
+  - heading "Prevent default actions" [level=2] [ref=e432]
+  - paragraph [ref=e433]:
+    - text: Use the
+    - 'link "@on{DOM EVENT}:preventDefault" [ref=e434] [cursor=pointer]':
+      - /url: ""
+      - code [ref=e435]: "@on{DOM EVENT}:preventDefault"
+    - text: directive attribute to prevent the default action for an event, where the
+    - code [ref=e436]: "{DOM EVENT}"
+    - text: placeholder is a
+    - link "DOM event" [ref=e437] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/Events
+    - text: .
+  - paragraph [ref=e438]:
+    - text: When a key is selected on an input device and the element focus is on a text box, a browser normally displays the key's character in the text box. In the following example, the default behavior is prevented by specifying the
+    - code [ref=e439]: "@onkeydown:preventDefault"
+    - text: directive attribute. When the focus is on the
+    - code [ref=e440]: <input>
+    - text: element, the counter increments with the key sequence Shift++. The
+    - code [ref=e441]: +
+    - text: character isn't assigned to the
+    - code [ref=e442]: <input>
+    - text: element's value. For more information on
+    - code [ref=e443]: keydown
+    - text: ", see"
+    - 'link "MDN Web Docs: Document: keydown event" [ref=e444] [cursor=pointer]':
+      - /url: https://developer.mozilla.org/docs/Web/API/Document/keydown_event
+      - code [ref=e445]: "MDN Web Docs: Document: keydown"
+      - text: event
+    - text: .
+  - paragraph [ref=e446]:
+    - code [ref=e447]: EventHandler6.razor
+    - text: ":"
+  - paragraph [ref=e448]:
+    - code [ref=e449]: EventHandler6.razor
+    - text: ":"
+  - paragraph [ref=e450]:
+    - code [ref=e451]: EventHandlerExample6.razor
+    - text: ":"
+  - paragraph [ref=e452]:
+    - code [ref=e453]: EventHandlerExample6.razor
+    - text: ":"
+  - paragraph [ref=e454]:
+    - code [ref=e455]: EventHandlerExample6.razor
+    - text: ":"
+  - paragraph [ref=e456]:
+    - code [ref=e457]: EventHandlerExample6.razor
+    - text: ":"
+  - paragraph [ref=e458]:
+    - text: Specifying the
+    - code [ref=e459]: "@on{DOM EVENT}:preventDefault"
+    - text: attribute without a value is equivalent to
+    - code [ref=e460]: "@on{DOM EVENT}:preventDefault=\"true\""
+    - text: .
+  - paragraph [ref=e461]:
+    - text: An expression is also a permitted value of the attribute. In the following example,
+    - code [ref=e462]: shouldPreventDefault
+    - text: is a
+    - code [ref=e463]: bool
+    - text: field set to either
+    - code [ref=e464]: "true"
+    - text: or
+    - code [ref=e465]: "false"
+    - text: ":"
+  - code [ref=e467]: "<input @onkeydown:preventDefault=\"shouldPreventDefault\" /> ... @code { private bool shouldPreventDefault = true; }"
+  - heading "Stop event propagation" [level=2] [ref=e468]
+  - paragraph [ref=e469]:
+    - text: Use the
+    - 'link "@on{DOM EVENT}:stopPropagation" [ref=e470] [cursor=pointer]':
+      - /url: ""
+      - code [ref=e471]: "@on{DOM EVENT}:stopPropagation"
+    - text: directive attribute to stop event propagation within the Blazor scope.
+    - code [ref=e472]: "{DOM EVENT}"
+    - text: is a placeholder for a
+    - link "DOM event" [ref=e473] [cursor=pointer]:
+      - /url: https://developer.mozilla.org/docs/Web/Events
+    - text: .
+  - paragraph [ref=e474]:
+    - text: The
+    - code [ref=e475]: stopPropagation
+    - text: "directive attribute's effect is limited to the Blazor scope and doesn't extend to the HTML DOM. Events must propagate to the HTML DOM root before Blazor can act upon them. For a mechanism to prevent HTML DOM event propagation, consider the following approach:"
+  - list [ref=e476]:
+    - listitem [ref=e477]:
+      - text: Obtain the event's path by calling
+      - link "Event.composedPath()" [ref=e478] [cursor=pointer]:
+        - /url: https://developer.mozilla.org/docs/Web/API/Event/composedPath
+        - code [ref=e479]: Event.composedPath()
+      - text: .
+    - listitem [ref=e480]:
+      - text: Filter events based on the composed
+      - link "event targets (EventTarget)" [ref=e481] [cursor=pointer]:
+        - /url: https://developer.mozilla.org/docs/Web/API/EventTarget
+        - text: event targets (
+        - code [ref=e482]: EventTarget
+        - text: )
+      - text: .
+  - paragraph [ref=e483]:
+    - text: In the following example, selecting the checkbox prevents click events from the second child
+    - code [ref=e484]: <div>
+    - text: from propagating to the parent
+    - code [ref=e485]: <div>
+    - text: . Since propagated click events normally fire the
+    - code [ref=e486]: OnSelectParentDiv
+    - text: method, selecting the second child
+    - code [ref=e487]: <div>
+    - text: results in the parent
+    - code [ref=e488]: <div>
+    - text: message appearing unless the checkbox is selected.
+  - paragraph [ref=e489]:
+    - code [ref=e490]: EventHandler7.razor
+    - text: ":"
+  - paragraph [ref=e491]:
+    - code [ref=e492]: EventHandler7.razor
+    - text: ":"
+  - paragraph [ref=e493]:
+    - code [ref=e494]: EventHandlerExample7.razor
+    - text: ":"
+  - paragraph [ref=e495]:
+    - code [ref=e496]: EventHandlerExample7.razor
+    - text: ":"
+  - paragraph [ref=e497]:
+    - code [ref=e498]: EventHandlerExample7.razor
+    - text: ":"
+  - paragraph [ref=e499]:
+    - code [ref=e500]: EventHandlerExample7.razor
+    - text: ":"
+  - heading "Focus an element" [level=2] [ref=e501]
+  - paragraph [ref=e502]:
+    - text: Call
+    - link "Microsoft.AspNetCore.Components.ElementReferenceExtensions.FocusAsync*" [ref=e503] [cursor=pointer]:
+      - /url: https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.ElementReferenceExtensions.FocusAsync
+    - text: on an
+    - link "element reference" [ref=e504] [cursor=pointer]:
+      - /url: ""
+    - text: to focus an element in code. In the following example, select the button to focus the
+    - code [ref=e505]: <input>
+    - text: element.
+  - paragraph [ref=e506]:
+    - code [ref=e507]: EventHandler8.razor
+    - text: ":"
+  - paragraph [ref=e508]:
+    - code [ref=e509]: EventHandler8.razor
+    - text: ":"
+  - paragraph [ref=e510]:
+    - code [ref=e511]: EventHandlerExample8.razor
+    - text: ":"
+  - paragraph [ref=e512]:
+    - code [ref=e513]: EventHandlerExample8.razor
+    - text: ":"

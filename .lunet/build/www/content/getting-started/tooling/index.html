@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>Tooling for ASP.NET Core Blazor - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="tooling-for-aspnet-core-blazor">Tooling for ASP.NET Core Blazor</h1>
+<p>This article describes tools for building Blazor apps using several tools:</p>
+<ul>
+<li><a href="https://visualstudio.microsoft.com">Visual Studio (VS)</a>: The most comprehensive integrated development environment (IDE) for .NET developers on Windows. Includes an array of tools and features to elevate and enhance every stage of software development.</li>
+<li><a href="https://code.visualstudio.com">Visual Studio Code (VS Code)</a> is an open source, cross-platform code editor that can be used to develop Blazor apps.</li>
+<li><a href="/dotnet/core/tools">.NET CLI</a>: The .NET command-line interface (CLI) is a cross-platform toolchain for developing, building, running, and publishing .NET applications. The .NET CLI is included with the <a href="/dotnet/core/sdk">.NET SDK</a> and runs on any platform supported by the SDK.</li>
+</ul>
+<p>Select the pivot of this article that matches your tooling choice.</p>
+<div class="zone"><p>To create a Blazor app with Visual Studio, use the following guidance:</p>
+<ul>
+<li><p>Install the latest version of <a href="https://visualstudio.microsoft.com/downloads/?utm_medium=microsoft&amp;utm_source=learn.microsoft.com&amp;utm_campaign=inline+link&amp;utm_content=download+vs2022">Visual Studio</a> with the <strong>ASP.NET and web development</strong> workload.</p>
+</li>
+<li><p>Create a new project using one of the available Blazor templates:</p>
+<ul>
+<li><strong>Blazor Web App</strong>: Creates an app that supports interactive server-side rendering (interactive SSR) and client-side rendering (CSR). The Blazor Web App template is recommended for getting started with Blazor to learn about server-side and client-side Blazor features.</li>
+<li><strong>Blazor WebAssembly Standalone App</strong>: Creates a standalone client web app that can be deployed as a static site.</li>
+</ul>
+</li>
+</ul>
+<p>Select <strong>Next</strong>.</p>
+<div class="moniker">
+<ul>
+<li><p>Install the latest version of <a href="https://visualstudio.microsoft.com">Visual Studio</a> with the <strong>ASP.NET and web development</strong> workload.</p>
+</li>
+<li><p>Create a new project:</p>
+<ul>
+<li>For a Blazor Server experience, choose the <strong>Blazor Server App</strong> template, which includes demonstration code and <a href="https://getbootstrap.com/">Bootstrap</a>, or the <strong>Blazor Server App Empty</strong> template without demonstration code and Bootstrap. Select <strong>Next</strong>.</li>
+<li>For a standalone Blazor WebAssembly experience, choose the <strong>Blazor WebAssembly App</strong> template, which includes demonstration code and Bootstrap, or the <strong>Blazor WebAssembly App Empty</strong> template without demonstration code and Bootstrap. Select <strong>Next</strong>.</li>
+</ul>
+</li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li><p>Install the latest version of <a href="https://visualstudio.microsoft.com">Visual Studio</a> with the <strong>ASP.NET and web development</strong> workload.</p>
+</li>
+<li><p>Create a new project:</p>
+<ul>
+<li>For a Blazor Server experience, choose the <strong>Blazor Server App</strong> template. Select <strong>Next</strong>.</li>
+<li>For a Blazor WebAssembly experience, choose the <strong>Blazor WebAssembly App</strong> template. Select <strong>Next</strong>.</li>
+</ul>
+</li>
+</ul>
+<div class="moniker-end">
+<ul>
+<li><p>Provide a <strong>Project name</strong> and confirm that the <strong>Location</strong> is correct.</p>
+</li>
+<li><p>For more information on the options in the <strong>Additional information</strong> dialog, see the <a href="#blazor-project-templates-and-template-options">Blazor project templates and template options</a> section.</p>
+</li>
+<li><p>Select <strong>Create</strong>.</p>
+</li>
+</ul>
+<div class="zone-end">
+<div class="zone"><p><a href="https://code.visualstudio.com">Visual Studio Code</a> is an open source, cross-platform Integrated Development Environment (IDE) that can be used to develop Blazor apps.</p>
+<p>Install the latest version of <a href="https://code.visualstudio.com/Download">Visual Studio Code</a> for your platform.</p>
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit">C# Dev Kit for Visual Studio Code</a>. For more information, see <a href=""></a>.</p>
+<p>If you're new to VS Code, see the <a href="https://code.visualstudio.com/docs">VS Code documentation</a>. If you're new to the .NET SDK, see <a href="/dotnet/core/sdk">What is the .NET SDK?</a> and the associated articles in the .NET SDK documentation.</p>
+<p>Create a new project:</p>
+<ul>
+<li><p>Open VS Code.</p>
+</li>
+<li><p>Go to the <strong>Explorer</strong> view and select the <strong>Create .NET Project</strong> button. Alternatively, you can bring up the <strong>Command Palette</strong> using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>, and then type &quot;<code>.NET</code>&quot; and find and select the <strong>.NET: New Project</strong> command.</p>
+</li>
+<li><p>Select the Blazor project template from the list.</p>
+</li>
+<li><p>In the <strong>Project Location</strong> dialog, create or select a folder for the project.</p>
+</li>
+<li><p>In the <strong>Command Palette</strong>, provide a name for the project or accept the default name.</p>
+</li>
+<li><p>Select <strong>Create project</strong> to create the project or adjust the project's options by selecting <strong>Show all template options</strong>. For more information on the templates and options, see the <a href="#blazor-project-templates-and-template-options">Blazor project templates and template options</a> section.</p>
+</li>
+<li><p>Press <kbd>F5</kbd> on the keyboard to run the app with the debugger or <kbd>Ctrl</kbd>+<kbd>F5</kbd> to run the app without the debugger.</p>
+<p>The <strong>Command Palette</strong> asks you to select a debugger. Select <strong>C#</strong> from the list.</p>
+<p>Next, select the <strong>https</strong> launch configuration.</p>
+</li>
+<li><p>To stop the app, press <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard.</p>
+</li>
+</ul>
+<p>The Visual Studio Code (VS Code) instructions for ASP.NET Core development in some parts of the Blazor documentation use the <a href="/dotnet/core/tools">.NET CLI</a>, which is part of the .NET SDK. .NET CLI commands are issued in VS Code's integrated <a href="https://code.visualstudio.com/docs/editor/integrated-terminal"><strong>Terminal</strong></a>, which defaults to a <a href="/powershell">PowerShell command shell</a>. The <strong>Terminal</strong> is opened by selecting <strong>New Terminal</strong> from the <strong>Terminal</strong> menu in the menu bar.</p>
+<p>For more information on Visual Studio Code configuration and use, see the <a href="https://code.visualstudio.com/docs">Visual Studio Code documentation</a>.</p>
+<div class="moniker"><p>Examine the <code>Properties/launchSettings.json</code> file and determine the URL of the app from the <code>applicationUrl</code> property. Depending on the framework version, the URL protocol is either secure (HTTPS) <code>https://localhost:{PORT}</code> or insecure (HTTP) <code>http://localhost:{PORT}</code>, where the <code>{PORT}</code> placeholder is an assigned port. Note the URL for use in the <code>launch.json</code> file.</p>
+<p>In the launch configuration of the <code>.vscode/launch.json</code> file:</p>
+<ul>
+<li>Set the current working directory (<code>cwd</code>) to the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> project folder.</li>
+<li>Indicate the app's URL with the <code>url</code> property. Use the value recorded earlier from the <code>Properties/launchSettings.json</code> file.</li>
+</ul>
+<pre><code class="language-json">&quot;cwd&quot;: &quot;${workspaceFolder}/{SERVER APP FOLDER}&quot;,
+&quot;url&quot;: &quot;{URL}&quot;
+</code></pre>
+<p>In the preceding configuration:</p>
+<ul>
+<li>The <code>{SERVER APP FOLDER}</code> placeholder is the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> project's folder, typically :<span>no-loc text=&quot;Server&quot;:.</span></li>
+<li>The <code>{URL}</code> placeholder is the app's URL, which is specified in the app's <code>Properties/launchSettings.json</code> file in the <code>applicationUrl</code> property.</li>
+</ul>
+<p>If Google Chrome is preferred over Microsoft Edge, update or add an additional property of <code>&quot;browser&quot;: &quot;chrome&quot;</code> to the configuration.</p>
+<p>The following example <code>.vscode/launch.json</code> file:</p>
+<ul>
+<li>Sets the current working directory to the :<span>no-loc text=&quot;Server&quot;: folder.</span></li>
+<li>Sets the URL for the app to <code>http://localhost:7268</code>.</li>
+<li>Changes the default browser from Microsoft Edge to Google Chrome.</li>
+</ul>
+<pre><code class="language-json">&quot;cwd&quot;: &quot;${workspaceFolder}/Server&quot;,
+&quot;url&quot;: &quot;http://localhost:7268&quot;,
+&quot;browser&quot;: &quot;chrome&quot;
+</code></pre>
+<p>The complete <code>.vscode/launch.json</code> file:</p>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      &quot;type&quot;: &quot;blazorwasm&quot;,
+      &quot;name&quot;: &quot;Launch and Debug Blazor WebAssembly Application&quot;,
+      &quot;request&quot;: &quot;launch&quot;,
+      &quot;cwd&quot;: &quot;${workspaceFolder}/Server&quot;,
+      &quot;url&quot;: &quot;http://localhost:7268&quot;,
+      &quot;browser&quot;: &quot;chrome&quot;
+    }
+  ]
+}
+</code></pre>
+<p>In <code>.vscode/tasks.json</code>, add a <code>build</code> argument that specifies the path to the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> app's project file:</p>
+<pre><code class="language-json">&quot;${workspaceFolder}/{SERVER APP FOLDER}/{PROJECT NAME}.csproj&quot;,
+</code></pre>
+<p>In the preceding argument:</p>
+<ul>
+<li>The <code>{SERVER APP FOLDER}</code> placeholder is the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> project's folder, typically :<span>no-loc text=&quot;Server&quot;:.</span></li>
+<li>The <code>{PROJECT NAME}</code> placeholder is the app's name, typically based on the solution's name followed by <code>.Server</code> in an app generated from the Blazor WebAssembly project template.</li>
+</ul>
+<p>An example <code>.vscode/tasks.json</code> file with a <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> project named <code>BlazorHosted</code> in the :<span>no-loc text=&quot;Server&quot;: folder of the solution:</span></p>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;2.0.0&quot;,
+  &quot;tasks&quot;: [
+    {
+      &quot;label&quot;: &quot;build&quot;,
+      &quot;command&quot;: &quot;dotnet&quot;,
+      &quot;type&quot;: &quot;process&quot;,
+        &quot;args&quot;: [
+          &quot;build&quot;,
+          &quot;${workspaceFolder}/Server/BlazorHosted.Server.csproj&quot;,
+          &quot;/property:GenerateFullPaths=true&quot;,
+          &quot;/consoleloggerparameters:NoSummary&quot;,
+        ],
+        &quot;group&quot;: &quot;build&quot;,
+        &quot;presentation&quot;: {
+          &quot;reveal&quot;: &quot;silent&quot;
+        },
+        &quot;problemMatcher&quot;: &quot;$msCompile&quot;
+    }
+  ]
+}
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+Only <a href="">browser debugging</a> is supported at this time.</p>
+<p>You can't automatically rebuild the backend <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> app of a hosted Blazor WebAssembly solution during debugging, for example by running the app with <a href=""><code>dotnet watch run</code></a>.</p>
+</blockquote>
+<div class="moniker-end">
+<div class="moniker"><p><strong><code>.vscode/launch.json</code></strong> (<code>launch</code> configuration):</p>
+<pre><code class="language-json">...
+&quot;cwd&quot;: &quot;${workspaceFolder}/{SERVER APP FOLDER}&quot;,
+...
+</code></pre>
+<p>In the preceding configuration for the current working directory (<code>cwd</code>), the <code>{SERVER APP FOLDER}</code> placeholder is the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> project's folder, typically &quot;:<span>no-loc text=&quot;Server&quot;:&quot;.</span></p>
+<p>If Microsoft Edge is used and Google Chrome isn't installed on the system, add an additional property of <code>&quot;browser&quot;: &quot;edge&quot;</code> to the configuration.</p>
+<p>Example for a project folder of :<span>no-loc text=&quot;Server&quot;: and that spawns Microsoft Edge as the browser for debug runs instead of the default browser Google Chrome:</span></p>
+<pre><code class="language-json">...
+&quot;cwd&quot;: &quot;${workspaceFolder}/Server&quot;,
+&quot;browser&quot;: &quot;edge&quot;
+...
+</code></pre>
+<p><strong><code>.vscode/tasks.json</code></strong> (<a href="/dotnet/core/tools/dotnet"><code>dotnet</code> command</a> arguments):</p>
+<pre><code class="language-json">...
+&quot;${workspaceFolder}/{SERVER APP FOLDER}/{PROJECT NAME}.csproj&quot;,
+...
+</code></pre>
+<p>In the preceding argument:</p>
+<ul>
+<li>The <code>{SERVER APP FOLDER}</code> placeholder is the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> project's folder, typically &quot;:<span>no-loc text=&quot;Server&quot;:&quot;.</span></li>
+<li>The <code>{PROJECT NAME}</code> placeholder is the app's name, typically based on the solution's name followed by &quot;<code>.Server</code>&quot; in an app generated from the <a href="">Blazor project template</a>.</li>
+</ul>
+<p>The following example from the <a href="">tutorial for using SignalR with a Blazor WebAssembly app</a> uses a project folder name of :<span>no-loc text=&quot;Server&quot;: and a project name of <code>BlazorWebAssemblySignalRApp.Server</code>:</span></p>
+<pre><code class="language-json">...
+&quot;args&quot;: [
+  &quot;build&quot;,
+    &quot;${workspaceFolder}/Server/BlazorWebAssemblySignalRApp.Server.csproj&quot;,
+    ...
+],
+...
+</code></pre>
+<div class="moniker-end">
+<div class="zone-end">
+<div class="zone"><p>The .NET SDK is a set of libraries and tools that developers use to create .NET applications and libraries.</p>
+<p>Install the <a href="https://dotnet.microsoft.com/download">.NET SDK</a>. Commands are issued in a command shell using the <a href="/dotnet/core/tools">.NET CLI</a>.</p>
+<p>If you previously installed one or more .NET SDKs and want to see your active version, execute the following command in a command shell:</p>
+<pre><code class="language-dotnetcli">dotnet --version
+</code></pre>
+<p>If you're new to the .NET SDK, see <a href="/dotnet/core/sdk">What is the .NET SDK?</a> and the associated articles in the .NET SDK documentation.</p>
+<p>Create a new project:</p>
+<ul>
+<li><p>Change to the directory using the <code>cd</code> command to where you want to create the project folder (for example, <code>cd c:/users/Bernie_Kopell/Documents</code>).</p>
+</li>
+<li><p>For a Blazor Web App experience with default interactive server-side rendering (interactive SSR), execute the following command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazor -o BlazorApp
+</code></pre>
+</li>
+<li><p>For a standalone Blazor WebAssembly experience, execute the following command in a command shell that uses the <code>blazorwasm</code> template:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorwasm -o BlazorApp
+</code></pre>
+</li>
+</ul>
+<div class="moniker"><p>Create a new project:</p>
+<ul>
+<li><p>Change to the directory using the <code>cd</code> command to where you want to create the project folder (for example, <code>cd c:/users/Bernie_Kopell/Documents</code>).</p>
+</li>
+<li><p>For a Blazor Server experience with demonstration code and <a href="https://getbootstrap.com/">Bootstrap</a>, execute the following command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorserver -o BlazorApp
+</code></pre>
+</li>
+<li><p>For a standalone Blazor WebAssembly experience with demonstration code and Bootstrap, execute the following command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorwasm -o BlazorApp
+</code></pre>
+</li>
+<li><p>For a hosted Blazor WebAssembly experience with demonstration code and Bootstrap, add the hosted option (<code>-ho</code>/<code>--hosted</code>) to the command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorwasm -o BlazorApp -ho
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+The Hosted Blazor WebAssembly project template isn't available in .NET 8 or later. To create a hosted Blazor WebAssembly app using a .NET 8 or later SDK, pass the <code>-f|--framework</code> option with a .NET 7 target framework (<code>net7.0</code>):</p>
+<pre><code class="language-dotnet">dotnet new blazorwasm -o BlazorApp -ho -f net7.0
+</code></pre>
+</blockquote>
+</li>
+</ul>
+<div class="moniker-end">
+<div class="moniker"><p>Create a new project:</p>
+<ul>
+<li><p>Change to the directory using the <code>cd</code> command to where you want to create the project folder (for example, <code>cd c:/users/Bernie_Kopell/Documents</code>).</p>
+</li>
+<li><p>For a Blazor WebAssembly experience, execute the following command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorwasm -o BlazorApp
+</code></pre>
+</li>
+<li><p>For a hosted Blazor WebAssembly experience, add the hosted option (<code>-ho</code> or <code>--hosted</code>) option to the command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorwasm -o BlazorApp -ho
+</code></pre>
+<blockquote>
+<p>[!NOTE]
+The hosted Blazor WebAssembly project template isn't available in .NET 8 or later. To create a hosted Blazor WebAssembly app using a .NET 8 or later SDK, pass the <code>-f|--framework</code> option with the target framework moniker (for example, <code>net6.0</code>):</p>
+<pre><code class="language-dotnet">dotnet new blazorwasm -o BlazorApp -ho -f net6.0
+</code></pre>
+</blockquote>
+</li>
+<li><p>For a Blazor Server experience, execute the following command:</p>
+<pre><code class="language-dotnetcli">dotnet new blazorserver -o BlazorApp
+</code></pre>
+</li>
+</ul>
+<div class="moniker-end"><p>For more information on the templates and options, see the <a href="#blazor-project-templates-and-template-options">Blazor project templates and template options</a> section.</p>
+<div class="zone-end"><h2 id="run-the-app">Run the app</h2>
+<blockquote>
+<p>[!IMPORTANT]
+When executing a Blazor Web App, run the app from the solution's server project, which is the project with a name that doesn't end in <code>.Client</code>.</p>
+</blockquote>
+<div class="zone"><p>Press <kbd>Ctrl</kbd>+<kbd>F5</kbd> on the keyboard to run the app without the debugger.</p>
+<p>Visual Studio displays the following dialog when a project isn't configured to use SSL:</p>
+<p><img src="/tooling/_static/trust-certificate.png" alt="Trust self-signed certificate dialog" /></p>
+<p>Select <strong>Yes</strong> if you trust the ASP.NET Core SSL certificate.</p>
+<p>The following dialog is displayed:</p>
+<p><img src="/tooling/_static/install-certificate.png" alt="Security warning dialog" /></p>
+<p>Select <strong>Yes</strong> to acknowledge the risk and install the certificate.</p>
+<p>Visual Studio:</p>
+<ul>
+<li>Compiles and runs the app.</li>
+<li>Launches the default browser at <code>https://localhost:{PORT}</code>, which displays the app's UI. The <code>{PORT}</code> placeholder is the random port assigned at app creation. If you need to change the port due to a local port conflict, change the port in the project's <code>Properties/launchSettings.json</code> file.</li>
+</ul>
+<div class="zone-end">
+<div class="zone"><p>In VS Code, press <kbd>Ctrl</kbd>+<kbd>F5</kbd> to run the app without debugging.</p>
+<p>At the <strong>Select debugger</strong> prompt in the <strong>Command Palette</strong> at the top of the VS Code UI, select <strong>C#</strong>. At the next prompt, select the HTTPS profile (<code>[https]</code>).</p>
+<p>The default browser is launched at <code>https://localhost:{PORT}</code>, which displays the app's UI. The <code>{PORT}</code> placeholder is the random port assigned at app creation. If you need to change the port due to a local port conflict, change the port in the project's <code>Properties/launchSettings.json</code> file.</p>
+<div class="zone-end">
+<div class="zone"><p>In a command shell opened to the project's root folder, execute the <a href="/dotnet/core/tools/dotnet-watch"><code>dotnet watch</code></a> command to compile and start the app:</p>
+<pre><code class="language-dotnetcli">dotnet watch
+</code></pre>
+<p>The default browser is launched at <code>https://localhost:{PORT}</code>, which displays the app's UI. The <code>{PORT}</code> placeholder is the random port assigned at app creation. If you need to change the port due to a local port conflict, change the port in the project's <code>Properties/launchSettings.json</code> file.</p>
+<p>When an app created from the Blazor Web App project template is run with the .NET CLI, the app runs at an HTTP (insecure) endpoint because the first profile found in the app's launch settings file (<code>Properties/launchSettings.json</code>) is the HTTP (insecure) profile, which is named <code>http</code>. The HTTP profile was placed in the first position to ease the transition of adopting SSL/HTTPS security for non-Windows users.</p>
+<p>One approach for running the app with SSL/HTTPS is to pass the <a href="/dotnet/core/tools/dotnet-run#options"><code>-lp</code>|<code>--launch-profile</code> option</a> with the <code>https</code> profile name to the <code>dotnet watch</code> command:</p>
+<pre><code class="language-dotnetcli">dotnet watch -lp https
+</code></pre>
+<p>An alternative approach is to move the <code>https</code> profile above the <code>http</code> profile in the <code>Properties/launchSettings.json</code> file and save the change. After changing the profile order in the file, the <code>dotnet watch</code> command always uses the <code>https</code> profile by default.</p>
+<div class="zone-end"><h2 id="stop-the-app">Stop the app</h2>
+<div class="zone"><p>Stop the app using either of the following approaches:</p>
+<ul>
+<li>Close the browser window.</li>
+<li>In Visual Studio, either:
+<ul>
+<li><p>Use the Stop button in Visual Studio's menu bar:</p>
+<p><img src="/tooling/_static/stop-button.png" alt="Stop button in Visual Studio's menu bar" /></p>
+</li>
+<li><p>Press <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard.</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="zone-end">
+<div class="zone"><p>Stop the app using the following approach:</p>
+<ol>
+<li>Close the browser window.</li>
+<li>In VS Code, either:
+<ul>
+<li>From the <strong>Run</strong> menu, select <strong>Stop Debugging</strong>.</li>
+<li>Press <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard.</li>
+</ul>
+</li>
+</ol>
+<div class="zone-end">
+<div class="zone"><p>Stop the app using the following approach:</p>
+<ol>
+<li>Close the browser window.</li>
+<li>In the command shell, press <kbd>Ctrl</kbd>+<kbd>C</kbd>.</li>
+</ol>
+<div class="zone-end"><h2 id="visual-studio-solution-file-sln">Visual Studio solution file (<code>.sln</code>)</h2>
+<p>A <em>solution</em> is a container to organize one or more related code projects. Solution files use a unique format and aren't intended to be edited directly.</p>
+<p><a href="https://visualstudio.microsoft.com/vs/">Visual Studio</a> and <a href="https://code.visualstudio.com">Visual Studio Code (VS Code)</a> use a solution file (<code>.sln</code>) to store settings for a solution. The <a href="/dotnet/core/tools">.NET CLI</a> doesn't organize projects using a solution file, but it can create solution files and list/modify the projects in solution files via the <a href="/dotnet/core/tools/dotnet-sln"><code>dotnet sln</code> command</a>. Other .NET CLI commands use the path of the solution file for various publishing, testing, and packaging commands.</p>
+<p>For more information, see the following resources:</p>
+<ul>
+<li><a href="/visualstudio/get-started/tutorial-projects-solutions">Introduction to projects and solutions (Visual Studio documentation)</a></li>
+<li><a href="/visualstudio/ide/solutions-and-projects-in-visual-studio">What are solutions and projects in Visual Studio? (Visual Studio documentation)</a></li>
+<li><a href="https://code.visualstudio.com/docs/csharp/project-management">Project management (VS Code documentation)</a></li>
+</ul>
+<h2 id="blazor-project-templates-and-template-options">Blazor project templates and template options</h2>
+<p>The Blazor framework provides project templates for creating new apps. The templates are used to create new Blazor projects and solutions regardless of the tooling that you select for Blazor development (Visual Studio, Visual Studio Code, or the <a href="/dotnet/core/tools">.NET command-line interface (CLI)</a>):</p>
+<ul>
+<li>Blazor Web App project template: <code>blazor</code></li>
+<li>Standalone Blazor WebAssembly app project template: <code>blazorwasm</code></li>
+</ul>
+<blockquote>
+<p>[!NOTE]
+The &quot;Hosted&quot; Blazor WebAssembly project template option isn't available in .NET 8 or later. To create a hosted Blazor WebAssembly app, a <strong>Framework</strong> option earlier than .NET 8 must be selected with the <strong>ASP.NET Core Hosted</strong> checkbox. However, we recommend a Blazor Web App for all new Blazor development in .NET 8 or later. For more information, see the following resources:</p>
+<ul>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+</ul>
+</blockquote>
+<div class="moniker">
+<ul>
+<li>Blazor Server project templates: <code>blazorserver</code>, <code>blazorserver-empty</code></li>
+<li>Blazor WebAssembly project templates: <code>blazorwasm</code>, <code>blazorwasm-empty</code></li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li>Blazor Server project template: <code>blazorserver</code></li>
+<li>Blazor WebAssembly project template: <code>blazorwasm</code></li>
+</ul>
+<div class="moniker-end"><p>For more information on Blazor project templates, see <a href=""></a>.</p>
+<p>Rendering terms and concepts used in the following subsections are introduced in the following sections of the <em>Fundamentals</em> overview article:</p>
+<ul>
+<li><a href="">Client and server rendering concepts</a></li>
+<li><a href="">Static and interactive rendering concepts</a></li>
+<li><a href="">Render modes</a></li>
+</ul>
+<p>Detailed guidance on render modes is provided by the <a href="/fundamentals/render-modes">render-modes</a> article.</p>
+<h3 id="interactive-render-mode">Interactive render mode</h3>
+<ul>
+<li>Interactive server-side rendering (interactive SSR) is enabled with the <strong>Server</strong> option.</li>
+<li>To only enable interactivity with client-side rendering (CSR), use the <strong>WebAssembly</strong> option.</li>
+<li>To enable both interactive rendering modes and the ability to automatically switch between them at runtime, use the <strong>Auto (Server and WebAssembly)</strong> (automatic) render mode option.</li>
+<li>If interactivity is set to <code>None</code>, the generated app has no interactivity. The app is only configured for static server-side rendering.</li>
+</ul>
+<p>The Interactive Auto render mode initially uses interactive SSR while the .NET app bundle and runtime are downloaded to the browser. After the .NET WebAssembly runtime is activated, the render mode switches to Interactive WebAssembly rendering.</p>
+<p>The Blazor Web App template enables both static and interactive SSR using a single project. If you also enable CSR, the project includes an additional client project (<code>.Client</code>) for your WebAssembly-based components. The built output from the client project is downloaded to the browser and executed on the client. Any components using the WebAssembly or automatic render modes must be built from the client project.</p>
+<blockquote>
+<p>[!IMPORTANT]
+When using a Blazor Web App, most of the Blazor documentation example components <em><strong>require</strong></em> interactivity to function and demonstrate the concepts covered by the articles. When you test an example component provided by an article, make sure that either the app adopts global interactivity or the component adopts an interactive render mode.</p>
+</blockquote>
+<h3 id="interactivity-location">Interactivity location</h3>
+<p>Interactivity location options:</p>
+<ul>
+<li><strong>Per page/component</strong>: The default sets up interactivity per page or per component.</li>
+<li><strong>Global</strong>: Using this option sets up interactivity globally for the entire app.</li>
+</ul>
+<p>Interactivity location can only be set if <strong>Interactive render mode</strong> isn't <code>None</code> and authentication isn't enabled.</p>
+<h3 id="sample-pages">Sample pages</h3>
+<p>To include sample pages and a layout based on Bootstrap styling, use the <strong>Include sample pages</strong> option. Disable this option for project without sample pages and Bootstrap styling.</p>
+<h3 id="additional-guidance-on-template-options">Additional guidance on template options</h3>
+<ul>
+<li><a href="/fundamentals/render-modes">render-modes</a></li>
+<li>The <em>.NET default templates for dotnet new</em> article in the .NET documentation:
+<ul>
+<li><a href="/dotnet/core/tools/dotnet-new-sdk-templates#blazor"><code>blazor</code></a></li>
+<li><a href="/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm"><code>blazorwasm</code></a></li>
+</ul>
+</li>
+<li>Passing the help option (<code>-h</code> or <code>--help</code>) to the <a href="/dotnet/core/tools/dotnet-new"><code>dotnet new</code></a> CLI command in a command shell:
+<ul>
+<li><code>dotnet new blazor -h</code></li>
+<li><code>dotnet new blazorwasm -h</code></li>
+</ul>
+</li>
+</ul>
+<div class="moniker"><p>For more information on template options, see the following resources:</p>
+<ul>
+<li>The <em>.NET default templates for dotnet new</em> article in the .NET documentation:
+<ul>
+<li><a href="/dotnet/core/tools/dotnet-new-sdk-templates#blazorserver"><code>blazorserver</code></a> (includes <code>blazorserver-empty</code> options)</li>
+<li><a href="/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm"><code>blazorwasm</code></a> (includes <code>blazorwasm-empty</code> options)</li>
+</ul>
+</li>
+<li>Passing the help option (<code>-h</code> or <code>--help</code>) to the <a href="/dotnet/core/tools/dotnet-new"><code>dotnet new</code></a> CLI command in a command shell:
+<ul>
+<li><code>dotnet new blazorserver -h</code></li>
+<li><code>dotnet new blazorserver-empty -h</code></li>
+<li><code>dotnet new blazorwasm -h</code></li>
+<li><code>dotnet new blazorwasm-empty -h</code></li>
+</ul>
+</li>
+</ul>
+<div class="moniker-end">
+<div class="moniker"><p>For more information on template options, see the following resources:</p>
+<ul>
+<li>The <em>.NET default templates for dotnet new</em> article in the .NET documentation:
+<ul>
+<li><a href="/dotnet/core/tools/dotnet-new-sdk-templates#blazorserver"><code>blazorserver</code></a></li>
+<li><a href="/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm"><code>blazorwasm</code></a></li>
+</ul>
+</li>
+<li>Passing the help option (<code>-h</code> or <code>--help</code>) to the <a href="/dotnet/core/tools/dotnet-new"><code>dotnet new</code></a> CLI command in a command shell:
+<ul>
+<li><code>dotnet new blazorserver -h</code></li>
+<li><code>dotnet new blazorwasm -h</code></li>
+</ul>
+</li>
+</ul>
+<div class="moniker-end"><h2 id="additional-resources">Additional resources</h2>
+<div class="moniker">
+<ul>
+<li><a href="https://visualstudio.microsoft.com">Visual Studio</a></li>
+<li><a href="https://code.visualstudio.com">Visual Studio Code</a></li>
+<li><a href=""></a></li>
+<li><a href="/dotnet/core/tools">.NET command-line interface (CLI)</a></li>
+<li><a href="/dotnet/core/sdk">.NET SDK</a></li>
+<li><a href=""></a></li>
+<li><a href="/getting-started/comparison">hosting-models</a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+</ul>
+<div class="moniker-end">
+<div class="moniker">
+<ul>
+<li><a href="https://visualstudio.microsoft.com">Visual Studio</a></li>
+<li><a href="https://code.visualstudio.com">Visual Studio Code</a></li>
+<li><a href="/dotnet/core/tools">.NET command-line interface (CLI)</a></li>
+<li><a href="/dotnet/core/sdk">.NET SDK</a></li>
+<li><a href="/getting-started/comparison">hosting-models</a></li>
+<li><a href=""></a></li>
+</ul>
+<div class="moniker-end"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <title>Forms - </title>
+    <script src="/js/lunet-menu-async.js" ></script>
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+<h1 id="forms">Forms</h1>
+<p>Learn how to build forms in Blazor SSR applications with built-in validation and user input handling.</p>
+<h2 id="topics">Topics</h2>
+<h3 id="input-components"><a href="/forms/input-components">Input Components</a></h3>
+<p>Explore the built-in input components provided by Blazor: InputText, InputNumber, InputSelect, and more.</p>
+<h3 id="validation"><a href="/forms/validation">Validation</a></h3>
+<p>Add validation to your forms using data annotations and custom validation logic.</p>
+<h3 id="data-binding"><a href="/forms/binding">Data Binding</a></h3>
+<p>Understand how to bind form inputs to your data models using two-way binding.</p>
+<h2 id="overview">Overview</h2>
+<p>Blazor provides a powerful forms system that integrates with:</p>
+<ul>
+<li><strong>Data Annotations</strong>: Use attributes like <code>[Required]</code>, <code>[StringLength]</code>, etc.</li>
+<li><strong>Input Components</strong>: Built-in components for various input types</li>
+<li><strong>Validation</strong>: Automatic client-side and server-side validation</li>
+<li><strong>EditContext</strong>: Fine-grained control over form behavior</li>
+</ul>
+<h2 id="basic-form-example">Basic Form Example</h2>
+<pre><code class="language-razor">@page &quot;/contact&quot;
+@rendermode InteractiveServer
+
+&lt;EditForm Model=&quot;@contactForm&quot; OnValidSubmit=&quot;@HandleSubmit&quot;&gt;
+    &lt;DataAnnotationsValidator /&gt;
+    
+    &lt;div&gt;
+        &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
+        &lt;InputText id=&quot;name&quot; @bind-Value=&quot;contactForm.Name&quot; /&gt;
+        &lt;ValidationMessage For=&quot;@(() =&gt; contactForm.Name)&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
+        &lt;InputText id=&quot;email&quot; @bind-Value=&quot;contactForm.Email&quot; /&gt;
+        &lt;ValidationMessage For=&quot;@(() =&gt; contactForm.Email)&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+&lt;/EditForm&gt;
+
+@code {
+    private ContactForm contactForm = new();
+
+    private void HandleSubmit()
+    {
+        // Process the form
+    }
+
+    public class ContactForm
+    {
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}
+</code></pre>
+<h2 id="built-in-input-components">Built-in Input Components</h2>
+<ul>
+<li><code>InputText</code> - Text input</li>
+<li><code>InputNumber&lt;T&gt;</code> - Numeric input</li>
+<li><code>InputDate&lt;T&gt;</code> - Date input</li>
+<li><code>InputTextArea</code> - Multi-line text</li>
+<li><code>InputSelect&lt;T&gt;</code> - Dropdown/select</li>
+<li><code>InputCheckbox</code> - Boolean checkbox</li>
+<li><code>InputFile</code> - File upload</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>After mastering forms, explore <a href="/security">Security</a> to learn about authentication and authorization.</p>
+  </body>
+</html>
