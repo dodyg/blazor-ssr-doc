@@ -1,0 +1,143 @@
+{
+  "title": "Blazor SSR Documentation",
+  "description": "Comprehensive guide to Blazor Server-Side Rendering (Static Rendering)",
+  "author": "Extracted from Microsoft ASP.NET Core Documentation",
+  "url": "https://blazor-ssr-docs.dev",
+  
+  "output": {
+    "directory": ".lunet/build/www"
+  },
+  
+  "menus": [
+    {
+      "id": "main",
+      "items": [
+        {
+          "title": "Home",
+          "url": "/",
+          "weight": 1
+        },
+        {
+          "title": "Getting Started",
+          "url": "/getting-started/",
+          "weight": 2,
+          "items": [
+            { "title": "What is Blazor SSR?", "url": "/getting-started/what-is-ssr" },
+            { "title": "Quick Start", "url": "/getting-started/quick-start" },
+            { "title": "Comparison", "url": "/getting-started/comparison" },
+            { "title": "Project Structure", "url": "/getting-started/project-structure" },
+            { "title": "Tooling", "url": "/getting-started/tooling" },
+            { "title": "Supported Platforms", "url": "/getting-started/supported-platforms" }
+          ]
+        },
+        {
+          "title": "Fundamentals",
+          "url": "/fundamentals/",
+          "weight": 3,
+          "items": [
+            { "title": "Render Modes", "url": "/fundamentals/render-modes" },
+            { "title": "Routing", "url": "/fundamentals/routing" },
+            { "title": "Dependency Injection", "url": "/fundamentals/dependency-injection" },
+            { "title": "Configuration", "url": "/fundamentals/configuration" },
+            { "title": "Static Files", "url": "/fundamentals/static-files" }
+          ]
+        },
+        {
+          "title": "Components",
+          "url": "/components/",
+          "weight": 4,
+          "items": [
+            { "title": "Component Basics", "url": "/components/index" },
+            { "title": "Rendering", "url": "/components/rendering" },
+            { "title": "Lifecycle", "url": "/components/lifecycle" },
+            { "title": "Prerendering", "url": "/components/prerender" },
+            { "title": "Cascading Values", "url": "/components/cascading-values-and-parameters" },
+            { "title": "Event Handling", "url": "/components/event-handling" },
+            { "title": "Data Binding", "url": "/components/data-binding" }
+          ]
+        },
+        {
+          "title": "Forms",
+          "url": "/forms/",
+          "weight": 5,
+          "items": [
+            { "title": "Forms Overview", "url": "/forms/index" },
+            { "title": "Input Components", "url": "/forms/input-components" },
+            { "title": "Validation", "url": "/forms/validation" },
+            { "title": "Binding", "url": "/forms/binding" }
+          ]
+        },
+        {
+          "title": "Security",
+          "url": "/security/",
+          "weight": 6,
+          "items": [
+            { "title": "Security Overview", "url": "/security/index" }
+          ]
+        },
+        {
+          "title": "Advanced",
+          "url": "/advanced/",
+          "weight": 7,
+          "items": [
+            { "title": "Advanced Scenarios", "url": "/advanced/advanced-scenarios" },
+            { "title": "Globalization", "url": "/advanced/globalization-localization" }
+          ]
+        }
+      ]
+    }
+  ],
+  
+  "taxonomies": [
+    {
+      "name": "tags",
+      "permalink": "/tags/:name/"
+    },
+    {
+      "name": "category",
+      "permalink": "/categories/:name/"
+    }
+  ],
+  
+  "urls": [
+    {
+      "pattern": "content/**/*.md",
+      "layout": "page"
+    },
+    {
+      "pattern": "content/index.md",
+      "layout": "index"
+    },
+    {
+      "pattern": "content/getting-started/**/*.md",
+      "section": "Getting Started"
+    },
+    {
+      "pattern": "content/fundamentals/**/*.md",
+      "section": "Fundamentals"
+    },
+    {
+      "pattern": "content/components/**/*.md",
+      "section": "Components"
+    },
+    {
+      "pattern": "content/forms/**/*.md",
+      "section": "Forms"
+    },
+    {
+      "pattern": "content/security/**/*.md",
+      "section": "Security"
+    },
+    {
+      "pattern": "content/advanced/**/*.md",
+      "section": "Advanced"
+    }
+  ],
+  
+  "defaults": {
+    "layout": "page",
+    "section": "Documentation",
+    "toc": true,
+    "comments": false
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | Blazor SSR Docs</title>
+    <meta name="description" content="{{ page.description }}">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <a href="/" class="logo">Blazor SSR Docs</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/getting-started/">Getting Started</a></li>
+                    <li><a href="/fundamentals/">Fundamentals</a></li>
+                    <li><a href="/components/">Components</a></li>
+                    <li><a href="/forms/">Forms</a></li>
+                    <li><a href="/security/">Security</a></li>
+                    <li><a href="/advanced/">Advanced</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            {{ content }}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Extracted from Microsoft ASP.NET Core Documentation</p>
+            <p><a href="https://github.com/dotnet/AspNetCore.Docs">Source Repository</a></p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
