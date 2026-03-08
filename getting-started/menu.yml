@@ -1,0 +1,6 @@
+doc:
+  - {path: readme.md, title: "<i class='bi bi-book' aria-hidden='true'></i> Overview"}
+  - {path: tooling.md, title: "<i class='bi bi-tools' aria-hidden='true'></i> Tooling"}
+  - {path: project-structure.md, title: "<i class='bi bi-folder' aria-hidden='true'></i> Project Structure"}
+  - {path: supported-platforms.md, title: "<i class='bi bi-device-hdd' aria-hidden='true'></i> Supported Platforms"}
+  - {path: comparison.md, title: "<i class='bi bi-bar-chart' aria-hidden='true'></i> Comparison"}

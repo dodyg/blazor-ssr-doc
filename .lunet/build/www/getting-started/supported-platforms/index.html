@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html data-lunet-theme-mode="system" data-lunet-theme-storage-key="blazor-ssr-theme" data-lunet-css-prefix="lunet" lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <script>(function(){const root=document.documentElement;const key=root.getAttribute("data-lunet-theme-storage-key")||"lunet-theme";const fallback=root.getAttribute("data-lunet-theme-mode")||"system";let stored=null;try{stored=localStorage.getItem(key);}catch(_){stored=null;}const mode=(stored==="light"||stored==="dark"||stored==="system")?stored:fallback;const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;const resolved=mode==="system"?(prefersDark?"dark":"light"):mode;root.setAttribute("data-lunet-theme-mode",mode);root.setAttribute("data-bs-theme",resolved);}());</script>
+    <link rel='icon' href='/favicon.ico' sizes='32x32'>
+    <title>ASP.NET Core Blazor supported platforms | Blazor SSR Documentation</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/site.js" ></script>
+    <script src="/js/site-defer.js" defer></script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@your-handle">
+<meta name="twitter:title" content="ASP.NET Core Blazor supported platforms | Blazor SSR Documentation">
+<meta name="twitter:description" content="ASP.NET Core Blazor supported platforms Blazor is supported in the browsers shown in the following table on both mobile and desktop platforms. Browser Version Apple Safari Current† Google Chrome Current† Microsoft Edge Current† Mozilla Firefox Current† †Current refers to the latest version of the browser. Blazor WebAssembly Browser Version Apple Safari Current† Google Chrome Current† Microsoft Edge Current† Microsoft Internet Explorer Not Supported Mozilla Firefox Current† †Current refers to the...">
+<meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
+<meta name="twitter:image:alt" content="ASP.NET Core Blazor supported platforms | Blazor SSR Documentation">
+<meta property="og:title" content="ASP.NET Core Blazor supported platforms | Blazor SSR Documentation">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:description" content="ASP.NET Core Blazor supported platforms Blazor is supported in the browsers shown in the following table on both mobile and desktop platforms. Browser Version Apple Safari Current† Google Chrome Current† Microsoft Edge Current† Mozilla Firefox Current† †Current refers to the latest version of the browser. Blazor WebAssembly Browser Version Apple Safari Current† Google Chrome Current† Microsoft Edge Current† Microsoft Internet Explorer Not Supported Mozilla Firefox Current† †Current refers to the...">
+<meta property="og:image" content="http://localhost:4000/img/project-banner.png">
+<meta property="og:image:alt" content="ASP.NET Core Blazor supported platforms | Blazor SSR Documentation">
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+
+    <div id="lunet" class="container">
+      <nav class="navbar navbar-expand-md sticky-top">
+        <a class="navbar-brand" href="/">
+          <img class="lunet-logo" src="/img/lunet-logo.png" alt="Blazor SSR Documentation" width="96" height="96">
+          <span class="visually-hidden">Home</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
+<ol id='nav-id-home-0' class='navbar-nav nav-level0 show '>
+  <li id='nav-item-home-1' class='nav-item '>
+    <span class='nav-item-row'><a href='/' class='nav-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a></span>  </li>
+  <li id='nav-item-home-2' class='nav-item  active'>
+    <span class='nav-item-row'><a href='/getting-started/' class='nav-link  '><i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Getting Started</a></span>  </li>
+  <li id='nav-item-home-3' class='nav-item '>
+    <span class='nav-item-row'><a href='/fundamentals/' class='nav-link  '><i class='bi bi-gear' aria-hidden='true'></i> Fundamentals</a></span>  </li>
+  <li id='nav-item-home-4' class='nav-item '>
+    <span class='nav-item-row'><a href='/components/' class='nav-link  '><i class='bi bi-puzzle' aria-hidden='true'></i> Components</a></span>  </li>
+  <li id='nav-item-home-5' class='nav-item '>
+    <span class='nav-item-row'><a href='/forms/' class='nav-link  '><i class='bi bi-input-cursor-text' aria-hidden='true'></i> Forms</a></span>  </li>
+  <li id='nav-item-home-6' class='nav-item '>
+    <span class='nav-item-row'><a href='/security/' class='nav-link  '><i class='bi bi-shield-lock' aria-hidden='true'></i> Security</a></span>  </li>
+  <li id='nav-item-home-7' class='nav-item '>
+    <span class='nav-item-row'><a href='/advanced/' class='nav-link  '><i class='bi bi-boxes' aria-hidden='true'></i> Advanced</a></span>  </li>
+</ol>
+          <ol class="navbar-nav flex-grow-1" style="padding-right: 0.5rem;">
+            <li class="nav-item w-100">
+                <div class="lunet-search dropdown w-100">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input id="search-input" type="search" class="form-control" placeholder="Search... (Alt+s)" aria-label="Search" aria-controls="search-results" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-search-empty-message="Enter words to search..." data-search-no-results-message="No results found.">
+                    <ul id="search-results" class="dropdown-menu w-100 p-0" style="max-height: 50vh;" role="listbox" aria-labelledby="search-input"></ul>
+                  </div>
+                </div>
+            </li>
+          </ol>
+          <div class="d-flex align-items-center gap-2 flex-shrink-0 navbar-right">
+            <div class="dropdown">
+              <button
+                id="theme-mode-toggle"
+                class="btn btn-outline-secondary btn-sm lunet-theme-toggle dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Theme">
+                <i class="bi bi-circle-half" data-lunet-theme-toggle-icon aria-hidden="true"></i>
+                <span
+                  data-lunet-theme-toggle-label
+                  data-theme-system-label="System"
+                  data-theme-light-label="Light"
+                  data-theme-dark-label="Dark">Theme</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="theme-mode-toggle">
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="system"><i class="bi bi-circle-half me-2"></i>System</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="light"><i class="bi bi-sun-fill me-2"></i>Light</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="dark"><i class="bi bi-moon-stars-fill me-2"></i>Dark</button></li>
+              </ul>
+            </div>
+<ol id='nav-id-home2-0' class='navbar-nav nav-level0 show flex-shrink-0'>
+  <li id='nav-item-home2-1' class='nav-item '>
+    <span class='nav-item-row'><a href='https://learn.microsoft.com/aspnet/core/blazor' class='nav-link  btn btn-outline-info'><i class="bi bi-book"></i> Official Docs</a></span>  </li>
+  <li id='nav-item-home2-2' class='nav-item '>
+    <span class='nav-item-row'><a href='https://github.com/dotnet/AspNetCore.Docs' class='nav-link  btn btn-info'><i class="bi bi-github"></i> GitHub</a></span>  </li>
+</ol>
+          </div>
+        </div>
+      </nav>
+      <div class="lunet lunet-getting-started">
+        <section data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-timeout="1200" data-copy-tooltip="Copy to Clipboard." data-copy-tooltip-success="Copied!" data-copy-tooltip-error="Failed to copy!">
+
+<div class="container-xxl">
+  <div class="row">
+      <!-- Left sidebar - responsive offcanvas (offcanvas on mobile, visible sidebar on md+) -->
+      <nav id="docs-sidebar-menu" class="col-md-3 col-lg-3 col-xl-3 col-xxl-2 offcanvas-md offcanvas-start sticky-md-top menu-sidebar align-self-start order-1 order-md-0" tabindex="-1" aria-labelledby="docs-sidebar-menu-label" aria-expanded="true">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="docs-sidebar-menu-label">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#docs-sidebar-menu" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ol id='menu-id-doc-0' class='menu menu-level0 show '>
+            <li id='menu-item-doc-1' class='menu-item '>
+              <span class='menu-item-row'><a href='/getting-started/' class='menu-link  '><i class='bi bi-book' aria-hidden='true'></i> Overview</a></span>  </li>
+            <li id='menu-item-doc-2' class='menu-item '>
+              <span class='menu-item-row'><a href='/getting-started/tooling/' class='menu-link  '><i class='bi bi-tools' aria-hidden='true'></i> Tooling</a></span>  </li>
+            <li id='menu-item-doc-3' class='menu-item '>
+              <span class='menu-item-row'><a href='/getting-started/project-structure/' class='menu-link  '><i class='bi bi-folder' aria-hidden='true'></i> Project Structure</a></span>  </li>
+            <li id='menu-item-doc-4' class='menu-item  active'>
+              <span class='menu-item-row'><a href='/getting-started/supported-platforms/' class='menu-link  '><i class='bi bi-device-hdd' aria-hidden='true'></i> Supported Platforms</a></span>  </li>
+            <li id='menu-item-doc-5' class='menu-item '>
+              <span class='menu-item-row'><a href='/getting-started/comparison/' class='menu-link  '><i class='bi bi-bar-chart' aria-hidden='true'></i> Comparison</a></span>  </li>
+          </ol>
+
+        </div>
+      </nav>
+      <!-- Right sidebar (TOC) - collapsible on mobile, visible sidebar on xxl+ -->
+      <aside id="docs-sidebar-toc" class="col-12 col-xxl-2 sticky-xxl-top menu-sidebar align-self-start order-0 order-xxl-2 collapse d-xxl-block" aria-expanded="true">
+        <h3 class="toc-title">On this page</h3>
+        <nav class="js-toc"></nav>
+      </aside>
+      <!-- Main content column -->
+      <div class="col-12 col-md-9 col-lg-9 col-xl-9 col-xxl-8 order-2 order-md-1 js-toc-content">
+        <ol class='breadcrumb'>
+          <li class='breadcrumb-item '>
+            <a href='/' class='breadcrumb-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a>  </li>
+          <li class='breadcrumb-item '>
+            <a href='/getting-started/' class='breadcrumb-link  '><i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Getting Started</a>  </li>
+          <li class='breadcrumb-item  active'>
+            <i class='bi bi-device-hdd' aria-hidden='true'></i> Supported Platforms  </li>
+        </ol>
+
+        <p id="lunet-results"></p>
+        <!-- Toggle buttons visible only on small screens -->
+        <div class="d-md-none mb-3">
+          <button
+            class="btn btn-outline-secondary btn-sm me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#docs-sidebar-menu"
+            aria-controls="docs-sidebar-menu"
+            aria-label="Toggle docs menu">
+            Menu
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-sm d-xxl-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#docs-sidebar-toc"
+            aria-controls="docs-sidebar-toc"
+            aria-expanded="false"
+            aria-label="Toggle Table Of Contents">
+            On this page
+          </button>
+        </div>
+<!-- lunet:summarize -->
+<h1 id="aspnet-core-blazor-supported-platforms">ASP.NET Core Blazor supported platforms</h1>
+<div class="moniker"><p>Blazor is supported in the browsers shown in the following table on both mobile and desktop platforms.</p>
+<table class="table">
+<thead>
+<tr>
+<th>Browser</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple Safari</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Google Chrome</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Microsoft Edge</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Mozilla Firefox</td>
+<td>Current†</td>
+</tr>
+</tbody>
+</table>
+<p>†<em>Current</em> refers to the latest version of the browser.</p>
+<div class="moniker-end">
+<div class="moniker"><h2 id="blazor-webassembly">Blazor WebAssembly</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Browser</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple Safari</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Google Chrome</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Microsoft Edge</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Microsoft Internet Explorer</td>
+<td>Not Supported</td>
+</tr>
+<tr>
+<td>Mozilla Firefox</td>
+<td>Current†</td>
+</tr>
+</tbody>
+</table>
+<p>†<em>Current</em> refers to the latest version of the browser.</p>
+<h2 id="blazor-server">Blazor Server</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Browser</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple Safari</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Google Chrome</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Microsoft Edge</td>
+<td>Current†</td>
+</tr>
+<tr>
+<td>Microsoft Internet Explorer</td>
+<td>Not Supported</td>
+</tr>
+<tr>
+<td>Mozilla Firefox</td>
+<td>Current†</td>
+</tr>
+</tbody>
+</table>
+<p>†<em>Current</em> refers to the latest version of the browser.</p>
+<div class="moniker-end">
+<div class="moniker"><p>For <a href="https://learn.microsoft.com/aspnet/core/blazor/hybrid/index">Blazor Hybrid apps</a>, we test on and support the latest platform Web View control versions:</p>
+<ul>
+<li><a href="/microsoft-edge/webview2">Microsoft Edge <code>WebView2</code> on Windows</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.android.chrome">Chrome on Android</a></li>
+<li><a href="https://www.apple.com/safari/">Safari on iOS and macOS</a></li>
+</ul>
+<div class="moniker-end"><h2 id="additional-resources">Additional resources</h2>
+<ul>
+<li><a href="/getting-started/comparison">hosting-models</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/signalr/supported-platforms">supported-platforms</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+      </div>
+  </div>
+</div>
+
+        </section>
+        <footer>
+          <hr>
+          <p>Copyright &copy; 2026, Microsoft aka <a href="https://learn.microsoft.com/aspnet/core/blazor">dotnet</a> - Content licensed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> | Site generated by <a href="https://github.com/lunet-io/lunet">lunet</a> hosted on <a href="https://pages.github.com/">GitHub Pages</a></p>
+        </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

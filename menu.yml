@@ -1,0 +1,12 @@
+home:
+  - {path: readme.md, title: "<i class='bi bi-house-door' aria-hidden='true'></i> Home", self: true}
+  - {path: getting-started/readme.md, title: "<i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Getting Started", folder: true}
+  - {path: fundamentals/readme.md, title: "<i class='bi bi-gear' aria-hidden='true'></i> Fundamentals", folder: true}
+  - {path: components/readme.md, title: "<i class='bi bi-puzzle' aria-hidden='true'></i> Components", folder: true}
+  - {path: forms/readme.md, title: "<i class='bi bi-input-cursor-text' aria-hidden='true'></i> Forms", folder: true}
+  - {path: security/readme.md, title: "<i class='bi bi-shield-lock' aria-hidden='true'></i> Security", folder: true}
+  - {path: advanced/readme.md, title: "<i class='bi bi-boxes' aria-hidden='true'></i> Advanced", folder: true}
+
+home2:
+  - {url: "https://learn.microsoft.com/aspnet/core/blazor", title: '<i class="bi bi-book"></i> Official Docs', link_class: btn btn-outline-info}
+  - {url: "https://github.com/dotnet/AspNetCore.Docs", title: '<i class="bi bi-github"></i> GitHub', link_class: btn btn-info}

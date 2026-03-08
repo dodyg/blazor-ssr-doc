@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html data-lunet-theme-mode="system" data-lunet-theme-storage-key="blazor-ssr-theme" data-lunet-css-prefix="lunet" lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <script>(function(){const root=document.documentElement;const key=root.getAttribute("data-lunet-theme-storage-key")||"lunet-theme";const fallback=root.getAttribute("data-lunet-theme-mode")||"system";let stored=null;try{stored=localStorage.getItem(key);}catch(_){stored=null;}const mode=(stored==="light"||stored==="dark"||stored==="system")?stored:fallback;const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;const resolved=mode==="system"?(prefersDark?"dark":"light"):mode;root.setAttribute("data-lunet-theme-mode",mode);root.setAttribute("data-bs-theme",resolved);}());</script>
+    <link rel='icon' href='/favicon.ico' sizes='32x32'>
+    <title>ASP.NET Core Blazor static files | Blazor SSR Documentation</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/site.js" ></script>
+    <script src="/js/site-defer.js" defer></script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@your-handle">
+<meta name="twitter:title" content="ASP.NET Core Blazor static files | Blazor SSR Documentation">
+<meta name="twitter:description" content="ASP.NET Core Blazor static files This article describes Blazor app configuration for serving static files. For general information on serving static files with Map Static Assets routing endpoint conventions, see static-files before reading this article. Preloaded Blazor framework static assets In Blazor Web Apps, framework static assets are automatically preloaded using Link headers, which allows the browser to preload resources before the initial page is fetched and rendered....">
+<meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
+<meta name="twitter:image:alt" content="ASP.NET Core Blazor static files | Blazor SSR Documentation">
+<meta property="og:title" content="ASP.NET Core Blazor static files | Blazor SSR Documentation">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:description" content="ASP.NET Core Blazor static files This article describes Blazor app configuration for serving static files. For general information on serving static files with Map Static Assets routing endpoint conventions, see static-files before reading this article. Preloaded Blazor framework static assets In Blazor Web Apps, framework static assets are automatically preloaded using Link headers, which allows the browser to preload resources before the initial page is fetched and rendered....">
+<meta property="og:image" content="http://localhost:4000/img/project-banner.png">
+<meta property="og:image:alt" content="ASP.NET Core Blazor static files | Blazor SSR Documentation">
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+
+    <div id="lunet" class="container">
+      <nav class="navbar navbar-expand-md sticky-top">
+        <a class="navbar-brand" href="/">
+          <img class="lunet-logo" src="/img/lunet-logo.png" alt="Blazor SSR Documentation" width="96" height="96">
+          <span class="visually-hidden">Home</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
+<ol id='nav-id-home-0' class='navbar-nav nav-level0 show '>
+  <li id='nav-item-home-1' class='nav-item '>
+    <span class='nav-item-row'><a href='/' class='nav-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a></span>  </li>
+  <li id='nav-item-home-2' class='nav-item '>
+    <span class='nav-item-row'><a href='/getting-started/' class='nav-link  '><i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Getting Started</a></span>  </li>
+  <li id='nav-item-home-3' class='nav-item  active'>
+    <span class='nav-item-row'><a href='/fundamentals/' class='nav-link  '><i class='bi bi-gear' aria-hidden='true'></i> Fundamentals</a></span>  </li>
+  <li id='nav-item-home-4' class='nav-item '>
+    <span class='nav-item-row'><a href='/components/' class='nav-link  '><i class='bi bi-puzzle' aria-hidden='true'></i> Components</a></span>  </li>
+  <li id='nav-item-home-5' class='nav-item '>
+    <span class='nav-item-row'><a href='/forms/' class='nav-link  '><i class='bi bi-input-cursor-text' aria-hidden='true'></i> Forms</a></span>  </li>
+  <li id='nav-item-home-6' class='nav-item '>
+    <span class='nav-item-row'><a href='/security/' class='nav-link  '><i class='bi bi-shield-lock' aria-hidden='true'></i> Security</a></span>  </li>
+  <li id='nav-item-home-7' class='nav-item '>
+    <span class='nav-item-row'><a href='/advanced/' class='nav-link  '><i class='bi bi-boxes' aria-hidden='true'></i> Advanced</a></span>  </li>
+</ol>
+          <ol class="navbar-nav flex-grow-1" style="padding-right: 0.5rem;">
+            <li class="nav-item w-100">
+                <div class="lunet-search dropdown w-100">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input id="search-input" type="search" class="form-control" placeholder="Search... (Alt+s)" aria-label="Search" aria-controls="search-results" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-search-empty-message="Enter words to search..." data-search-no-results-message="No results found.">
+                    <ul id="search-results" class="dropdown-menu w-100 p-0" style="max-height: 50vh;" role="listbox" aria-labelledby="search-input"></ul>
+                  </div>
+                </div>
+            </li>
+          </ol>
+          <div class="d-flex align-items-center gap-2 flex-shrink-0 navbar-right">
+            <div class="dropdown">
+              <button
+                id="theme-mode-toggle"
+                class="btn btn-outline-secondary btn-sm lunet-theme-toggle dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Theme">
+                <i class="bi bi-circle-half" data-lunet-theme-toggle-icon aria-hidden="true"></i>
+                <span
+                  data-lunet-theme-toggle-label
+                  data-theme-system-label="System"
+                  data-theme-light-label="Light"
+                  data-theme-dark-label="Dark">Theme</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="theme-mode-toggle">
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="system"><i class="bi bi-circle-half me-2"></i>System</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="light"><i class="bi bi-sun-fill me-2"></i>Light</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="dark"><i class="bi bi-moon-stars-fill me-2"></i>Dark</button></li>
+              </ul>
+            </div>
+<ol id='nav-id-home2-0' class='navbar-nav nav-level0 show flex-shrink-0'>
+  <li id='nav-item-home2-1' class='nav-item '>
+    <span class='nav-item-row'><a href='https://learn.microsoft.com/aspnet/core/blazor' class='nav-link  btn btn-outline-info'><i class="bi bi-book"></i> Official Docs</a></span>  </li>
+  <li id='nav-item-home2-2' class='nav-item '>
+    <span class='nav-item-row'><a href='https://github.com/dotnet/AspNetCore.Docs' class='nav-link  btn btn-info'><i class="bi bi-github"></i> GitHub</a></span>  </li>
+</ol>
+          </div>
+        </div>
+      </nav>
+      <div class="lunet lunet-fundamentals">
+        <section data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-timeout="1200" data-copy-tooltip="Copy to Clipboard." data-copy-tooltip-success="Copied!" data-copy-tooltip-error="Failed to copy!">
+
+<div class="container-xxl">
+  <div class="row">
+      <!-- Left sidebar - responsive offcanvas (offcanvas on mobile, visible sidebar on md+) -->
+      <nav id="docs-sidebar-menu" class="col-md-3 col-lg-3 col-xl-3 col-xxl-2 offcanvas-md offcanvas-start sticky-md-top menu-sidebar align-self-start order-1 order-md-0" tabindex="-1" aria-labelledby="docs-sidebar-menu-label" aria-expanded="true">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="docs-sidebar-menu-label">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#docs-sidebar-menu" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ol id='menu-id-doc-0' class='menu menu-level0 show '>
+            <li id='menu-item-doc-1' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/' class='menu-link  '><i class='bi bi-book' aria-hidden='true'></i> Overview</a></span>  </li>
+            <li id='menu-item-doc-2' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/render-modes/' class='menu-link  '><i class='bi bi-layers' aria-hidden='true'></i> Render Modes</a></span>  </li>
+            <li id='menu-item-doc-3' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/routing/' class='menu-link  '><i class='bi bi-signpost-2' aria-hidden='true'></i> Routing</a></span>  </li>
+            <li id='menu-item-doc-4' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/dependency-injection/' class='menu-link  '><i class='bi bi-box-arrow-in-right' aria-hidden='true'></i> Dependency Injection</a></span>  </li>
+            <li id='menu-item-doc-5' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/configuration/' class='menu-link  '><i class='bi bi-sliders' aria-hidden='true'></i> Configuration</a></span>  </li>
+            <li id='menu-item-doc-6' class='menu-item  active'>
+              <span class='menu-item-row'><a href='/fundamentals/static-files/' class='menu-link  '><i class='bi bi-file-earmark' aria-hidden='true'></i> Static Files</a></span>  </li>
+          </ol>
+
+        </div>
+      </nav>
+      <!-- Right sidebar (TOC) - collapsible on mobile, visible sidebar on xxl+ -->
+      <aside id="docs-sidebar-toc" class="col-12 col-xxl-2 sticky-xxl-top menu-sidebar align-self-start order-0 order-xxl-2 collapse d-xxl-block" aria-expanded="true">
+        <h3 class="toc-title">On this page</h3>
+        <nav class="js-toc"></nav>
+      </aside>
+      <!-- Main content column -->
+      <div class="col-12 col-md-9 col-lg-9 col-xl-9 col-xxl-8 order-2 order-md-1 js-toc-content">
+        <ol class='breadcrumb'>
+          <li class='breadcrumb-item '>
+            <a href='/' class='breadcrumb-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a>  </li>
+          <li class='breadcrumb-item '>
+            <a href='/fundamentals/' class='breadcrumb-link  '><i class='bi bi-gear' aria-hidden='true'></i> Fundamentals</a>  </li>
+          <li class='breadcrumb-item  active'>
+            <i class='bi bi-file-earmark' aria-hidden='true'></i> Static Files  </li>
+        </ol>
+
+        <p id="lunet-results"></p>
+        <!-- Toggle buttons visible only on small screens -->
+        <div class="d-md-none mb-3">
+          <button
+            class="btn btn-outline-secondary btn-sm me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#docs-sidebar-menu"
+            aria-controls="docs-sidebar-menu"
+            aria-label="Toggle docs menu">
+            Menu
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-sm d-xxl-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#docs-sidebar-toc"
+            aria-controls="docs-sidebar-toc"
+            aria-expanded="false"
+            aria-label="Toggle Table Of Contents">
+            On this page
+          </button>
+        </div>
+<!-- lunet:summarize -->
+<h1 id="aspnet-core-blazor-static-files">ASP.NET Core Blazor static files</h1>
+<p>This article describes Blazor app configuration for serving static files.</p>
+<div class="moniker"><p>For general information on serving static files with Map Static Assets routing endpoint conventions, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/static-files">static-files</a> before reading this article.</p>
+<div class="moniker-end">
+<div class="moniker"><h2 id="preloaded-blazor-framework-static-assets">Preloaded Blazor framework static assets</h2>
+<p>In Blazor Web Apps, framework static assets are automatically preloaded using <a href="https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Link"><code>Link</code> headers</a>, which allows the browser to preload resources before the initial page is fetched and rendered.</p>
+<p>In standalone Blazor WebAssembly apps, framework assets are scheduled for high priority downloading and caching early in browser <code>index.html</code> page processing when:</p>
+<ul>
+<li><p>The <code>OverrideHtmlAssetPlaceholders</code> MSBuild property in the app's project file (<code>.csproj</code>) is set to <code>true</code>:</p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+  &lt;OverrideHtmlAssetPlaceholders&gt;true&lt;/OverrideHtmlAssetPlaceholders&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+</li>
+<li><p>The following <code>&lt;link&gt;</code> element containing <a href="https://developer.mozilla.org/docs/Web/HTML/Reference/Attributes/rel/preload"><code>rel=&quot;preload&quot;</code></a> is present in the <code>&lt;head&gt;</code> content of <code>wwwroot/index.html</code>:</p>
+<pre><code class="language-html">&lt;link rel=&quot;preload&quot; id=&quot;webassembly&quot; /&gt;
+</code></pre>
+</li>
+</ul>
+<div class="moniker-end"><h2 id="static-asset-delivery-in-server-side-blazor-apps">Static asset delivery in server-side Blazor apps</h2>
+<div class="moniker"><p>Serving static assets is managed by either routing endpoint conventions or a middleware described in the following table.</p>
+<table class="table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>API</th>
+<th style="text-align: center;">.NET Version</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Map Static Assets routing endpoint conventions</td>
+<td><a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticassetsendpointroutebuilderextensions.mapstaticassets%2a">Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets *</a></td>
+<td style="text-align: center;">.NET 9 or later</td>
+<td>Optimizes the delivery of static assets to clients.</td>
+</tr>
+<tr>
+<td>Static File Middleware</td>
+<td><a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a></td>
+<td style="text-align: center;">All .NET versions</td>
+<td>Serves static assets to clients without the optimizations of Map Static Assets but useful for some tasks that Map Static Assets isn't capable of managing.</td>
+</tr>
+</tbody>
+</table>
+<p>Map Static Assets can replace <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a> in most situations. However, Map Static Assets is optimized for serving the assets from known locations in the app at build and publish time. If the app serves assets from other locations, such as disk or embedded resources, <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a> should be used.</p>
+<p>Map Static Assets (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticassetsendpointroutebuilderextensions.mapstaticassets%2a">Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets *</a>) also replaces calling <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentswebassemblyapplicationbuilderextensions.useblazorframeworkfiles%2a">Microsoft.AspNetCore.Builder.ComponentsWebAssemblyApplicationBuilderExtensions.UseBlazorFrameworkFiles *</a> in apps that serve Blazor WebAssembly framework files, and explicitly calling <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentswebassemblyapplicationbuilderextensions.useblazorframeworkfiles%2a">Microsoft.AspNetCore.Builder.ComponentsWebAssemblyApplicationBuilderExtensions.UseBlazorFrameworkFiles *</a> in a Blazor Web App isn't necessary because the API is automatically called when invoking <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.webassemblyrazorcomponentsbuilderextensions.addinteractivewebassemblycomponents%2a">Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents *</a>.</p>
+<p>When <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/index#render-modes">Interactive WebAssembly or Interactive Auto render modes</a> are enabled:</p>
+<ul>
+<li>Blazor creates an endpoint to expose the resource collection as a JS module.</li>
+<li>The URL is emitted to the body of the request as persisted component state when a WebAssembly component is rendered into the page.</li>
+<li>During WebAssembly boot, Blazor retrieves the URL, imports the module, and calls a function to retrieve the asset collection and reconstruct it in memory. The URL is specific to the content and cached forever, so this overhead cost is only paid once per user until the app is updated.</li>
+<li>The resource collection is also exposed at a human-readable URL (<code>_framework/resource-collection.js</code>), so JS has access to the resource collection for <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#enhanced-navigation-and-form-handling">enhanced navigation</a> or to implement features of other frameworks and third-party components.</li>
+</ul>
+<p>Static File Middleware (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a>) is useful in the following situations that Map Static Assets (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticassetsendpointroutebuilderextensions.mapstaticassets%2a">Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets *</a>) can't handle:</p>
+<ul>
+<li>Serving files from disk that aren't part of the build or publish process, for example, files added to the application folder during or after deployment.</li>
+<li>Applying a path prefix to Blazor WebAssembly static asset files, which is covered in the <a href="#prefix-for-blazor-webassembly-assets">Prefix for Blazor WebAssembly assets</a> section.</li>
+<li>Configuring file mappings of extensions to specific content types and setting static file options, which is covered in the <a href="#file-mappings-and-static-file-options">File mappings and static file options</a> section.</li>
+</ul>
+<p>For more information, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/static-files">static-files</a>.</p>
+<h2 id="deliver-assets-with-map-static-assets-routing-endpoint-conventions">Deliver assets with Map Static Assets routing endpoint conventions</h2>
+<p><em>This section applies to server-side Blazor apps.</em></p>
+<p>Assets are delivered via the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.assets?displayproperty=namewithtype">Microsoft.AspNetCore.Components.ComponentBase.Assets?displayProperty=nameWithType</a> property, which resolves the fingerprinted URL for a given asset. In the following example, Bootstrap, the Blazor project template app stylesheet (<code>app.css</code>), and the <a href="https://learn.microsoft.com/aspnet/core/blazor/components/css-isolation">CSS isolation stylesheet</a> (based on an app's namespace of <code>BlazorSample</code>) are linked in a root component, typically the <code>App</code> component (<code>Components/App.razor</code>):</p>
+<pre><code class="language-razor">&lt;link rel=&quot;stylesheet&quot; href=&quot;@Assets[&quot;bootstrap/bootstrap.min.css&quot;]&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;@Assets[&quot;app.css&quot;]&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;@Assets[&quot;BlazorSample.styles.css&quot;]&quot; /&gt;
+</code></pre>
+<h2 id="importmap-component"><code>ImportMap</code> component</h2>
+<p><em>This section applies to Blazor Web Apps that call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointroutebuilderextensions.maprazorcomponents%2a">Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents *</a>.</em></p>
+<p>The <code>ImportMap</code> component (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmap">Microsoft.AspNetCore.Components.ImportMap</a>) represents an import map element (<code>&lt;script type=&quot;importmap&quot;&gt;&lt;/script&gt;</code>) that defines the import map for module scripts. The Import Map component is placed in <code>&lt;head&gt;</code> content of the root component, typically the <code>App</code> component (<code>Components/App.razor</code>).</p>
+<pre><code class="language-razor">&lt;ImportMap /&gt;
+</code></pre>
+<p>If a custom <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmapdefinition">Microsoft.AspNetCore.Components.ImportMapDefinition</a> isn't assigned to an Import Map component, the import map is generated based on the app's assets.</p>
+<blockquote class="blockquote">
+<p>[!NOTE]
+<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmapdefinition">Microsoft.AspNetCore.Components.ImportMapDefinition</a> instances are expensive to create, so we recommended caching them when creating an additional instance.</p>
+</blockquote>
+<p>The following examples demonstrate custom import map definitions and the import maps that they create.</p>
+<p>Basic import map:</p>
+<pre><code class="language-csharp">new ImportMapDefinition(
+    new Dictionary&lt;string, string&gt;
+    {
+        { &quot;jquery&quot;, &quot;https://cdn.example.com/jquery.js&quot; },
+    },
+    null,
+    null);
+</code></pre>
+<p>The preceding code results in the following import map:</p>
+<pre><code class="language-json">{
+  &quot;imports&quot;: {
+    &quot;jquery&quot;: &quot;https://cdn.example.com/jquery.js&quot;
+  }
+}
+</code></pre>
+<p>Scoped import map:</p>
+<pre><code class="language-csharp">new ImportMapDefinition(
+    null,
+    new Dictionary&lt;string, IReadOnlyDictionary&lt;string, string&gt;&gt;
+    {
+        [&quot;/scoped/&quot;] = new Dictionary&lt;string, string&gt;
+        {
+            { &quot;jquery&quot;, &quot;https://cdn.example.com/jquery.js&quot; },
+        }
+    },
+    null);
+</code></pre>
+<p>The preceding code results in the following import map:</p>
+<pre><code class="language-json">{
+  &quot;scopes&quot;: {
+    &quot;/scoped/&quot;: {
+      &quot;jquery&quot;: &quot;https://cdn.example.com/jquery.js&quot;
+    }
+  }
+}
+</code></pre>
+<p>Import map with integrity:</p>
+<pre><code class="language-csharp">new ImportMapDefinition(
+    new Dictionary&lt;string, string&gt;
+    {
+        { &quot;jquery&quot;, &quot;https://cdn.example.com/jquery.js&quot; },
+    },
+    null,
+    new Dictionary&lt;string, string&gt;
+    {
+        { &quot;https://cdn.example.com/jquery.js&quot;, &quot;sha384-abc123&quot; },
+    });
+</code></pre>
+<p>The preceding code results in the following import map:</p>
+<pre><code class="language-json">{
+  &quot;imports&quot;: {
+    &quot;jquery&quot;: &quot;https://cdn.example.com/jquery.js&quot;
+  },
+  &quot;integrity&quot;: {
+    &quot;https://cdn.example.com/jquery.js&quot;: &quot;sha384-abc123&quot;
+  }
+}
+</code></pre>
+<p>Combine import map definitions (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmapdefinition">Microsoft.AspNetCore.Components.ImportMapDefinition</a>) with <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmapdefinition.combine%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.ImportMapDefinition.Combine *?displayProperty=nameWithType</a>.</p>
+<p>Import map created from a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.resourceassetcollection">Microsoft.AspNetCore.Components.ResourceAssetCollection</a> that maps static assets to their corresponding unique URLs:</p>
+<pre><code class="language-csharp">ImportMapDefinition.FromResourceCollection(
+    new ResourceAssetCollection(
+    [
+        new ResourceAsset(
+            &quot;jquery.fingerprint.js&quot;,
+            [
+                new ResourceAssetProperty(&quot;integrity&quot;, &quot;sha384-abc123&quot;),
+                new ResourceAssetProperty(&quot;label&quot;, &quot;jquery.js&quot;),
+            ])
+    ]));
+</code></pre>
+<p>The preceding code results in the following import map:</p>
+<pre><code class="language-json">{
+  &quot;imports&quot;: {
+    &quot;./jquery.js&quot;: &quot;./jquery.fingerprint.js&quot;
+  },
+  &quot;integrity&quot;: {
+    &quot;jquery.fingerprint.js&quot;: &quot;sha384-abc123&quot;
+  }
+}
+</code></pre>
+<h2 id="import-map-content-security-policy-csp-violations">Import map Content Security Policy (CSP) violations</h2>
+<p><em>This section applies to Blazor Web Apps that call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointroutebuilderextensions.maprazorcomponents%2a">Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents *</a>.</em></p>
+<p>The <code>ImportMap</code> component is rendered as an inline <code>&lt;script&gt;</code> tag, which violates a strict <a href="https://developer.mozilla.org/docs/Web/HTTP/Guides/CSP">Content Security Policy (CSP)</a> that sets the <code>default-src</code> or <code>script-src</code> directive.</p>
+<p>For examples of how to address the policy violation with Subresource Integrity (SRI) or a cryptographic nonce, see <a href="https://learn.microsoft.com/aspnet/core/blazor/security/content-security-policy#resolving-csp-violations-with-subresource-integrity-sri-or-a-cryptographic-nonce">Resolving CSP violations with Subresource Integrity (SRI) or a nonce</a>.</p>
+<div class="moniker-end">
+<div class="moniker"><p>Configure Static File Middleware to serve static assets to clients by calling <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a> in the app's request processing pipeline. For more information, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/static-files">static-files</a>.</p>
+<p>In releases prior to .NET 8, Blazor framework static files, such as the Blazor script, are served via Static File Middleware. In .NET 8 or later, Blazor framework static files are mapped using endpoint routing, and Static File Middleware is no longer used.</p>
+<div class="moniker-end">
+<div class="moniker"><h2 id="fingerprint-client-side-static-assets-in-standalone-blazor-webassembly-apps">Fingerprint client-side static assets in standalone Blazor WebAssembly apps</h2>
+<p>In standalone Blazor WebAssembly apps during build and publish, the framework overrides placeholders in <code>index.html</code> with values computed during build to fingerprint static assets for client-side rendering. A <a href="https://wikipedia.org/wiki/Fingerprint_(computing)">fingerprint</a> is placed into the <code>blazor.webassembly.js</code> script file name, and an import map is generated for other .NET assets.</p>
+<p>The following configuration must be present in the <code>wwwwoot/index.html</code> file of a standalone Blazor WebAssembly app to adopt fingerprinting:</p>
+<pre><code class="language-html">&lt;head&gt;
+    ...
+    &lt;script type=&quot;importmap&quot;&gt;&lt;/script&gt;
+    ...
+&lt;/head&gt;
+
+&lt;body&gt;
+    ...
+    &lt;script src=&quot;_framework/blazor.webassembly#[.{fingerprint}].js&quot;&gt;&lt;/script&gt;
+    ...
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+<p>In the project file (<code>.csproj</code>), the <code>&lt;OverrideHtmlAssetPlaceholders&gt;</code> property is set to <code>true</code>:</p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+  &lt;OverrideHtmlAssetPlaceholders&gt;true&lt;/OverrideHtmlAssetPlaceholders&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<p>When resolving imports for JavaScript interop, the import map is used by the browser resolve fingerprinted files.</p>
+<p>In the following example, all developer-supplied JS files are modules with a <code>.js</code> file extension.</p>
+<p>A module named <code>scripts.js</code> in the app's <code>wwwroot/js</code> folder is fingerprinted by adding <code>#[.{fingerprint}]</code> before the file extension (<code>.js</code>):</p>
+<pre><code class="language-html">&lt;script type=&quot;module&quot; src=&quot;js/scripts#[.{fingerprint}].js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Specify the fingerprint expression with the <code>&lt;StaticWebAssetFingerprintPattern&gt;</code> property in the app's project file (<code>.csproj</code>):</p>
+<pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;StaticWebAssetFingerprintPattern Include=&quot;JSModule&quot; Pattern=&quot;*.js&quot; 
+    Expression=&quot;#[.{fingerprint}]!&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<p>Any JS file (<code>*.js</code>) in <code>index.html</code> with the fingerprint marker is fingerprinted by the framework, including when the app is published.</p>
+<h2 id="fingerprint-client-side-static-assets-in-blazor-web-apps">Fingerprint client-side static assets in Blazor Web Apps</h2>
+<p>For client-side rendering (CSR) in Blazor Web Apps (Interactive Auto or Interactive WebAssembly render modes), static asset server-side <a href="https://wikipedia.org/wiki/Fingerprint_(computing)">fingerprinting</a> is enabled by adopting <a href="https://learn.microsoft.com/aspnet/core/fundamentals/static-files">Map Static Assets routing endpoint conventions (<code>MapStaticAssets</code>)</a>, <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/static-files#importmap-component"><code>ImportMap</code> component</a>, and the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.assets?displayproperty=namewithtype">Microsoft.AspNetCore.Components.ComponentBase.Assets?displayProperty=nameWithType</a> property (<code>@Assets[&quot;...&quot;]</code>). For more information, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/static-files">static-files</a>.</p>
+<p>To fingerprint additional JavaScript modules for CSR, use the <code>&lt;StaticWebAssetFingerprintPattern&gt;</code> item in the app's project file (<code>.csproj</code>). In the following example, a fingerprint is added for all developer-supplied <code>.mjs</code> files in the app:</p>
+<pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;StaticWebAssetFingerprintPattern Include=&quot;JSModule&quot; Pattern=&quot;*.mjs&quot; 
+    Expression=&quot;#[.{fingerprint}]!&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<p>When resolving imports for JavaScript interop, the import map is used by the browser resolve fingerprinted files.</p>
+<div class="moniker-end"><h2 id="summary-of-static-file-link-href-formats">Summary of static file <code>&lt;link&gt;</code> <code>href</code> formats</h2>
+<p><em>This section applies to all .NET releases and Blazor apps.</em></p>
+<p>The following tables summarize static file <code>&lt;link&gt;</code> <code>href</code> formats by .NET release.</p>
+<div class="moniker"><p>For the location of <code>&lt;head&gt;</code> content where static file links are placed, see <a href="https://learn.microsoft.com/aspnet/core/blazor/project-structure#location-of-head-and-body-content">project-structure</a>. Static asset links can also be supplied using <a href="https://learn.microsoft.com/aspnet/core/blazor/components/control-head-content"><code>&lt;HeadContent&gt;</code> components</a> in individual Razor components.</p>
+<div class="moniker-end">
+<div class="moniker"><p>For the location of <code>&lt;head&gt;</code> content where static file links are placed, see <a href="https://learn.microsoft.com/aspnet/core/blazor/project-structure#location-of-head-and-body-content">project-structure</a>.</p>
+<div class="moniker-end"><h3 id="net-9-or-later">.NET 9 or later</h3>
+<table class="table">
+<thead>
+<tr>
+<th>App type</th>
+<th><code>href</code> value</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blazor Web App</td>
+<td><code>@Assets[&quot;{PATH}&quot;]</code></td>
+<td><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;@Assets[&quot;app.css&quot;]&quot; /&gt;</code><br><code>&lt;link href=&quot;@Assets[&quot;_content/ComponentLib/styles.css&quot;]&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Blazor Server†</td>
+<td><code>@Assets[&quot;{PATH}&quot;]</code></td>
+<td><code>&lt;link href=&quot;@Assets[&quot;css/site.css&quot;]&quot; rel=&quot;stylesheet&quot; /&gt;</code><br><code>&lt;link href=&quot;@Assets[&quot;_content/ComponentLib/styles.css&quot;]&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Standalone Blazor WebAssembly</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="net-8x">.NET 8.x</h3>
+<table class="table">
+<thead>
+<tr>
+<th>App type</th>
+<th><code>href</code> value</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blazor Web App</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Blazor Server†</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link href=&quot;css/site.css&quot; rel=&quot;stylesheet&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Standalone Blazor WebAssembly</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="net-7x-or-earlier">.NET 7.x or earlier</h3>
+<table class="table">
+<thead>
+<tr>
+<th>App type</th>
+<th><code>href</code> value</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blazor Server†</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link href=&quot;css/site.css&quot; rel=&quot;stylesheet&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Hosted Blazor WebAssembly‡</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Blazor WebAssembly</td>
+<td><code>{PATH}</code></td>
+<td><code>&lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;</code><br><code>&lt;link href=&quot;_content/ComponentLib/styles.css&quot; rel=&quot;stylesheet&quot; /&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>†Blazor Server is supported in .NET 8 or later but is no longer a project template after .NET 7.<br />
+‡We recommend updating Hosted Blazor WebAssembly apps to Blazor Web Apps when adopting .NET 8 or later.</p>
+<h2 id="static-web-asset-project-mode">Static Web Asset Project Mode</h2>
+<p><em>This section applies to the <code>.Client</code> project of a Blazor Web App.</em></p>
+<p>The required <code>&lt;StaticWebAssetProjectMode&gt;Default&lt;/StaticWebAssetProjectMode&gt;</code> setting in the <code>.Client</code> project of a Blazor Web App reverts Blazor WebAssembly static asset behaviors back to the defaults, so that the project behaves as part of the hosted project. The Blazor WebAssembly SDK (<code>Microsoft.NET.Sdk.BlazorWebAssembly</code>) configures static web assets in a specific way to work in &quot;standalone&quot; mode with a server simply consuming the outputs from the library. This isn't appropriate for a Blazor Web App, where the WebAssembly portion of the app is a logical part of the host and must behave more like a library. For example, the project doesn't expose the styles bundle (for example, <code>BlazorSample.Client.styles.css</code>) and instead only provides the host with the project bundle, so that the host can include it in its own styles bundle.</p>
+<p>Changing the value (<code>Default</code>) of <code>&lt;StaticWebAssetProjectMode&gt;</code> or removing the property from the <code>.Client</code> project isn't supported.</p>
+<h2 id="prefix-for-blazor-webassembly-assets">Prefix for Blazor WebAssembly assets</h2>
+<p><em>This section applies to Blazor Web Apps.</em></p>
+<p>Use the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.server.webassemblycomponentsendpointoptions.pathprefix?displayproperty=namewithtype">Microsoft.AspNetCore.Components.WebAssembly.Server.WebAssemblyComponentsEndpointOptions.PathPrefix?displayProperty=nameWithType</a> endpoint option to set the path string that indicates the prefix for Blazor WebAssembly assets. The path must correspond to a referenced Blazor WebAssembly application project.</p>
+<pre><code class="language-csharp">endpoints.MapRazorComponents&lt;App&gt;()
+    .AddInteractiveWebAssemblyRenderMode(options =&gt; 
+        options.PathPrefix = &quot;{PATH PREFIX}&quot;);
+</code></pre>
+<p>In the preceding example, the <code>{PATH PREFIX}</code> placeholder is the path prefix and must start with a forward slash (<code>/</code>).</p>
+<p>In the following example, the path prefix is set to <code>/path-prefix</code>:</p>
+<pre><code class="language-csharp">endpoints.MapRazorComponents&lt;App&gt;()
+    .AddInteractiveWebAssemblyRenderMode(options =&gt; 
+        options.PathPrefix = &quot;/path-prefix&quot;);
+</code></pre>
+<h2 id="static-web-asset-base-path">Static web asset base path</h2>
+<p><em>This section applies to standalone Blazor WebAssembly apps.</em></p>
+<p>Publishing the app places the app's static assets, including Blazor framework files (<code>_framework</code> folder assets), at the root path (<code>/</code>) in published output. The <code>&lt;StaticWebAssetBasePath&gt;</code> property specified in the project file (<code>.csproj</code>) sets the base path to a non-root path:</p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+  &lt;StaticWebAssetBasePath&gt;{PATH}&lt;/StaticWebAssetBasePath&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<p>In the preceding example, the <code>{PATH}</code> placeholder is the path.</p>
+<p>Without setting the <code>&lt;StaticWebAssetBasePath&gt;</code> property, a standalone app is published at <code>/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/</code>.</p>
+<p>In the preceding example, the <code>{TFM}</code> placeholder is the <a href="/dotnet/standard/frameworks">Target Framework Moniker (TFM)</a>.</p>
+<p>If the <code>&lt;StaticWebAssetBasePath&gt;</code> property in a standalone Blazor WebAssembly app sets the published static asset path to <code>app1</code>, the root path to the app in published output is <code>/app1</code>.</p>
+<p>In the standalone Blazor WebAssembly app's project file (<code>.csproj</code>):</p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+  &lt;StaticWebAssetBasePath&gt;app1&lt;/StaticWebAssetBasePath&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<p>In published output, the path to the standalone Blazor WebAssembly app is <code>/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/app1/</code>.</p>
+<p>In the preceding example, the <code>{TFM}</code> placeholder is the <a href="/dotnet/standard/frameworks">Target Framework Moniker (TFM)</a>.</p>
+<h2 id="serve-files-from-multiple-locations">Serve files from multiple locations</h2>
+<p><em>The guidance in this section only applies to Blazor Web Apps.</em></p>
+<p>To serve files from multiple locations with a <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.fileproviders.compositefileprovider">Microsoft.Extensions.FileProviders.CompositeFileProvider</a>:</p>
+<ul>
+<li>Add the namespace for <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.fileproviders?displayproperty=fullname">Microsoft.Extensions.FileProviders?displayProperty=fullName</a> to the top of the <code>Program</code> file of the server project.</li>
+<li>In the server project's <code>Program</code> file <em><strong>before</strong></em> the call to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a>:
+<ul>
+<li>Create a <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.fileproviders.physicalfileprovider">Microsoft.Extensions.FileProviders.PhysicalFileProvider</a> with the path to the static assets.</li>
+<li>Create a <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.fileproviders.compositefileprovider">Microsoft.Extensions.FileProviders.CompositeFileProvider</a> from the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.hosting.iwebhostenvironment.webrootfileprovider">Microsoft.AspNetCore.Hosting.IWebHostEnvironment.WebRootFileProvider</a> and the <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.fileproviders.physicalfileprovider">Microsoft.Extensions.FileProviders.PhysicalFileProvider</a>. Assign the composite file provider back to the app's <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.hosting.iwebhostenvironment.webrootfileprovider">Microsoft.AspNetCore.Hosting.IWebHostEnvironment.WebRootFileProvider</a>.</li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<p>Create a new folder in the server project named <code>AdditionalStaticAssets</code>. Place an image into the folder.</p>
+<p>Add the following <code>using</code> statement to the top of the server project's <code>Program</code> file:</p>
+<pre><code class="language-csharp">using Microsoft.Extensions.FileProviders;
+</code></pre>
+<p>In the server project's <code>Program</code> file <em><strong>before</strong></em> the call to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles%2a">Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles *</a>, add the following code:</p>
+<pre><code class="language-csharp">var secondaryProvider = new PhysicalFileProvider(
+    Path.Combine(builder.Environment.ContentRootPath, &quot;AdditionalStaticAssets&quot;));
+app.Environment.WebRootFileProvider = new CompositeFileProvider(
+    app.Environment.WebRootFileProvider, secondaryProvider);
+</code></pre>
+<p>In the app's <code>Home</code> component (<code>Home.razor</code>) markup, reference the image with an <code>&lt;img&gt;</code> tag:</p>
+<pre><code class="language-razor">&lt;img src=&quot;{IMAGE FILE NAME}&quot; alt=&quot;{ALT TEXT}&quot; /&gt;
+</code></pre>
+<p>In the preceding example:</p>
+<ul>
+<li>The <code>{IMAGE FILE NAME}</code> placeholder is the image file name. There's no need to provide a path segment if the image file is at the root of the <code>AdditionalStaticAssets</code> folder.</li>
+<li>The <code>{ALT TEXT}</code> placeholder is the image alternate text.</li>
+</ul>
+<p>Run the app.</p>
+<h2 id="additional-resources">Additional resources</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/app-base-path">app-base-path</a></li>
+<li><a href="/fundamentals/routing#avoid-file-capture-in-a-route-parameter">Avoid file capture in a route parameter</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+      </div>
+  </div>
+</div>
+
+        </section>
+        <footer>
+          <hr>
+          <p>Copyright &copy; 2026, Microsoft aka <a href="https://learn.microsoft.com/aspnet/core/blazor">dotnet</a> - Content licensed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> | Site generated by <a href="https://github.com/lunet-io/lunet">lunet</a> hosted on <a href="https://pages.github.com/">GitHub Pages</a></p>
+        </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

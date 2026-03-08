@@ -1,120 +1,16 @@
-{
-  "title": "Blazor SSR Documentation",
-  "description": "Comprehensive guide to Blazor Server-Side Rendering (Static Rendering)",
-  "author": "Extracted from Microsoft ASP.NET Core Documentation",
-  "url": "https://blazor-ssr-docs.dev",
-  
-  "output": {
-    "directory": ".lunet/build/www"
-  },
-  
-  "menus": [
-    {
-      "id": "main",
-      "items": [
-        {
-          "title": "Home",
-          "url": "/",
-          "weight": 1
-        },
+extend "lunet-io/templates"
 
+template_theme_default_mode = "system"
+template_theme_storage_key = "blazor-ssr-theme"
 
-        {
-          "title": "Components",
-          "url": "/components/",
-          "weight": 4,
-          "items": [
-            { "title": "Component Basics", "url": "/components/index" },
-            { "title": "Rendering", "url": "/components/rendering" },
-            { "title": "Lifecycle", "url": "/components/lifecycle" },
-            { "title": "Prerendering", "url": "/components/prerender" },
-            { "title": "Cascading Values", "url": "/components/cascading-values-and-parameters" },
-            { "title": "Event Handling", "url": "/components/event-handling" },
-            { "title": "Data Binding", "url": "/components/data-binding" }
-          ]
-        },
-        {
-          "title": "Forms",
-          "url": "/forms/",
-          "weight": 5,
-          "items": [
-            { "title": "Forms Overview", "url": "/forms/index" },
-            { "title": "Input Components", "url": "/forms/input-components" },
-            { "title": "Validation", "url": "/forms/validation" },
-            { "title": "Binding", "url": "/forms/binding" }
-          ]
-        },
-        {
-          "title": "Security",
-          "url": "/security/",
-          "weight": 6,
-          "items": [
-            { "title": "Security Overview", "url": "/security/index" }
-          ]
-        },
-        {
-          "title": "Advanced",
-          "url": "/advanced/",
-          "weight": 7,
-          "items": [
-            { "title": "Advanced Scenarios", "url": "/advanced/advanced-scenarios" },
-            { "title": "Globalization", "url": "/advanced/globalization-localization" }
-          ]
-        }
-      ]
-    }
-  ],
-  
-  "taxonomies": [
-    {
-      "name": "tags",
-      "permalink": "/tags/:name/"
-    },
-    {
-      "name": "category",
-      "permalink": "/categories/:name/"
-    }
-  ],
-  
-  "urls": [
-    {
-      "pattern": "content/**/*.md",
-      "layout": "page"
-    },
-    {
-      "pattern": "content/index.md",
-      "layout": "index"
-    },
-    {
-      "pattern": "content/getting-started/**/*.md",
-      "section": "Getting Started"
-    },
-    {
-      "pattern": "content/fundamentals/**/*.md",
-      "section": "Fundamentals"
-    },
-    {
-      "pattern": "content/components/**/*.md",
-      "section": "Components"
-    },
-    {
-      "pattern": "content/forms/**/*.md",
-      "section": "Forms"
-    },
-    {
-      "pattern": "content/security/**/*.md",
-      "section": "Security"
-    },
-    {
-      "pattern": "content/advanced/**/*.md",
-      "section": "Advanced"
-    }
-  ],
-  
-  "defaults": {
-    "layout": "page",
-    "section": "Documentation",
-    "toc": true,
-    "comments": false
-  }
-}
+site_project_name = "Blazor SSR Documentation"
+site_project_description = "Comprehensive guide to Blazor Server-Side Rendering (Static Rendering)"
+site_project_github_user = "dotnet"
+site_project_github_repo = "AspNetCore.Docs"
+site_project_owner_name = "Microsoft"
+site_project_owner_alias = "dotnet"
+site_project_owner_url = "https://learn.microsoft.com/aspnet/core/blazor"
+site_project_content_license_name = "CC BY 4.0"
+site_project_content_license_url = "https://creativecommons.org/licenses/by/4.0/"
+
+site_project_init

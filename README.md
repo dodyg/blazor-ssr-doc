@@ -1,193 +1,287 @@
-# Blazor SSR Documentation
+---
+title: Blazor SSR Documentation
+description: Comprehensive guide to Blazor Server-Side Rendering (Static Rendering) - Build fast, SEO-friendly web applications with Blazor
+layout: index
+---
 
-> A curated, static documentation site focused exclusively on **Blazor Server-Side Rendering (SSR)** extracted from the official ASP.NET Core documentation.
+# Welcome to Blazor SSR Documentation
 
-## Overview
+> Your comprehensive guide to **Blazor Server-Side Rendering (SSR)**, also known as static rendering.
 
-This project extracts, filters, and organizes documentation specifically for Blazor SSR (also known as static rendering) from the Microsoft ASP.NET Core documentation. The site is built using [Lunet](https://github.com/lunet-io/lunet), a fast, modular static website generator for .NET.
+## What is Blazor SSR?
 
-## What's Included
+Blazor SSR (Server-Side Rendering) is a hosting model for Blazor applications where components are rendered on the server and delivered as static HTML to the browser. This approach offers:
 
-- ✅ **Blazor SSR Concepts**: Static and Interactive Server-Side Rendering
-- ✅ **Render Modes**: Complete guide to Static Server, Interactive Server, and Auto modes
-- ✅ **Component Fundamentals**: Lifecycle, rendering, and data flow in SSR contexts
-- ✅ **Prerendering**: Optimization techniques for initial load performance
-- ✅ **Security**: Authentication and authorization for SSR
-- ✅ **Deployment**: Best practices for deploying Blazor SSR apps
+- **Fast Initial Load**: HTML is rendered server-side and delivered immediately
+- **SEO-Friendly**: Content is available to search engines without JavaScript execution
+- **Full .NET Runtime**: Access to complete .NET APIs on the server
+- **Low Client Requirements**: Works on any browser without WebAssembly support
 
-## What's NOT Included
+## Two Types of SSR
 
-To maintain focus on SSR, the following topics are excluded:
-- ❌ Blazor WebAssembly standalone apps
-- ❌ Progressive Web Apps (PWA)
-- ❌ Blazor Hybrid (.NET MAUI, WPF, Windows Forms)
-- ❌ WebAssembly-specific features (AOT, native dependencies)
-- ❌ Client-side offline scenarios
+### 1. Static SSR (Non-Interactive)
+
+Components are rendered to static HTML with **no interactivity**. Perfect for:
+
+- Content-focused websites
+- Blogs and documentation sites
+- Marketing pages
+- SEO-critical pages
+
+```razor
+@page "/about"
+@attribute [RenderMode.Static]
+
+<h1>About Us</h1>
+<p>This page is rendered as static HTML.</p>
+```
+
+### 2. Interactive SSR (Server-Side)
+
+Components are rendered with **full interactivity** via SignalR. Ideal for:
+
+- Interactive web applications
+- Real-time updates
+- Complex forms and workflows
+- Dashboards
+
+```razor
+@page "/counter"
+@attribute [RenderMode.InteractiveServer]
+@rendermode InteractiveServer
+
+<h1>Counter</h1>
+<p>Current count: @currentCount</p>
+<button @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+    
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
+```
+
+## Why Choose Blazor SSR?
+
+### Advantages
+
+✅ **Fast Time to First Byte (TTFB)** - HTML is rendered on the server  
+✅ **Excellent SEO** - Content available immediately to crawlers  
+✅ **Full .NET API Access** - Use any .NET library server-side  
+✅ **Small Payload** - No WebAssembly runtime to download  
+✅ **Thin Client Support** - Works on low-powered devices  
+✅ **Code Security** - Application logic stays on the server  
+
+### Considerations
+
+⚠️ **Server Resources** - Requires server-side processing  
+⚠️ **Network Latency** - User interactions require server round-trip  
+⚠️ **No Offline Support** - Requires active server connection  
 
 ## Quick Start
 
 ### Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
-- Git (for cloning the source repository)
+- Your favorite code editor (Visual Studio, VS Code, etc.)
 
-### Setup
-
-1. **Clone this repository**
-   ```bash
-   git clone <your-repo-url>
-   cd blazor-ssr-docs
-   ```
-
-2. **Install Lunet**
-   ```bash
-   dotnet tool install --global lunet
-   ```
-
-3. **Initialize the site** (if not already done)
-   ```bash
-   lunet init
-   ```
-
-4. **Build the site**
-   ```bash
-   lunet build
-   ```
-
-5. **Serve locally**
-   ```bash
-   lunet serve
-   ```
-   Open http://localhost:4000 in your browser.
-
-## Project Structure
-
-```
-blazor-ssr-docs/
-├── config.scriban          # Lunet configuration
-├── content/                # Markdown documentation
-│   ├── index.md           # Homepage
-│   ├── getting-started/   # Getting started guides
-│   ├── fundamentals/      # Core SSR concepts
-│   ├── components/        # Component documentation
-│   ├── render-modes/      # Render mode details
-│   └── advanced/          # Advanced topics
-├── layouts/               # Page layout templates
-├── includes/              # Reusable partials
-├── assets/                # CSS, JS, images
-├── scripts/               # Extraction utilities
-├── PLAN.md               # Detailed project plan
-└── README.md             # This file
-```
-
-## Content Extraction
-
-The documentation is extracted from the [official ASP.NET Core Docs repository](https://github.com/dotnet/AspNetCore.Docs).
-
-### Automated Extraction
-
-Run the extraction script to pull content from the source:
+### Create Your First Blazor SSR App
 
 ```bash
-# Clone source repository (one-time)
-git clone --depth 1 https://github.com/dotnet/AspNetCore.Docs.git temp-docs
+# Create a new Blazor Web App (includes SSR support)
+dotnet new blazor -o MyBlazorApp --interactivity Server
 
-# Run extraction script
-./scripts/extract-ssr-content.sh
+# Navigate to the project
+cd MyBlazorApp
 
-# Clean up
-rm -rf temp-docs
+# Run the application
+dotnet run
 ```
 
-### Manual Extraction
+Open your browser to `https://localhost:5001` to see your Blazor SSR app in action!
 
-See [PLAN.md](PLAN.md) for detailed information on which files to extract and how to process them.
+### Understanding Render Modes
 
-## Development
+In your `_Imports.razor` file, you can set default render modes:
 
-### Adding New Content
+```razor
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
 
-1. Create a new markdown file in the appropriate `content/` subdirectory
-2. Add frontmatter with title, description, and other metadata
-3. Write content in Markdown
-4. Build and test locally
+// For static SSR (no interactivity)
+@attribute [rendermode: Static]
 
-### Updating Content
+// For interactive SSR
+@attribute [rendermode: InteractiveServer]
 
-1. Update the source content in `content/`
-2. Rebuild: `lunet build`
-3. Test: `lunet serve`
-
-### Customizing Layouts
-
-Edit templates in `layouts/` directory:
-- `_default.scriban` - Base layout
-- `page.scriban` - Standard page layout
-- `index.scriban` - Homepage layout
-
-## Building for Production
-
-```bash
-lunet build
+// Per-page override
+@page "/mypage"
+@rendermode InteractiveServer
 ```
 
-The generated site will be in `.lunet/build/www/`.
+## Documentation Sections
 
-## Deployment
+### 🚀 [Getting Started](/getting-started/)
+Learn the basics of Blazor SSR and get up and running quickly.
 
-### GitHub Pages
+**Topics:**
+- [What is Blazor SSR?](/getting-started/what-is-ssr)
+- [Quick Start Guide](/getting-started/quick-start)
+- [SSR vs WebAssembly vs Hybrid](/getting-started/comparison)
 
-```bash
-# Build the site
-lunet build
+### 📚 [Fundamentals](/fundamentals/)
+Understand core concepts and architecture of Blazor SSR.
 
-# Deploy to gh-pages branch
-cd .lunet/build/www
-git init
-git add .
-git commit -m "Deploy documentation"
-git push -f git@github.com:<username>/<repo>.git master:gh-pages
+**Topics:**
+- [Render Modes](/fundamentals/render-modes) - Static vs Interactive
+- [Routing](/fundamentals/routing) - Navigation and URL handling
+- [Dependency Injection](/fundamentals/dependency-injection) - Service management
+- [Configuration](/fundamentals/configuration) - App settings
+
+### 🧩 [Components](/components/)
+Deep dive into Razor components and how they work in SSR.
+
+**Topics:**
+- [Component Basics](/components/index) - Structure and syntax
+- [Render Modes](/components/render-modes) - Component-level control
+- [Lifecycle](/components/lifecycle) - Component events
+- [Prerendering](/components/prerender) - Optimization techniques
+
+### 📝 [Forms](/forms/)
+Handle user input with forms and validation in SSR.
+
+### 🔒 [Security](/security/)
+Implement authentication and authorization for your SSR apps.
+
+### ⚡ [Advanced](/advanced/)
+Performance optimization, deployment, and advanced scenarios.
+
+## Example: Static SSR Page
+
+```razor
+@page "/products"
+@attribute [RenderMode.Static]
+
+<h1>Products</h1>
+
+@if (products == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+    @foreach (var product in products)
+    {
+        <li>
+            <h2>@product.Name</h2>
+            <p>@product.Description</p>
+            <p>Price: $@product.Price</p>
+        </li>
+    }
+    </ul>
+}
+
+@code {
+    private Product[]? products;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // Runs on the server during rendering
+        products = await ProductService.GetProductsAsync();
+    }
+}
 ```
 
-### Azure Static Web Apps
+## Example: Interactive SSR Component
 
-1. Connect your repository to Azure Static Web Apps
-2. Set build command: `lunet build`
-3. Set output directory: `.lunet/build/www`
+```razor
+@page "/todos"
+@rendermode InteractiveServer
+@inject TodoService TodoService
 
-### Netlify/Vercel
+<h1>Todo List (@todos.Count(t => !t.IsComplete))</h1>
 
-1. Connect repository
-2. Build command: `lunet build`
-3. Publish directory: `.lunet/build/www`
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li>
+            <input type="checkbox" @bind="todo.IsComplete" />
+            <span>@todo.Title</span>
+            <button @onclick="() => DeleteTodo(todo)">Delete</button>
+        </li>
+    }
+</ul>
+
+<input @bind="newTodoTitle" placeholder="Add todo..." />
+<button @onclick="AddTodo">Add</button>
+
+@code {
+    private List<Todo> todos = new();
+    private string newTodoTitle = "";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await TodoService.GetTodosAsync();
+    }
+    
+    private async Task AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodoTitle))
+        {
+            var todo = await TodoService.AddTodoAsync(newTodoTitle);
+            todos.Add(todo);
+            newTodoTitle = "";
+        }
+    }
+    
+    private async Task DeleteTodo(Todo todo)
+    {
+        await TodoService.DeleteTodoAsync(todo.Id);
+        todos.Remove(todo);
+    }
+}
+```
+
+## Resources
+
+### Official Documentation
+- [ASP.NET Core Blazor](https://learn.microsoft.com/aspnet/core/blazor) - Complete official docs
+- [Blazor GitHub Repository](https://github.com/dotnet/aspnetcore) - Source code and issues
+
+### Learning Resources
+- [Blazor Workshop](https://github.com/dotnet-presentations/blazor-workshop/) - Hands-on tutorial
+- [Blazor University](https://blazor-university.com/) - Community tutorials
+
+### Community
+- [Blazor Gitter](https://gitter.im/aspnet/Blazor) - Chat with the community
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/blazor) - Q&A
+- [Reddit r/blazor](https://reddit.com/r/blazor) - Community discussions
 
 ## Contributing
 
-This is an extracted subset of the official documentation. For contributions to the source documentation, please submit PRs to the [AspNetCore.Docs repository](https://github.com/dotnet/AspNetCore.Docs).
+This documentation is extracted from the [official ASP.NET Core documentation](https://github.com/dotnet/AspNetCore.Docs). 
 
-For improvements to this extraction/organization:
-1. Fork this repository
-2. Create a feature branch
-3. Submit a pull request
+To contribute to the source documentation:
+1. Visit the [AspNetCore.Docs repository](https://github.com/dotnet/AspNetCore.Docs)
+2. Fork the repository
+3. Make your changes
+4. Submit a pull request
 
 ## License
 
-The documentation content is sourced from the [ASP.NET Core Docs](https://github.com/dotnet/AspNetCore.Docs) and is subject to its license (Creative Commons Attribution 4.0 International Public License).
-
-The project structure, scripts, and Lunet configuration are provided under the MIT License.
-
-## Credits
-
-- **Documentation Source**: [Microsoft ASP.NET Core Documentation](https://learn.microsoft.com/aspnet/core/blazor)
-- **Static Site Generator**: [Lunet](https://lunet.io) by Alexandre Mutel
-- **Template Engine**: [Scriban](https://github.com/scriban/scriban)
-
-## References
-
-- [Blazor Documentation](https://learn.microsoft.com/aspnet/core/blazor)
-- [Lunet Documentation](https://lunet.io)
-- [ASP.NET Core Docs Source](https://github.com/dotnet/AspNetCore.Docs)
+Documentation content is sourced from Microsoft's ASP.NET Core Documentation under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/).
 
 ---
 
-**Note**: This is an unofficial, community-maintained extraction focused specifically on Blazor SSR. For the complete, official Blazor documentation covering all hosting models, visit the [Microsoft Learn site](https://learn.microsoft.com/aspnet/core/blazor).
+## Get Started Now!
+
+Ready to build your first Blazor SSR application?
+
+<div class="call-to-action">
+
+[**🚀 Quick Start Guide**](/getting-started/quick-start) | [**📖 Full Documentation**](/getting-started/)
+
+</div>

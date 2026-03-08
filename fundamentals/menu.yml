@@ -1,0 +1,7 @@
+doc:
+  - {path: readme.md, title: "<i class='bi bi-book' aria-hidden='true'></i> Overview"}
+  - {path: render-modes.md, title: "<i class='bi bi-layers' aria-hidden='true'></i> Render Modes"}
+  - {path: routing.md, title: "<i class='bi bi-signpost-2' aria-hidden='true'></i> Routing"}
+  - {path: dependency-injection.md, title: "<i class='bi bi-box-arrow-in-right' aria-hidden='true'></i> Dependency Injection"}
+  - {path: configuration.md, title: "<i class='bi bi-sliders' aria-hidden='true'></i> Configuration"}
+  - {path: static-files.md, title: "<i class='bi bi-file-earmark' aria-hidden='true'></i> Static Files"}

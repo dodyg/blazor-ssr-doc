@@ -1,0 +1,5 @@
+doc:
+  - {path: readme.md, title: "<i class='bi bi-book' aria-hidden='true'></i> Overview"}
+  - {path: input-components.md, title: "<i class='bi bi-input-cursor-text' aria-hidden='true'></i> Input Components"}
+  - {path: binding.md, title: "<i class='bi bi-link-45deg' aria-hidden='true'></i> Binding"}
+  - {path: validation.md, title: "<i class='bi bi-check-circle' aria-hidden='true'></i> Validation"}

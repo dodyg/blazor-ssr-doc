@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html data-lunet-theme-mode="system" data-lunet-theme-storage-key="blazor-ssr-theme" data-lunet-css-prefix="lunet" lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <script>(function(){const root=document.documentElement;const key=root.getAttribute("data-lunet-theme-storage-key")||"lunet-theme";const fallback=root.getAttribute("data-lunet-theme-mode")||"system";let stored=null;try{stored=localStorage.getItem(key);}catch(_){stored=null;}const mode=(stored==="light"||stored==="dark"||stored==="system")?stored:fallback;const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;const resolved=mode==="system"?(prefersDark?"dark":"light"):mode;root.setAttribute("data-lunet-theme-mode",mode);root.setAttribute("data-bs-theme",resolved);}());</script>
+    <link rel='icon' href='/favicon.ico' sizes='32x32'>
+    <title>ASP.NET Core Razor component rendering | Blazor SSR Documentation</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/site.js" ></script>
+    <script src="/js/site-defer.js" defer></script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@your-handle">
+<meta name="twitter:title" content="ASP.NET Core Razor component rendering | Blazor SSR Documentation">
+<meta name="twitter:description" content="ASP.NET Core Razor component rendering This article explains Razor component rendering in ASP.NET Core Blazor apps, including when to call Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged * to manually trigger a component to render. Rendering conventions for ComponentBase Components must render when they're first added to the component hierarchy by a parent component. This is the only time that a component must render. Components may render at other times according to their own logic and...">
+<meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
+<meta name="twitter:image:alt" content="ASP.NET Core Razor component rendering | Blazor SSR Documentation">
+<meta property="og:title" content="ASP.NET Core Razor component rendering | Blazor SSR Documentation">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:description" content="ASP.NET Core Razor component rendering This article explains Razor component rendering in ASP.NET Core Blazor apps, including when to call Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged * to manually trigger a component to render. Rendering conventions for ComponentBase Components must render when they're first added to the component hierarchy by a parent component. This is the only time that a component must render. Components may render at other times according to their own logic and...">
+<meta property="og:image" content="http://localhost:4000/img/project-banner.png">
+<meta property="og:image:alt" content="ASP.NET Core Razor component rendering | Blazor SSR Documentation">
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+
+    <div id="lunet" class="container">
+      <nav class="navbar navbar-expand-md sticky-top">
+        <a class="navbar-brand" href="/">
+          <img class="lunet-logo" src="/img/lunet-logo.png" alt="Blazor SSR Documentation" width="96" height="96">
+          <span class="visually-hidden">Home</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
+<ol id='nav-id-home-0' class='navbar-nav nav-level0 show '>
+  <li id='nav-item-home-1' class='nav-item '>
+    <span class='nav-item-row'><a href='/' class='nav-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a></span>  </li>
+  <li id='nav-item-home-2' class='nav-item '>
+    <span class='nav-item-row'><a href='/getting-started/' class='nav-link  '><i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Getting Started</a></span>  </li>
+  <li id='nav-item-home-3' class='nav-item '>
+    <span class='nav-item-row'><a href='/fundamentals/' class='nav-link  '><i class='bi bi-gear' aria-hidden='true'></i> Fundamentals</a></span>  </li>
+  <li id='nav-item-home-4' class='nav-item  active'>
+    <span class='nav-item-row'><a href='/components/' class='nav-link  '><i class='bi bi-puzzle' aria-hidden='true'></i> Components</a></span>  </li>
+  <li id='nav-item-home-5' class='nav-item '>
+    <span class='nav-item-row'><a href='/forms/' class='nav-link  '><i class='bi bi-input-cursor-text' aria-hidden='true'></i> Forms</a></span>  </li>
+  <li id='nav-item-home-6' class='nav-item '>
+    <span class='nav-item-row'><a href='/security/' class='nav-link  '><i class='bi bi-shield-lock' aria-hidden='true'></i> Security</a></span>  </li>
+  <li id='nav-item-home-7' class='nav-item '>
+    <span class='nav-item-row'><a href='/advanced/' class='nav-link  '><i class='bi bi-boxes' aria-hidden='true'></i> Advanced</a></span>  </li>
+</ol>
+          <ol class="navbar-nav flex-grow-1" style="padding-right: 0.5rem;">
+            <li class="nav-item w-100">
+                <div class="lunet-search dropdown w-100">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input id="search-input" type="search" class="form-control" placeholder="Search... (Alt+s)" aria-label="Search" aria-controls="search-results" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-search-empty-message="Enter words to search..." data-search-no-results-message="No results found.">
+                    <ul id="search-results" class="dropdown-menu w-100 p-0" style="max-height: 50vh;" role="listbox" aria-labelledby="search-input"></ul>
+                  </div>
+                </div>
+            </li>
+          </ol>
+          <div class="d-flex align-items-center gap-2 flex-shrink-0 navbar-right">
+            <div class="dropdown">
+              <button
+                id="theme-mode-toggle"
+                class="btn btn-outline-secondary btn-sm lunet-theme-toggle dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Theme">
+                <i class="bi bi-circle-half" data-lunet-theme-toggle-icon aria-hidden="true"></i>
+                <span
+                  data-lunet-theme-toggle-label
+                  data-theme-system-label="System"
+                  data-theme-light-label="Light"
+                  data-theme-dark-label="Dark">Theme</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="theme-mode-toggle">
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="system"><i class="bi bi-circle-half me-2"></i>System</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="light"><i class="bi bi-sun-fill me-2"></i>Light</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="dark"><i class="bi bi-moon-stars-fill me-2"></i>Dark</button></li>
+              </ul>
+            </div>
+<ol id='nav-id-home2-0' class='navbar-nav nav-level0 show flex-shrink-0'>
+  <li id='nav-item-home2-1' class='nav-item '>
+    <span class='nav-item-row'><a href='https://learn.microsoft.com/aspnet/core/blazor' class='nav-link  btn btn-outline-info'><i class="bi bi-book"></i> Official Docs</a></span>  </li>
+  <li id='nav-item-home2-2' class='nav-item '>
+    <span class='nav-item-row'><a href='https://github.com/dotnet/AspNetCore.Docs' class='nav-link  btn btn-info'><i class="bi bi-github"></i> GitHub</a></span>  </li>
+</ol>
+          </div>
+        </div>
+      </nav>
+      <div class="lunet lunet-components">
+        <section data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-timeout="1200" data-copy-tooltip="Copy to Clipboard." data-copy-tooltip-success="Copied!" data-copy-tooltip-error="Failed to copy!">
+
+<div class="container-xxl">
+  <div class="row">
+      <!-- Left sidebar - responsive offcanvas (offcanvas on mobile, visible sidebar on md+) -->
+      <nav id="docs-sidebar-menu" class="col-md-3 col-lg-3 col-xl-3 col-xxl-2 offcanvas-md offcanvas-start sticky-md-top menu-sidebar align-self-start order-1 order-md-0" tabindex="-1" aria-labelledby="docs-sidebar-menu-label" aria-expanded="true">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="docs-sidebar-menu-label">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#docs-sidebar-menu" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ol id='menu-id-doc-0' class='menu menu-level0 show '>
+            <li id='menu-item-doc-1' class='menu-item '>
+              <span class='menu-item-row'><a href='/components/' class='menu-link  '><i class='bi bi-book' aria-hidden='true'></i> Overview</a></span>  </li>
+            <li id='menu-item-doc-2' class='menu-item  active'>
+              <span class='menu-item-row'><a href='/components/rendering/' class='menu-link  '><i class='bi bi-easel' aria-hidden='true'></i> Rendering</a></span>  </li>
+            <li id='menu-item-doc-3' class='menu-item '>
+              <span class='menu-item-row'><a href='/components/lifecycle/' class='menu-link  '><i class='bi bi-arrow-repeat' aria-hidden='true'></i> Lifecycle</a></span>  </li>
+            <li id='menu-item-doc-4' class='menu-item '>
+              <span class='menu-item-row'><a href='/components/prerender/' class='menu-link  '><i class='bi bi-file-earmark-break' aria-hidden='true'></i> Prerendering</a></span>  </li>
+            <li id='menu-item-doc-5' class='menu-item '>
+              <span class='menu-item-row'><a href='/components/cascading-values-and-parameters/' class='menu-link  '><i class='bi bi-arrow-down-up' aria-hidden='true'></i> Cascading Values</a></span>  </li>
+            <li id='menu-item-doc-6' class='menu-item '>
+              <span class='menu-item-row'><a href='/components/event-handling/' class='menu-link  '><i class='bi bi-lightning' aria-hidden='true'></i> Event Handling</a></span>  </li>
+            <li id='menu-item-doc-7' class='menu-item '>
+              <span class='menu-item-row'><a href='/components/data-binding/' class='menu-link  '><i class='bi bi-link-45deg' aria-hidden='true'></i> Data Binding</a></span>  </li>
+          </ol>
+
+        </div>
+      </nav>
+      <!-- Right sidebar (TOC) - collapsible on mobile, visible sidebar on xxl+ -->
+      <aside id="docs-sidebar-toc" class="col-12 col-xxl-2 sticky-xxl-top menu-sidebar align-self-start order-0 order-xxl-2 collapse d-xxl-block" aria-expanded="true">
+        <h3 class="toc-title">On this page</h3>
+        <nav class="js-toc"></nav>
+      </aside>
+      <!-- Main content column -->
+      <div class="col-12 col-md-9 col-lg-9 col-xl-9 col-xxl-8 order-2 order-md-1 js-toc-content">
+        <ol class='breadcrumb'>
+          <li class='breadcrumb-item '>
+            <a href='/' class='breadcrumb-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a>  </li>
+          <li class='breadcrumb-item '>
+            <a href='/components/' class='breadcrumb-link  '><i class='bi bi-puzzle' aria-hidden='true'></i> Components</a>  </li>
+          <li class='breadcrumb-item  active'>
+            <i class='bi bi-easel' aria-hidden='true'></i> Rendering  </li>
+        </ol>
+
+        <p id="lunet-results"></p>
+        <!-- Toggle buttons visible only on small screens -->
+        <div class="d-md-none mb-3">
+          <button
+            class="btn btn-outline-secondary btn-sm me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#docs-sidebar-menu"
+            aria-controls="docs-sidebar-menu"
+            aria-label="Toggle docs menu">
+            Menu
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-sm d-xxl-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#docs-sidebar-toc"
+            aria-controls="docs-sidebar-toc"
+            aria-expanded="false"
+            aria-label="Toggle Table Of Contents">
+            On this page
+          </button>
+        </div>
+<!-- lunet:summarize -->
+<h1 id="aspnet-core-razor-component-rendering">ASP.NET Core Razor component rendering</h1>
+<p>This article explains Razor component rendering in ASP.NET Core Blazor apps, including when to call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> to manually trigger a component to render.</p>
+<h2 id="rendering-conventions-for-componentbase">Rendering conventions for <code>ComponentBase</code></h2>
+<p>Components <em>must</em> render when they're first added to the component hierarchy by a parent component. This is the only time that a component must render. Components <em>may</em> render at other times according to their own logic and conventions.</p>
+<p>Razor components inherit from the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> base class, which contains logic to trigger rerendering at the following times:</p>
+<ul>
+<li>After applying an updated set of <a href="https://learn.microsoft.com/aspnet/core/blazor/components/data-binding#binding-with-component-parameters">parameters</a> from a parent component.</li>
+<li>After applying an updated value for a <a href="https://learn.microsoft.com/aspnet/core/blazor/components/cascading-values-and-parameters">cascading parameter</a>.</li>
+<li>After notification of an event and invoking one of its own <a href="https://learn.microsoft.com/aspnet/core/blazor/components/event-handling">event handlers</a>.</li>
+<li>After a call to its own <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> method (see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#state-changes-statehaschanged">lifecycle</a>). For guidance on how to prevent overwriting child component parameters when <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> is called in a parent component, see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/overwriting-parameters">overwriting-parameters</a>.</li>
+</ul>
+<p>Components inherited from <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> skip rerenders due to parameter updates if either of the following are true:</p>
+<ul>
+<li><p>All of the parameters are from a set of known types† or any <a href="/dotnet/api/system.type.isprimitive">primitive type</a> that hasn't changed since the previous set of parameters were set.</p>
+<p>†The Blazor framework uses a set of built-in rules and explicit parameter type checks for change detection. These rules and the types are subject to change at any time. For more information, see the <a href="https://github.com/dotnet/aspnetcore/blob/main/src/Components/Components/src/ChangeDetection.cs"><code>ChangeDetection</code> API in the ASP.NET Core reference source</a>.</p>
+</li>
+<li><p>The override of the component's <a href="#suppress-ui-refreshing-shouldrender"><code>ShouldRender</code> method</a> returns <code>false</code> (the default <code>ComponentBase</code> implementation always returns <code>true</code>).</p>
+</li>
+</ul>
+<h2 id="control-the-rendering-flow">Control the rendering flow</h2>
+<p>In most cases, <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> conventions result in the correct subset of component rerenders after an event occurs. Developers aren't usually required to provide manual logic to tell the framework which components to rerender and when to rerender them. The overall effect of the framework's conventions is that the component receiving an event rerenders itself, which recursively triggers rerendering of descendant components whose parameter values may have changed.</p>
+<p>For more information on the performance implications of the framework's conventions and how to optimize an app's component hierarchy for rendering, see <a href="https://learn.microsoft.com/aspnet/core/blazor/performance/rendering">rendering</a>.</p>
+<div class="moniker"><h2 id="streaming-rendering">Streaming rendering</h2>
+<p>Use <em>streaming rendering</em> with <a href="/fundamentals/render-modes">static server-side rendering (static SSR)</a> or prerendering to stream content updates on the response stream and improve the user experience for components that perform long-running asynchronous tasks to fully render.</p>
+<p>For example, consider a component that makes a long-running database query or web API call to render data when the page loads. Normally, asynchronous tasks executed as part of rendering a server-side component must complete before the rendered response is sent, which can delay loading the page. Any significant delay in rendering the page harms the user experience. To improve the user experience, streaming rendering initially renders the entire page quickly with placeholder content while asynchronous operations execute. After the operations are complete, the updated content is sent to the client on the same response connection and patched into the DOM.</p>
+<p>Streaming rendering requires the server to avoid buffering the output. The response data must flow to the client as the data is generated. For hosts that enforce buffering, streaming rendering degrades gracefully, and the page loads without streaming rendering.</p>
+<p>To stream content updates when using static server-side rendering (static SSR) or prerendering, apply the <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.StreamRenderingAttribute"><code>[StreamRendering]</code> attribute</a> in .NET 9 or later (use <code>[StreamRendering(true)]</code> in .NET 8) to the component. Streaming rendering must be explicitly enabled because streamed updates may cause content on the page to shift. Components without the attribute automatically adopt streaming rendering if the parent component uses the feature. Pass <code>false</code> to the attribute in a child component to disable the feature at that point and further down the component subtree. The attribute is functional when applied to components supplied by a <a href="https://learn.microsoft.com/aspnet/core/blazor/components/class-libraries">Razor class library</a>.</p>
+<div class="moniker-end">
+<div class="moniker"><p>If <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#enhanced-navigation-and-form-handling">enhanced navigation</a> is active, streaming rendering renders <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#not-found-responses">Not Found responses</a> without reloading the page. When enhanced navigation is blocked, the framework redirects to Not Found content with a page refresh.</p>
+<p>Streaming rendering can only render components that have a route, such as a <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#not-found-responses"><code>NotFoundPage</code> assignment</a> (<code>NotFoundPage=&quot;...&quot;</code>) or a <a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling#usestatuscodepageswithreexecute">Status Code Pages Re-execution Middleware page assignment</a> (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.statuscodepagesextensions.usestatuscodepageswithreexecute%2a">Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePagesWithReExecute *</a>). The Not Found render fragment (<code>&lt;NotFound&gt;...&lt;/NotFound&gt;</code>) and the <code>DefaultNotFound</code> 404 content (&quot;<code>Not found</code>&quot; plain text) don't have routes, so they can't be used during streaming rendering.</p>
+<p>Streaming <code>NavigationManager.NotFound</code> content rendering uses (in order):</p>
+<ul>
+<li>A <code>NotFoundPage</code> passed to the <code>Router</code> component, if present.</li>
+<li>A Status Code Pages Re-execution Middleware page, if configured.</li>
+<li>No action if neither of the preceding approaches is adopted.</li>
+</ul>
+<p>Non-streaming <code>NavigationManager.NotFound</code> content rendering uses (in order):</p>
+<ul>
+<li>A <code>NotFoundPage</code> passed to the <code>Router</code> component, if present.</li>
+<li>Not Found render fragment content, if present. <em>Not recommended in .NET 10 or later.</em></li>
+<li><code>DefaultNotFound</code> 404 content (&quot;<code>Not found</code>&quot; plain text).</li>
+</ul>
+<p><a href="https://learn.microsoft.com/aspnet/core/fundamentals/error-handling#usestatuscodepageswithreexecute">Status Code Pages Re-execution Middleware</a> with <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.statuscodepagesextensions.usestatuscodepageswithreexecute%2a">Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePagesWithReExecute *</a> takes precedence for browser-based address routing problems, such as an incorrect URL typed into the browser's address bar or selecting a link that has no endpoint in the app.</p>
+<div class="moniker-end"><p>The following example is based on the <code>Weather</code> component in an app created from the <a href="https://learn.microsoft.com/aspnet/core/blazor/project-structure#blazor-web-app">Blazor Web App project template</a>. The call to <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.delay%2a?displayproperty=namewithtype">System.Threading.Tasks.Task.Delay *?displayProperty=nameWithType</a> simulates retrieving weather data asynchronously. The component initially renders placeholder content (&quot;<code>Loading...</code>&quot;) without waiting for the asynchronous delay to complete. When the asynchronous delay completes and the weather data content is generated, the content is streamed to the response and patched into the weather forecast table.</p>
+<p><code>Weather.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/weather&quot;
+@attribute [StreamRendering]
+
+...
+
+@if (forecasts == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;table class=&quot;table&quot;&gt;
+        ...
+        &lt;tbody&gt;
+            @foreach (var forecast in forecasts)
+            {
+                &lt;tr&gt;
+                    &lt;td&gt;@forecast.Date.ToShortDateString()&lt;/td&gt;
+                    &lt;td&gt;@forecast.TemperatureC&lt;/td&gt;
+                    &lt;td&gt;@forecast.TemperatureF&lt;/td&gt;
+                    &lt;td&gt;@forecast.Summary&lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+}
+
+@code {
+    ...
+
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+
+        ...
+
+        forecasts = ...
+    }
+}
+</code></pre>
+<h2 id="suppress-ui-refreshing-shouldrender">Suppress UI refreshing (<code>ShouldRender</code>)</h2>
+<p><a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.shouldrender%2a">Microsoft.AspNetCore.Components.ComponentBase.ShouldRender *</a> is called each time a component is rendered. Override <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.shouldrender%2a">Microsoft.AspNetCore.Components.ComponentBase.ShouldRender *</a> to manage UI refreshing. If the implementation returns <code>true</code>, the UI is refreshed.</p>
+<p>Even if <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.shouldrender%2a">Microsoft.AspNetCore.Components.ComponentBase.ShouldRender *</a> is overridden, the component is always initially rendered.</p>
+<p><code>ControlRender.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><p>For more information on performance best practices pertaining to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.shouldrender%2a">Microsoft.AspNetCore.Components.ComponentBase.ShouldRender *</a>, see <a href="https://learn.microsoft.com/aspnet/core/blazor/performance/rendering#avoid-unnecessary-rendering-of-component-subtrees">rendering</a>.</p>
+<h2 id="statehaschanged"><code>StateHasChanged</code></h2>
+<p>Calling <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> enqueues a rerender to occur when the app's main thread is free.</p>
+<p>Components are enqueued for rendering, and they aren't enqueued again if there's already a pending rerender. If a component calls <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> five times in a row in a loop, the component only renders once. This behavior is encoded in <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a>, which checks first if it has queued a rerender before enqueuing an additional one.</p>
+<p>A component can render multiple times during the same cycle, which commonly occurs when a component has children that interact with each other:</p>
+<ul>
+<li>A parent component renders several children.</li>
+<li>Child components render and trigger an update on the parent.</li>
+<li>A parent component rerenders with new state.</li>
+</ul>
+<p>This design allows for <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> to be called when necessary without the risk of introducing unnecessary rendering. You can always take control of this behavior in individual components by implementing <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.icomponent">Microsoft.AspNetCore.Components.IComponent</a> directly and manually handling when the component renders.</p>
+<p>Consider the following <code>IncrementCount</code> method that increments a count, calls <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a>, and increments the count again:</p>
+<pre><code class="language-csharp">private void IncrementCount()
+{
+    currentCount++;
+    StateHasChanged();
+    currentCount++;
+}
+</code></pre>
+<p>Stepping through the code in the debugger, you might think that the count updates in the UI for the first <code>currentCount++</code> execution immediately after <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> is called. However, the UI doesn't show an updated count at that point due to the synchronous processing taking place for this method's execution. There's no opportunity for the renderer to render the component until after the event handler is finished. The UI displays increases for both <code>currentCount++</code> executions <em>in a single render</em>.</p>
+<p>If you await something between the <code>currentCount++</code> lines, the awaited call gives the renderer a chance to render. This has led to some developers calling <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.delay%2a">System.Threading.Tasks.Task.Delay *</a> with a one millisecond delay in their components to allow a render to occur, but we don't recommend arbitrarily slowing down an app to enqueue a render.</p>
+<p>The best approach is to await <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.yield%2a?displayproperty=namewithtype">System.Threading.Tasks.Task.Yield *?displayProperty=nameWithType</a>, which forces the component to process code asynchronously and render during the current batch with a second render in a separate batch after the yielded task runs the continuation.</p>
+<p>Consider the following revised <code>IncrementCount</code> method, which updates the UI twice because the render enqueued by <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> is performed when the task is yielded with the call to <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.yield%2a?displayproperty=namewithtype">System.Threading.Tasks.Task.Yield *?displayProperty=nameWithType</a>:</p>
+<pre><code class="language-csharp">private async Task IncrementCount()
+{
+    currentCount++;
+    StateHasChanged();
+    await Task.Yield();
+    currentCount++;
+}
+</code></pre>
+<p>Be careful not to call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> unnecessarily, which is a common mistake that imposes unnecessary rendering costs. Code shouldn't need to call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> when:</p>
+<ul>
+<li>Routinely handling events, whether synchronously or asynchronously, since <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> triggers a render for most routine event handlers.</li>
+<li>Implementing typical lifecycle logic, such as <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#component-initialization-oninitializedasync"><code>OnInitialized</code></a> or <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#after-parameters-are-set-onparameterssetasync"><code>OnParametersSetAsync</code></a>, whether synchronously or asynchronously, since <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> triggers a render for typical lifecycle events.</li>
+</ul>
+<p>However, it might make sense to call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> in the cases described in the following sections of this article:</p>
+<ul>
+<li><a href="#an-asynchronous-handler-involves-multiple-asynchronous-phases">An asynchronous handler involves multiple asynchronous phases</a></li>
+<li><a href="#receiving-a-call-from-something-external-to-the-blazor-rendering-and-event-handling-system">Receiving a call from something external to the Blazor rendering and event handling system</a></li>
+<li><a href="#to-render-a-component-outside-the-subtree-thats-rerendered-by-a-particular-event">To render component outside the subtree that is rerendered by a particular event</a></li>
+</ul>
+<h3 id="an-asynchronous-handler-involves-multiple-asynchronous-phases">An asynchronous handler involves multiple asynchronous phases</h3>
+<p>Due to the way that tasks are defined in .NET, a receiver of a <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">System.Threading.Tasks.Task</a> can only observe its final completion, not intermediate asynchronous states. Therefore, <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> can only trigger rerendering when the <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">System.Threading.Tasks.Task</a> is first returned and when the <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">System.Threading.Tasks.Task</a> finally completes. The framework can't know to rerender a component at other intermediate points, such as when an <a href="https://github.com/dotnet/aspnetcore/issues/43098#issuecomment-1206224427">System.Collections.Generic.IAsyncEnumerable<code>1](https://learn.microsoft.com/dotnet/api/system.collections.generic.iasyncenumerable%601) [returns data in a series of intermediate </code>Task`s</a>. If you want to rerender at intermediate points, call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> at those points.</p>
+<p>Consider the following <code>CounterState1</code> component, which updates the count four times each time the <code>IncrementCount</code> method executes:</p>
+<ul>
+<li>Automatic renders occur after the first and last increments of <code>currentCount</code>.</li>
+<li>Manual renders are triggered by calls to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> when the framework doesn't automatically trigger rerenders at intermediate processing points where <code>currentCount</code> is incremented.</li>
+</ul>
+<p><code>CounterState1.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><h3 id="receiving-a-call-from-something-external-to-the-blazor-rendering-and-event-handling-system">Receiving a call from something external to the Blazor rendering and event handling system</h3>
+<p><a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> only knows about its own lifecycle methods and Blazor-triggered events. <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase">Microsoft.AspNetCore.Components.ComponentBase</a> doesn't know about other events that may occur in code. For example, any C# events raised by a custom data store are unknown to Blazor. In order for such events to trigger rerendering to display updated values in the UI, call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a>.</p>
+<p>Consider the following <code>CounterState2</code> component that uses <a href="https://learn.microsoft.com/dotnet/api/system.timers.timer?displayproperty=fullname">System.Timers.Timer?displayProperty=fullName</a> to update a count at a regular interval and calls <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> to update the UI:</p>
+<ul>
+<li><code>OnTimerCallback</code> runs outside of any Blazor-managed rendering flow or event notification. Therefore, <code>OnTimerCallback</code> must call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> because Blazor isn't aware of the changes to <code>currentCount</code> in the callback.</li>
+<li>The component implements <a href="https://learn.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>, where the <a href="https://learn.microsoft.com/dotnet/api/system.timers.timer">System.Timers.Timer</a> is disposed when the framework calls the <code>Dispose</code> method. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/component-disposal">component-disposal</a>.</li>
+</ul>
+<p>Because the callback is invoked outside of Blazor's synchronization context, the component must wrap the logic of <code>OnTimerCallback</code> in <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.invokeasync%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.ComponentBase.InvokeAsync *?displayProperty=nameWithType</a> to move it onto the renderer's synchronization context. This is equivalent to marshalling to the UI thread in other UI frameworks. <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> can only be called from the renderer's synchronization context and throws an exception otherwise:</p>
+<blockquote class="blockquote">
+<div class="no-loc"></div>
+</blockquote>
+<p><code>CounterState2.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><h3 id="to-render-a-component-outside-the-subtree-thats-rerendered-by-a-particular-event">To render a component outside the subtree that's rerendered by a particular event</h3>
+<p>The UI might involve:</p>
+<ol>
+<li>Dispatching an event to one component.</li>
+<li>Changing some state.</li>
+<li>Rerendering a completely different component that isn't a descendant of the component receiving the event.</li>
+</ol>
+<p>One way to deal with this scenario is to provide a <em>state management</em> class, often as a dependency injection (DI) service, injected into multiple components. When one component calls a method on the state manager, the state manager raises a C# event that's then received by an independent component.</p>
+<p>For approaches to manage state, see the following resources:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/components/data-binding#bind-across-more-than-two-components">Bind across more than two components</a> using data bindings.</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/components/cascading-values-and-parameters#pass-data-across-a-component-hierarchy">Pass data across a component hierarchy</a> using cascading values and parameters.</li>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/state-management/index#in-memory-state-container-service">In-memory state container service</a> section of the <em>State management</em> overview.</li>
+</ul>
+<p>For the state manager approach, C# events are outside the Blazor rendering pipeline. Call <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.statehaschanged%2a">Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged *</a> on other components you wish to rerender in response to the state manager's events.</p>
+<p>The state manager approach is similar to the earlier case with <a href="https://learn.microsoft.com/dotnet/api/system.timers.timer?displayproperty=fullname">System.Timers.Timer?displayProperty=fullName</a> in the <a href="#receiving-a-call-from-something-external-to-the-blazor-rendering-and-event-handling-system">previous section</a>. Since the execution call stack typically remains on the renderer's synchronization context, calling <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.invokeasync%2a">Microsoft.AspNetCore.Components.ComponentBase.InvokeAsync *</a> isn't normally required. Calling <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase.invokeasync%2a">Microsoft.AspNetCore.Components.ComponentBase.InvokeAsync *</a> is only required if the logic escapes the synchronization context, such as calling <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.continuewith%2a">System.Threading.Tasks.Task.ContinueWith *</a> on a <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">System.Threading.Tasks.Task</a> or awaiting a <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">System.Threading.Tasks.Task</a> with <a href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.configureawait%2a"><code>ConfigureAwait(false)</code></a>. For more information, see the <a href="#receiving-a-call-from-something-external-to-the-blazor-rendering-and-event-handling-system">Receiving a call from something external to the Blazor rendering and event handling system</a> section.</p>
+<h2 id="webassembly-loading-progress-indicator-for-blazor-web-apps">WebAssembly loading progress indicator for Blazor Web Apps</h2>
+<p>An app can adopt custom code to create a loading progress indicator. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/startup#client-side-loading-indicators">startup</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+      </div>
+  </div>
+</div>
+
+        </section>
+        <footer>
+          <hr>
+          <p>Copyright &copy; 2026, Microsoft aka <a href="https://learn.microsoft.com/aspnet/core/blazor">dotnet</a> - Content licensed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> | Site generated by <a href="https://github.com/lunet-io/lunet">lunet</a> hosted on <a href="https://pages.github.com/">GitHub Pages</a></p>
+        </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

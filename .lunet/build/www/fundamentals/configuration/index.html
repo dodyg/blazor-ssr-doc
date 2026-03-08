@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html data-lunet-theme-mode="system" data-lunet-theme-storage-key="blazor-ssr-theme" data-lunet-css-prefix="lunet" lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="lunet 1.0.10.0">
+    <script>(function(){const root=document.documentElement;const key=root.getAttribute("data-lunet-theme-storage-key")||"lunet-theme";const fallback=root.getAttribute("data-lunet-theme-mode")||"system";let stored=null;try{stored=localStorage.getItem(key);}catch(_){stored=null;}const mode=(stored==="light"||stored==="dark"||stored==="system")?stored:fallback;const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;const resolved=mode==="system"?(prefersDark?"dark":"light"):mode;root.setAttribute("data-lunet-theme-mode",mode);root.setAttribute("data-bs-theme",resolved);}());</script>
+    <link rel='icon' href='/favicon.ico' sizes='32x32'>
+    <title>ASP.NET Core Blazor configuration | Blazor SSR Documentation</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/site.js" ></script>
+    <script src="/js/site-defer.js" defer></script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@your-handle">
+<meta name="twitter:title" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
+<meta name="twitter:description" content="ASP.NET Core Blazor configuration This article explains how to configure Blazor apps, including app settings, authentication, and logging configuration. This guidance applies to client-side project configuration in a Blazor Web App or a standalone Blazor WebAssembly app. Default behavior in Blazor Web Apps: For server-side configuration:See index for guidance. Only configuration in the project's root app settings files is loaded. The remainder of this article only applies to client-side configuration...">
+<meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
+<meta name="twitter:image:alt" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
+<meta property="og:title" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:description" content="ASP.NET Core Blazor configuration This article explains how to configure Blazor apps, including app settings, authentication, and logging configuration. This guidance applies to client-side project configuration in a Blazor Web App or a standalone Blazor WebAssembly app. Default behavior in Blazor Web Apps: For server-side configuration:See index for guidance. Only configuration in the project's root app settings files is loaded. The remainder of this article only applies to client-side configuration...">
+<meta property="og:image" content="http://localhost:4000/img/project-banner.png">
+<meta property="og:image:alt" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
+  </head>
+  <body>
+
+    <div id="lunet" class="container">
+      <nav class="navbar navbar-expand-md sticky-top">
+        <a class="navbar-brand" href="/">
+          <img class="lunet-logo" src="/img/lunet-logo.png" alt="Blazor SSR Documentation" width="96" height="96">
+          <span class="visually-hidden">Home</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
+<ol id='nav-id-home-0' class='navbar-nav nav-level0 show '>
+  <li id='nav-item-home-1' class='nav-item '>
+    <span class='nav-item-row'><a href='/' class='nav-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a></span>  </li>
+  <li id='nav-item-home-2' class='nav-item '>
+    <span class='nav-item-row'><a href='/getting-started/' class='nav-link  '><i class='bi bi-rocket-takeoff' aria-hidden='true'></i> Getting Started</a></span>  </li>
+  <li id='nav-item-home-3' class='nav-item  active'>
+    <span class='nav-item-row'><a href='/fundamentals/' class='nav-link  '><i class='bi bi-gear' aria-hidden='true'></i> Fundamentals</a></span>  </li>
+  <li id='nav-item-home-4' class='nav-item '>
+    <span class='nav-item-row'><a href='/components/' class='nav-link  '><i class='bi bi-puzzle' aria-hidden='true'></i> Components</a></span>  </li>
+  <li id='nav-item-home-5' class='nav-item '>
+    <span class='nav-item-row'><a href='/forms/' class='nav-link  '><i class='bi bi-input-cursor-text' aria-hidden='true'></i> Forms</a></span>  </li>
+  <li id='nav-item-home-6' class='nav-item '>
+    <span class='nav-item-row'><a href='/security/' class='nav-link  '><i class='bi bi-shield-lock' aria-hidden='true'></i> Security</a></span>  </li>
+  <li id='nav-item-home-7' class='nav-item '>
+    <span class='nav-item-row'><a href='/advanced/' class='nav-link  '><i class='bi bi-boxes' aria-hidden='true'></i> Advanced</a></span>  </li>
+</ol>
+          <ol class="navbar-nav flex-grow-1" style="padding-right: 0.5rem;">
+            <li class="nav-item w-100">
+                <div class="lunet-search dropdown w-100">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input id="search-input" type="search" class="form-control" placeholder="Search... (Alt+s)" aria-label="Search" aria-controls="search-results" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-search-empty-message="Enter words to search..." data-search-no-results-message="No results found.">
+                    <ul id="search-results" class="dropdown-menu w-100 p-0" style="max-height: 50vh;" role="listbox" aria-labelledby="search-input"></ul>
+                  </div>
+                </div>
+            </li>
+          </ol>
+          <div class="d-flex align-items-center gap-2 flex-shrink-0 navbar-right">
+            <div class="dropdown">
+              <button
+                id="theme-mode-toggle"
+                class="btn btn-outline-secondary btn-sm lunet-theme-toggle dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Theme">
+                <i class="bi bi-circle-half" data-lunet-theme-toggle-icon aria-hidden="true"></i>
+                <span
+                  data-lunet-theme-toggle-label
+                  data-theme-system-label="System"
+                  data-theme-light-label="Light"
+                  data-theme-dark-label="Dark">Theme</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="theme-mode-toggle">
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="system"><i class="bi bi-circle-half me-2"></i>System</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="light"><i class="bi bi-sun-fill me-2"></i>Light</button></li>
+                <li><button class="dropdown-item" type="button" data-lunet-theme-choice="dark"><i class="bi bi-moon-stars-fill me-2"></i>Dark</button></li>
+              </ul>
+            </div>
+<ol id='nav-id-home2-0' class='navbar-nav nav-level0 show flex-shrink-0'>
+  <li id='nav-item-home2-1' class='nav-item '>
+    <span class='nav-item-row'><a href='https://learn.microsoft.com/aspnet/core/blazor' class='nav-link  btn btn-outline-info'><i class="bi bi-book"></i> Official Docs</a></span>  </li>
+  <li id='nav-item-home2-2' class='nav-item '>
+    <span class='nav-item-row'><a href='https://github.com/dotnet/AspNetCore.Docs' class='nav-link  btn btn-info'><i class="bi bi-github"></i> GitHub</a></span>  </li>
+</ol>
+          </div>
+        </div>
+      </nav>
+      <div class="lunet lunet-fundamentals">
+        <section data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-timeout="1200" data-copy-tooltip="Copy to Clipboard." data-copy-tooltip-success="Copied!" data-copy-tooltip-error="Failed to copy!">
+
+<div class="container-xxl">
+  <div class="row">
+      <!-- Left sidebar - responsive offcanvas (offcanvas on mobile, visible sidebar on md+) -->
+      <nav id="docs-sidebar-menu" class="col-md-3 col-lg-3 col-xl-3 col-xxl-2 offcanvas-md offcanvas-start sticky-md-top menu-sidebar align-self-start order-1 order-md-0" tabindex="-1" aria-labelledby="docs-sidebar-menu-label" aria-expanded="true">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="docs-sidebar-menu-label">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#docs-sidebar-menu" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ol id='menu-id-doc-0' class='menu menu-level0 show '>
+            <li id='menu-item-doc-1' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/' class='menu-link  '><i class='bi bi-book' aria-hidden='true'></i> Overview</a></span>  </li>
+            <li id='menu-item-doc-2' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/render-modes/' class='menu-link  '><i class='bi bi-layers' aria-hidden='true'></i> Render Modes</a></span>  </li>
+            <li id='menu-item-doc-3' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/routing/' class='menu-link  '><i class='bi bi-signpost-2' aria-hidden='true'></i> Routing</a></span>  </li>
+            <li id='menu-item-doc-4' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/dependency-injection/' class='menu-link  '><i class='bi bi-box-arrow-in-right' aria-hidden='true'></i> Dependency Injection</a></span>  </li>
+            <li id='menu-item-doc-5' class='menu-item  active'>
+              <span class='menu-item-row'><a href='/fundamentals/configuration/' class='menu-link  '><i class='bi bi-sliders' aria-hidden='true'></i> Configuration</a></span>  </li>
+            <li id='menu-item-doc-6' class='menu-item '>
+              <span class='menu-item-row'><a href='/fundamentals/static-files/' class='menu-link  '><i class='bi bi-file-earmark' aria-hidden='true'></i> Static Files</a></span>  </li>
+          </ol>
+
+        </div>
+      </nav>
+      <!-- Right sidebar (TOC) - collapsible on mobile, visible sidebar on xxl+ -->
+      <aside id="docs-sidebar-toc" class="col-12 col-xxl-2 sticky-xxl-top menu-sidebar align-self-start order-0 order-xxl-2 collapse d-xxl-block" aria-expanded="true">
+        <h3 class="toc-title">On this page</h3>
+        <nav class="js-toc"></nav>
+      </aside>
+      <!-- Main content column -->
+      <div class="col-12 col-md-9 col-lg-9 col-xl-9 col-xxl-8 order-2 order-md-1 js-toc-content">
+        <ol class='breadcrumb'>
+          <li class='breadcrumb-item '>
+            <a href='/' class='breadcrumb-link  '><i class='bi bi-house-door' aria-hidden='true'></i> Home</a>  </li>
+          <li class='breadcrumb-item '>
+            <a href='/fundamentals/' class='breadcrumb-link  '><i class='bi bi-gear' aria-hidden='true'></i> Fundamentals</a>  </li>
+          <li class='breadcrumb-item  active'>
+            <i class='bi bi-sliders' aria-hidden='true'></i> Configuration  </li>
+        </ol>
+
+        <p id="lunet-results"></p>
+        <!-- Toggle buttons visible only on small screens -->
+        <div class="d-md-none mb-3">
+          <button
+            class="btn btn-outline-secondary btn-sm me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#docs-sidebar-menu"
+            aria-controls="docs-sidebar-menu"
+            aria-label="Toggle docs menu">
+            Menu
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-sm d-xxl-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#docs-sidebar-toc"
+            aria-controls="docs-sidebar-toc"
+            aria-expanded="false"
+            aria-label="Toggle Table Of Contents">
+            On this page
+          </button>
+        </div>
+<!-- lunet:summarize -->
+<h1 id="aspnet-core-blazor-configuration">ASP.NET Core Blazor configuration</h1>
+<p>This article explains how to configure Blazor apps, including app settings, authentication, and logging configuration.</p>
+<p>This guidance applies to client-side project configuration in a Blazor Web App or a standalone Blazor WebAssembly app.</p>
+<p>Default behavior in Blazor Web Apps:</p>
+<ul>
+<li>For server-side configuration:
+<ul>
+<li>See <a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/index">index</a> for guidance.</li>
+<li>Only configuration in the project's root app settings files is loaded.</li>
+<li>The remainder of this article only applies to client-side configuration in the <code>.Client</code> project.</li>
+</ul>
+</li>
+<li>For client-side configuration (<code>.Client</code> project), configuration is loaded from the following app settings files:
+<ul>
+<li><code>wwwroot/appsettings.json</code>.</li>
+<li><code>wwwroot/appsettings.{ENVIRONMENT}.json</code>, where the <code>{ENVIRONMENT}</code> placeholder is the app's <a href="https://learn.microsoft.com/aspnet/core/fundamentals/environments">runtime environment</a>.</li>
+</ul>
+</li>
+</ul>
+<p>In standalone Blazor WebAssembly apps, configuration is loaded from the following app settings files:</p>
+<ul>
+<li><code>wwwroot/appsettings.json</code>.</li>
+<li><code>wwwroot/appsettings.{ENVIRONMENT}.json</code>, where the <code>{ENVIRONMENT}</code> placeholder is the app's <a href="https://learn.microsoft.com/aspnet/core/fundamentals/environments">runtime environment</a>.</li>
+</ul>
+<div class="markdown-alert markdown-alert-note alert alert-primary lunet-alert-note" role="alert">
+<div class='lunet-alert-note-heading'>
+<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
+</div><div class='lunet-alert-note-content'>
+<p>Logging configuration placed into an app settings file in <code>wwwroot</code> isn't loaded by default. For more information, see the <a href="#logging-configuration">Logging configuration</a> section later in this article.</p>
+<p class="mb-0">In some scenarios, such as with Azure services, it's important to use an environment file name segment that exactly matches the environment name. For example, use the file name <code>appsettings.Staging.json</code> with a capital &quot;:<span>no-loc text=&quot;S&quot;:&quot; for the <code>Staging</code> environment. For recommended conventions, see the opening remarks of <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/environments">environments</a>.</span></p>
+</div></div>
+<p>Other configuration providers registered by the app can also provide configuration, but not all providers or provider features are appropriate:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/security/key-vault-configuration">Azure Key Vault configuration provider</a>: The provider isn't supported for managed identity and application ID (client ID) with client secret scenarios. Application ID with a client secret isn't recommended for any ASP.NET Core app, especially client-side apps because the client secret can't be secured client-side to access the Azure Key Vault service.</li>
+<li><a href="/azure/azure-app-configuration/quickstart-aspnet-core-app">Azure App configuration provider</a>: The provider isn't appropriate for a client-side app because the app doesn't run on a server in Azure.</li>
+</ul>
+<p>For more information on configuration providers, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/index">index</a>.</p>
+<div class="markdown-alert markdown-alert-warning alert alert-warning lunet-alert-warning" role="alert">
+<div class='lunet-alert-warning-heading'>
+<span class='lunet-alert-warning-icon'></span><span class='lunet-alert-warning-heading-text'></span>
+</div><div class='lunet-alert-warning-content'>
+<p class="mb-0">Configuration and settings files in the web root (<code>wwwroot</code> folder) are visible to users on the client, and users can tamper with the data. <strong>Don't store app secrets, credentials, or any other sensitive data in any web root file.</strong></p>
+</div></div>
+<h2 id="app-settings-configuration">App settings configuration</h2>
+<p>Configuration in app settings files are loaded by default. In the following example, a UI configuration value is stored in an app settings file and loaded by the Blazor framework automatically. The value is read by a component.</p>
+<p><code>wwwroot/appsettings.json</code>:</p>
+<pre><code class="language-json">{
+    &quot;h1FontSize&quot;: &quot;50px&quot;
+}
+</code></pre>
+<p>Inject an <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration">Microsoft.Extensions.Configuration.IConfiguration</a> instance into a component to access the configuration data.</p>
+<p><code>ConfigExample.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><p>Client security restrictions prevent direct access to files via user code, including settings files for app configuration. To read configuration files in addition to <code>appsettings.json</code>/<code>appsettings.{ENVIRONMENT}.json</code> from the <code>wwwroot</code> folder into configuration, use an <a href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">System.Net.Http.HttpClient</a>.</p>
+<blockquote class="blockquote">
+<p>[!WARNING]
+Configuration and settings files in the web root (<code>wwwroot</code> folder) are visible to users on the client, and users can tamper with the data. <strong>Don't store app secrets, credentials, or any other sensitive data in any web root file.</strong></p>
+</blockquote>
+<p>The following example reads a configuration file (<code>cars.json</code>) into the app's configuration.</p>
+<p><code>wwwroot/cars.json</code>:</p>
+<pre><code class="language-json">{
+    &quot;size&quot;: &quot;tiny&quot;
+}
+</code></pre>
+<p>Add the namespace for <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration?displayproperty=fullname">Microsoft.Extensions.Configuration?displayProperty=fullName</a> to the <code>Program</code> file:</p>
+<pre><code class="language-csharp">using Microsoft.Extensions.Configuration;
+</code></pre>
+<p>Modify the existing <a href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">System.Net.Http.HttpClient</a> service registration to use the client to read the file:</p>
+<pre><code class="language-csharp">var http = new HttpClient()
+{
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+};
+
+builder.Services.AddScoped(sp =&gt; http);
+
+using var response = await http.GetAsync(&quot;cars.json&quot;);
+using var stream = await response.Content.ReadAsStreamAsync();
+
+builder.Configuration.AddJsonStream(stream);
+</code></pre>
+<p>The preceding example sets the base address with <code>builder.HostEnvironment.BaseAddress</code> (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment.baseaddress%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment.BaseAddress *?displayProperty=nameWithType</a>), which gets the base address for the app and is typically derived from the <code>&lt;base&gt;</code> tag's <code>href</code> value in the host page.</p>
+<h2 id="memory-configuration-source">Memory Configuration Source</h2>
+<p>The following example uses a <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.memory.memoryconfigurationsource">Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource</a> in the <code>Program</code> file to supply additional configuration.</p>
+<p>Add the namespace for <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.memory?displayproperty=fullname">Microsoft.Extensions.Configuration.Memory?displayProperty=fullName</a> to the <code>Program</code> file:</p>
+<pre><code class="language-csharp">using Microsoft.Extensions.Configuration.Memory;
+</code></pre>
+<p>In the <code>Program</code> file:</p>
+<pre><code class="language-csharp">var vehicleData = new Dictionary&lt;string, string?&gt;()
+{
+    { &quot;color&quot;, &quot;blue&quot; },
+    { &quot;type&quot;, &quot;car&quot; },
+    { &quot;wheels:count&quot;, &quot;3&quot; },
+    { &quot;wheels:brand&quot;, &quot;Blazin&quot; },
+    { &quot;wheels:brand:type&quot;, &quot;rally&quot; },
+    { &quot;wheels:year&quot;, &quot;2008&quot; },
+};
+
+var memoryConfig = new MemoryConfigurationSource { InitialData = vehicleData };
+
+builder.Configuration.Add(memoryConfig);
+</code></pre>
+<p>Inject an <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration">Microsoft.Extensions.Configuration.IConfiguration</a> instance into a component to access the configuration data.</p>
+<p><code>MemoryConfig.razor</code>:</p>
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end">
+<div class="moniker">
+<div class="code">
+<div class="moniker-end"><p>Obtain a section of the configuration in C# code with <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration.getsection%2a?displayproperty=namewithtype">Microsoft.Extensions.Configuration.IConfiguration.GetSection *?displayProperty=nameWithType</a>. The following example obtains the <code>wheels</code> section for the configuration in the preceding example:</p>
+<pre><code class="language-razor">@code {
+    protected override void OnInitialized()
+    {
+        var wheelsSection = Configuration.GetSection(&quot;wheels&quot;);
+
+        ...
+    }
+}
+</code></pre>
+<h2 id="authentication-configuration">Authentication configuration</h2>
+<p>Provide <em><strong>public</strong></em> authentication configuration in an app settings file.</p>
+<p><code>wwwroot/appsettings.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;Local&quot;: {
+    &quot;Authority&quot;: &quot;{AUTHORITY}&quot;,
+    &quot;ClientId&quot;: &quot;{CLIENT ID}&quot;
+  }
+}
+</code></pre>
+<p>Load the configuration for an Identity provider with <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.configurationbinder.bind%2a?displayproperty=namewithtype">Microsoft.Extensions.Configuration.ConfigurationBinder.Bind *?displayProperty=nameWithType</a> in the <code>Program</code> file. The following example loads configuration for an <a href="https://learn.microsoft.com/aspnet/core/blazor/security/webassembly/standalone-with-authentication-library">OIDC provider</a>:</p>
+<pre><code class="language-csharp">builder.Services.AddOidcAuthentication(options =&gt;
+    builder.Configuration.Bind(&quot;Local&quot;, options.ProviderOptions));
+</code></pre>
+<blockquote class="blockquote">
+<p>[!WARNING]
+Configuration and settings files in the web root (<code>wwwroot</code> folder) are visible to users on the client, and users can tamper with the data. <strong>Don't store app secrets, credentials, or any other sensitive data in any web root file.</strong></p>
+</blockquote>
+<h2 id="logging-configuration">Logging configuration</h2>
+<p><em>This section applies to apps that configure logging via an app settings file in the <code>wwwroot</code> folder.</em></p>
+<p>Add the <a href="https://www.nuget.org/packages/Microsoft.Extensions.Logging.Configuration"><code>Microsoft.Extensions.Logging.Configuration</code></a> package to the app.</p>
+<p>In the app settings file, provide logging configuration. The logging configuration is loaded in the <code>Program</code> file.</p>
+<p><code>wwwroot/appsettings.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,
+      &quot;Microsoft.AspNetCore&quot;: &quot;Warning&quot;
+    }
+  }
+}
+</code></pre>
+<p>In the <code>Program</code> file:</p>
+<pre><code class="language-csharp">builder.Logging.AddConfiguration(
+    builder.Configuration.GetSection(&quot;Logging&quot;));
+</code></pre>
+<h2 id="host-builder-configuration">Host builder configuration</h2>
+<p>Read host builder configuration from <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.webassemblyhostbuilder.configuration?displayproperty=namewithtype">Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.Configuration?displayProperty=nameWithType</a> in the <code>Program</code> file:</p>
+<pre><code class="language-csharp">var hostname = builder.Configuration[&quot;HostName&quot;];
+</code></pre>
+<h2 id="cached-configuration">Cached configuration</h2>
+<p>Configuration files are cached for offline use. With <a href="https://learn.microsoft.com/aspnet/core/blazor/progressive-web-app/index">Progressive Web Applications (PWAs)</a>, you can only update configuration files when creating a new deployment. Editing configuration files between deployments has no effect because:</p>
+<ul>
+<li>Users have cached versions of the files that they continue to use.</li>
+<li>The PWA's <code>service-worker.js</code> and <code>service-worker-assets.js</code> files must be rebuilt on compilation, which signal to the app on the user's next online visit that the app has been redeployed.</li>
+</ul>
+<p>For more information on how background updates are handled by PWAs, see <a href="https://learn.microsoft.com/aspnet/core/blazor/progressive-web-app/index#background-updates">index</a>.</p>
+<h2 id="options-configuration">Options configuration</h2>
+<p><a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options">Options configuration</a> uses API in the <a href="https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions"><code>Microsoft.Extensions.Options.ConfigurationExtensions</code></a> NuGet package.</p>
+<p>Example:</p>
+<p><code>OptionsExample.cs</code>:</p>
+<pre><code class="language-csharp">public class OptionsExample
+{
+    public string? Option1 { get; set; }
+    public string? Option2 { get; set; }
+}
+</code></pre>
+<p>In <code>appsettings.json</code>:</p>
+<pre><code class="language-json">&quot;OptionsExample&quot;: {
+  &quot;Option1&quot;: &quot;Option1 Value&quot;,
+  &quot;Option2&quot;: &quot;Option2 Value&quot;
+}
+</code></pre>
+<pre><code class="language-csharp">builder.Services.Configure&lt;OptionsExample&gt;(
+    builder.Configuration.GetSection(&quot;OptionsExample&quot;));
+</code></pre>
+<p>The following Razor component retrieves the settings with the <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#inject"><code>@inject</code></a> directive or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.InjectAttribute"><code>[Inject]</code> attribute</a>.</p>
+<p><code>Options.razor</code>:</p>
+<pre><code class="language-razor">@page &quot;/options&quot;
+@using Microsoft.Extensions.Options
+@inject IOptions&lt;OptionsExample&gt;? OptionsExample1
+
+&lt;h1&gt;Options&lt;/h1&gt;
+
+&lt;h2&gt;
+    &amp;commat;inject approach
+&lt;/h2&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;@OptionsExample1?.Value.Option1&lt;/li&gt;
+    &lt;li&gt;@OptionsExample1?.Value.Option2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;
+    [Inject] approach
+&lt;/h2&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;@OptionsExample2?.Value.Option1&lt;/li&gt;
+    &lt;li&gt;@OptionsExample2?.Value.Option2&lt;/li&gt;
+&lt;/ul&gt;
+
+@code {
+    [Inject]
+    public IOptions&lt;OptionsExample&gt;? OptionsExample2 { get; set; }
+}
+</code></pre>
+<p>Not all of the ASP.NET Core Options features are supported in Razor components. For example, <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionsmonitor%601">Microsoft.Extensions.Options.IOptionsSnapshot<code>1](https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionssnapshot%601) and [Microsoft.Extensions.Options.IOptionsMonitor</code>1</a> configuration is supported, but recomputing option values for these interfaces isn't supported outside of reloading the app by either requesting the app in a new browser tab or selecting the browser's reload button. Merely calling <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#state-changes-statehaschanged"><code>StateHasChanged</code></a> doesn't update snapshot or monitored option values when the underlying configuration changes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+      </div>
+  </div>
+</div>
+
+        </section>
+        <footer>
+          <hr>
+          <p>Copyright &copy; 2026, Microsoft aka <a href="https://learn.microsoft.com/aspnet/core/blazor">dotnet</a> - Content licensed under the Creative Commons <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> | Site generated by <a href="https://github.com/lunet-io/lunet">lunet</a> hosted on <a href="https://pages.github.com/">GitHub Pages</a></p>
+        </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

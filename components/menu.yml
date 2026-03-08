@@ -1,0 +1,8 @@
+doc:
+  - {path: readme.md, title: "<i class='bi bi-book' aria-hidden='true'></i> Overview"}
+  - {path: rendering.md, title: "<i class='bi bi-easel' aria-hidden='true'></i> Rendering"}
+  - {path: lifecycle.md, title: "<i class='bi bi-arrow-repeat' aria-hidden='true'></i> Lifecycle"}
+  - {path: prerender.md, title: "<i class='bi bi-file-earmark-break' aria-hidden='true'></i> Prerendering"}
+  - {path: cascading-values-and-parameters.md, title: "<i class='bi bi-arrow-down-up' aria-hidden='true'></i> Cascading Values"}
+  - {path: event-handling.md, title: "<i class='bi bi-lightning' aria-hidden='true'></i> Event Handling"}
+  - {path: data-binding.md, title: "<i class='bi bi-link-45deg' aria-hidden='true'></i> Data Binding"}

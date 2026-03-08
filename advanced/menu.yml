@@ -1,0 +1,4 @@
+doc:
+  - {path: readme.md, title: "<i class='bi bi-book' aria-hidden='true'></i> Overview"}
+  - {path: advanced-scenarios.md, title: "<i class='bi bi-stars' aria-hidden='true'></i> Advanced Scenarios"}
+  - {path: globalization-localization.md, title: "<i class='bi bi-globe' aria-hidden='true'></i> Globalization"}
