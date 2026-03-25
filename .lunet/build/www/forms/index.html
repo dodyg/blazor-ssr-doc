@@ -13,13 +13,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@your-handle">
 <meta name="twitter:title" content="Forms | Blazor SSR Documentation">
-<meta name="twitter:description" content="Forms Learn how to build forms in Blazor SSR applications with built-in validation and user input handling. Topics Input Components Explore the built-in input components provided by Blazor: InputText, InputNumber, InputSelect, and more. Validation Add validation to your forms using data annotations and custom validation logic. Data Binding Understand how to bind form inputs to your data models using two-way binding. Overview Blazor provides a powerful forms system that integrates...">
+<meta name="twitter:description" content="Forms Learn how to build forms in Blazor Static SSR applications with built-in validation and user input handling. Topics Input Components Explore the built-in input components provided by Blazor: InputText, InputNumber, InputSelect, and more. Validation Add validation to your forms using data annotations and custom validation logic. Data Binding Understand how to bind form inputs to your data models in Static SSR. Overview Blazor provides a powerful forms system that...">
 <meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
 <meta name="twitter:image:alt" content="Forms | Blazor SSR Documentation">
 <meta property="og:title" content="Forms | Blazor SSR Documentation">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:4000/">
-<meta property="og:description" content="Forms Learn how to build forms in Blazor SSR applications with built-in validation and user input handling. Topics Input Components Explore the built-in input components provided by Blazor: InputText, InputNumber, InputSelect, and more. Validation Add validation to your forms using data annotations and custom validation logic. Data Binding Understand how to bind form inputs to your data models using two-way binding. Overview Blazor provides a powerful forms system that integrates...">
+<meta property="og:description" content="Forms Learn how to build forms in Blazor Static SSR applications with built-in validation and user input handling. Topics Input Components Explore the built-in input components provided by Blazor: InputText, InputNumber, InputSelect, and more. Validation Add validation to your forms using data annotations and custom validation logic. Data Binding Understand how to bind form inputs to your data models in Static SSR. Overview Blazor provides a powerful forms system that...">
 <meta property="og:image" content="http://localhost:4000/img/project-banner.png">
 <meta property="og:image:alt" content="Forms | Blazor SSR Documentation">
     <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
@@ -162,28 +162,32 @@
         </div>
 <!-- lunet:summarize -->
 <h1 id="forms">Forms</h1>
-<p>Learn how to build forms in Blazor SSR applications with built-in validation and user input handling.</p>
+<p>Learn how to build forms in Blazor Static SSR applications with built-in validation and user input handling.</p>
 <h2 id="topics">Topics</h2>
 <h3 id="input-components"><a href="/forms/input-components">Input Components</a></h3>
 <p>Explore the built-in input components provided by Blazor: InputText, InputNumber, InputSelect, and more.</p>
 <h3 id="validation"><a href="/forms/validation">Validation</a></h3>
 <p>Add validation to your forms using data annotations and custom validation logic.</p>
 <h3 id="data-binding"><a href="/forms/binding">Data Binding</a></h3>
-<p>Understand how to bind form inputs to your data models using two-way binding.</p>
+<p>Understand how to bind form inputs to your data models in Static SSR.</p>
 <h2 id="overview">Overview</h2>
 <p>Blazor provides a powerful forms system that integrates with:</p>
 <ul>
 <li><strong>Data Annotations</strong>: Use attributes like <code>[Required]</code>, <code>[StringLength]</code>, etc.</li>
 <li><strong>Input Components</strong>: Built-in components for various input types</li>
-<li><strong>Validation</strong>: Automatic client-side and server-side validation</li>
+<li><strong>Server-side Validation</strong>: Validation occurs on form submission</li>
 <li><strong>EditContext</strong>: Fine-grained control over form behavior</li>
 </ul>
 <h2 id="basic-form-example">Basic Form Example</h2>
+<p>In Static SSR, forms use traditional POST requests:</p>
 <pre><code class="language-razor">@page &quot;/contact&quot;
-@rendermode InteractiveServer
+@inject EmailService EmailService
 
-&lt;EditForm Model=&quot;@contactForm&quot; OnValidSubmit=&quot;@HandleSubmit&quot;&gt;
+&lt;h1&gt;Contact Us&lt;/h1&gt;
+
+&lt;EditForm Model=&quot;@contactForm&quot; OnValidSubmit=&quot;@HandleSubmit&quot; FormName=&quot;ContactForm&quot;&gt;
     &lt;DataAnnotationsValidator /&gt;
+    &lt;AntiforgeryToken /&gt;
     
     &lt;div&gt;
         &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
@@ -197,39 +201,250 @@
         &lt;ValidationMessage For=&quot;@(() =&gt; contactForm.Email)&quot; /&gt;
     &lt;/div&gt;
     
+    &lt;div&gt;
+        &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
+        &lt;InputTextArea id=&quot;message&quot; @bind-Value=&quot;contactForm.Message&quot; /&gt;
+        &lt;ValidationMessage For=&quot;@(() =&gt; contactForm.Message)&quot; /&gt;
+    &lt;/div&gt;
+    
     &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
 &lt;/EditForm&gt;
 
+@if (submitted)
+{
+    &lt;p&gt;Thank you! Your message has been sent.&lt;/p&gt;
+}
+
 @code {
     private ContactForm contactForm = new();
+    private bool submitted;
 
-    private void HandleSubmit()
+    private async Task HandleSubmit()
     {
-        // Process the form
+        await EmailService.SendAsync(contactForm);
+        submitted = true;
     }
 
     public class ContactForm
     {
-        [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
+        [Required(ErrorMessage = &quot;Name is required&quot;)]
+        [StringLength(100, ErrorMessage = &quot;Name must be less than 100 characters&quot;)]
+        public string Name { get; set; } = &quot;&quot;;
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required(ErrorMessage = &quot;Email is required&quot;)]
+        [EmailAddress(ErrorMessage = &quot;Invalid email address&quot;)]
+        public string Email { get; set; } = &quot;&quot;;
+
+        [Required(ErrorMessage = &quot;Message is required&quot;)]
+        [StringLength(1000, ErrorMessage = &quot;Message must be less than 1000 characters&quot;)]
+        public string Message { get; set; } = &quot;&quot;;
     }
 }
 </code></pre>
 <h2 id="built-in-input-components">Built-in Input Components</h2>
 <ul>
-<li><code>InputText</code> - Text input</li>
-<li><code>InputNumber&lt;T&gt;</code> - Numeric input</li>
-<li><code>InputDate&lt;T&gt;</code> - Date input</li>
-<li><code>InputTextArea</code> - Multi-line text</li>
-<li><code>InputSelect&lt;T&gt;</code> - Dropdown/select</li>
-<li><code>InputCheckbox</code> - Boolean checkbox</li>
-<li><code>InputFile</code> - File upload</li>
+<li><code>InputText</code> - Text input (<code>&lt;input type=&quot;text&quot;&gt;</code>)</li>
+<li><code>InputNumber&lt;T&gt;</code> - Numeric input (<code>&lt;input type=&quot;number&quot;&gt;</code>)</li>
+<li><code>InputDate&lt;T&gt;</code> - Date input (<code>&lt;input type=&quot;date&quot;&gt;</code>)</li>
+<li><code>InputTextArea</code> - Multi-line text (<code>&lt;textarea&gt;</code>)</li>
+<li><code>InputSelect&lt;T&gt;</code> - Dropdown/select (<code>&lt;select&gt;</code>)</li>
+<li><code>InputCheckbox</code> - Boolean checkbox (<code>&lt;input type=&quot;checkbox&quot;&gt;</code>)</li>
+<li><code>InputFile</code> - File upload (<code>&lt;input type=&quot;file&quot;&gt;</code>)</li>
 </ul>
+<h2 id="form-submission-in-static-ssr">Form Submission in Static SSR</h2>
+<p>In Static SSR, form submission triggers a full HTTP POST request:</p>
+<ol>
+<li>User fills out the form</li>
+<li>Form is submitted via POST</li>
+<li>Server validates and processes the data</li>
+<li>Server renders a new page response</li>
+</ol>
+<h3 id="antiforgery-protection">Antiforgery Protection</h3>
+<p>Always include antiforgery tokens in forms:</p>
+<pre><code class="language-razor">&lt;EditForm Model=&quot;@model&quot; OnValidSubmit=&quot;@HandleSubmit&quot; FormName=&quot;MyForm&quot;&gt;
+    &lt;AntiforgeryToken /&gt;
+    &lt;!-- form fields --&gt;
+&lt;/EditForm&gt;
+</code></pre>
+<h3 id="supplying-form-data">Supplying Form Data</h3>
+<p>For forms that need to receive data from POST requests:</p>
+<pre><code class="language-razor">@page &quot;/edit/{id:int}&quot;
+@inject ProductRepository Repository
+
+&lt;h1&gt;Edit Product&lt;/h1&gt;
+
+&lt;EditForm Model=&quot;@product&quot; OnValidSubmit=&quot;@HandleSubmit&quot; FormName=&quot;EditProduct&quot;&gt;
+    &lt;AntiforgeryToken /&gt;
+    &lt;DataAnnotationsValidator /&gt;
+    
+    &lt;input type=&quot;hidden&quot; @bind-value=&quot;product.Id&quot; /&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Name:&lt;/label&gt;
+        &lt;InputText @bind-Value=&quot;product.Name&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Price:&lt;/label&gt;
+        &lt;InputNumber @bind-Value=&quot;product.Price&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;button type=&quot;submit&quot;&gt;Save&lt;/button&gt;
+&lt;/EditForm&gt;
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Product product = new();
+
+    [SupplyParameterFromForm]
+    private Product? FormData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (FormData != null)
+        {
+            product = FormData;
+        }
+        else
+        {
+            product = await Repository.GetByIdAsync(Id) ?? new();
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        await Repository.UpdateAsync(product);
+    }
+}
+</code></pre>
+<h2 id="validation-1">Validation</h2>
+<h3 id="data-annotations">Data Annotations</h3>
+<p>Decorate your model with validation attributes:</p>
+<pre><code class="language-csharp">public class UserRegistration
+{
+    [Required]
+    [MinLength(3)]
+    [MaxLength(50)]
+    public string Username { get; set; } = &quot;&quot;;
+
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; } = &quot;&quot;;
+
+    [Required]
+    [MinLength(8)]
+    [RegularExpression(@&quot;^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$&quot;, 
+        ErrorMessage = &quot;Password must contain uppercase, lowercase, and numbers&quot;)]
+    public string Password { get; set; } = &quot;&quot;;
+
+    [Required]
+    [Compare(&quot;Password&quot;, ErrorMessage = &quot;Passwords do not match&quot;)]
+    public string ConfirmPassword { get; set; } = &quot;&quot;;
+}
+</code></pre>
+<h3 id="displaying-validation-errors">Displaying Validation Errors</h3>
+<pre><code class="language-razor">&lt;EditForm Model=&quot;@model&quot; OnValidSubmit=&quot;@HandleSubmit&quot; FormName=&quot;Registration&quot;&gt;
+    &lt;DataAnnotationsValidator /&gt;
+    &lt;AntiforgeryToken /&gt;
+    
+    &lt;ValidationSummary /&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Username:&lt;/label&gt;
+        &lt;InputText @bind-Value=&quot;model.Username&quot; /&gt;
+        &lt;ValidationMessage For=&quot;@(() =&gt; model.Username)&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- more fields --&gt;
+&lt;/EditForm&gt;
+</code></pre>
+<h2 id="crud-example">CRUD Example</h2>
+<p>A complete create/edit/delete example:</p>
+<pre><code class="language-razor">@page &quot;/products&quot;
+@page &quot;/products/edit/{id:int}&quot;
+@inject ProductRepository Repository
+@inject NavigationManager Navigation
+
+&lt;h1&gt;@(IsEdit ? &quot;Edit Product&quot; : &quot;New Product&quot;)&lt;/h1&gt;
+
+&lt;EditForm Model=&quot;@product&quot; OnValidSubmit=&quot;@HandleSubmit&quot; FormName=&quot;ProductForm&quot;&gt;
+    &lt;DataAnnotationsValidator /&gt;
+    &lt;AntiforgeryToken /&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Name:&lt;/label&gt;
+        &lt;InputText @bind-Value=&quot;product.Name&quot; /&gt;
+        &lt;ValidationMessage For=&quot;@(() =&gt; product.Name)&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Description:&lt;/label&gt;
+        &lt;InputTextArea @bind-Value=&quot;product.Description&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Price:&lt;/label&gt;
+        &lt;InputNumber @bind-Value=&quot;product.Price&quot; /&gt;
+        &lt;ValidationMessage For=&quot;@(() =&gt; product.Price)&quot; /&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+        &lt;label&gt;Category:&lt;/label&gt;
+        &lt;InputSelect @bind-Value=&quot;product.CategoryId&quot;&gt;
+            &lt;option value=&quot;&quot;&gt;Select category&lt;/option&gt;
+            @foreach (var cat in categories)
+            {
+                &lt;option value=&quot;@cat.Id&quot;&gt;@cat.Name&lt;/option&gt;
+            }
+        &lt;/InputSelect&gt;
+    &lt;/div&gt;
+    
+    &lt;button type=&quot;submit&quot;&gt;Save&lt;/button&gt;
+    &lt;a href=&quot;/products&quot;&gt;Cancel&lt;/a&gt;
+&lt;/EditForm&gt;
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    private bool IsEdit =&gt; Id.HasValue;
+    private Product product = new();
+    private List&lt;Category&gt; categories = new();
+
+    [SupplyParameterFromForm]
+    private Product? FormData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await Repository.GetCategoriesAsync();
+        
+        if (FormData != null)
+        {
+            product = FormData;
+        }
+        else if (IsEdit &amp;&amp; Id.HasValue)
+        {
+            product = await Repository.GetByIdAsync(Id.Value) ?? new();
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (IsEdit)
+        {
+            await Repository.UpdateAsync(product);
+        }
+        else
+        {
+            await Repository.CreateAsync(product);
+        }
+        
+        Navigation.NavigateTo(&quot;/products&quot;);
+    }
+}
+</code></pre>
 <h2 id="next-steps">Next Steps</h2>
 <p>After mastering forms, explore <a href="/security">Security</a> to learn about authentication and authorization.</p>
 

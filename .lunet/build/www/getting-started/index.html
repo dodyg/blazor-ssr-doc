@@ -13,13 +13,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@your-handle">
 <meta name="twitter:title" content="Getting Started | Blazor SSR Documentation">
-<meta name="twitter:description" content="Getting Started Welcome to Blazor SSR! This section will help you understand what Blazor SSR is and how to get started building server-side rendered web applications. What You'll Learn What is Blazor SSR? - Understanding server-side rendering in Blazor Comparison - How SSR compares to WebAssembly and Hybrid approaches Project Structure - Understanding the layout of a Blazor SSR project Tooling - Development tools and IDE support Supported Platforms -...">
+<meta name="twitter:description" content="Getting Started Welcome to Blazor Static SSR! This section will help you understand what Blazor Static SSR is and how to get started building server-side rendered web applications. What You'll Learn What is Blazor Static SSR? - Understanding static server-side rendering in Blazor When to Use Static SSR - Choosing the right approach for your project Project Structure - Understanding the layout of a Blazor Static SSR project Tooling -...">
 <meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
 <meta name="twitter:image:alt" content="Getting Started | Blazor SSR Documentation">
 <meta property="og:title" content="Getting Started | Blazor SSR Documentation">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:4000/">
-<meta property="og:description" content="Getting Started Welcome to Blazor SSR! This section will help you understand what Blazor SSR is and how to get started building server-side rendered web applications. What You'll Learn What is Blazor SSR? - Understanding server-side rendering in Blazor Comparison - How SSR compares to WebAssembly and Hybrid approaches Project Structure - Understanding the layout of a Blazor SSR project Tooling - Development tools and IDE support Supported Platforms -...">
+<meta property="og:description" content="Getting Started Welcome to Blazor Static SSR! This section will help you understand what Blazor Static SSR is and how to get started building server-side rendered web applications. What You'll Learn What is Blazor Static SSR? - Understanding static server-side rendering in Blazor When to Use Static SSR - Choosing the right approach for your project Project Structure - Understanding the layout of a Blazor Static SSR project Tooling -...">
 <meta property="og:image" content="http://localhost:4000/img/project-banner.png">
 <meta property="og:image:alt" content="Getting Started | Blazor SSR Documentation">
     <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
@@ -164,34 +164,34 @@
         </div>
 <!-- lunet:summarize -->
 <h1 id="getting-started">Getting Started</h1>
-<p>Welcome to Blazor SSR! This section will help you understand what Blazor SSR is and how to get started building server-side rendered web applications.</p>
+<p>Welcome to Blazor Static SSR! This section will help you understand what Blazor Static SSR is and how to get started building server-side rendered web applications.</p>
 <h2 id="what-youll-learn">What You'll Learn</h2>
 <ul>
-<li><strong>What is Blazor SSR?</strong> - Understanding server-side rendering in Blazor</li>
-<li><strong>Comparison</strong> - How SSR compares to WebAssembly and Hybrid approaches</li>
-<li><strong>Project Structure</strong> - Understanding the layout of a Blazor SSR project</li>
+<li><strong>What is Blazor Static SSR?</strong> - Understanding static server-side rendering in Blazor</li>
+<li><strong>When to Use Static SSR</strong> - Choosing the right approach for your project</li>
+<li><strong>Project Structure</strong> - Understanding the layout of a Blazor Static SSR project</li>
 <li><strong>Tooling</strong> - Development tools and IDE support</li>
 <li><strong>Supported Platforms</strong> - Platform requirements and compatibility</li>
 </ul>
 <h2 id="topics">Topics</h2>
-<h3 id="ssr-vs-webassembly-vs-hybrid"><a href="/getting-started/comparison">SSR vs WebAssembly vs Hybrid</a></h3>
-<p>Learn about the different Blazor hosting models and when to choose SSR over WebAssembly or Hybrid approaches.</p>
+<h3 id="when-to-use-static-ssr"><a href="/getting-started/comparison">When to Use Static SSR</a></h3>
+<p>Learn about the advantages and limitations of Static SSR and when it's the right choice for your project.</p>
 <h3 id="project-structure"><a href="/getting-started/project-structure">Project Structure</a></h3>
-<p>Understand how a Blazor SSR project is organized and what each file does.</p>
+<p>Understand how a Blazor Static SSR project is organized and what each file does.</p>
 <h3 id="tooling"><a href="/getting-started/tooling">Tooling</a></h3>
 <p>Get familiar with the development tools available for building Blazor applications.</p>
 <h3 id="supported-platforms"><a href="/getting-started/supported-platforms">Supported Platforms</a></h3>
-<p>Learn about the platform requirements and browser compatibility for Blazor SSR.</p>
+<p>Learn about the platform requirements and browser compatibility for Blazor Static SSR.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Before you begin, ensure you have:</p>
 <ul>
-<li><a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET 8.0 SDK</a> or later</li>
+<li><a href="https://dotnet.microsoft.com/download/dotnet/10.0">.NET 10.0 SDK</a> or later</li>
 <li>A code editor (Visual Studio 2022, VS Code, or JetBrains Rider)</li>
 <li>Basic knowledge of C# and web development</li>
 </ul>
 <h2 id="quick-start">Quick Start</h2>
-<p>Create your first Blazor SSR application:</p>
-<pre><code class="language-bash"># Create a new Blazor Web App with SSR
+<p>Create your first Blazor Static SSR application:</p>
+<pre><code class="language-bash"># Create a new Blazor Web App (Static SSR by default)
 dotnet new blazor -o MyBlazorApp
 
 # Navigate to the project
@@ -200,9 +200,33 @@ cd MyBlazorApp
 # Run the application
 dotnet run
 </code></pre>
-<p>Open your browser to the URL shown in the console output to see your Blazor SSR app!</p>
+<p>Open your browser to the URL shown in the console output to see your Blazor Static SSR app!</p>
+<h2 id="key-concepts">Key Concepts</h2>
+<h3 id="static-server-side-rendering">Static Server-Side Rendering</h3>
+<p>In Static SSR, your Blazor components are rendered on the server for each request, producing pure HTML that's sent to the browser:</p>
+<pre><code class="language-razor">@page &quot;/hello&quot;
+
+&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;p&gt;The current time is: @DateTime.Now&lt;/p&gt;
+</code></pre>
+<h3 id="no-interactive-circuit">No Interactive Circuit</h3>
+<p>Unlike interactive Blazor modes, Static SSR doesn't maintain a persistent connection. User interactions occur through:</p>
+<ul>
+<li><strong>Form submissions</strong> - Traditional POST requests</li>
+<li><strong>Navigation</strong> - Link clicks and redirects</li>
+<li><strong>Query strings</strong> - URL parameters</li>
+</ul>
+<h3 id="component-lifecycle">Component Lifecycle</h3>
+<p>In Static SSR, components follow a simpler lifecycle:</p>
+<ol>
+<li><code>SetParametersAsync</code> - Parameters are set</li>
+<li><code>OnInitialized</code> / <code>OnInitializedAsync</code> - Initialization</li>
+<li><code>OnParametersSet</code> / <code>OnParametersSetAsync</code> - After parameters set</li>
+<li>HTML is rendered and sent to the browser</li>
+</ol>
+<p><strong>Note</strong>: <code>OnAfterRender</code> is not called in Static SSR.</p>
 <h2 id="next-steps">Next Steps</h2>
-<p>Once you've completed the getting started guide, explore the <a href="/fundamentals">Fundamentals</a> section to learn about core concepts like render modes, routing, and dependency injection.</p>
+<p>Once you've completed the getting started guide, explore the <a href="/fundamentals">Fundamentals</a> section to learn about core concepts like routing, and dependency injection.</p>
 
       </div>
   </div>

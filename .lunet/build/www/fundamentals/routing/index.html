@@ -6,22 +6,22 @@
     <meta name="generator" content="lunet 1.0.10.0">
     <script>(function(){const root=document.documentElement;const key=root.getAttribute("data-lunet-theme-storage-key")||"lunet-theme";const fallback=root.getAttribute("data-lunet-theme-mode")||"system";let stored=null;try{stored=localStorage.getItem(key);}catch(_){stored=null;}const mode=(stored==="light"||stored==="dark"||stored==="system")?stored:fallback;const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;const resolved=mode==="system"?(prefersDark?"dark":"light"):mode;root.setAttribute("data-lunet-theme-mode",mode);root.setAttribute("data-bs-theme",resolved);}());</script>
     <link rel='icon' href='/favicon.ico' sizes='32x32'>
-    <title>ASP.NET Core Blazor routing | Blazor SSR Documentation</title>
+    <title>ASP.NET Core Blazor Routing | Blazor SSR Documentation</title>
     <link rel="stylesheet" href="/css/site.css">
     <script src="/js/site.js" ></script>
     <script src="/js/site-defer.js" defer></script>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@your-handle">
-<meta name="twitter:title" content="ASP.NET Core Blazor routing | Blazor SSR Documentation">
-<meta name="twitter:description" content="ASP.NET Core Blazor routing This article explains Blazor app request routing with guidance on static versus interactive routing, ASP.NET Core endpoint routing integration, navigation events, and route templates and constraints for Razor components. Routing in Blazor is achieved by providing a route template to each accessible component in the app with an @page directive. When a Razor file with an @page directive is compiled, the generated class is given a...">
+<meta name="twitter:title" content="ASP.NET Core Blazor Routing | Blazor SSR Documentation">
+<meta name="twitter:description" content="ASP.NET Core Blazor Routing This article explains routing in Blazor Static SSR applications. Route Templates Define routes with the @page directive: @page &quot;/&quot; &lt;h1>Home&lt;/h1> &lt;p>Welcome to the home page.&lt;/p> Multiple Routes A component can have multiple routes: @page &quot;/about&quot; @page &quot;/about-us&quot; &lt;h1>About Us&lt;/h1> Route Parameters Capture route parameters: @page &quot;/product/{id:int}&quot; &lt;h1>Product @Id&lt;/h1> @code { [Parameter] public int Id { get; set; } }...">
 <meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
-<meta name="twitter:image:alt" content="ASP.NET Core Blazor routing | Blazor SSR Documentation">
-<meta property="og:title" content="ASP.NET Core Blazor routing | Blazor SSR Documentation">
+<meta name="twitter:image:alt" content="ASP.NET Core Blazor Routing | Blazor SSR Documentation">
+<meta property="og:title" content="ASP.NET Core Blazor Routing | Blazor SSR Documentation">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:4000/">
-<meta property="og:description" content="ASP.NET Core Blazor routing This article explains Blazor app request routing with guidance on static versus interactive routing, ASP.NET Core endpoint routing integration, navigation events, and route templates and constraints for Razor components. Routing in Blazor is achieved by providing a route template to each accessible component in the app with an @page directive. When a Razor file with an @page directive is compiled, the generated class is given a...">
+<meta property="og:description" content="ASP.NET Core Blazor Routing This article explains routing in Blazor Static SSR applications. Route Templates Define routes with the @page directive: @page &quot;/&quot; &lt;h1>Home&lt;/h1> &lt;p>Welcome to the home page.&lt;/p> Multiple Routes A component can have multiple routes: @page &quot;/about&quot; @page &quot;/about-us&quot; &lt;h1>About Us&lt;/h1> Route Parameters Capture route parameters: @page &quot;/product/{id:int}&quot; &lt;h1>Product @Id&lt;/h1> @code { [Parameter] public int Id { get; set; } }...">
 <meta property="og:image" content="http://localhost:4000/img/project-banner.png">
-<meta property="og:image:alt" content="ASP.NET Core Blazor routing | Blazor SSR Documentation">
+<meta property="og:image:alt" content="ASP.NET Core Blazor Routing | Blazor SSR Documentation">
     <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
   </head>
   <body>
@@ -167,540 +167,327 @@
           </button>
         </div>
 <!-- lunet:summarize -->
-<h1 id="aspnet-core-blazor-routing">ASP.NET Core Blazor routing</h1>
-<p>This article explains Blazor app request routing with guidance on static versus interactive routing, ASP.NET Core endpoint routing integration, navigation events, and route templates and constraints for Razor components.</p>
-<p>Routing in Blazor is achieved by providing a route template to each accessible component in the app with an <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#page"><code>@page</code></a> directive. When a Razor file with an <code>@page</code> directive is compiled, the generated class is given a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routeattribute">Microsoft.AspNetCore.Components.RouteAttribute</a> specifying the route template. At runtime, the router searches for component classes with a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routeattribute">Microsoft.AspNetCore.Components.RouteAttribute</a> and renders whichever component has a route template that matches the requested URL.</p>
-<p>The following <code>HelloWorld</code> component uses a route template of <code>/hello-world</code>, and the rendered webpage for the component is reached at the relative URL <code>/hello-world</code>.</p>
-<p><code>HelloWorld.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/hello-world&quot;
+<h1 id="aspnet-core-blazor-routing">ASP.NET Core Blazor Routing</h1>
+<p>This article explains routing in Blazor Static SSR applications.</p>
+<h2 id="route-templates">Route Templates</h2>
+<p>Define routes with the <code>@page</code> directive:</p>
+<pre><code class="language-razor">@page &quot;/&quot;
 
-&lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;h1&gt;Home&lt;/h1&gt;
+&lt;p&gt;Welcome to the home page.&lt;/p&gt;
 </code></pre>
-<p>The preceding component loads in the browser at <code>/hello-world</code> regardless of whether or not you add the component to the app's UI navigation as a link.</p>
-<h2 id="static-versus-interactive-routing">Static versus interactive routing</h2>
-<p><em>This section applies to Blazor Web Apps.</em></p>
-<p>If <a href="https://learn.microsoft.com/aspnet/core/blazor/components/prerender">prerendering is enabled</a>, the Blazor router (<code>Router</code> component, <code>&lt;Router&gt;</code> in <code>Routes.razor</code>) performs static routing to components during static server-side rendering (static SSR). This type of routing is called <em>static routing</em>.</p>
-<p>When an interactive render mode is assigned to the <code>Routes</code> component, the Blazor router becomes interactive after static SSR with static routing on the server. This type of routing is called <em>interactive routing</em>.</p>
-<p>Static routers use endpoint routing and the HTTP request path to determine which component to render. When the router becomes interactive, it uses the document's URL (the URL in the browser's address bar) to determine which component to render. This means that the interactive router can dynamically change which component is rendered if the document's URL dynamically changes to another valid internal URL, and it can do so without performing an HTTP request to fetch new page content.</p>
-<p>Interactive routing also prevents prerendering because new page content isn't requested from the server with a normal page request. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/state-management/prerendered-state-persistence#interactive-routing-and-prerendering">prerendered-state-persistence</a>.</p>
-<h2 id="aspnet-core-endpoint-routing-integration">ASP.NET Core endpoint routing integration</h2>
-<p><em>This section applies to Blazor Web Apps operating over a circuit.</em></p>
-<p>A Blazor Web App is integrated into <a href="https://learn.microsoft.com/aspnet/core/fundamentals/routing">ASP.NET Core Endpoint Routing</a>. An ASP.NET Core app is configured with endpoints for routable components and the root component to render for those endpoints with <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointroutebuilderextensions.maprazorcomponents%2a">Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents *</a> in the <code>Program</code> file.  The default root component (first component loaded) is the <code>App</code> component (<code>App.razor</code>):</p>
-<pre><code class="language-csharp">app.MapRazorComponents&lt;App&gt;();
+<h3 id="multiple-routes">Multiple Routes</h3>
+<p>A component can have multiple routes:</p>
+<pre><code class="language-razor">@page &quot;/about&quot;
+@page &quot;/about-us&quot;
+
+&lt;h1&gt;About Us&lt;/h1&gt;
 </code></pre>
-<div class="moniker"><p><em>This section applies to Blazor Server apps operating over a circuit.</em></p>
-<p>Blazor Server is integrated into <a href="https://learn.microsoft.com/aspnet/core/fundamentals/routing">ASP.NET Core Endpoint Routing</a>. An ASP.NET Core app is configured to accept incoming connections for interactive components with <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a">Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub *</a> in the <code>Program</code> file:</p>
-<pre><code class="language-csharp">app.UseRouting();
+<h3 id="route-parameters">Route Parameters</h3>
+<p>Capture route parameters:</p>
+<pre><code class="language-razor">@page &quot;/product/{id:int}&quot;
 
-app.MapBlazorHub();
-app.MapFallbackToPage(&quot;/_Host&quot;);
-</code></pre>
-<div class="moniker-end">
-<div class="moniker"><p><em>This section applies to Blazor Server apps operating over a circuit.</em></p>
-<p>Blazor Server is integrated into <a href="https://learn.microsoft.com/aspnet/core/fundamentals/routing">ASP.NET Core Endpoint Routing</a>. An ASP.NET Core app is configured to accept incoming connections for interactive components with <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a">Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub *</a> in <code>Startup.Configure</code>.</p>
-<div class="moniker-end"><h2 id="route-templates">Route templates</h2>
-<p>The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component enables routing to Razor components and is located in the app's <code>Routes</code> component (<code>Components/Routes.razor</code>).</p>
-<p>When a Razor component (<code>.razor</code>) with an <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#page"><code>@page</code> directive</a> is compiled, the generated component class is provided a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routeattribute">Microsoft.AspNetCore.Components.RouteAttribute</a> specifying the component's route template.</p>
-<p>When the app starts, the assembly specified as the Router's <code>AppAssembly</code> is scanned to gather route information for the app's components that have a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routeattribute">Microsoft.AspNetCore.Components.RouteAttribute</a>.</p>
-<p>At runtime, the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routeview">Microsoft.AspNetCore.Components.RouteView</a> component:</p>
-<ul>
-<li>Receives the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routedata">Microsoft.AspNetCore.Components.RouteData</a> from the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> along with any route parameters.</li>
-<li>Renders the specified component with its <a href="https://learn.microsoft.com/aspnet/core/blazor/components/layouts">layout</a>, including any further nested layouts.</li>
-</ul>
-<p>Optionally specify a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routeview.defaultlayout">Microsoft.AspNetCore.Components.RouteView.DefaultLayout</a> parameter with a layout class for components that don't specify a layout with the <a href="https://learn.microsoft.com/aspnet/core/blazor/components/layouts#apply-a-layout-to-a-component"><code>@layout</code> directive</a>. The framework's <a href="https://learn.microsoft.com/aspnet/core/blazor/project-structure">Blazor project templates</a> specify the <code>MainLayout</code> component (<code>MainLayout.razor</code>) as the app's default layout. For more information on layouts, see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/layouts">layouts</a>.</p>
-<p>Components support multiple route templates using multiple <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#page"><code>@page</code> directives</a>. The following example component loads on requests for <code>/blazor-route</code> and <code>/different-blazor-route</code>.</p>
-<p><code>BlazorRoute.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/blazor-route&quot;
-@page &quot;/different-blazor-route&quot;
-
-&lt;h1&gt;Routing Example&lt;/h1&gt;
-
-&lt;p&gt;
-    This page is reached at either &lt;code&gt;/blazor-route&lt;/code&gt; or 
-    &lt;code&gt;/different-blazor-route&lt;/code&gt;.
-&lt;/p&gt;
-</code></pre>
-<blockquote class="blockquote">
-<p>[!IMPORTANT]
-For URLs to resolve correctly, the app must include a <code>&lt;base&gt;</code> tag (<a href="https://learn.microsoft.com/aspnet/core/blazor/project-structure#location-of-head-and-body-content">location of <code>&lt;head&gt;</code> content</a>) with the app base path specified in the <code>href</code> attribute. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/app-base-path">app-base-path</a>.</p>
-</blockquote>
-<div class="moniker"><p>The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> doesn't interact with query string values. To work with query strings, see <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#query-strings">Query strings</a>.</p>
-<div class="moniker-end"><p>As an alternative to specifying the route template as a string literal with the <code>@page</code> directive, constant-based route templates can be specified with the <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#attribute"><code>@attribute</code> directive</a>.</p>
-<p>In the following example, the <code>@page</code> directive in a component is replaced with the <code>@attribute</code> directive and the constant-based route template in <code>Constants.CounterRoute</code>, which is set elsewhere in the app to &quot;<code>/counter</code>&quot;:</p>
-<pre><code class="language-diff">- @page &quot;/counter&quot;
-+ @attribute [Route(Constants.CounterRoute)]
-</code></pre>
-<div class="moniker">
-<div class="moniker-end">
-<div class="moniker"><h2 id="focus-an-element-on-navigation">Focus an element on navigation</h2>
-<p>The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.focusonnavigate">Microsoft.AspNetCore.Components.Routing.FocusOnNavigate</a> component sets the UI focus to an element based on a CSS selector after navigating from one page to another.</p>
-<pre><code class="language-razor">&lt;FocusOnNavigate RouteData=&quot;routeData&quot; Selector=&quot;h1&quot; /&gt;
-</code></pre>
-<p>When the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component navigates to a new page, the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.focusonnavigate">Microsoft.AspNetCore.Components.Routing.FocusOnNavigate</a> component sets the focus to the page's top-level header (<code>&lt;h1&gt;</code>). This is a common strategy for ensuring that a page navigation is announced when using a screen reader.</p>
-<div class="moniker-end"><h2 id="provide-custom-content-when-content-isnt-found">Provide custom content when content isn't found</h2>
-<div class="moniker"><p>For requests where content isn't found, a Razor component can be assigned to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfoundpage%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.Routing.Router.NotFoundPage *?displayProperty=nameWithType</a>. The parameter works in concert with <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#not-found-responses"><code>NavigationManager.NotFound</code></a>, a method called in developer code that triggers a Not Found response.</p>
-<p>The Blazor project template includes a <code>NotFound.razor</code> page. This page automatically renders whenever <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.navigationmanager.notfound%2a">Microsoft.AspNetCore.Components.NavigationManager.NotFound *</a> is called, making it possible to handle missing routes with a consistent user experience.</p>
-<p><code>NotFound.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/not-found&quot;
-@layout MainLayout
-
-&lt;h3&gt;Not Found&lt;/h3&gt;
-&lt;p&gt;Sorry, the content you are looking for does not exist.&lt;/p&gt;
-</code></pre>
-<p>The <code>NotFound</code> component is assigned to the router's <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfoundpage%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.Routing.Router.NotFoundPage *?displayProperty=nameWithType</a> parameter, which supports routing that can be used across Status Code Pages Re-execution Middleware, including non-Blazor middleware.</p>
-<p>In the following example, the preceding <code>NotFound</code> component is present in the app's <code>Pages</code> folder and passed to the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfoundpage%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.Routing.Router.NotFoundPage *?displayProperty=nameWithType</a> parameter:</p>
-<pre><code class="language-razor">&lt;Router AppAssembly=&quot;@typeof(Program).Assembly&quot; NotFoundPage=&quot;typeof(Pages.NotFound)&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; /&gt;
-        &lt;FocusOnNavigate RouteData=&quot;@routeData&quot; Selector=&quot;h1&quot; /&gt;
-    &lt;/Found&gt;
-&lt;/Router&gt;
-</code></pre>
-<p>For more information, see the next article on <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#not-found-responses">navigation</a>.</p>
-<div class="moniker-end">
-<div class="moniker"><p>The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component allows the app to specify custom content if content isn't found for the requested route.</p>
-<p>Set custom content for the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component's <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfound">Microsoft.AspNetCore.Components.Routing.Router.NotFound</a> parameter:</p>
-<pre><code class="language-razor">&lt;Router ...&gt;
-    ...
-    &lt;NotFound&gt;
-        ...
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-</code></pre>
-<p>Arbitrary items are supported as content of the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfound">Microsoft.AspNetCore.Components.Routing.Router.NotFound</a> parameter, such as other interactive components. To apply a default layout to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfound">Microsoft.AspNetCore.Components.Routing.Router.NotFound</a> content, see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/layouts#apply-a-layout-to-arbitrary-content-layoutview-component">layouts</a>.</p>
-<p>Blazor Web Apps don't use the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.notfound">Microsoft.AspNetCore.Components.Routing.Router.NotFound</a> parameter (<code>&lt;NotFound&gt;...&lt;/NotFound&gt;</code> markup), but the parameter is supported† for backward compatibility in .NET 8/9 to avoid a breaking change in the framework. The server-side ASP.NET Core middleware pipeline processes requests on the server. Use server-side techniques to handle bad requests.</p>
-<p>†<em>Supported</em> in this context means that placing <code>&lt;NotFound&gt;...&lt;/NotFound&gt;</code> markup doesn't result in an exception, but using the markup isn't effective either.</p>
-<p>For more information, see the following resources:</p>
-<ul>
-<li>&lt;/fundamentals/render-modes#static-server-side-rendering-static-ssr&gt;</li>
-<li><a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#not-found-responses">Blazor navigation: Not Found responses</a></li>
-</ul>
-<div class="moniker-end"><h2 id="route-to-components-from-multiple-assemblies">Route to components from multiple assemblies</h2>
-<p><em>This section applies to Blazor Web Apps.</em></p>
-<p>Use the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component's <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.additionalassemblies">Microsoft.AspNetCore.Components.Routing.Router.AdditionalAssemblies</a> parameter and the endpoint convention builder <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointconventionbuilderextensions.addadditionalassemblies%2a">Microsoft.AspNetCore.Builder.RazorComponentsEndpointConventionBuilderExtensions.AddAdditionalAssemblies *</a> to discover routable components in additional assemblies. The following subsections explain when and how to use each API.</p>
-<h3 id="static-routing">Static routing</h3>
-<p>To discover routable components from additional assemblies for static server-side rendering (static SSR), even if the router later becomes interactive for interactive rendering, the assemblies must be disclosed to the Blazor framework. Call the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointconventionbuilderextensions.addadditionalassemblies%2a">Microsoft.AspNetCore.Builder.RazorComponentsEndpointConventionBuilderExtensions.AddAdditionalAssemblies *</a> method with the additional assemblies chained to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointroutebuilderextensions.maprazorcomponents%2a">Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents *</a> in the server project's <code>Program</code> file.</p>
-<p>The following example includes the routable components in the <code>BlazorSample.Client</code> project's assembly using the project's <code>_Imports.razor</code> file:</p>
-<pre><code class="language-csharp">app.MapRazorComponents&lt;App&gt;()
-    .AddAdditionalAssemblies(typeof(BlazorSample.Client._Imports).Assembly);
-</code></pre>
-<blockquote class="blockquote">
-<p>[!NOTE]
-The preceding guidance also applies in <a href="https://learn.microsoft.com/aspnet/core/blazor/components/class-libraries">component class library</a> scenarios. Additional important guidance for class libraries and static SSR is found in <a href="https://learn.microsoft.com/aspnet/core/blazor/components/class-libraries-with-static-ssr">class-libraries-with-static-ssr</a>.</p>
-</blockquote>
-<h3 id="interactive-routing">Interactive routing</h3>
-<p>An interactive render mode can be assigned to the <code>Routes</code> component (<code>Routes.razor</code>) that makes the Blazor router become interactive after static SSR and static routing on the server. For example, <code>&lt;Routes @rendermode=&quot;InteractiveServer&quot; /&gt;</code> assigns interactive server-side rendering (interactive SSR) to the <code>Routes</code> component. The <code>Router</code> component inherits interactive server-side rendering (interactive SSR) from the <code>Routes</code> component. The router becomes interactive after static routing on the server.</p>
-<p>Internal navigation for interactive routing doesn't involve requesting new page content from the server. Therefore, prerendering doesn't occur for internal page requests. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/state-management/prerendered-state-persistence#interactive-routing-and-prerendering">prerendered-state-persistence</a>.</p>
-<p>If the <code>Routes</code> component is defined in the server project, the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.additionalassemblies">Microsoft.AspNetCore.Components.Routing.Router.AdditionalAssemblies</a> parameter of the <code>Router</code> component should include the <code>.Client</code> project's assembly. This allows the router to work correctly when rendered interactively.</p>
-<p>In the following example, the <code>Routes</code> component is in the server project, and the <code>_Imports.razor</code> file of the <code>BlazorSample.Client</code> project indicates the assembly to search for routable components:</p>
-<pre><code class="language-razor">&lt;Router
-    AppAssembly=&quot;...&quot;
-    AdditionalAssemblies=&quot;[ typeof(BlazorSample.Client._Imports).Assembly ]&quot;&gt;
-    ...
-&lt;/Router&gt;
-</code></pre>
-<p>Additional assemblies are scanned in addition to the assembly specified to <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.appassembly%2a">Microsoft.AspNetCore.Components.Routing.Router.AppAssembly *</a>.</p>
-<blockquote class="blockquote">
-<p>[!NOTE]
-The preceding guidance also applies in <a href="https://learn.microsoft.com/aspnet/core/blazor/components/class-libraries">component class library</a> scenarios.</p>
-</blockquote>
-<p>Alternatively, routable components only exist in the <code>.Client</code> project with global Interactive WebAssembly or Auto rendering applied, and the <code>Routes</code> component is defined in the <code>.Client</code> project, not the server project. In this case, there aren't external assemblies with routable components, so it isn't necessary to specify a value for <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.additionalassemblies">Microsoft.AspNetCore.Components.Routing.Router.AdditionalAssemblies</a>.</p>
-<h2 id="route-parameters">Route parameters</h2>
-<p>The router uses route parameters to populate the corresponding <a href="/components/index#component-parameters">component parameters</a> with the same name. Route parameter names are case insensitive. In the following example, the <code>text</code> parameter assigns the value of the route segment to the component's <code>Text</code> property. When a request is made for <code>/route-parameter-1/amazing</code>, the content is rendered as <code>Blazor is amazing!</code>.</p>
-<p><code>RouteParameter1.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/route-parameter-1/{text}&quot;
-
-&lt;h1&gt;Route Parameter Example 1&lt;/h1&gt;
-
-&lt;p&gt;Blazor is @Text!&lt;/p&gt;
-
-@code {
-    [Parameter]
-    public string? Text { get; set; }
-}
-</code></pre>
-<div class="moniker"><p>Optional parameters are supported. In the following example, the <code>text</code> optional parameter assigns the value of the route segment to the component's <code>Text</code> property. If the segment isn't present, the value of <code>Text</code> is set to <code>fantastic</code>.</p>
-<div class="moniker-end">
-<div class="moniker"><p>Optional parameters aren't supported. In the following example, two <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#page"><code>@page</code> directives</a> are applied. The first directive permits navigation to the component without a parameter. The second directive assigns the <code>{text}</code> route parameter value to the component's <code>Text</code> property.</p>
-<div class="moniker-end"><p><code>RouteParameter2.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/route-parameter-2/{text?}&quot;
-
-&lt;h1&gt;Route Parameter Example 2&lt;/h1&gt;
-
-&lt;p&gt;Blazor is @Text!&lt;/p&gt;
-
-@code {
-    [Parameter]
-    public string? Text { get; set; }
-
-    protected override void OnParametersSet() =&gt; Text = Text ?? &quot;fantastic&quot;;
-}
-</code></pre>
-<p>When the <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#component-initialization-oninitializedasync"><code>OnInitialized{Async}</code> lifecycle method</a> is used instead of the <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#after-parameters-are-set-onparameterssetasync"><code>OnParametersSet{Async}</code> lifecycle method</a>, the default assignment of the <code>Text</code> property to <code>fantastic</code> doesn't occur if the user navigates within the same component. For example, this situation arises when the user navigates from <code>/route-parameter-2/amazing</code> to <code>/route-parameter-2</code>. As the component instance persists and accepts new parameters, the <code>OnInitialized</code> method isn't invoked again.</p>
-<div class="moniker">
-<blockquote class="blockquote">
-<p>[!NOTE]
-Route parameters don't work with query string values. To work with query strings, see <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#query-strings">Query strings</a>.</p>
-</blockquote>
-<div class="moniker-end"><h2 id="route-constraints">Route constraints</h2>
-<p>A route constraint enforces type matching on a route segment to a component.</p>
-<p>In the following example, the route to the <code>User</code> component only matches if:</p>
-<ul>
-<li>An <code>Id</code> route segment is present in the request URL.</li>
-<li>The <code>Id</code> segment is an integer (<code>int</code>) type.</li>
-</ul>
-<p><code>User.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/user/{Id:int}&quot;
-
-&lt;h1&gt;User Example&lt;/h1&gt;
-
-&lt;p&gt;User Id: @Id&lt;/p&gt;
+&lt;h1&gt;Product @Id&lt;/h1&gt;
 
 @code {
     [Parameter]
     public int Id { get; set; }
 }
 </code></pre>
-<div class="moniker">
-<blockquote class="blockquote">
-<p>[!NOTE]
-Route constraints don't work with query string values. To work with query strings, see <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#query-strings">Query strings</a>.</p>
-</blockquote>
-<div class="moniker-end"><p>The route constraints shown in the following table are available. For the route constraints that match the invariant culture, see the warning below the table for more information.</p>
+<h3 id="optional-parameters">Optional Parameters</h3>
+<p>Make parameters optional:</p>
+<pre><code class="language-razor">@page &quot;/search/{query?}&quot;
+
+&lt;h1&gt;Search Results&lt;/h1&gt;
+&lt;p&gt;Searching for: @(Query ?? &quot;all products&quot;)&lt;/p&gt;
+
+@code {
+    [Parameter]
+    public string? Query { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Query ??= &quot;&quot;; // Set default value
+    }
+}
+</code></pre>
+<h3 id="route-constraints">Route Constraints</h3>
+<p>Use constraints to enforce parameter types:</p>
 <table class="table">
 <thead>
 <tr>
 <th>Constraint</th>
 <th>Example</th>
-<th>Example Matches</th>
-<th style="text-align: center;">Invariant<br>culture<br>matching</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>bool</code></td>
-<td><code>{active:bool}</code></td>
-<td><code>true</code>, <code>FALSE</code></td>
-<td style="text-align: center;">No</td>
+<td><code>int</code></td>
+<td><code>{id:int}</code></td>
+<td>Integer</td>
 </tr>
 <tr>
-<td><code>datetime</code></td>
-<td><code>{dob:datetime}</code></td>
-<td><code>2016-12-31</code>, <code>2016-12-31 7:32pm</code></td>
-<td style="text-align: center;">Yes</td>
-</tr>
-<tr>
-<td><code>decimal</code></td>
-<td><code>{price:decimal}</code></td>
-<td><code>49.99</code>, <code>-1,000.01</code></td>
-<td style="text-align: center;">Yes</td>
-</tr>
-<tr>
-<td><code>double</code></td>
-<td><code>{weight:double}</code></td>
-<td><code>1.234</code>, <code>-1,001.01e8</code></td>
-<td style="text-align: center;">Yes</td>
-</tr>
-<tr>
-<td><code>float</code></td>
-<td><code>{weight:float}</code></td>
-<td><code>1.234</code>, <code>-1,001.01e8</code></td>
-<td style="text-align: center;">Yes</td>
+<td><code>long</code></td>
+<td><code>{id:long}</code></td>
+<td>Long integer</td>
 </tr>
 <tr>
 <td><code>guid</code></td>
 <td><code>{id:guid}</code></td>
-<td><code>00001111-aaaa-2222-bbbb-3333cccc4444</code>, <code>{00001111-aaaa-2222-bbbb-3333cccc4444}</code></td>
-<td style="text-align: center;">No</td>
+<td>GUID</td>
 </tr>
 <tr>
-<td><code>int</code></td>
-<td><code>{id:int}</code></td>
-<td><code>123456789</code>, <code>-123456789</code></td>
-<td style="text-align: center;">Yes</td>
+<td><code>bool</code></td>
+<td><code>{active:bool}</code></td>
+<td>Boolean</td>
 </tr>
 <tr>
-<td><code>long</code></td>
-<td><code>{ticks:long}</code></td>
-<td><code>123456789</code>, <code>-123456789</code></td>
-<td style="text-align: center;">Yes</td>
+<td><code>datetime</code></td>
+<td><code>{date:datetime}</code></td>
+<td>DateTime</td>
 </tr>
 <tr>
-<td><code>nonfile</code></td>
-<td><code>{parameter:nonfile}</code></td>
-<td>Not <code>BlazorSample.styles.css</code>, not <code>favicon.ico</code></td>
-<td style="text-align: center;">Yes</td>
+<td><code>decimal</code></td>
+<td><code>{price:decimal}</code></td>
+<td>Decimal</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td><code>{weight:double}</code></td>
+<td>Double</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>{score:float}</code></td>
+<td>Float</td>
 </tr>
 </tbody>
 </table>
-<blockquote class="blockquote">
-<p>[!WARNING]
-Route constraints that verify the URL and are converted to a CLR type (such as <code>int</code> or <a href="https://learn.microsoft.com/dotnet/api/system.datetime">System.DateTime</a>) always use the invariant culture. These constraints assume that the URL is non-localizable.</p>
-</blockquote>
-<div class="moniker"><p>Route constraints also work with <a href="#route-parameters">optional parameters</a>. In the following example, <code>Id</code> is required, but <code>Option</code> is an optional boolean route parameter.</p>
-<p><code>User.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/user/{id:int}/{option:bool?}&quot;
+<p>Example:</p>
+<pre><code class="language-razor">@page &quot;/user/{id:guid}&quot;
+@page &quot;/order/{orderId:int}&quot;
 
-&lt;p&gt;
-    Id: @Id
-&lt;/p&gt;
-
-&lt;p&gt;
-    Option: @Option
-&lt;/p&gt;
+&lt;h1&gt;Details&lt;/h1&gt;
 
 @code {
     [Parameter]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Parameter]
-    public bool Option { get; set; }
+    public int OrderId { get; set; }
 }
 </code></pre>
-<div class="moniker-end"><h2 id="avoid-file-capture-in-a-route-parameter">Avoid file capture in a route parameter</h2>
-<p>The following route template inadvertently captures static asset paths in its optional route parameter (<code>Optional</code>). For example, the app's stylesheet (<code>.styles.css</code>) is captured, which breaks the app's styles:</p>
-<pre><code class="language-razor">@page &quot;/{optional?}&quot;
+<h3 id="catch-all-routes">Catch-All Routes</h3>
+<p>Capture multiple segments:</p>
+<pre><code class="language-razor">@page &quot;/docs/{*pagePath}&quot;
 
-...
-
-@code {
-    [Parameter]
-    public string? Optional { get; set; }
-}
-</code></pre>
-<p>To restrict a route parameter to capturing non-file paths, use the <a href="#route-constraints"><code>:nonfile</code> constraint</a> in the route template:</p>
-<pre><code class="language-razor">@page &quot;/{optional:nonfile?}&quot;
-</code></pre>
-<div class="moniker"><p>To permit the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> app of a hosted Blazor WebAssembly <a href="https://learn.microsoft.com/aspnet/core/blazor/tooling#visual-studio-solution-file-sln">solution</a> to route the request with a dot in the <code>param</code> route parameter, add a fallback file route template with the optional parameter in the <code>Program</code> file:</p>
-<pre><code class="language-csharp">app.MapFallbackToFile(&quot;/example/{param?}&quot;, &quot;index.html&quot;);
-</code></pre>
-<p>To configure a Blazor Server app to route the request with a dot in the <code>param</code> route parameter, add a fallback page route template with the optional parameter in the <code>Program</code> file:</p>
-<pre><code class="language-csharp">app.MapFallbackToPage(&quot;/example/{param?}&quot;, &quot;/_Host&quot;);
-</code></pre>
-<p>For more information, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/routing">routing</a>.</p>
-<div class="moniker-end">
-<div class="moniker"><p>To permit the <strong>:<span>no-loc text=&quot;Server&quot;:</span></strong> app of a hosted Blazor WebAssembly <a href="https://learn.microsoft.com/aspnet/core/blazor/tooling#visual-studio-solution-file-sln">solution</a> to route the request with a dot in the <code>param</code> route parameter, add a fallback file route template with the optional parameter in <code>Startup.Configure</code>.</p>
-<p><code>Startup.cs</code>:</p>
-<pre><code class="language-csharp">endpoints.MapFallbackToFile(&quot;/example/{param?}&quot;, &quot;index.html&quot;);
-</code></pre>
-<p>To configure a Blazor Server app to route the request with a dot in the <code>param</code> route parameter, add a fallback page route template with the optional parameter in <code>Startup.Configure</code>.</p>
-<p><code>Startup.cs</code>:</p>
-<pre><code class="language-csharp">endpoints.MapFallbackToPage(&quot;/example/{param?}&quot;, &quot;/_Host&quot;);
-</code></pre>
-<p>For more information, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/routing">routing</a>.</p>
-<div class="moniker-end">
-<div class="moniker"><h2 id="catch-all-route-parameters">Catch-all route parameters</h2>
-<p>Catch-all route parameters, which capture paths across multiple folder boundaries, are supported in components.</p>
-<p>Catch-all route parameters are:</p>
-<ul>
-<li>Named to match the route segment name. Naming isn't case-sensitive.</li>
-<li>A <code>string</code> type. The framework doesn't provide automatic casting.</li>
-<li>At the end of the URL.</li>
-</ul>
-<p><code>CatchAll.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/catch-all/{*pageRoute}&quot;
-
-&lt;h1&gt;Catch All Parameters Example&lt;/h1&gt;
-
-&lt;p&gt;Add some URI segments to the route and request the page again.&lt;/p&gt;
-
-&lt;p&gt;
-    PageRoute: @PageRoute
-&lt;/p&gt;
+&lt;h1&gt;Documentation&lt;/h1&gt;
+&lt;p&gt;Path: @PagePath&lt;/p&gt;
 
 @code {
     [Parameter]
-    public string? PageRoute { get; set; }
+    public string? PagePath { get; set; }
 }
 </code></pre>
-<p>For the URL <code>/catch-all/this/is/a/test</code> with a route template of <code>/catch-all/{*pageRoute}</code>, the value of <code>PageRoute</code> is set to <code>this/is/a/test</code>.</p>
-<p>Slashes and segments of the captured path are decoded. For a route template of <code>/catch-all/{*pageRoute}</code>, the URL <code>/catch-all/this/is/a%2Ftest%2A</code> yields <code>this/is/a/test*</code>.</p>
-<div class="moniker-end">
-<div class="moniker"><h2 id="handle-asynchronous-navigation-events-with-onnavigateasync">Handle asynchronous navigation events with <code>OnNavigateAsync</code></h2>
-<p>The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component supports an <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> feature. The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> handler is invoked when the user:</p>
+<h2 id="query-strings">Query Strings</h2>
+<p>Access query string parameters:</p>
+<pre><code class="language-razor">@page &quot;/search&quot;
+@inject NavigationManager Navigation
+
+&lt;h1&gt;Search&lt;/h1&gt;
+&lt;p&gt;Query: @searchQuery&lt;/p&gt;
+
+@code {
+    private string? searchQuery;
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(Navigation.Uri);
+        searchQuery = System.Web.HttpUtility.ParseQueryString(uri.Query).Get(&quot;q&quot;);
+    }
+}
+</code></pre>
+<p>Or use <code>[SupplyParameterFromQuery]</code>:</p>
+<pre><code class="language-razor">@page &quot;/products&quot;
+
+&lt;h1&gt;Products&lt;/h1&gt;
+&lt;p&gt;Category: @Category&lt;/p&gt;
+&lt;p&gt;Page: @Page&lt;/p&gt;
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? Category { get; set; }
+
+    [SupplyParameterFromQuery]
+    public int Page { get; set; } = 1;
+}
+</code></pre>
+<h2 id="navigation">Navigation</h2>
+<h3 id="navigationmanager">NavigationManager</h3>
+<p>Inject <code>NavigationManager</code> for navigation features:</p>
+<pre><code class="language-razor">@page &quot;/dashboard&quot;
+@inject NavigationManager Navigation
+
+&lt;h1&gt;Dashboard&lt;/h1&gt;
+
+&lt;button @onclick=&quot;NavigateHome&quot;&gt;Go Home&lt;/button&gt;
+&lt;a href=&quot;@Navigation.GetUriWithQueryParameter(&quot;page&quot;, 2)&quot;&gt;Page 2&lt;/a&gt;
+
+@code {
+    private void NavigateHome()
+    {
+        Navigation.NavigateTo(&quot;/&quot;);
+    }
+}
+</code></pre>
+<h3 id="navigation-features">Navigation Features</h3>
+<pre><code class="language-razor">@page &quot;/navigation-demo&quot;
+@inject NavigationManager Navigation
+
+&lt;h1&gt;Navigation Features&lt;/h1&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;Base URI: @Navigation.BaseUri&lt;/li&gt;
+    &lt;li&gt;Current URI: @Navigation.Uri&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;button @onclick=&quot;GoBack&quot;&gt;Go Back&lt;/button&gt;
+&lt;button @onclick=&quot;Refresh&quot;&gt;Refresh&lt;/button&gt;
+
+@code {
+    private void GoBack()
+    {
+        // Navigate back in history
+        Navigation.NavigateTo(Navigation.Uri);
+    }
+
+    private void Refresh()
+    {
+        // Refresh current page
+        Navigation.Refresh();
+    }
+}
+</code></pre>
+<h3 id="navigation-links">Navigation Links</h3>
+<p>Use standard anchor tags for navigation:</p>
+<pre><code class="language-razor">&lt;nav&gt;
+    &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
+    &lt;a href=&quot;/products&quot;&gt;Products&lt;/a&gt;
+    &lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+<h2 id="enhanced-navigation">Enhanced Navigation</h2>
+<p>Blazor provides enhanced navigation that updates content without full page reloads:</p>
+<pre><code class="language-csharp">// Program.cs
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+</code></pre>
+<p>Enhanced navigation:</p>
 <ul>
-<li>Visits a route for the first time by navigating to it directly in their browser.</li>
-<li>Navigates to a new route using a link or a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.navigationmanager.navigateto%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.NavigationManager.NavigateTo *?displayProperty=nameWithType</a> invocation, which is called in developer code to navigates to a URI. [<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.navigationmanager">Microsoft.AspNetCore.Components.NavigationManager</a> API is described in the next article, <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation">navigation</a>.]</li>
+<li>Intercepts internal link clicks</li>
+<li>Fetches content via enhanced navigation request</li>
+<li>Updates DOM without full page reload</li>
+<li>Preserves scroll position</li>
 </ul>
-<div class="moniker-end">
-<div class="moniker">
-<pre><code class="language-razor">&lt;Router AppAssembly=&quot;typeof(App).Assembly&quot; 
-    OnNavigateAsync=&quot;OnNavigateAsync&quot;&gt;
-    ...
-&lt;/Router&gt;
+<h2 id="link-helpers">Link Helpers</h2>
+<h3 id="navlink-component">NavLink Component</h3>
+<p>Highlight active navigation links:</p>
+<pre><code class="language-razor">&lt;nav&gt;
+    &lt;NavLink href=&quot;/&quot; Match=&quot;NavLinkMatch.All&quot; class=&quot;nav-link&quot;&gt;
+        Home
+    &lt;/NavLink&gt;
+    &lt;NavLink href=&quot;/products&quot; Match=&quot;NavLinkMatch.Prefix&quot; class=&quot;nav-link&quot;&gt;
+        Products
+    &lt;/NavLink&gt;
+&lt;/nav&gt;
 
-@code {
-    private async Task OnNavigateAsync(NavigationContext args)
-    {
-        ...
+&lt;style&gt;
+    .nav-link.active {
+        font-weight: bold;
     }
-}
+&lt;/style&gt;
 </code></pre>
-<div class="moniker-end">
-<div class="moniker">
-<pre><code class="language-razor">&lt;Router AppAssembly=&quot;typeof(Program).Assembly&quot; 
-    OnNavigateAsync=&quot;OnNavigateAsync&quot;&gt;
-    ...
-&lt;/Router&gt;
-
-@code {
-    private async Task OnNavigateAsync(NavigationContext args)
-    {
-        ...
-    }
-}
-</code></pre>
-<div class="moniker-end">
-<div class="moniker"><p>For an example that uses <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a>, see <a href="https://learn.microsoft.com/aspnet/core/blazor/webassembly-lazy-load-assemblies">webassembly-lazy-load-assemblies</a>.</p>
-<p>When prerendering on the server, <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> is executed <em>twice</em>:</p>
+<h3 id="match-modes">Match Modes</h3>
 <ul>
-<li>Once when the requested endpoint component is initially rendered statically.</li>
-<li>A second time when the browser renders the endpoint component.</li>
+<li><code>NavLinkMatch.All</code> - Exact path match</li>
+<li><code>NavLinkMatch.Prefix</code> - Path prefix match (default)</li>
 </ul>
-<div class="moniker-end"><p>To prevent developer code in <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> from executing twice, the <code>Routes</code> component can store the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navigationcontext">Microsoft.AspNetCore.Components.Routing.NavigationContext</a> for use in the <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#after-component-render-onafterrenderasync"><code>OnAfterRender{Async}</code> lifecycle method</a>, where <code>firstRender</code> can be checked. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#prerendering-with-javascript-interop">Prerendering with JavaScript interop</a>.</p>
-<div class="moniker"><p>To prevent developer code in <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> from executing twice, the <code>App</code> component can store the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navigationcontext">Microsoft.AspNetCore.Components.Routing.NavigationContext</a> for use in <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#after-component-render-onafterrenderasync"><code>OnAfterRender{Async}</code></a>, where <code>firstRender</code> can be checked. For more information, see <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#prerendering-with-javascript-interop">Prerendering with JavaScript interop</a>.</p>
-<div class="moniker-end">
-<div class="moniker"><h2 id="handle-cancellations-in-onnavigateasync">Handle cancellations in <code>OnNavigateAsync</code></h2>
-<p>The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navigationcontext">Microsoft.AspNetCore.Components.Routing.NavigationContext</a> object passed to the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> callback contains a <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navigationcontext.cancellationtoken">Microsoft.AspNetCore.Components.Routing.NavigationContext.CancellationToken</a> that's set when a new navigation event occurs. The <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> callback must throw when this cancellation token is set to avoid continuing to run the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> callback on an outdated navigation.</p>
-<p>If a user navigates to an endpoint but then immediately navigates to a new endpoint, the app shouldn't continue running the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.onnavigateasync">Microsoft.AspNetCore.Components.Routing.Router.OnNavigateAsync</a> callback for the first endpoint.</p>
-<p>In the following example:</p>
+<h2 id="route-to-components">Route to Components</h2>
+<p>Components are routed via the <code>App.razor</code> component:</p>
+<pre><code class="language-razor">@* App.razor *@
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;HeadOutlet /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;Routes /&gt;
+    &lt;script src=&quot;_framework/blazor.web.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-razor">@* Routes.razor *@
+&lt;Router AppAssembly=&quot;typeof(Program).Assembly&quot;&gt;
+    &lt;Found Context=&quot;routeData&quot;&gt;
+        &lt;RouteView RouteData=&quot;routeData&quot; DefaultLayout=&quot;typeof(MainLayout)&quot; /&gt;
+        &lt;FocusOnNavigate RouteData=&quot;routeData&quot; Selector=&quot;h1&quot; /&gt;
+    &lt;/Found&gt;
+&lt;/Router&gt;
+</code></pre>
+<h2 id="layouts">Layouts</h2>
+<p>Apply layouts to pages:</p>
+<pre><code class="language-razor">@page &quot;/admin&quot;
+@layout AdminLayout
+
+&lt;h1&gt;Admin Page&lt;/h1&gt;
+</code></pre>
+<p>Or use <code>@layout</code> in <code>_Imports.razor</code>:</p>
+<pre><code class="language-razor">@* _Imports.razor *@
+@layout MainLayout
+</code></pre>
+<h3 id="default-layout">Default Layout</h3>
+<p>Set a default layout in <code>Routes.razor</code>:</p>
+<pre><code class="language-razor">&lt;RouteView RouteData=&quot;routeData&quot; DefaultLayout=&quot;typeof(MainLayout)&quot; /&gt;
+</code></pre>
+<h2 id="static-vs-interactive-routing">Static vs Interactive Routing</h2>
+<p>In Static SSR:</p>
 <ul>
-<li>The cancellation token is passed in the call to <code>PostAsJsonAsync</code>, which can cancel the POST if the user navigates away from the <code>/about</code> endpoint.</li>
-<li>The cancellation token is set during a product prefetch operation if the user navigates away from the <code>/store</code> endpoint.</li>
+<li>Each navigation triggers an HTTP request</li>
+<li>Server renders fresh HTML for each page</li>
+<li>Full page lifecycle executes per request</li>
 </ul>
-<div class="moniker-end">
-<div class="moniker">
-<pre><code class="language-razor">@inject HttpClient Http
-@inject ProductCatalog Products
-
-&lt;Router AppAssembly=&quot;typeof(App).Assembly&quot; 
-    OnNavigateAsync=&quot;OnNavigateAsync&quot;&gt;
-    ...
+<h2 id="not-found-pages">Not Found Pages</h2>
+<p>Handle 404 scenarios:</p>
+<pre><code class="language-razor">@* Routes.razor *@
+&lt;Router AppAssembly=&quot;typeof(Program).Assembly&quot;&gt;
+    &lt;Found Context=&quot;routeData&quot;&gt;
+        &lt;RouteView RouteData=&quot;routeData&quot; DefaultLayout=&quot;typeof(MainLayout)&quot; /&gt;
+    &lt;/Found&gt;
+    &lt;NotFound&gt;
+        &lt;PageTitle&gt;Not found&lt;/PageTitle&gt;
+        &lt;LayoutView Layout=&quot;typeof(MainLayout)&quot;&gt;
+            &lt;h1&gt;Page not found&lt;/h1&gt;
+            &lt;p&gt;The page you're looking for doesn't exist.&lt;/p&gt;
+            &lt;a href=&quot;/&quot;&gt;Go home&lt;/a&gt;
+        &lt;/LayoutView&gt;
+    &lt;/NotFound&gt;
 &lt;/Router&gt;
-
-@code {
-    private async Task OnNavigateAsync(NavigationContext context)
-    {
-        if (context.Path == &quot;/about&quot;) 
-        {
-            var stats = new Stats { Page = &quot;/about&quot; };
-            await Http.PostAsJsonAsync(&quot;api/visited&quot;, stats, 
-                context.CancellationToken);
-        }
-        else if (context.Path == &quot;/store&quot;)
-        {
-            var productIds = new[] { 345, 789, 135, 689 };
-
-            foreach (var productId in productIds) 
-            {
-                context.CancellationToken.ThrowIfCancellationRequested();
-                Products.Prefetch(productId);
-            }
-        }
-    }
-}
 </code></pre>
-<div class="moniker-end">
-<div class="moniker">
-<pre><code class="language-razor">@inject HttpClient Http
-@inject ProductCatalog Products
-
-&lt;Router AppAssembly=&quot;typeof(Program).Assembly&quot; 
-    OnNavigateAsync=&quot;OnNavigateAsync&quot;&gt;
-    ...
-&lt;/Router&gt;
-
-@code {
-    private async Task OnNavigateAsync(NavigationContext context)
-    {
-        if (context.Path == &quot;/about&quot;) 
-        {
-            var stats = new Stats { Page = &quot;/about&quot; };
-            await Http.PostAsJsonAsync(&quot;api/visited&quot;, stats, 
-                context.CancellationToken);
-        }
-        else if (context.Path == &quot;/store&quot;)
-        {
-            var productIds = new[] { 345, 789, 135, 689 };
-
-            foreach (var productId in productIds) 
-            {
-                context.CancellationToken.ThrowIfCancellationRequested();
-                Products.Prefetch(productId);
-            }
-        }
-    }
-}
-</code></pre>
-<div class="moniker-end">
-<div class="moniker">
-<blockquote class="blockquote">
-<p>[!NOTE]
-Not throwing if the cancellation token in <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navigationcontext">Microsoft.AspNetCore.Components.Routing.NavigationContext</a> is canceled can result in unintended behavior, such as rendering a component from a previous navigation.</p>
-</blockquote>
-<div class="moniker-end">
-<div class="moniker"><h2 id="user-interaction-with-navigating-content">User interaction with <code>&lt;Navigating&gt;</code> content</h2>
-<p>If there's a significant delay during navigation, such as while <a href="https://learn.microsoft.com/aspnet/core/blazor/webassembly-lazy-load-assemblies">lazy-loading assemblies in a Blazor WebAssembly app</a> or for a slow network connection to a Blazor server-side app, the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component can indicate to the user that a page transition is occurring.</p>
-<p>At the top of the component that specifies the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router">Microsoft.AspNetCore.Components.Routing.Router</a> component, add an <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#using"><code>@using</code></a> directive for the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing?displayproperty=fullname">Microsoft.AspNetCore.Components.Routing?displayProperty=fullName</a> namespace:</p>
-<pre><code class="language-razor">@using Microsoft.AspNetCore.Components.Routing
-</code></pre>
-<p>Provide content to the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.navigating">Microsoft.AspNetCore.Components.Routing.Router.Navigating</a> parameter for display during page transition events.</p>
-<p>In the router element (<code>&lt;Router&gt;...&lt;/Router&gt;</code>) content:</p>
-<pre><code class="language-razor">&lt;Navigating&gt;
-    &lt;p&gt;Loading the requested page&amp;hellip;&lt;/p&gt;
-&lt;/Navigating&gt;
-</code></pre>
-<p>For an example that uses the <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router.navigating">Microsoft.AspNetCore.Components.Routing.Router.Navigating</a> property, see <a href="https://learn.microsoft.com/aspnet/core/blazor/webassembly-lazy-load-assemblies#user-interaction-with-navigating-content">webassembly-lazy-load-assemblies</a>.</p>
-<div class="moniker-end"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Use route constraints</strong> to enforce parameter types</li>
+<li><strong>Handle optional parameters</strong> with default values</li>
+<li><strong>Use NavLink</strong> for active link highlighting</li>
+<li><strong>Organize routes</strong> logically</li>
+<li><strong>Consider SEO</strong> - use clean, semantic URLs</li>
+</ol>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/routing">ASP.NET Core Blazor routing</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/components/layouts">ASP.NET Core Blazor layouts</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation">ASP.NET Core Blazor navigation</a></li>
+</ul>
 
       </div>
   </div>

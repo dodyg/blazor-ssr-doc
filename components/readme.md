@@ -1,6 +1,6 @@
 ---
 title: Components
-description: Deep dive into Razor components and how they work in Blazor SSR
+description: Deep dive into Razor components and how they work in Blazor Static SSR
 layout: page
 section: Components
 toc: true
@@ -8,7 +8,7 @@ toc: true
 
 # Components
 
-Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your SSR applications.
+Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your Static SSR applications.
 
 ## Topics
 
@@ -16,45 +16,154 @@ Components are the building blocks of Blazor applications. Learn how to create, 
 Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements.
 
 ### [Rendering](/components/rendering)
-Understand how components are rendered in Blazor SSR. Learn about rendering concepts, optimization techniques, and best practices.
+Understand how components are rendered in Blazor Static SSR. Learn about rendering concepts, streaming rendering, and best practices.
 
 ### [Prerendering](/components/prerender)
-Improve perceived performance with prerendering. Learn how to pre-render components to static HTML before they become interactive.
+Improve perceived performance with prerendering. Learn how to pre-render components to static HTML.
 
 ### [Lifecycle](/components/lifecycle)
-Master the component lifecycle methods. Learn when to use OnInitialized, OnParametersSet, OnAfterRender, and other lifecycle events.
+Master the component lifecycle methods. Learn when to use OnInitialized, OnParametersSet, and other lifecycle events.
 
 ### [Cascading Values and Parameters](/components/cascading-values-and-parameters)
 Share data across the component hierarchy using cascading values and parameters.
 
-### [Event Handling](/components/event-handling)
-Handle user interactions in your components. Learn about event arguments, event callbacks, and how to handle DOM events.
-
 ### [Data Binding](/components/data-binding)
-Bind data between your components and the UI. Learn about one-way and two-way binding patterns.
+Bind data between your components and the UI. Learn about one-way binding patterns in Static SSR.
 
 ## Component Structure
 
 A typical Razor component consists of:
 
 ```razor
-@page "/counter"
-@rendermode InteractiveServer
+@page "/products"
+@inject ProductService ProductService
 
-<h1>Counter</h1>
+<h1>Products</h1>
 
-<p>Current count: @currentCount</p>
-
-<button @onclick="IncrementCount">Click me</button>
+@if (products == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var product in products)
+        {
+            <li>
+                <strong>@product.Name</strong>
+                <span>$@product.Price</span>
+            </li>
+        }
+    </ul>
+}
 
 @code {
-    private int currentCount = 0;
+    private List<Product>? products;
 
-    private void IncrementCount()
+    protected override async Task OnInitializedAsync()
     {
-        currentCount++;
+        products = await ProductService.GetProductsAsync();
     }
 }
+```
+
+## Static SSR Component Patterns
+
+### Data Display
+
+Components excel at displaying data from the server:
+
+```razor
+@page "/weather"
+@inject WeatherService WeatherService
+
+<h1>Weather Forecast</h1>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temperature (C)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await WeatherService.GetForecastAsync();
+    }
+}
+```
+
+### Reusable Components
+
+Create reusable components that accept parameters:
+
+```razor
+@* ProductCard.razor *@
+<div class="product-card">
+    <h3>@Product?.Name</h3>
+    <p>@Product?.Description</p>
+    <span class="price">$@Product?.Price</span>
+    @if (OnAddToCart.HasDelegate)
+    {
+        <a href="/cart/add/@Product?.Id" class="btn">Add to Cart</a>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Product? Product { get; set; }
+
+    [Parameter]
+    public EventCallback OnAddToCart { get; set; }
+}
+```
+
+### Layout Components
+
+Define consistent page layouts:
+
+```razor
+@* MainLayout.razor *@
+@inherits LayoutComponentBase
+
+<header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/about">About</a>
+    </nav>
+</header>
+
+<main>
+    @Body
+</main>
+
+<footer>
+    <p>&copy; @DateTime.Now.Year - My Application</p>
+</footer>
 ```
 
 ## Best Practices
@@ -62,7 +171,20 @@ A typical Razor component consists of:
 - **Keep components small and focused**: Each component should have a single responsibility
 - **Use parameters for input**: Pass data into components via parameters
 - **Leverage cascading values**: Share common data without prop drilling
-- **Optimize rendering**: Use `ShouldRender` and other optimization techniques when needed
+- **Handle null states**: Always handle loading and null states gracefully
+- **Use streaming rendering**: For long-running data operations
+
+## Differences from Interactive Blazor
+
+In Static SSR, keep in mind:
+
+| Feature | Static SSR | Interactive Blazor |
+|---------|-----------|-------------------|
+| Event handlers (`@onclick`) | ❌ Not available | ✅ Available |
+| Two-way binding (`@bind`) | ✅ In forms | ✅ Everywhere |
+| `OnAfterRender` | ❌ Never called | ✅ Called after render |
+| `StateHasChanged` | ❌ Not useful | ✅ Triggers rerender |
+| JavaScript interop | ⚠️ After page load | ✅ Anytime |
 
 ## Next Steps
 

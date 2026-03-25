@@ -13,13 +13,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@your-handle">
 <meta name="twitter:title" content="Components | Blazor SSR Documentation">
-<meta name="twitter:description" content="Components Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your SSR applications. Topics Component Basics Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements. Rendering Understand how components are rendered in Blazor SSR. Learn about rendering concepts, optimization techniques, and best practices. Prerendering Improve perceived performance with prerendering. Learn how to pre-render components to...">
+<meta name="twitter:description" content="Components Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your Static SSR applications. Topics Component Basics Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements. Rendering Understand how components are rendered in Blazor Static SSR. Learn about rendering concepts, streaming rendering, and best practices. Prerendering Improve perceived performance with prerendering. Learn how to pre-render...">
 <meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
 <meta name="twitter:image:alt" content="Components | Blazor SSR Documentation">
 <meta property="og:title" content="Components | Blazor SSR Documentation">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:4000/">
-<meta property="og:description" content="Components Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your SSR applications. Topics Component Basics Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements. Rendering Understand how components are rendered in Blazor SSR. Learn about rendering concepts, optimization techniques, and best practices. Prerendering Improve perceived performance with prerendering. Learn how to pre-render components to...">
+<meta property="og:description" content="Components Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your Static SSR applications. Topics Component Basics Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements. Rendering Understand how components are rendered in Blazor Static SSR. Learn about rendering concepts, streaming rendering, and best practices. Prerendering Improve perceived performance with prerendering. Learn how to pre-render...">
 <meta property="og:image" content="http://localhost:4000/img/project-banner.png">
 <meta property="og:image:alt" content="Components | Blazor SSR Documentation">
     <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
@@ -168,49 +168,185 @@
         </div>
 <!-- lunet:summarize -->
 <h1 id="components">Components</h1>
-<p>Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your SSR applications.</p>
+<p>Components are the building blocks of Blazor applications. Learn how to create, use, and optimize components in your Static SSR applications.</p>
 <h2 id="topics">Topics</h2>
 <h3 id="component-basics"><a href="/components/index">Component Basics</a></h3>
 <p>Learn the fundamentals of Razor components: their structure, syntax, and how to create reusable UI elements.</p>
 <h3 id="rendering"><a href="/components/rendering">Rendering</a></h3>
-<p>Understand how components are rendered in Blazor SSR. Learn about rendering concepts, optimization techniques, and best practices.</p>
+<p>Understand how components are rendered in Blazor Static SSR. Learn about rendering concepts, streaming rendering, and best practices.</p>
 <h3 id="prerendering"><a href="/components/prerender">Prerendering</a></h3>
-<p>Improve perceived performance with prerendering. Learn how to pre-render components to static HTML before they become interactive.</p>
+<p>Improve perceived performance with prerendering. Learn how to pre-render components to static HTML.</p>
 <h3 id="lifecycle"><a href="/components/lifecycle">Lifecycle</a></h3>
-<p>Master the component lifecycle methods. Learn when to use OnInitialized, OnParametersSet, OnAfterRender, and other lifecycle events.</p>
+<p>Master the component lifecycle methods. Learn when to use OnInitialized, OnParametersSet, and other lifecycle events.</p>
 <h3 id="cascading-values-and-parameters"><a href="/components/cascading-values-and-parameters">Cascading Values and Parameters</a></h3>
 <p>Share data across the component hierarchy using cascading values and parameters.</p>
-<h3 id="event-handling"><a href="/components/event-handling">Event Handling</a></h3>
-<p>Handle user interactions in your components. Learn about event arguments, event callbacks, and how to handle DOM events.</p>
 <h3 id="data-binding"><a href="/components/data-binding">Data Binding</a></h3>
-<p>Bind data between your components and the UI. Learn about one-way and two-way binding patterns.</p>
+<p>Bind data between your components and the UI. Learn about one-way binding patterns in Static SSR.</p>
 <h2 id="component-structure">Component Structure</h2>
 <p>A typical Razor component consists of:</p>
-<pre><code class="language-razor">@page &quot;/counter&quot;
-@rendermode InteractiveServer
+<pre><code class="language-razor">@page &quot;/products&quot;
+@inject ProductService ProductService
 
-&lt;h1&gt;Counter&lt;/h1&gt;
+&lt;h1&gt;Products&lt;/h1&gt;
 
-&lt;p&gt;Current count: @currentCount&lt;/p&gt;
-
-&lt;button @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+@if (products == null)
+{
+    &lt;p&gt;Loading...&lt;/p&gt;
+}
+else
+{
+    &lt;ul&gt;
+        @foreach (var product in products)
+        {
+            &lt;li&gt;
+                &lt;strong&gt;@product.Name&lt;/strong&gt;
+                &lt;span&gt;$@product.Price&lt;/span&gt;
+            &lt;/li&gt;
+        }
+    &lt;/ul&gt;
+}
 
 @code {
-    private int currentCount = 0;
+    private List&lt;Product&gt;? products;
 
-    private void IncrementCount()
+    protected override async Task OnInitializedAsync()
     {
-        currentCount++;
+        products = await ProductService.GetProductsAsync();
     }
 }
+</code></pre>
+<h2 id="static-ssr-component-patterns">Static SSR Component Patterns</h2>
+<h3 id="data-display">Data Display</h3>
+<p>Components excel at displaying data from the server:</p>
+<pre><code class="language-razor">@page &quot;/weather&quot;
+@inject WeatherService WeatherService
+
+&lt;h1&gt;Weather Forecast&lt;/h1&gt;
+
+@if (forecasts == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;table&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Date&lt;/th&gt;
+                &lt;th&gt;Temperature (C)&lt;/th&gt;
+                &lt;th&gt;Summary&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @foreach (var forecast in forecasts)
+            {
+                &lt;tr&gt;
+                    &lt;td&gt;@forecast.Date.ToShortDateString()&lt;/td&gt;
+                    &lt;td&gt;@forecast.TemperatureC&lt;/td&gt;
+                    &lt;td&gt;@forecast.Summary&lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await WeatherService.GetForecastAsync();
+    }
+}
+</code></pre>
+<h3 id="reusable-components">Reusable Components</h3>
+<p>Create reusable components that accept parameters:</p>
+<pre><code class="language-razor">@* ProductCard.razor *@
+&lt;div class=&quot;product-card&quot;&gt;
+    &lt;h3&gt;@Product?.Name&lt;/h3&gt;
+    &lt;p&gt;@Product?.Description&lt;/p&gt;
+    &lt;span class=&quot;price&quot;&gt;$@Product?.Price&lt;/span&gt;
+    @if (OnAddToCart.HasDelegate)
+    {
+        &lt;a href=&quot;/cart/add/@Product?.Id&quot; class=&quot;btn&quot;&gt;Add to Cart&lt;/a&gt;
+    }
+&lt;/div&gt;
+
+@code {
+    [Parameter]
+    public Product? Product { get; set; }
+
+    [Parameter]
+    public EventCallback OnAddToCart { get; set; }
+}
+</code></pre>
+<h3 id="layout-components">Layout Components</h3>
+<p>Define consistent page layouts:</p>
+<pre><code class="language-razor">@* MainLayout.razor *@
+@inherits LayoutComponentBase
+
+&lt;header&gt;
+    &lt;nav&gt;
+        &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
+        &lt;a href=&quot;/products&quot;&gt;Products&lt;/a&gt;
+        &lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+    @Body
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;&amp;copy; @DateTime.Now.Year - My Application&lt;/p&gt;
+&lt;/footer&gt;
 </code></pre>
 <h2 id="best-practices">Best Practices</h2>
 <ul>
 <li><strong>Keep components small and focused</strong>: Each component should have a single responsibility</li>
 <li><strong>Use parameters for input</strong>: Pass data into components via parameters</li>
 <li><strong>Leverage cascading values</strong>: Share common data without prop drilling</li>
-<li><strong>Optimize rendering</strong>: Use <code>ShouldRender</code> and other optimization techniques when needed</li>
+<li><strong>Handle null states</strong>: Always handle loading and null states gracefully</li>
+<li><strong>Use streaming rendering</strong>: For long-running data operations</li>
 </ul>
+<h2 id="differences-from-interactive-blazor">Differences from Interactive Blazor</h2>
+<p>In Static SSR, keep in mind:</p>
+<table class="table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>Static SSR</th>
+<th>Interactive Blazor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Event handlers (<code>@onclick</code>)</td>
+<td>❌ Not available</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td>Two-way binding (<code>@bind</code>)</td>
+<td>✅ In forms</td>
+<td>✅ Everywhere</td>
+</tr>
+<tr>
+<td><code>OnAfterRender</code></td>
+<td>❌ Never called</td>
+<td>✅ Called after render</td>
+</tr>
+<tr>
+<td><code>StateHasChanged</code></td>
+<td>❌ Not useful</td>
+<td>✅ Triggers rerender</td>
+</tr>
+<tr>
+<td>JavaScript interop</td>
+<td>⚠️ After page load</td>
+<td>✅ Anytime</td>
+</tr>
+</tbody>
+</table>
 <h2 id="next-steps">Next Steps</h2>
 <p>After mastering components, explore <a href="/forms">Forms</a> to learn about handling user input with validation.</p>
 
