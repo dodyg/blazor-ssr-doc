@@ -3,9 +3,9 @@
 # -----------------------------------------------------------------------------
 # This file defines:
 # - theme/template defaults (`template_*`)
-# - the consumer contract (`site.project_*` inputs) consumed by `site.project_init`
+# - the consumer contract (`site_project_*` inputs) consumed by `site_project_init`
 #
-# Consumer sites should only set `site.project_*` (project metadata) and optionally
+# Consumer sites should only set `site_project_*` (project metadata) and optionally
 # `template_*` (theme customization).
 
 # Template UI defaults
@@ -95,26 +95,26 @@ template_prism_components = [
 # PROJECT INPUTS (consumer config)
 # -----------------------------------------------------------------------------
 # Variables describing the project/site using this template.
-# Set them in your site `config.scriban` before calling `site.project_init`.
+# Set them in your site `config.scriban` before calling `site_project_init`.
 #
 # Note: `baseurl`/`basepath` are Lunet core variables. This template supports
-# configuring them either directly (`baseurl = ...`) or via `site.project_*`.
-site.project_baseurl = null
-site.project_basepath = null
-site.project_favicon_path = null
-site.project_github_user = null
-site.project_owner_name = null
-site.project_owner_alias = null
-site.project_owner_url = null
-site.project_content_license_name = null
-site.project_content_license_url = null
-site.project_twitter_user = null
+# configuring them either directly (`baseurl = ...`) or via `site_project_*`.
+site_project_baseurl = null
+site_project_basepath = null
+site_project_favicon_path = null
+site_project_github_user = null
+site_project_owner_name = null
+site_project_owner_alias = null
+site_project_owner_url = null
+site_project_content_license_name = null
+site_project_content_license_url = null
+site_project_twitter_user = null
 
 # -----------------------------------------------------------------------------
 # LEGACY INPUTS (deprecated)
 # -----------------------------------------------------------------------------
 # Older versions exposed `template_project_*` variables for site/project metadata.
-# Keep these for backward compatibility, but prefer the `site.project_*` inputs.
+# Keep these for backward compatibility, but prefer the `site_project_*` inputs.
 template_baseurl = null
 template_basepath = null
 template_project_favicon_path = null
@@ -129,39 +129,39 @@ template_project_twitter_user = null
 # Defaults for local template iteration (`cd dist && lunet build`).
 project_logo_path = "/img/lunet-logo.png"
 
-# Initializes all resolved site values from `site.project_*`.
-func site.project_init
-    # Map legacy `template_*` inputs to the new `site.project_*` inputs.
-    site.project_baseurl = site.project_baseurl ?? template_baseurl
-    site.project_basepath = site.project_basepath ?? template_basepath
-    site.project_favicon_path = site.project_favicon_path ?? template_project_favicon_path ?? "/favicon.ico"
-    site.project_github_user = site.project_github_user ?? template_project_github_user ?? "your-org"
-    site.project_owner_name = site.project_owner_name ?? template_project_owner_name ?? "Your Name"
-    site.project_owner_alias = site.project_owner_alias ?? template_project_owner_alias ?? "your-handle"
-    site.project_owner_url = site.project_owner_url ?? template_project_owner_url ?? "https://example.com"
-    site.project_content_license_name = site.project_content_license_name ?? template_project_content_license_name ?? "CC BY 2.5"
-    site.project_content_license_url = site.project_content_license_url ?? template_project_content_license_url ?? "http://creativecommons.org/licenses/by/2.5/"
-    site.project_twitter_user = site.project_twitter_user ?? template_project_twitter_user ?? "your-handle"
+# Initializes all resolved site values from `site_project_*`.
+func site_project_init
+    # Map legacy `template_*` inputs to the new `site_project_*` inputs.
+    site_project_baseurl = site_project_baseurl ?? template_baseurl
+    site_project_basepath = site_project_basepath ?? template_basepath
+    site_project_favicon_path = site_project_favicon_path ?? template_project_favicon_path ?? "/favicon.ico"
+    site_project_github_user = site_project_github_user ?? template_project_github_user ?? "your-org"
+    site_project_owner_name = site_project_owner_name ?? template_project_owner_name ?? "Your Name"
+    site_project_owner_alias = site_project_owner_alias ?? template_project_owner_alias ?? "your-handle"
+    site_project_owner_url = site_project_owner_url ?? template_project_owner_url ?? "https://example.com"
+    site_project_content_license_name = site_project_content_license_name ?? template_project_content_license_name ?? "CC BY 2.5"
+    site_project_content_license_url = site_project_content_license_url ?? template_project_content_license_url ?? "http://creativecommons.org/licenses/by/2.5/"
+    site_project_twitter_user = site_project_twitter_user ?? template_project_twitter_user ?? "your-handle"
 
-    project_name = site.project_name ?? "ProjectName"
-    project_description = site.project_description ?? "Project description."
-    project_logo_path = site.project_logo_path ?? "/img/lunet-logo.png"
-    project_social_banner_path = site.project_social_banner_path ?? "/img/project-banner.png"
-    project_banner_background_path = site.project_banner_background_path ?? "/img/project-banner-background.png"
-    project_package_id = site.project_package_id ?? "Project.Package"
-    project_github_repo = site.project_github_repo ?? "Project.Repository"
+    project_name = site_project_name ?? "ProjectName"
+    project_description = site_project_description ?? "Project description."
+    project_logo_path = site_project_logo_path ?? "/img/lunet-logo.png"
+    project_social_banner_path = site_project_social_banner_path ?? "/img/project-banner.png"
+    project_banner_background_path = site_project_banner_background_path ?? "/img/project-banner-background.png"
+    project_package_id = site_project_package_id ?? "Project.Package"
+    project_github_repo = site_project_github_repo ?? "Project.Repository"
 
-    baseurl = baseurl ?? site.project_baseurl ?? "https://example.com"
-    basepath = site.project_basepath ?? ""
-    project_favicon_path = site.project_favicon_path
-    project_github_user = site.project_github_user
+    baseurl = baseurl ?? site_project_baseurl ?? "https://example.com"
+    basepath = site_project_basepath ?? ""
+    project_favicon_path = site_project_favicon_path
+    project_github_user = site_project_github_user
     project_github_repo_url = $"https://github.com/{project_github_user}/{project_github_repo}/"
-    project_owner_name = site.project_owner_name
-    project_owner_alias = site.project_owner_alias
-    project_owner_url = site.project_owner_url
-    project_content_license_name = site.project_content_license_name
-    project_content_license_url = site.project_content_license_url
-    project_twitter_user = site.project_twitter_user
+    project_owner_name = site_project_owner_name
+    project_owner_alias = site_project_owner_alias
+    project_owner_url = site_project_owner_url
+    project_content_license_name = site_project_content_license_name
+    project_content_license_url = site_project_content_license_url
+    project_twitter_user = site_project_twitter_user
 
     footer_ownership_html = template_footer_ownership_html ?? $"Copyright &copy; {date.now.year}, {project_owner_name} aka <a href=\"{project_owner_url}\">{project_owner_alias}</a>"
     footer_content_license_html = template_footer_content_license_html ?? $"- Content licensed under the Creative Commons <a href=\"{project_content_license_url}\">{project_content_license_name}</a>"
