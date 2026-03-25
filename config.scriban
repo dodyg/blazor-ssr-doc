@@ -12,3 +12,5 @@ site_project_owner_alias = "dotnet"
 site_project_owner_url = "https://learn.microsoft.com/aspnet/core/blazor"
 site_project_content_license_name = "CC BY 4.0"
 site_project_content_license_url = "https://creativecommons.org/licenses/by/4.0/"
+
+baseurl = "https://dodyg.github.io/blazor-ssr-doc/"
