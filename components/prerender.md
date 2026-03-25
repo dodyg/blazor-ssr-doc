@@ -1,7 +1,7 @@
 ---
 title: Prerendering and Streaming Rendering
 description: Learn about prerendering and streaming rendering in Blazor Static SSR.
-layout: page
+
 section: Components
 toc: true
 ---

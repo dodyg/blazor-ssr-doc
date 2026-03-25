@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor globalization and localization
 description: Learn how to render globalized and localized content to users in different cultures and languages.
-layout: page
+
 section: Documentation
 toc: true
 ---

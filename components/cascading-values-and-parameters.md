@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor cascading values and parameters
 description: Learn how to flow data from an ancestor Razor component to descendent components.
-layout: page
+
 section: Components
 toc: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: Forms
 description: Handle user input with forms and validation in Blazor Static SSR
-layout: page
+
 section: Forms
 toc: true
 ---

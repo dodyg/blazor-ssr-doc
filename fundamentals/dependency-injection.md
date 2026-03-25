@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor dependency injection
 description: Learn how Blazor Static SSR apps can inject services into components.
-layout: page
+
 section: Fundamentals
 toc: true
 ---

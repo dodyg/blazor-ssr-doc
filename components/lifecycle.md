@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Razor Component Lifecycle
 description: Learn about the Razor component lifecycle in Blazor Static SSR.
-layout: page
+
 section: Components
 toc: true
 ---

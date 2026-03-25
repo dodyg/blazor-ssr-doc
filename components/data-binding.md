@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor Data Binding
 description: Learn about data binding features in Blazor Static SSR applications.
-layout: page
+
 section: Components
 toc: true
 ---

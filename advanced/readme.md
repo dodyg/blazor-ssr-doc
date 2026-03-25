@@ -1,7 +1,7 @@
 ---
 title: Advanced Topics
 description: Performance optimization, deployment, and advanced scenarios for Blazor SSR
-layout: page
+
 section: Advanced
 toc: true
 ---

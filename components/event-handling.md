@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor event handling
 description: Learn about Blazor's event handling features, including event argument types, event callbacks, and managing default browser events.
-layout: page
+
 section: Components
 toc: true
 ---

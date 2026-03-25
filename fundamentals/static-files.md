@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor static files
 description: Learn how to configure and manage static files for Blazor apps.
-layout: page
+
 section: Fundamentals
 toc: true
 ---

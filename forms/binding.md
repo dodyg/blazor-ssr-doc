@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor forms binding
 description: Learn how to use binding in Blazor forms.
-layout: page
+
 section: Forms
 toc: true
 ---

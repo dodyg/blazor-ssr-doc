@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Razor Component Rendering
 description: Learn about component rendering in Blazor Static SSR.
-layout: page
+
 section: Components
 toc: true
 ---

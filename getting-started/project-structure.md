@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor project structure
 description: Learn about ASP.NET Core Blazor app project structure.
-layout: page
+
 section: Documentation
 toc: true
 ---

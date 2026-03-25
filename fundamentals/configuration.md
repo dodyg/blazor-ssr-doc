@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor configuration
 description: Learn about Blazor Static SSR app configuration, including app settings and logging.
-layout: page
+
 section: Fundamentals
 toc: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor forms validation
 description: Learn how to use validation in Blazor forms.
-layout: page
+
 section: Forms
 toc: true
 ---

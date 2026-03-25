@@ -1,7 +1,7 @@
 ---
 title: Fundamentals
 description: Core concepts of Blazor SSR including render modes, routing, and dependency injection
-layout: page
+
 section: Fundamentals
 toc: true
 ---

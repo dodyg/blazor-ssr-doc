@@ -1,5 +1,0 @@
-{{ layout "_default" }}
-
-<div class="homepage">
-    {{ content }}
-</div>

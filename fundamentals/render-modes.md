@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor Static Server-Side Rendering
 description: Learn about Blazor Static SSR and how it renders components on the server as static HTML.
-layout: page
+
 section: Fundamentals
 toc: true
 ---

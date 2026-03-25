@@ -1,7 +1,7 @@
 ---
 title: Components
 description: Deep dive into Razor components and how they work in Blazor Static SSR
-layout: page
+
 section: Components
 toc: true
 ---

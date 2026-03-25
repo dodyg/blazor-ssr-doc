@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 description: Learn the basics of Blazor Static SSR and get up and running quickly
-layout: page
+
 section: Getting Started
 toc: true
 ---

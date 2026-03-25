@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor Routing
 description: Learn about Blazor Static SSR routing and navigation.
-layout: page
+
 section: Fundamentals
 toc: true
 ---

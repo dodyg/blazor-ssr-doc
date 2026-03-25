@@ -1,7 +1,7 @@
 ---
 title: Tooling for ASP.NET Core Blazor
 description: Learn about the tools available to build Blazor apps and how to use them.
-layout: page
+
 section: Documentation
 toc: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: When to Use Blazor Static SSR
 description: Learn when to choose Blazor Static SSR for your web applications.
-layout: page
+
 section: Getting Started
 toc: true
 ---

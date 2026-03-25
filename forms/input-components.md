@@ -1,7 +1,7 @@
 ---
 title: ASP.NET Core Blazor input components
 description: Learn about built-in Blazor input components.
-layout: page
+
 section: Forms
 toc: true
 ---

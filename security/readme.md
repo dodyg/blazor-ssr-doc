@@ -1,7 +1,7 @@
 ---
 title: Security
 description: Implement authentication and authorization for your Blazor SSR apps
-layout: page
+
 section: Security
 toc: true
 ---
