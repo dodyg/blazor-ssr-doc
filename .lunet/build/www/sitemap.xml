@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:4000/components</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
     <loc>http://localhost:4000/</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost:4000/advanced</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/components/rendering</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/advanced/advanced-scenarios</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/forms</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/components/lifecycle</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/advanced/globalization-localization</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/components/data-binding</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/forms/input-components</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
@@ -46,14 +14,50 @@
   </url>
   <url>
     <loc>http://localhost:4000/components/prerender</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/components/data-binding</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/forms</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/components/lifecycle</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/components/rendering</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/components</loc>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost:4000/components/cascading-values-and-parameters</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
+    <loc>http://localhost:4000/forms/input-components</loc>
+    <lastmod>2026-03-08</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/advanced/globalization-localization</loc>
+    <lastmod>2026-03-08</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/advanced/advanced-scenarios</loc>
+    <lastmod>2026-03-08</lastmod>
+  </url>
+  <url>
     <loc>http://localhost:4000/forms/binding</loc>
+    <lastmod>2026-03-08</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/fundamentals</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
@@ -62,46 +66,38 @@
   </url>
   <url>
     <loc>http://localhost:4000/fundamentals/configuration</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/fundamentals/routing</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/fundamentals/render-modes</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/fundamentals/dependency-injection</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/fundamentals</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost:4000/fundamentals/static-files</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
+    <loc>http://localhost:4000/fundamentals/routing</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/fundamentals/dependency-injection</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/fundamentals/render-modes</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:4000/getting-started</loc>
+    <lastmod>2026-03-25</lastmod>
+  </url>
+  <url>
     <loc>http://localhost:4000/getting-started/supported-platforms</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
-    <loc>http://localhost:4000/getting-started</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
     <loc>http://localhost:4000/getting-started/comparison</loc>
-    <lastmod>2026-03-08</lastmod>
+    <lastmod>2026-03-25</lastmod>
   </url>
   <url>
     <loc>http://localhost:4000/getting-started/project-structure</loc>
-    <lastmod>2026-03-08</lastmod>
-  </url>
-  <url>
-    <loc>http://localhost:4000/getting-started/tooling</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
@@ -109,11 +105,11 @@
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
-    <loc>http://localhost:4000/PLAN.md</loc>
+    <loc>http://localhost:4000/QUICKSTART.md</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
-    <loc>http://localhost:4000/QUICKSTART.md</loc>
+    <loc>http://localhost:4000/PROJECT-SUMMARY.md</loc>
     <lastmod>2026-03-08</lastmod>
   </url>
   <url>
