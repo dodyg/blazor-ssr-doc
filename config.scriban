@@ -1,4 +1,4 @@
-extend "lunet-io/templates"
+extend "blazor-ssr-theme"
 
 template_theme_default_mode = "system"
 template_theme_storage_key = "blazor-ssr-theme"
