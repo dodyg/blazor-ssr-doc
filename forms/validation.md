@@ -13,7 +13,7 @@ This article explains how to use validation in Blazor forms.
 
 ## Form validation
 
-In basic form validation scenarios, an [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) instance can use declared [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) and [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) instances to validate form fields. A handler for the [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested) event of the [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) executes custom validation logic. The handler's result updates the [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) instance.
+In basic form validation scenarios, an [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) instance can use declared [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) and [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) instances to validate form fields. A handler for the [OnValidationRequested](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested) event of the [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) executes custom validation logic. The handler's result updates the [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) instance.
 
 Basic form validation is useful in cases where the form's model is defined within the component hosting the form, either as members directly on the component or in a subclass. Use of a [validator component](#validator-components) is recommended where an independent model class is used across several components.
 
@@ -21,7 +21,7 @@ Basic form validation is useful in cases where the form's model is defined withi
 In Blazor Web Apps, client-side validation requires an active Blazor SignalR circuit. Client-side validation isn't available to forms in components that have adopted static server-side rendering (static SSR). Forms that adopt static SSR are validated on the server after the form is submitted.
 
 
-In the following component, the `HandleValidationRequested` handler method clears any existing validation messages by calling [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore.Clear *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore.clear%2a?displayproperty=namewithtype) before validating the form.
+In the following component, the `HandleValidationRequested` handler method clears any existing validation messages by calling [Clear *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore.clear%2a?displayproperty=namewithtype) before validating the form.
 
 `Starship8.razor`:
 
@@ -40,7 +40,7 @@ In the following component, the `HandleValidationRequested` handler method clear
 
 ## Data Annotations Validator component and custom validation
 
-The [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component attaches data annotations validation to a cascaded [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext). Enabling data annotations validation requires the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. To use a different validation system than data annotations, use a custom implementation instead of the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. The framework implementations for [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) are available for inspection in the reference source:
+The [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component attaches data annotations validation to a cascaded [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext). Enabling data annotations validation requires the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. To use a different validation system than data annotations, use a custom implementation instead of the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. The framework implementations for [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) are available for inspection in the reference source:
 
 * [`DataAnnotationsValidator`](https://github.com/dotnet/AspNetCore/blob/main/src/Components/Forms/src/DataAnnotationsValidator.cs)
 * [`EnableDataAnnotationsValidation`](https://github.com/dotnet/AspNetCore/blob/main/src/Components/Forms/src/EditContextDataAnnotationsExtensions.cs)
@@ -51,33 +51,33 @@ For details on validation behavior, see the [`DataAnnotationsValidator` validati
 
 :::moniker-end
 
-If you need to enable data annotations validation support for an [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) in code, call [Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.EnableDataAnnotationsValidation *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontextdataannotationsextensions.enabledataannotationsvalidation%2a) with an injected [System.IServiceProvider](https://learn.microsoft.com/dotnet/api/system.iserviceprovider) (`@inject IServiceProvider ServiceProvider`) on the [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext). For an advanced example, see the [`NotifyPropertyChangedValidationComponent` component in the ASP.NET Core Blazor framework's `BasicTestApp` (`dotnet/aspnetcore` GitHub repository)](https://github.com/dotnet/aspnetcore/blob/main/src/Components/test/testassets/BasicTestApp/FormsTest/NotifyPropertyChangedValidationComponent.razor). In a production version of the example, replace the `new TestServiceProvider()` argument for the service provider with an injected [System.IServiceProvider](https://learn.microsoft.com/dotnet/api/system.iserviceprovider).
+If you need to enable data annotations validation support for an [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) in code, call [EnableDataAnnotationsValidation *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontextdataannotationsextensions.enabledataannotationsvalidation%2a) with an injected [IServiceProvider](https://learn.microsoft.com/dotnet/api/system.iserviceprovider) (`@inject IServiceProvider ServiceProvider`) on the [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext). For an advanced example, see the [`NotifyPropertyChangedValidationComponent` component in the ASP.NET Core Blazor framework's `BasicTestApp` (`dotnet/aspnetcore` GitHub repository)](https://github.com/dotnet/aspnetcore/blob/main/src/Components/test/testassets/BasicTestApp/FormsTest/NotifyPropertyChangedValidationComponent.razor). In a production version of the example, replace the `new TestServiceProvider()` argument for the service provider with an injected [IServiceProvider](https://learn.microsoft.com/dotnet/api/system.iserviceprovider).
 
 
 Blazor performs two types of validation:
 
-* *Field validation* is performed when the user tabs out of a field. During field validation, the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component associates all reported validation results with the field.
-* *Model validation* is performed when the user submits the form. During model validation, the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component attempts to determine the field based on the member name that the validation result reports. Validation results that aren't associated with an individual member are associated with the model rather than a field.
+* *Field validation* is performed when the user tabs out of a field. During field validation, the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component associates all reported validation results with the field.
+* *Model validation* is performed when the user submits the form. During model validation, the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component attempts to determine the field based on the member name that the validation result reports. Validation results that aren't associated with an individual member are associated with the model rather than a field.
 
 In custom validation scenarios:
 
-* Validation manages a [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) for a form's [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext).
-* The [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component is used to attach validation support to forms based on [validation attributes (data annotations)](https://learn.microsoft.com/aspnet/core/mvc/models/validation#validation-attributes).
+* Validation manages a [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) for a form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext).
+* The [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component is used to attach validation support to forms based on [validation attributes (data annotations)](https://learn.microsoft.com/aspnet/core/mvc/models/validation#validation-attributes).
 
 There are two general approaches for achieving custom validation, which are described in the next two sections of this article:
 
-* [Manual validation using the `OnValidationRequested` event](#manual-validation-using-the-onvalidationrequested-event): Manually validate a form's fields with data annotations validation and custom code for field checks when validation is requested via an event handler assigned to the [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a) event.
+* [Manual validation using the `OnValidationRequested` event](#manual-validation-using-the-onvalidationrequested-event): Manually validate a form's fields with data annotations validation and custom code for field checks when validation is requested via an event handler assigned to the [OnValidationRequested *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a) event.
 * [Validator components](#validator-components): One or more custom validator components can be used to process validation for different forms on the same page or the same form at different steps of form processing (for example, client validation followed by server validation).
 
 ## Manual validation using the `OnValidationRequested` event
 
-You can manually validate a form with a custom event handler assigned to the [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a?displayproperty=namewithtype) event to manage a [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore).
+You can manually validate a form with a custom event handler assigned to the [OnValidationRequested *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a?displayproperty=namewithtype) event to manage a [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore).
 
-The Blazor framework provides the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component to attach additional validation support to forms based on [validation attributes (data annotations)](https://learn.microsoft.com/aspnet/core/mvc/models/validation#validation-attributes). 
+The Blazor framework provides the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component to attach additional validation support to forms based on [validation attributes (data annotations)](https://learn.microsoft.com/aspnet/core/mvc/models/validation#validation-attributes). 
 
-Recalling the earlier `Starship8` component example, the `HandleValidationRequested` method is assigned to [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a), where you can perform manual validation in C# code. A few changes demonstrate combining the existing manual validation with data annotations validation via a [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) and a validation attribute applied to the `Holodeck` model.
+Recalling the earlier `Starship8` component example, the `HandleValidationRequested` method is assigned to [OnValidationRequested *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a), where you can perform manual validation in C# code. A few changes demonstrate combining the existing manual validation with data annotations validation via a [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) and a validation attribute applied to the `Holodeck` model.
 
-Reference the [System.ComponentModel.DataAnnotations?displayProperty=fullName](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations?displayproperty=fullname) namespace in the component's Razor directives at the top of the component definition file:
+Reference the [DataAnnotations?displayProperty=fullName](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations?displayproperty=fullname) namespace in the component's Razor directives at the top of the component definition file:
 
 ```razor
 @using System.ComponentModel.DataAnnotations
@@ -90,13 +90,13 @@ Add an `Id` property to the `Holodeck` model with a validation attribute to limi
 public string? Id { get; set; }
 ```
 
-Add a [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component (`<DataAnnotationsValidator />`) to the form. Typically, the component is placed immediately under the `<EditForm>` tag, but you can place it anywhere in the form:
+Add a [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component (`<DataAnnotationsValidator />`) to the form. Typically, the component is placed immediately under the `<EditForm>` tag, but you can place it anywhere in the form:
 
 ```razor
 <DataAnnotationsValidator />
 ```
 
-Change the form's submit behavior in the `<EditForm>` tag from [Microsoft.AspNetCore.Components.Forms.EditForm.OnSubmit](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.onsubmit) to [Microsoft.AspNetCore.Components.Forms.EditForm.OnValidSubmit](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.onvalidsubmit), which ensures that the form is valid before executing the assigned event handler method:
+Change the form's submit behavior in the `<EditForm>` tag from [OnSubmit](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.onsubmit) to [OnValidSubmit](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.onvalidsubmit), which ensures that the form is valid before executing the assigned event handler method:
 
 ```diff
 - OnSubmit="Submit"
@@ -118,14 +118,14 @@ In the `<EditForm>`, add a field for the `Id` property:
 After making the preceding changes, the form's behavior matches the following specification:
 
 * The data annotations validation on the `Id` property doesn't trigger a validation failure when the `Id` field merely loses focus. The validation executes when the user selects the **`Update`** button.
-* Any manual validation that you want to perform in the `HandleValidationRequested` method assigned to the form's [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a) event executes when the user selects the form's **`Update`** button. In the existing code of the `Starship8` component example, the user must select either or both of the checkboxes to validate the form.
+* Any manual validation that you want to perform in the `HandleValidationRequested` method assigned to the form's [OnValidationRequested *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested%2a) event executes when the user selects the form's **`Update`** button. In the existing code of the `Starship8` component example, the user must select either or both of the checkboxes to validate the form.
 * The form doesn't process the `Submit` method until both the data annotations and manual validation pass.
 
 ## Validator components
 
-Validator components support form validation by managing a [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) for a form's [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext).
+Validator components support form validation by managing a [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) for a form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext).
 
-The Blazor framework provides the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component to attach validation support to forms based on [validation attributes (data annotations)](https://learn.microsoft.com/aspnet/core/mvc/models/validation#validation-attributes). You can create custom validator components to process validation messages for different forms on the same page or the same form at different steps of form processing (for example, client validation followed by server validation). The validator component example shown in this section, `CustomValidation`, is used in the following sections of this article:
+The Blazor framework provides the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component to attach validation support to forms based on [validation attributes (data annotations)](https://learn.microsoft.com/aspnet/core/mvc/models/validation#validation-attributes). You can create custom validator components to process validation messages for different forms on the same page or the same form at different steps of form processing (for example, client validation followed by server validation). The validator component example shown in this section, `CustomValidation`, is used in the following sections of this article:
 
 * [Business logic validation with a validator component](#business-logic-validation-with-a-validator-component)
 * [Server validation with a validator component](#server-validation-with-a-validator-component)
@@ -133,16 +133,16 @@ The Blazor framework provides the [Microsoft.AspNetCore.Components.Forms.DataAnn
 Of the [data annotation built-in validators](https://learn.microsoft.com/aspnet/core/mvc/models/validation#built-in-attributes), only the [`[Remote]` validation attribute](https://learn.microsoft.com/aspnet/core/mvc/models/validation#remote-attribute) isn't supported in Blazor.
 
 > [!NOTE]
-> Custom data annotation validation attributes can be used instead of custom validator components in many cases. Custom attributes applied to the form's model activate with the use of the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, any custom attributes applied to the model must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
+> Custom data annotation validation attributes can be used instead of custom validator components in many cases. Custom attributes applied to the form's model activate with the use of the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, any custom attributes applied to the model must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
 
-Create a validator component from [Microsoft.AspNetCore.Components.ComponentBase](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase):
+Create a validator component from [ComponentBase](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase):
 
-* The form's [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) is a [cascading parameter](https://learn.microsoft.com/aspnet/core/blazor/components/cascading-values-and-parameters) of the component.
-* When the validator component is initialized, a new [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) is created to maintain a current list of form errors.
+* The form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) is a [cascading parameter](https://learn.microsoft.com/aspnet/core/blazor/components/cascading-values-and-parameters) of the component.
+* When the validator component is initialized, a new [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) is created to maintain a current list of form errors.
 * The message store receives errors when developer code in the form's component calls the `DisplayErrors` method. The errors are passed to the `DisplayErrors` method in a [`Dictionary<string, List<string>>`](https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary%602). In the dictionary, the key is the name of the form field that has one or more errors. The value is the error list.
 * Messages are cleared when any of the following have occurred:
-  * Validation is requested on the [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) when the [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested) event is raised. All of the errors are cleared.
-  * A field changes in the form when the [Microsoft.AspNetCore.Components.Forms.EditContext.OnFieldChanged](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onfieldchanged) event is raised. Only the errors for the field are cleared.
+  * Validation is requested on the [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) when the [OnValidationRequested](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested) event is raised. All of the errors are cleared.
+  * A field changes in the form when the [OnFieldChanged](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onfieldchanged) event is raised. Only the errors for the field are cleared.
   * The `ClearErrors` method is called by developer code. All of the errors are cleared.
 
 Update the namespace in the following class to match your app's namespace.
@@ -152,14 +152,14 @@ Update the namespace in the following class to match your app's namespace.
 :::code language="csharp" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/CustomValidation.cs":::
 
 > [!IMPORTANT]
-> Specifying a namespace is **required** when deriving from [Microsoft.AspNetCore.Components.ComponentBase](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase). Failing to specify a namespace results in a build error:
+> Specifying a namespace is **required** when deriving from [ComponentBase](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.componentbase). Failing to specify a namespace results in a build error:
 >
 > > :::no-loc text="Tag helpers cannot target tag name '\<global namespace>.{CLASS NAME}' because it contains a ' ' character.":::
 >
 > The `{CLASS NAME}` placeholder is the name of the component class. The custom validator example in this section specifies the example namespace `BlazorSample`.
 
 > [!NOTE]
-> Anonymous lambda expressions are registered event handlers for [Microsoft.AspNetCore.Components.Forms.EditContext.OnValidationRequested](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested) and [Microsoft.AspNetCore.Components.Forms.EditContext.OnFieldChanged](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onfieldchanged) in the preceding example. It isn't necessary to implement [System.IDisposable](https://learn.microsoft.com/dotnet/api/system.idisposable) and unsubscribe the event delegates in this scenario. For more information, see [component-disposal](https://learn.microsoft.com/aspnet/core/blazor/components/component-disposal).
+> Anonymous lambda expressions are registered event handlers for [OnValidationRequested](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onvalidationrequested) and [OnFieldChanged](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onfieldchanged) in the preceding example. It isn't necessary to implement [IDisposable](https://learn.microsoft.com/dotnet/api/system.idisposable) and unsubscribe the event delegates in this scenario. For more information, see [component-disposal](https://learn.microsoft.com/aspnet/core/blazor/components/component-disposal).
 
 ## Business logic validation with a validator component
 
@@ -169,11 +169,11 @@ Basic validation is useful in cases where the form's model is defined within the
 
 In the following example:
 
-* A shortened version of the `Starfleet Starship Database` form (`Starship3` component) of the [Example form](https://learn.microsoft.com/aspnet/core/blazor/forms/input-components#example-form) section of the *Input components* article is used that only accepts the starship's classification and description. Data annotation validation isn't triggered on form submission because the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component isn't included in the form.
+* A shortened version of the `Starfleet Starship Database` form (`Starship3` component) of the [Example form](https://learn.microsoft.com/aspnet/core/blazor/forms/input-components#example-form) section of the *Input components* article is used that only accepts the starship's classification and description. Data annotation validation isn't triggered on form submission because the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component isn't included in the form.
 * The `CustomValidation` component from the [Validator components](#validator-components) section of this article is used.
 * The validation requires a value for the ship's description (`Description`) if the user selects the "`Defense`" ship classification (`Classification`).
 
-When validation messages are set in the component, they're added to the validator's [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) and shown in the [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform)'s validation summary.
+When validation messages are set in the component, they're added to the validator's [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore) and shown in the [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform)'s validation summary.
 
 `Starship9.razor`:
 
@@ -191,7 +191,7 @@ When validation messages are set in the component, they're added to the validato
 
 
 > [!NOTE]
-> As an alternative to using [validation components](#validator-components), data annotation validation attributes can be used. Custom attributes applied to the form's model activate with the use of the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, the attributes must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
+> As an alternative to using [validation components](#validator-components), data annotation validation attributes can be used. Custom attributes applied to the form's model activate with the use of the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, the attributes must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
 
 ## Server validation with a validator component
 
@@ -202,8 +202,8 @@ When validation messages are set in the component, they're added to the validato
 
 Server validation is supported in addition to client validation:
 
-* Process client validation in the form with the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component.
-* When the form passes client validation ([Microsoft.AspNetCore.Components.Forms.EditForm.OnValidSubmit](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.onvalidsubmit) is called), send the [Microsoft.AspNetCore.Components.Forms.EditContext.Model?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.model?displayproperty=namewithtype) to a backend server API for form processing.
+* Process client validation in the form with the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component.
+* When the form passes client validation ([OnValidSubmit](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.onvalidsubmit) is called), send the [Model?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.model?displayproperty=namewithtype) to a backend server API for form processing.
 * Process model validation on the server.
 * The server API includes both the built-in framework data annotations validation and custom validation logic supplied by the developer. If validation passes on the server, process the form and send back a success status code ([`200 - OK`](https://developer.mozilla.org/docs/Web/HTTP/Status/200)). If validation fails, return a failure status code ([`400 - Bad Request`](https://developer.mozilla.org/docs/Web/HTTP/Status/400)) and the field validation errors.
 * Either disable the form on success or display the errors.
@@ -290,7 +290,7 @@ public class StarshipValidationController(
 
 Confirm or update the namespace of the preceding controller (`BlazorSample.Server.Controllers`) to match the app's controllers' namespace.
 
-When a model binding validation error occurs on the server, an [`ApiController`](https://learn.microsoft.com/aspnet/core/web-api/index) ([Microsoft.AspNetCore.Mvc.ApiControllerAttribute](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.apicontrollerattribute)) normally returns a [default bad request response](https://learn.microsoft.com/aspnet/core/web-api/index#default-badrequest-response) with a [Microsoft.AspNetCore.Mvc.ValidationProblemDetails](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails). The response contains more data than just the validation errors, as shown in the following example when all of the fields of the `Starfleet Starship Database` form aren't submitted and the form fails validation:
+When a model binding validation error occurs on the server, an [`ApiController`](https://learn.microsoft.com/aspnet/core/web-api/index) ([ApiControllerAttribute](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.apicontrollerattribute)) normally returns a [default bad request response](https://learn.microsoft.com/aspnet/core/web-api/index#default-badrequest-response) with a [ValidationProblemDetails](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails). The response contains more data than just the validation errors, as shown in the following example when all of the fields of the `Starfleet Starship Database` form aren't submitted and the form fails validation:
 
 ```json
 {
@@ -308,7 +308,7 @@ When a model binding validation error occurs on the server, an [`ApiController`]
 > [!NOTE]
 > To demonstrate the preceding JSON response, you must either disable the form's client validation to permit empty field form submission or use a tool to send a request directly to the server API, such as [Firefox Browser Developer](https://www.mozilla.org/firefox/developer/).
 
-If the server API returns the preceding default JSON response, it's possible for the client to parse the response in developer code to obtain the children of the `errors` node for forms validation error processing. It's inconvenient to write developer code to parse the file. Parsing the JSON manually requires producing a [`Dictionary<string, List<string>>`](https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary%602) of errors after calling [System.Net.Http.Json.HttpContentJsonExtensions.ReadFromJsonAsync *](https://learn.microsoft.com/dotnet/api/system.net.http.json.httpcontentjsonextensions.readfromjsonasync%2a). Ideally, the server API should only return the validation errors, as the following example shows:
+If the server API returns the preceding default JSON response, it's possible for the client to parse the response in developer code to obtain the children of the `errors` node for forms validation error processing. It's inconvenient to write developer code to parse the file. Parsing the JSON manually requires producing a [`Dictionary<string, List<string>>`](https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary%602) of errors after calling [ReadFromJsonAsync *](https://learn.microsoft.com/dotnet/api/system.net.http.json.httpcontentjsonextensions.readfromjsonasync%2a). Ideally, the server API should only return the validation errors, as the following example shows:
 
 ```json
 {
@@ -319,16 +319,16 @@ If the server API returns the preceding default JSON response, it's possible for
 }
 ```
 
-To modify the server API's response to make it only return the validation errors, change the delegate that's invoked on actions that are annotated with [Microsoft.AspNetCore.Mvc.ApiControllerAttribute](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.apicontrollerattribute) in the `Program` file. For the API endpoint (`/StarshipValidation`), return a [Microsoft.AspNetCore.Mvc.BadRequestObjectResult](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.badrequestobjectresult) with the [Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.modelbinding.modelstatedictionary). For any other API endpoints, preserve the default behavior by returning the object result with a new [Microsoft.AspNetCore.Mvc.ValidationProblemDetails](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails).
+To modify the server API's response to make it only return the validation errors, change the delegate that's invoked on actions that are annotated with [ApiControllerAttribute](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.apicontrollerattribute) in the `Program` file. For the API endpoint (`/StarshipValidation`), return a [BadRequestObjectResult](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.badrequestobjectresult) with the [ModelStateDictionary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.modelbinding.modelstatedictionary). For any other API endpoints, preserve the default behavior by returning the object result with a new [ValidationProblemDetails](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails).
 
 
-Add the [Microsoft.AspNetCore.Mvc?displayProperty=fullName](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc?displayproperty=fullname) namespace to the top of the `Program` file in the main project of the Blazor Web App:
+Add the [Mvc?displayProperty=fullName](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc?displayproperty=fullname) namespace to the top of the `Program` file in the main project of the Blazor Web App:
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
 ```
 
-In the `Program` file, add or update the following [Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) extension method and add the following call to [Microsoft.Extensions.DependencyInjection.MvcCoreMvcBuilderExtensions.ConfigureApiBehaviorOptions *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvccoremvcbuilderextensions.configureapibehavioroptions%2a):
+In the `Program` file, add or update the following [AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) extension method and add the following call to [ConfigureApiBehaviorOptions *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvccoremvcbuilderextensions.configureapibehavioroptions%2a):
 
 ```csharp
 builder.Services.AddControllersWithViews()
@@ -356,7 +356,7 @@ app.MapDefaultControllerRoute();
 ```
 
 > [!NOTE]
-> The preceding example explicitly registers controller services by calling [Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) to automatically [mitigate Cross-Site Request Forgery (XSRF/CSRF) attacks](https://learn.microsoft.com/aspnet/core/security/anti-request-forgery). If you merely use [Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllers *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers%2a), antiforgery isn't enabled automatically.
+> The preceding example explicitly registers controller services by calling [AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) to automatically [mitigate Cross-Site Request Forgery (XSRF/CSRF) attacks](https://learn.microsoft.com/aspnet/core/security/anti-request-forgery). If you merely use [AddControllers *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers%2a), antiforgery isn't enabled automatically.
 
 For more information on controller routing and validation failure error responses, see the following resources:
 
@@ -365,7 +365,7 @@ For more information on controller routing and validation failure error response
 
 In the `.Client` project, add the `CustomValidation` component shown in the [Validator components](#validator-components) section. Update the namespace to match the app (for example, `namespace BlazorSample.Client`).
 
-In the `.Client` project, the `Starfleet Starship Database` form is updated to show server validation errors with help of the `CustomValidation` component. When the server API returns validation messages, they're added to the `CustomValidation` component's [Microsoft.AspNetCore.Components.Forms.ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore). The errors are available in the form's [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) for display by the form's validation summary.
+In the `.Client` project, the `Starfleet Starship Database` form is updated to show server validation errors with help of the `CustomValidation` component. When the server API returns validation messages, they're added to the `CustomValidation` component's [ValidationMessageStore](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessagestore). The errors are available in the form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) for display by the form's validation summary.
 
 In the following component, update the namespace of the shared project (`@using BlazorSample.Shared`) to the shared project's namespace. Note that the form requires authorization, so the user must be signed into the app to navigate to the form.
 
@@ -375,7 +375,7 @@ In the following component, update the namespace of the shared project (`@using 
 
 
 > [!NOTE]
-> Forms based on [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) automatically enable [antiforgery support](/forms/index#antiforgery-support). The controller should use [Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) to register controller services and automatically enable antiforgery support for the web API.
+> Forms based on [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) automatically enable [antiforgery support](/forms/index#antiforgery-support). The controller should use [AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) to register controller services and automatically enable antiforgery support for the web API.
 
 ```razor
 @page "/starship-10"
@@ -506,14 +506,14 @@ In the following component, update the namespace of the shared project (`@using 
 }
 ```
 
-The `.Client` project of a Blazor Web App must also register an [System.Net.Http.HttpClient](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient) for HTTP POST requests to a backend web API controller. Confirm or add the following to the `.Client` project's `Program` file:
+The `.Client` project of a Blazor Web App must also register an [HttpClient](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient) for HTTP POST requests to a backend web API controller. Confirm or add the following to the `.Client` project's `Program` file:
 
 ```csharp
 builder.Services.AddScoped(sp => 
     new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 ```
 
-The preceding example sets the base address with `builder.HostEnvironment.BaseAddress` ([Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment.BaseAddress *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment.baseaddress%2a?displayproperty=namewithtype)), which gets the base address for the app and is typically derived from the `<base>` tag's `href` value in the host page.
+The preceding example sets the base address with `builder.HostEnvironment.BaseAddress` ([BaseAddress *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment.baseaddress%2a?displayproperty=namewithtype)), which gets the base address for the app and is typically derived from the `<base>` tag's `href` value in the host page.
 
 <!--
 :::code language="razor" source="~/../blazor-samples/8.0/BlazorWebAppSample/Components/Pages/Starship10.razor":::
@@ -526,12 +526,12 @@ The preceding example sets the base address with `builder.HostEnvironment.BaseAd
 -->
 
 > [!NOTE]
-> As an alternative to the use of a [validation component](#validator-components), data annotation validation attributes can be used. Custom attributes applied to the form's model activate with the use of the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, the attributes must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
+> As an alternative to the use of a [validation component](#validator-components), data annotation validation attributes can be used. Custom attributes applied to the form's model activate with the use of the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, the attributes must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
 
 
 ## `InputText` based on the input event
 
-Use the [Microsoft.AspNetCore.Components.Forms.InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) component to create a custom component that uses the `oninput` event ([`input`](https://developer.mozilla.org/docs/Web/API/HTMLElement/input_event)) instead of the `onchange` event ([`change`](https://developer.mozilla.org/docs/Web/API/HTMLElement/change_event)). Use of the `input` event triggers field validation on each keystroke.
+Use the [InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) component to create a custom component that uses the `oninput` event ([`input`](https://developer.mozilla.org/docs/Web/API/HTMLElement/input_event)) instead of the `onchange` event ([`change`](https://developer.mozilla.org/docs/Web/API/HTMLElement/change_event)). Use of the `input` event triggers field validation on each keystroke.
 
 The following `CustomInputText` component inherits the framework's `InputText` component and sets event binding to the `oninput` event ([`input`](https://developer.mozilla.org/docs/Web/API/HTMLElement/input_event)).
 
@@ -539,7 +539,7 @@ The following `CustomInputText` component inherits the framework's `InputText` c
 
 :::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/CustomInputText.razor":::
 
-The `CustomInputText` component can be used anywhere [Microsoft.AspNetCore.Components.Forms.InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) is used. The following  component uses the shared `CustomInputText` component.
+The `CustomInputText` component can be used anywhere [InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) is used. The following  component uses the shared `CustomInputText` component.
 
 `Starship11.razor`:
 
@@ -558,7 +558,7 @@ The `CustomInputText` component can be used anywhere [Microsoft.AspNetCore.Compo
 
 ## Validation Summary and Validation Message components
 
-The [Microsoft.AspNetCore.Components.Forms.ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component summarizes all validation messages, which is similar to the [Validation Summary Tag Helper](https://learn.microsoft.com/aspnet/core/mvc/views/working-with-forms#the-validation-summary-tag-helper):
+The [ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component summarizes all validation messages, which is similar to the [Validation Summary Tag Helper](https://learn.microsoft.com/aspnet/core/mvc/views/working-with-forms#the-validation-summary-tag-helper):
 
 ```razor
 <ValidationSummary />
@@ -570,13 +570,13 @@ Output validation messages for a specific model with the `Model` parameter:
 <ValidationSummary Model="Model" />
 ```
 
-The [Microsoft.AspNetCore.Components.Forms.ValidationMessage`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessage%601) component displays validation messages for a specific field, which is similar to the [Validation Message Tag Helper](https://learn.microsoft.com/aspnet/core/mvc/views/working-with-forms#the-validation-message-tag-helper). Specify the field for validation with the [Microsoft.AspNetCore.Components.Forms.ValidationMessage`1.For *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessage%601.for%2a) attribute and a lambda expression naming the model property:
+The [ValidationMessage`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessage%601) component displays validation messages for a specific field, which is similar to the [Validation Message Tag Helper](https://learn.microsoft.com/aspnet/core/mvc/views/working-with-forms#the-validation-message-tag-helper). Specify the field for validation with the [For *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessage%601.for%2a) attribute and a lambda expression naming the model property:
 
 ```razor
 <ValidationMessage For="@(() => Model!.MaximumAccommodation)" />
 ```
 
-The [Microsoft.AspNetCore.Components.Forms.ValidationMessage`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessage%601) and [Microsoft.AspNetCore.Components.Forms.ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) components support arbitrary attributes. Any attribute that doesn't match a component parameter is added to the generated `<div>` or `<ul>` element.
+The [ValidationMessage`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationmessage%601) and [ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) components support arbitrary attributes. Any attribute that doesn't match a component parameter is added to the generated `<div>` or `<ul>` element.
 
 Control the style of validation messages in the app's stylesheet (`wwwroot/css/app.css` or `wwwroot/css/site.css`). The default `validation-message` class sets the text color of validation messages to red:
 
@@ -589,7 +589,7 @@ Control the style of validation messages in the app's stylesheet (`wwwroot/css/a
 
 ## Determine if a form field is valid
 
-Use [Microsoft.AspNetCore.Components.Forms.EditContext.IsValid *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.isvalid%2a?displayproperty=namewithtype) to determine if a field is valid without obtaining validation messages.
+Use [IsValid *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.isvalid%2a?displayproperty=namewithtype) to determine if a field is valid without obtaining validation messages.
 
 <span aria-hidden="true">❌</span> Supported, but not recommended:
 
@@ -606,7 +606,7 @@ var isValid = editContext.IsValid(fieldIdentifier);
 
 ## Custom validation attributes
 
-To ensure that a validation result is correctly associated with a field when using a [custom validation attribute](https://learn.microsoft.com/aspnet/core/mvc/models/validation#custom-attributes), pass the validation context's [System.ComponentModel.DataAnnotations.ValidationContext.MemberName](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validationcontext.membername) when creating the [System.ComponentModel.DataAnnotations.ValidationResult](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validationresult).
+To ensure that a validation result is correctly associated with a field when using a [custom validation attribute](https://learn.microsoft.com/aspnet/core/mvc/models/validation#custom-attributes), pass the validation context's [MemberName](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validationcontext.membername) when creating the [ValidationResult](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validationresult).
 
 `CustomValidator.cs`:
 
@@ -671,7 +671,7 @@ public class CustomValidator : ValidationAttribute
 
 :::moniker-end
 
-Inject services into custom validation attributes through the [System.ComponentModel.DataAnnotations.ValidationContext](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validationcontext). The following example demonstrates a salad chef form that validates user input with dependency injection (DI).
+Inject services into custom validation attributes through the [ValidationContext](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validationcontext). The following example demonstrates a salad chef form that validates user input with dependency injection (DI).
 
 The `SaladChef` class indicates the approved starship ingredient list for a Ten Forward salad.
 
@@ -728,7 +728,7 @@ Add the following CSS classes to the app's stylesheet:
 }
 ```
 
-Create a class derived from [Microsoft.AspNetCore.Components.Forms.FieldCssClassProvider](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.fieldcssclassprovider) that checks for field validation messages and applies the appropriate valid or invalid style.
+Create a class derived from [FieldCssClassProvider](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.fieldcssclassprovider) that checks for field validation messages and applies the appropriate valid or invalid style.
 
 `CustomFieldClassProvider.cs`:
 
@@ -776,7 +776,7 @@ public class CustomFieldClassProvider : FieldCssClassProvider
 :::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/CustomFieldClassProvider.cs":::
 -->
 
-Set the `CustomFieldClassProvider` class as the Field CSS Class Provider on the form's [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) instance with [Microsoft.AspNetCore.Components.Forms.EditContextFieldClassExtensions.SetFieldCssClassProvider *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontextfieldclassextensions.setfieldcssclassprovider%2a).
+Set the `CustomFieldClassProvider` class as the Field CSS Class Provider on the form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) instance with [SetFieldCssClassProvider *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontextfieldclassextensions.setfieldcssclassprovider%2a).
 
 `Starship13.razor`:
 
@@ -921,7 +921,7 @@ Add the `Description` to the `CustomValidationForm` component's form:
 <InputText @bind-Value="Model!.Description" />
 ```
 
-Update the [Microsoft.AspNetCore.Components.Forms.EditForm.EditContext *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext%2a) instance in the component's `OnInitialized` method to use the new Field CSS Class Provider:
+Update the [EditContext *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext%2a) instance in the component's `OnInitialized` method to use the new Field CSS Class Provider:
 
 ```csharp
 editContext?.SetFieldCssClassProvider(new CustomFieldClassProvider2());
@@ -1020,7 +1020,7 @@ public class CustomFieldClassProvider3 : FieldCssClassProvider
 :::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/CustomFieldClassProvider3.cs":::
 -->
 
-Update the [Microsoft.AspNetCore.Components.Forms.EditForm.EditContext *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext%2a) instance in the component's `OnInitialized` method to use the preceding Field CSS Class Provider:
+Update the [EditContext *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext%2a) instance in the component's `OnInitialized` method to use the preceding Field CSS Class Provider:
 
 ```csharp
 editContext.SetFieldCssClassProvider(new CustomFieldClassProvider3());
@@ -1035,7 +1035,7 @@ Using `CustomFieldClassProvider3`:
 
 ## Class-level validation with `IValidatableObject`
 
-[Class-level validation with `IValidatableObject`](https://learn.microsoft.com/aspnet/core/mvc/models/validation#ivalidatableobject) ([API documentation](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject)) is supported for Blazor form models. [System.ComponentModel.DataAnnotations.IValidatableObject](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject) validation only executes when the form is submitted and only if all other validation succeeds.
+[Class-level validation with `IValidatableObject`](https://learn.microsoft.com/aspnet/core/mvc/models/validation#ivalidatableobject) ([API documentation](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject)) is supported for Blazor form models. [IValidatableObject](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject) validation only executes when the form is submitted and only if all other validation succeeds.
 
 :::moniker range="< aspnetcore-10.0"
 
@@ -1044,10 +1044,10 @@ Using `CustomFieldClassProvider3`:
 > [!NOTE]
 > The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) is no longer recommended for apps that target .NET 10 or later. For more information, see the [Nested objects, collection types, and complex types](#nested-objects-collection-types-and-complex-types) section.
 
-The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) fills validation experience gaps using the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. The package is currently *experimental*.
+The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) fills validation experience gaps using the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. The package is currently *experimental*.
 
 > [!WARNING]
-> The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) has a latest version of *release candidate* at [NuGet.org](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation). Continue to use the *experimental* release candidate package at this time. Experimental features are provided for the purpose of exploring feature viability and may not ship in a stable version. Watch the [Announcements GitHub repository](https://github.com/aspnet/Announcements), the [`dotnet/aspnetcore` GitHub repository](https://github.com/dotnet/aspnetcore), or this topic section for further updates.
+> The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) has a latest version of *release candidate* at [org](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation). Continue to use the *experimental* release candidate package at this time. Experimental features are provided for the purpose of exploring feature viability and may not ship in a stable version. Watch the [Announcements GitHub repository](https://github.com/aspnet/Announcements), the [`dotnet/aspnetcore` GitHub repository](https://github.com/dotnet/aspnetcore), or this topic section for further updates.
 
 :::moniker-end
 
@@ -1055,7 +1055,7 @@ The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https
 
 ## `[CompareProperty]` attribute
 
-The [System.ComponentModel.DataAnnotations.CompareAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.compareattribute) doesn't work well with the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component because the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) doesn't associate the validation result with a specific member. This can result in inconsistent behavior between field-level validation and when the entire model is validated on a submit. The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` *experimental* package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) introduces an additional validation attribute, `ComparePropertyAttribute`, that works around these limitations. In a Blazor app, `[CompareProperty]` is a direct replacement for the [`[Compare]` attribute](xref:System.ComponentModel.DataAnnotations.CompareAttribute).
+The [CompareAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.compareattribute) doesn't work well with the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component because the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) doesn't associate the validation result with a specific member. This can result in inconsistent behavior between field-level validation and when the entire model is validated on a submit. The [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` *experimental* package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) introduces an additional validation attribute, `ComparePropertyAttribute`, that works around these limitations. In a Blazor app, `[CompareProperty]` is a direct replacement for the [`[Compare]` attribute](xref:System.ComponentModel.DataAnnotations.CompareAttribute).
 
 :::moniker-end
 
@@ -1063,19 +1063,19 @@ The [System.ComponentModel.DataAnnotations.CompareAttribute](https://learn.micro
 
 ## Nested objects and collection types
 
-Blazor form validation includes support for validating properties of nested objects and collection items with the built-in [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator).
+Blazor form validation includes support for validating properties of nested objects and collection items with the built-in [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator).
 
-To create a validated form, use a [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component inside an [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) component.
+To create a validated form, use a [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component inside an [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) component.
 
 To opt into the nested objects and collection types validation feature:
 
-1. Call the [Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a) extension method in the `Program` file where services are registered.
+1. Call the [AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a) extension method in the `Program` file where services are registered.
 2. Declare the form model types in a C# class file, not in a Razor component (`.razor`).
 3. Annotate the root form model type with the [`[ValidatableType]` attribute](xref:Microsoft.Extensions.Validation.ValidatableTypeAttribute).
 
 The following example demonstrates customer orders with nested collection form validation.
 
-In `Program.cs`, call [Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a) on the service collection:
+In `Program.cs`, call [AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a) on the service collection:
 
 ```csharp
 builder.Services.AddValidation();
@@ -1142,7 +1142,7 @@ public class ShippingAddress
 }
 ```
 
-In the following `OrderPage` component, the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component is present in the [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) component.
+In the following `OrderPage` component, the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component is present in the [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) component.
 
 `OrderPage.razor`:
 
@@ -1180,9 +1180,9 @@ For guidance on using validation models from a different assembly, see the [Use 
 ## Nested objects, collection types, and complex types
 
 > [!NOTE]
-> For apps targeting .NET 10 or later, we no longer recommend using the [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` *experimental* package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) and approach described in this section. We recommend using the built-in validation features of the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component.
+> For apps targeting .NET 10 or later, we no longer recommend using the [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` *experimental* package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) and approach described in this section. We recommend using the built-in validation features of the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component.
 
-Blazor provides support for validating form input using data annotations with the built-in [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator). However, the [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) in .NET 9 or earlier only validates top-level properties of the model bound to the form that aren't collection- or complex-type properties.
+Blazor provides support for validating form input using data annotations with the built-in [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator). However, the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) in .NET 9 or earlier only validates top-level properties of the model bound to the form that aren't collection- or complex-type properties.
 
 To validate the bound model's entire object graph, including collection- and complex-type properties, use the `ObjectGraphDataAnnotationsValidator` provided by the *experimental* [`Microsoft.AspNetCore.Components.DataAnnotations.Validation` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation) in .NET 9 or earlier:
 
@@ -1243,8 +1243,8 @@ public class ShipDescription
 For model validation defined in a different assembly, such as a library or the `.Client` project of a Blazor Web App:
 
 * If the library is a plain class library (it isn't based on the `Microsoft.NET.Sdk.Web` or `Microsoft.NET.Sdk.Razor` SDKs), add a package reference to the library for the [`Microsoft.Extensions.Validation` NuGet package](https://www.nuget.org/packages/Microsoft.Extensions.Validation). Additional steps are required for plain class libraries, which are described later in this section.
-* Create a method in the library or `.Client` project that receives an [Microsoft.Extensions.DependencyInjection.IServiceCollection](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection) instance as an argument and calls [Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a) on it.
-* In the app, call both the method and [Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a).
+* Create a method in the library or `.Client` project that receives an [IServiceCollection](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.iservicecollection) instance as an argument and calls [AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a) on it.
+* In the app, call both the method and [AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a).
 
 The preceding approach results in validation of the types from both assemblies.
 
@@ -1265,7 +1265,7 @@ public static class ServiceCollectionExtensions
 }
 ```
 
-In the server project's `Program` file, add the namespace and call the `.Client` project's service collection extension method (`AddValidationForTypesInClient`) and [Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a):
+In the server project's `Program` file, add the namespace and call the `.Client` project's service collection extension method (`AddValidationForTypesInClient`) and [AddValidation *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.validationservicecollectionextensions.addvalidation%2a):
 
 ```csharp
 using BlazorSample.Client.Extensions;
@@ -1280,7 +1280,7 @@ builder.Services.AddValidation();
                    is updated for plain class libs upon 
                    experimental status dropping at 11.0 -->
 
-The new attributes from the `Microsoft.Extensions.Validation` package ([Microsoft.Extensions.Validation.ValidatableTypeAttribute](https://learn.microsoft.com/dotnet/api/microsoft.extensions.validation.validatabletypeattribute) and [Microsoft.Extensions.Validation.SkipValidationAttribute](https://learn.microsoft.com/dotnet/api/microsoft.extensions.validation.skipvalidationattribute)) are published as *experimental* in .NET 10. The package is intended to provide a new shared infrastructure for validation features across frameworks, and publishing experimental types provides greater flexibility for the final design of the public API for better support in consuming frameworks.
+The new attributes from the `Microsoft.Extensions.Validation` package ([ValidatableTypeAttribute](https://learn.microsoft.com/dotnet/api/microsoft.extensions.validation.validatabletypeattribute) and [SkipValidationAttribute](https://learn.microsoft.com/dotnet/api/microsoft.extensions.validation.skipvalidationattribute)) are published as *experimental* in .NET 10. The package is intended to provide a new shared infrastructure for validation features across frameworks, and publishing experimental types provides greater flexibility for the final design of the public API for better support in consuming frameworks.
 
 In Blazor apps, types are made available via a generated embedded attribute. If a web app project that uses the `Microsoft.NET.Sdk.Web` SDK (`<Project Sdk="Microsoft.NET.Sdk.Web">`) or an RCL that uses the `Microsoft.NET.Sdk.Razor` SDK (`<Project Sdk="Microsoft.NET.Sdk.Razor">`) contains Razor components (`.razor`), the framework automatically generates an internal attribute inside the project (`Microsoft.Extensions.Validation.Embedded.ValidatableType`, `Microsoft.Extensions.Validation.Embedded.SkipValidation`). These types are interchangeable with the actual attributes and not marked experimental. In the majority of cases, developers use the `[ValidatableType]`/`[SkipValidation]` attributes on their classes without concern over their source.
 
@@ -1337,12 +1337,12 @@ Whichever approach is adopted, denote the presence of the workaround for a futur
 To enable and disable the submit button based on form validation, the following example:
 
 * Uses a shortened version of the earlier `Starfleet Starship Database` form (`Starship3` component) of the [Example form](https://learn.microsoft.com/aspnet/core/blazor/forms/input-components#example-form) section of the *Input components* article that only accepts a value for the ship's Id. The other `Starship` properties receive valid default values when an instance of the `Starship` type is created.
-* Uses the form's [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) to assign the model when the component is initialized.
-* Validates the form in the context's [Microsoft.AspNetCore.Components.Forms.EditContext.OnFieldChanged](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onfieldchanged) callback to enable and disable the submit button.
-* Implements [System.IDisposable](https://learn.microsoft.com/dotnet/api/system.idisposable) and unsubscribes the event handler in the `Dispose` method. For more information, see [component-disposal](https://learn.microsoft.com/aspnet/core/blazor/components/component-disposal).
+* Uses the form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) to assign the model when the component is initialized.
+* Validates the form in the context's [OnFieldChanged](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.onfieldchanged) callback to enable and disable the submit button.
+* Implements [IDisposable](https://learn.microsoft.com/dotnet/api/system.idisposable) and unsubscribes the event handler in the `Dispose` method. For more information, see [component-disposal](https://learn.microsoft.com/aspnet/core/blazor/components/component-disposal).
 
 > [!NOTE]
-> When assigning to the [Microsoft.AspNetCore.Components.Forms.EditForm.EditContext?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext?displayproperty=namewithtype), don't also assign an [Microsoft.AspNetCore.Components.Forms.EditForm.Model?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.model?displayproperty=namewithtype) to the [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform).
+> When assigning to the [EditContext?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext?displayproperty=namewithtype), don't also assign an [Model?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.model?displayproperty=namewithtype) to the [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform).
 
 `Starship14.razor`:
 
@@ -1361,10 +1361,10 @@ To enable and disable the submit button based on form validation, the following 
 
 If a form isn't preloaded with valid values and you wish to disable the **`Submit`** button on form load, set `formInvalid` to `true`.
 
-A side effect of the preceding approach is that a validation summary ([Microsoft.AspNetCore.Components.Forms.ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component) is populated with invalid fields after the user interacts with any one field. Address this scenario in either of the following ways:
+A side effect of the preceding approach is that a validation summary ([ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component) is populated with invalid fields after the user interacts with any one field. Address this scenario in either of the following ways:
 
-* Don't use a [Microsoft.AspNetCore.Components.Forms.ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component on the form.
-* Make the [Microsoft.AspNetCore.Components.Forms.ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component visible when the submit button is selected (for example, in a `Submit` method).
+* Don't use a [ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component on the form.
+* Make the [ValidationSummary](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.validationsummary) component visible when the submit button is selected (for example, in a `Submit` method).
 
 ```razor
 <EditForm ... EditContext="editContext" OnValidSubmit="Submit" ...>
@@ -1392,11 +1392,11 @@ A side effect of the preceding approach is that a validation summary ([Microsoft
 
 ## `DataAnnotationsValidator` validation behavior
 
-The [Microsoft.AspNetCore.Components.Forms.DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component has the same validation order and short-circuiting behavior as [System.ComponentModel.DataAnnotations.Validator?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validator?displayproperty=namewithtype). The following rules are applied when validating an instance of type `T`:
+The [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component has the same validation order and short-circuiting behavior as [Validator?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.validator?displayproperty=namewithtype). The following rules are applied when validating an instance of type `T`:
 
 1. Member properties of `T` are validated, including recursively validating nested objects.
 1. Type-level attributes of `T` are validated.
-1. The [System.ComponentModel.DataAnnotations.IValidatableObject.Validate *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject.validate%2a?displayproperty=namewithtype) method is executed, if `T` implements it.
+1. The [Validate *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject.validate%2a?displayproperty=namewithtype) method is executed, if `T` implements it.
 
 If one of the preceding steps produces a validation error, the remaining steps are skipped.
 
