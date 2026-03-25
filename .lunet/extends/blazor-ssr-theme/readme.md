@@ -17,26 +17,26 @@ Reference the template and set project values:
 ```scriban
 extend "lunet-io/lunet_template"
 
-site_project_name = "MyProject"
-site_project_description = "Short project description."
-site_project_logo_path = "/img/myproject-logo.png"
-site_project_social_banner_path = "/img/myproject-banner.png"
-site_project_banner_background_path = "/img/myproject-banner-background.png"
-site_project_package_id = "MyProject"
-site_project_github_user = "org"
-site_project_github_repo = "myproject"
-site_project_basepath = "/myproject"
+site.project_name = "MyProject"
+site.project_description = "Short project description."
+site.project_logo_path = "/img/myproject-logo.png"
+site.project_social_banner_path = "/img/myproject-banner.png"
+site.project_banner_background_path = "/img/myproject-banner-background.png"
+site.project_package_id = "MyProject"
+site.project_github_user = "org"
+site.project_github_repo = "myproject"
+site.project_basepath = "/myproject"
 
 # Optional: override the default favicon path (/favicon.ico)
-site_project_favicon_path = "/favicon.ico"
+site.project_favicon_path = "/favicon.ico"
 
-site_project_init
+site.project_init
 ```
 
 Notes:
 
-- `site_project_logo_path` defaults to `/img/lunet-logo.png` if not set.
-- Favicon defaults to `/favicon.ico`. Keep a file there, or override `site_project_favicon_path`.
+- `site.project_logo_path` defaults to `/img/lunet-logo.png` if not set.
+- Favicon defaults to `/favicon.ico`. Keep a file there, or override `site.project_favicon_path`.
 
 ### Theme defaults
 
@@ -55,14 +55,14 @@ Customize through your own site files and `config.scriban` only.
 
 ### Naming conventions (to avoid confusion)
 
-- `site_project_*`: **project inputs** you set in your site `config.scriban` (name, repo, owner, assets…).
+- `site.project_*`: **project inputs** you set in your site `config.scriban` (name, repo, owner, assets…).
 - `template_*`: **theme customization** knobs (labels, theme mode, extra override styles…).
-- `project_*`: **resolved values** computed by `site_project_init` and used by the theme layouts (don’t set these manually).
-- Lunet core variables like `baseurl`, `basepath`, `title`, `description`, `author` are set by `site_project_init` (but you can also override them directly if needed).
+- `project_*`: **resolved values** computed by `site.project_init` and used by the theme layouts (don’t set these manually).
+- Lunet core variables like `baseurl`, `basepath`, `title`, `description`, `author` are set by `site.project_init` (but you can also override them directly if needed).
 
 ### Theme variables (`config.scriban`)
 
-Set these variables before calling `site_project_init`:
+Set these variables before calling `site.project_init`:
 
 {.table}
 | Variable | Type | Default | Meaning |
@@ -78,23 +78,23 @@ These variables are project/site metadata used by the theme:
 {.table}
 | Variable | Example | Used for |
 |---|---:|---|
-| `site_project_name` | `"MyProject"` | Site title/branding. |
-| `site_project_description` | `"Short description"` | Homepage and social metadata. |
-| `site_project_logo_path` | `"/img/myproject-logo.png"` | Navbar logo. |
-| `site_project_social_banner_path` | `"/img/myproject-banner.png"` | Social/OG image. |
-| `site_project_banner_background_path` | `"/img/myproject-banner-background.png"` | Homepage banner background. |
-| `site_project_package_id` | `"MyProject"` | Package display/links (when enabled). |
-| `site_project_baseurl` | `"https://example.com"` | Canonical URL used for `lunet build` (do not set core `baseurl`; `lunet serve` uses localhost). |
-| `site_project_github_user` | `"org"` | GitHub org/user (used to build repo URLs). |
-| `site_project_github_repo` | `"myproject"` | GitHub repo name (used to build repo URLs). |
-| `site_project_basepath` | `"/myproject"` | Base path when hosted under a sub-path (e.g. GitHub Pages project site). |
-| `site_project_favicon_path` | `"/favicon.ico"` | Favicon path used by the theme `<head>` includes. |
-| `site_project_owner_name` | `"Your Name"` | Footer ownership + author metadata. |
-| `site_project_owner_alias` | `"your-handle"` | Footer ownership alias (linked). |
-| `site_project_owner_url` | `"https://example.com"` | Footer ownership link target. |
-| `site_project_content_license_name` | `"CC BY 2.5"` | Footer content license label. |
-| `site_project_content_license_url` | `"http://creativecommons.org/licenses/by/2.5/"` | Footer content license link target. |
-| `site_project_twitter_user` | `"your-handle"` | Twitter card metadata. |
+| `site.project_name` | `"MyProject"` | Site title/branding. |
+| `site.project_description` | `"Short description"` | Homepage and social metadata. |
+| `site.project_logo_path` | `"/img/myproject-logo.png"` | Navbar logo. |
+| `site.project_social_banner_path` | `"/img/myproject-banner.png"` | Social/OG image. |
+| `site.project_banner_background_path` | `"/img/myproject-banner-background.png"` | Homepage banner background. |
+| `site.project_package_id` | `"MyProject"` | Package display/links (when enabled). |
+| `site.project_baseurl` | `"https://example.com"` | Canonical URL used for `lunet build` (do not set core `baseurl`; `lunet serve` uses localhost). |
+| `site.project_github_user` | `"org"` | GitHub org/user (used to build repo URLs). |
+| `site.project_github_repo` | `"myproject"` | GitHub repo name (used to build repo URLs). |
+| `site.project_basepath` | `"/myproject"` | Base path when hosted under a sub-path (e.g. GitHub Pages project site). |
+| `site.project_favicon_path` | `"/favicon.ico"` | Favicon path used by the theme `<head>` includes. |
+| `site.project_owner_name` | `"Your Name"` | Footer ownership + author metadata. |
+| `site.project_owner_alias` | `"your-handle"` | Footer ownership alias (linked). |
+| `site.project_owner_url` | `"https://example.com"` | Footer ownership link target. |
+| `site.project_content_license_name` | `"CC BY 2.5"` | Footer content license label. |
+| `site.project_content_license_url` | `"http://creativecommons.org/licenses/by/2.5/"` | Footer content license link target. |
+| `site.project_twitter_user` | `"your-handle"` | Twitter card metadata. |
 
 ### 1) Configure the theme in `config.scriban`
 
@@ -105,17 +105,17 @@ template_theme_default_mode = "system"   # system, light, dark
 template_theme_storage_key = "lunet-theme"
 template_theme_override_styles = ["/css/theme-overrides.scss"]
 
-site_project_name = "MyProject"
-site_project_description = "Short project description."
-site_project_logo_path = "/img/myproject-logo.png"
-site_project_social_banner_path = "/img/myproject-banner.png"
-site_project_banner_background_path = "/img/myproject-banner-background.png"
-site_project_package_id = "MyProject"
-site_project_github_user = "org"
-site_project_github_repo = "myproject"
-site_project_basepath = "/myproject"
+site.project_name = "MyProject"
+site.project_description = "Short project description."
+site.project_logo_path = "/img/myproject-logo.png"
+site.project_social_banner_path = "/img/myproject-banner.png"
+site.project_banner_background_path = "/img/myproject-banner-background.png"
+site.project_package_id = "MyProject"
+site.project_github_user = "org"
+site.project_github_repo = "myproject"
+site.project_basepath = "/myproject"
 
-site_project_init
+site.project_init
 ```
 
 `template_theme_override_styles` is the supported extension point to load your site-owned styles after the theme styles.
