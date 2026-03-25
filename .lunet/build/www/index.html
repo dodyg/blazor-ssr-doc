@@ -3,25 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="lunet 1.0.12.0">
+    <meta name="generator" content="lunet 1.0.10.0">
     <script>(function(){const root=document.documentElement;const key=root.getAttribute("data-lunet-theme-storage-key")||"lunet-theme";const fallback=root.getAttribute("data-lunet-theme-mode")||"system";let stored=null;try{stored=localStorage.getItem(key);}catch(_){stored=null;}const mode=(stored==="light"||stored==="dark"||stored==="system")?stored:fallback;const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;const resolved=mode==="system"?(prefersDark?"dark":"light"):mode;root.setAttribute("data-lunet-theme-mode",mode);root.setAttribute("data-bs-theme",resolved);}());</script>
     <link rel='icon' href='/favicon.ico' sizes='32x32'>
-    <title>Blazor SSR Documentation</title>
+    <title>Blazor SSR Documentation | Blazor SSR Documentation</title>
     <link rel="stylesheet" href="/css/site.css">
     <script src="/js/site.js" ></script>
     <script src="/js/site-defer.js" defer></script>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@your-handle">
-<meta name="twitter:title" content="Blazor SSR Documentation">
-<meta name="twitter:description" content="New Website Quickstart This is the default landing page for a new website using this template. Use it as a setup checklist, then replace it with your real homepage content. 1) Create config.scriban Reference the template and set project values: extend &quot;lunet-io/lunet_template&quot; site_project_name = &quot;MyProject&quot; site_project_description = &quot;Short project description.&quot; site_project_logo_path = &quot;/img/myproject-logo.png&quot; site_project_social_banner_path = &quot;/img/myproject-banner.png&quot; site_project_banner_background_path = &quot;/img/myproject-banner-background.png&quot; site_project_package_id = &quot;MyProject&quot; site_project_github_user = &quot;org&quot; site_project_github_repo = &quot;myproject&quot; site_project_basepath =...">
-<meta name="twitter:image" content="https://example.com/img/project-banner.png">
-<meta name="twitter:image:alt" content="Blazor SSR Documentation">
-<meta property="og:title" content="Blazor SSR Documentation">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://example.com/">
-<meta property="og:description" content="New Website Quickstart This is the default landing page for a new website using this template. Use it as a setup checklist, then replace it with your real homepage content. 1) Create config.scriban Reference the template and set project values: extend &quot;lunet-io/lunet_template&quot; site_project_name = &quot;MyProject&quot; site_project_description = &quot;Short project description.&quot; site_project_logo_path = &quot;/img/myproject-logo.png&quot; site_project_social_banner_path = &quot;/img/myproject-banner.png&quot; site_project_banner_background_path = &quot;/img/myproject-banner-background.png&quot; site_project_package_id = &quot;MyProject&quot; site_project_github_user = &quot;org&quot; site_project_github_repo = &quot;myproject&quot; site_project_basepath =...">
-<meta property="og:image" content="https://example.com/img/project-banner.png">
-<meta property="og:image:alt" content="Blazor SSR Documentation">
+<meta name="twitter:title" content="Blazor SSR Documentation | Blazor SSR Documentation">
+<meta name="twitter:description" content="Welcome to Blazor SSR Documentation Your comprehensive guide to Blazor Server-Side Rendering (SSR), also known as static rendering. What is Blazor SSR? Blazor SSR (Server-Side Rendering) is a hosting model for Blazor applications where components are rendered on the server and delivered as static HTML to the browser. This approach offers: Fast Initial Load: HTML is rendered server-side and delivered immediately SEO-Friendly: Content is available to search engines without JavaScript...">
+<meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
+<meta name="twitter:image:alt" content="Blazor SSR Documentation | Blazor SSR Documentation">
+<meta property="og:title" content="Blazor SSR Documentation | Blazor SSR Documentation">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:description" content="Welcome to Blazor SSR Documentation Your comprehensive guide to Blazor Server-Side Rendering (SSR), also known as static rendering. What is Blazor SSR? Blazor SSR (Server-Side Rendering) is a hosting model for Blazor applications where components are rendered on the server and delivered as static HTML to the browser. This approach offers: Fast Initial Load: HTML is rendered server-side and delivered immediately SEO-Friendly: Content is available to search engines without JavaScript...">
+<meta property="og:image" content="http://localhost:4000/img/project-banner.png">
+<meta property="og:image:alt" content="Blazor SSR Documentation | Blazor SSR Documentation">
+    <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
   </head>
   <body>
 
@@ -100,421 +101,302 @@
       <div class="lunet lunet-home">
         <section data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-timeout="1200" data-copy-tooltip="Copy to Clipboard." data-copy-tooltip-success="Copied!" data-copy-tooltip-error="Failed to copy!">
 
-<div class="container">
+<div class="container-xxl">
+  <div class="row">
+      <!-- Left sidebar - responsive offcanvas (offcanvas on mobile, visible sidebar on md+) -->
+      <nav id="docs-sidebar-menu" class="col-md-3 col-lg-3 col-xl-3 col-xxl-2 offcanvas-md offcanvas-start sticky-md-top menu-sidebar align-self-start order-1 order-md-0" tabindex="-1" aria-labelledby="docs-sidebar-menu-label" aria-expanded="true">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="docs-sidebar-menu-label">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#docs-sidebar-menu" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class='lunet-menu-async' data-lunet-menu-partial='/partials/menus/menu-home.cd80dfe53914814e7eafc1c078aba999.html' data-lunet-menu-open='menu-id-home-0' data-lunet-menu-active='menu-item-home-1,menu-item-home-0'><div class='menu-loading text-body-secondary small'>Loading menu…</div></div>
+        </div>
+      </nav>
+      <!-- Right sidebar (TOC) - collapsible on mobile, visible sidebar on xxl+ -->
+      <aside id="docs-sidebar-toc" class="col-12 col-xxl-2 sticky-xxl-top menu-sidebar align-self-start order-0 order-xxl-2 collapse d-xxl-block" aria-expanded="true">
+        <h3 class="toc-title">On this page</h3>
+        <nav class="js-toc"></nav>
+      </aside>
+      <!-- Main content column -->
+      <div class="col-12 col-md-9 col-lg-9 col-xl-9 col-xxl-8 order-2 order-md-1 js-toc-content">
+        <ol class='breadcrumb'>
+          <li class='breadcrumb-item  active'>
+            <i class='bi bi-house-door' aria-hidden='true'></i> Home  </li>
+        </ol>
+
+        <p id="lunet-results"></p>
+        <!-- Toggle buttons visible only on small screens -->
+        <div class="d-md-none mb-3">
+          <button
+            class="btn btn-outline-secondary btn-sm me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#docs-sidebar-menu"
+            aria-controls="docs-sidebar-menu"
+            aria-label="Toggle docs menu">
+            Menu
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-sm d-xxl-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#docs-sidebar-toc"
+            aria-controls="docs-sidebar-toc"
+            aria-expanded="false"
+            aria-label="Toggle Table Of Contents">
+            On this page
+          </button>
+        </div>
 <!-- lunet:summarize -->
-<h1 id="new-website-quickstart">New Website Quickstart</h1>
-<p>This is the default landing page for a new website using this template.</p>
-<p>Use it as a setup checklist, then replace it with your real homepage content.</p>
-<h2 id="1-create-configscriban">1) Create <code>config.scriban</code></h2>
-<p>Reference the template and set project values:</p>
-<pre><code class="language-scriban">extend &quot;lunet-io/lunet_template&quot;
-
-site_project_name = &quot;MyProject&quot;
-site_project_description = &quot;Short project description.&quot;
-site_project_logo_path = &quot;/img/myproject-logo.png&quot;
-site_project_social_banner_path = &quot;/img/myproject-banner.png&quot;
-site_project_banner_background_path = &quot;/img/myproject-banner-background.png&quot;
-site_project_package_id = &quot;MyProject&quot;
-site_project_github_user = &quot;org&quot;
-site_project_github_repo = &quot;myproject&quot;
-site_project_basepath = &quot;/myproject&quot;
-
-# Optional: override the default favicon path (/favicon.ico)
-site_project_favicon_path = &quot;/favicon.ico&quot;
-
-site_project_init
-</code></pre>
-<p>Notes:</p>
+<h1 id="welcome-to-blazor-ssr-documentation">Welcome to Blazor SSR Documentation</h1>
+<blockquote class="blockquote">
+<p>Your comprehensive guide to <strong>Blazor Server-Side Rendering (SSR)</strong>, also known as static rendering.</p>
+</blockquote>
+<h2 id="what-is-blazor-ssr">What is Blazor SSR?</h2>
+<p>Blazor SSR (Server-Side Rendering) is a hosting model for Blazor applications where components are rendered on the server and delivered as static HTML to the browser. This approach offers:</p>
 <ul>
-<li><code>site_project_logo_path</code> defaults to <code>/img/lunet-logo.png</code> if not set.</li>
-<li>Favicon defaults to <code>/favicon.ico</code>. Keep a file there, or override <code>site_project_favicon_path</code>.</li>
+<li><strong>Fast Initial Load</strong>: HTML is rendered server-side and delivered immediately</li>
+<li><strong>SEO-Friendly</strong>: Content is available to search engines without JavaScript execution</li>
+<li><strong>Full .NET Runtime</strong>: Access to complete .NET APIs on the server</li>
+<li><strong>Low Client Requirements</strong>: Works on any browser without WebAssembly support</li>
 </ul>
-<h3 id="theme-defaults">Theme defaults</h3>
-<pre><code class="language-scriban">template_theme_default_mode = &quot;system&quot; # system, light, dark
-template_theme_storage_key = &quot;lunet-theme&quot;
-</code></pre>
-<p>Use the navbar theme button to switch mode at runtime.</p>
-<h2 id="theme-configuration-and-customization-consumer-guide">Theme configuration and customization (consumer guide)</h2>
-<p>When this theme is used from a remote repository, you should treat theme internals as read-only.</p>
-<p>Customize through your own site files and <code>config.scriban</code> only.</p>
-<h3 id="naming-conventions-to-avoid-confusion">Naming conventions (to avoid confusion)</h3>
+<h2 id="two-types-of-ssr">Two Types of SSR</h2>
+<h3 id="1-static-ssr-non-interactive">1. Static SSR (Non-Interactive)</h3>
+<p>Components are rendered to static HTML with <strong>no interactivity</strong>. Perfect for:</p>
 <ul>
-<li><code>site_project_*</code>: <strong>project inputs</strong> you set in your site <code>config.scriban</code> (name, repo, owner, assets…).</li>
-<li><code>template_*</code>: <strong>theme customization</strong> knobs (labels, theme mode, extra override styles…).</li>
-<li><code>project_*</code>: <strong>resolved values</strong> computed by <code>site_project_init</code> and used by the theme layouts (don’t set these manually).</li>
-<li>Lunet core variables like <code>baseurl</code>, <code>basepath</code>, <code>title</code>, <code>description</code>, <code>author</code> are set by <code>site_project_init</code> (but you can also override them directly if needed).</li>
+<li>Content-focused websites</li>
+<li>Blogs and documentation sites</li>
+<li>Marketing pages</li>
+<li>SEO-critical pages</li>
 </ul>
-<h3 id="theme-variables-configscriban">Theme variables (<code>config.scriban</code>)</h3>
-<p>Set these variables before calling <code>site_project_init</code>:</p>
-<table class="table">
-<thead>
-<tr>
-<th>Variable</th>
-<th style="text-align: right;">Type</th>
-<th style="text-align: right;">Default</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>template_theme_default_mode</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><code>&quot;system&quot;</code></td>
-<td>Initial theme mode (<code>&quot;system&quot;</code>, <code>&quot;light&quot;</code>, <code>&quot;dark&quot;</code>).</td>
-</tr>
-<tr>
-<td><code>template_theme_storage_key</code></td>
-<td style="text-align: right;">string</td>
-<td style="text-align: right;"><code>&quot;lunet-theme&quot;</code></td>
-<td>LocalStorage key used by the theme switcher.</td>
-</tr>
-<tr>
-<td><code>template_theme_override_styles</code></td>
-<td style="text-align: right;">list of strings</td>
-<td style="text-align: right;"><code>[]</code></td>
-<td>Site-owned stylesheet paths bundled <strong>after</strong> the theme CSS (recommended way to override colors).</td>
-</tr>
-</tbody>
-</table>
-<h3 id="project-variables-configscriban">Project variables (<code>config.scriban</code>)</h3>
-<p>These variables are project/site metadata used by the theme:</p>
-<table class="table">
-<thead>
-<tr>
-<th>Variable</th>
-<th style="text-align: right;">Example</th>
-<th>Used for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>site_project_name</code></td>
-<td style="text-align: right;"><code>&quot;MyProject&quot;</code></td>
-<td>Site title/branding.</td>
-</tr>
-<tr>
-<td><code>site_project_description</code></td>
-<td style="text-align: right;"><code>&quot;Short description&quot;</code></td>
-<td>Homepage and social metadata.</td>
-</tr>
-<tr>
-<td><code>site_project_logo_path</code></td>
-<td style="text-align: right;"><code>&quot;/img/myproject-logo.png&quot;</code></td>
-<td>Navbar logo.</td>
-</tr>
-<tr>
-<td><code>site_project_social_banner_path</code></td>
-<td style="text-align: right;"><code>&quot;/img/myproject-banner.png&quot;</code></td>
-<td>Social/OG image.</td>
-</tr>
-<tr>
-<td><code>site_project_banner_background_path</code></td>
-<td style="text-align: right;"><code>&quot;/img/myproject-banner-background.png&quot;</code></td>
-<td>Homepage banner background.</td>
-</tr>
-<tr>
-<td><code>site_project_package_id</code></td>
-<td style="text-align: right;"><code>&quot;MyProject&quot;</code></td>
-<td>Package display/links (when enabled).</td>
-</tr>
-<tr>
-<td><code>site_project_baseurl</code></td>
-<td style="text-align: right;"><code>&quot;https://example.com&quot;</code></td>
-<td>Canonical URL used for <code>lunet build</code> (do not set core <code>baseurl</code>; <code>lunet serve</code> uses localhost).</td>
-</tr>
-<tr>
-<td><code>site_project_github_user</code></td>
-<td style="text-align: right;"><code>&quot;org&quot;</code></td>
-<td>GitHub org/user (used to build repo URLs).</td>
-</tr>
-<tr>
-<td><code>site_project_github_repo</code></td>
-<td style="text-align: right;"><code>&quot;myproject&quot;</code></td>
-<td>GitHub repo name (used to build repo URLs).</td>
-</tr>
-<tr>
-<td><code>site_project_basepath</code></td>
-<td style="text-align: right;"><code>&quot;/myproject&quot;</code></td>
-<td>Base path when hosted under a sub-path (e.g. GitHub Pages project site).</td>
-</tr>
-<tr>
-<td><code>site_project_favicon_path</code></td>
-<td style="text-align: right;"><code>&quot;/favicon.ico&quot;</code></td>
-<td>Favicon path used by the theme <code>&lt;head&gt;</code> includes.</td>
-</tr>
-<tr>
-<td><code>site_project_owner_name</code></td>
-<td style="text-align: right;"><code>&quot;Your Name&quot;</code></td>
-<td>Footer ownership + author metadata.</td>
-</tr>
-<tr>
-<td><code>site_project_owner_alias</code></td>
-<td style="text-align: right;"><code>&quot;your-handle&quot;</code></td>
-<td>Footer ownership alias (linked).</td>
-</tr>
-<tr>
-<td><code>site_project_owner_url</code></td>
-<td style="text-align: right;"><code>&quot;https://example.com&quot;</code></td>
-<td>Footer ownership link target.</td>
-</tr>
-<tr>
-<td><code>site_project_content_license_name</code></td>
-<td style="text-align: right;"><code>&quot;CC BY 2.5&quot;</code></td>
-<td>Footer content license label.</td>
-</tr>
-<tr>
-<td><code>site_project_content_license_url</code></td>
-<td style="text-align: right;"><code>&quot;http://creativecommons.org/licenses/by/2.5/&quot;</code></td>
-<td>Footer content license link target.</td>
-</tr>
-<tr>
-<td><code>site_project_twitter_user</code></td>
-<td style="text-align: right;"><code>&quot;your-handle&quot;</code></td>
-<td>Twitter card metadata.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="1-configure-the-theme-in-configscriban">1) Configure the theme in <code>config.scriban</code></h3>
-<pre><code class="language-scriban">extend &quot;lunet-io/lunet_template@1.0.0&quot;
+<pre><code class="language-razor">@page &quot;/about&quot;
+@attribute [RenderMode.Static]
 
-template_theme_default_mode = &quot;system&quot;   # system, light, dark
-template_theme_storage_key = &quot;lunet-theme&quot;
-template_theme_override_styles = [&quot;/css/theme-overrides.scss&quot;]
-
-site_project_name = &quot;MyProject&quot;
-site_project_description = &quot;Short project description.&quot;
-site_project_logo_path = &quot;/img/myproject-logo.png&quot;
-site_project_social_banner_path = &quot;/img/myproject-banner.png&quot;
-site_project_banner_background_path = &quot;/img/myproject-banner-background.png&quot;
-site_project_package_id = &quot;MyProject&quot;
-site_project_github_user = &quot;org&quot;
-site_project_github_repo = &quot;myproject&quot;
-site_project_basepath = &quot;/myproject&quot;
-
-site_project_init
+&lt;h1&gt;About Us&lt;/h1&gt;
+&lt;p&gt;This page is rendered as static HTML.&lt;/p&gt;
 </code></pre>
-<p><code>template_theme_override_styles</code> is the supported extension point to load your site-owned styles after the theme styles.</p>
-<p>Notes:</p>
+<h3 id="2-interactive-ssr-server-side">2. Interactive SSR (Server-Side)</h3>
+<p>Components are rendered with <strong>full interactivity</strong> via SignalR. Ideal for:</p>
 <ul>
-<li>Paths in <code>template_theme_override_styles</code> are site URLs (e.g. <code>&quot;/css/theme-overrides.scss&quot;</code>), not filesystem paths.</li>
-<li>Use <code>.scss</code> if you want Sass features (variables, nesting); plain <code>.css</code> also works.</li>
+<li>Interactive web applications</li>
+<li>Real-time updates</li>
+<li>Complex forms and workflows</li>
+<li>Dashboards</li>
 </ul>
-<h3 id="2-create-your-site-level-override-stylesheet">2) Create your site-level override stylesheet</h3>
-<p>Create <code>site/css/theme-overrides.scss</code> in your own project:</p>
-<pre><code class="language-scss">:root[data-bs-theme=&quot;dark&quot;] {
-  /* Core surfaces */
-  --lunet-color-background: #0b1020;
-  --lunet-color-foreground: #e7ecff;
-  --lunet-color-surface-1: #0f1830;
-  --lunet-color-border: rgba(255, 255, 255, 0.10);
+<pre><code class="language-razor">@page &quot;/counter&quot;
+@attribute [RenderMode.InteractiveServer]
+@rendermode InteractiveServer
 
-  /* Accents */
-  --lunet-color-blue: #6ea8ff;
-  --lunet-color-magenta: #ff5bd6;
+&lt;h1&gt;Counter&lt;/h1&gt;
+&lt;p&gt;Current count: @currentCount&lt;/p&gt;
+&lt;button @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
 
-  /* Code (Prism tokens) */
-  --lunet-code-bg: #0b1426;
-  --lunet-prism-text: #e9eeff;
-  --lunet-prism-keyword: #7aa2ff;
-  --lunet-prism-string: #a6e3a1;
-  --lunet-prism-comment: #7c8aa5;
-}
-
-:root[data-bs-theme=&quot;light&quot;] {
-  /* Core surfaces */
-  --lunet-color-background: #f7f9ff;
-  --lunet-color-foreground: #121828;
-  --lunet-color-surface-1: #ffffff;
-  --lunet-color-border: rgba(0, 0, 0, 0.10);
-
-  /* Accents */
-  --lunet-color-blue: #2459d2;
-  --lunet-color-magenta: #b62cff;
-
-  /* Code (Prism tokens) */
-  --lunet-code-bg: #f2f5ff;
-  --lunet-prism-text: #10162a;
-  --lunet-prism-keyword: #305fdf;
-  --lunet-prism-string: #1b7f3a;
-  --lunet-prism-comment: #6a738b;
+@code {
+    private int currentCount = 0;
+    
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
 }
 </code></pre>
-<p>This approach keeps your branding in your site repo while allowing safe theme upgrades.</p>
-<h3 id="3-what-can-be-overridden">3) What can be overridden</h3>
-<p>The theme exposes CSS custom properties (<code>--lunet-*</code>) so you can override without editing theme files.</p>
-<h4 id="core-ui-variables">Core UI variables</h4>
-<p>Commonly overridden variables:</p>
-<table class="table">
-<thead>
-<tr>
-<th>Variable</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--lunet-color-background</code></td>
-<td>Page background.</td>
-</tr>
-<tr>
-<td><code>--lunet-color-foreground</code></td>
-<td>Default text color.</td>
-</tr>
-<tr>
-<td><code>--lunet-color-surface-1</code></td>
-<td>Surface background for cards/blocks.</td>
-</tr>
-<tr>
-<td><code>--lunet-color-border</code></td>
-<td>Default border color.</td>
-</tr>
-<tr>
-<td><code>--lunet-color-blue</code></td>
-<td>Primary accent (links, highlights).</td>
-</tr>
-<tr>
-<td><code>--lunet-color-cyan</code></td>
-<td>Secondary accent.</td>
-</tr>
-<tr>
-<td><code>--lunet-color-magenta</code></td>
-<td>Accent used in gradients/branding.</td>
-</tr>
-<tr>
-<td><code>--lunet-color-green</code> / <code>--lunet-color-yellow</code> / <code>--lunet-color-red</code></td>
-<td>Status/semantic colors.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="prism-syntax-highlighting-variables">Prism (syntax highlighting) variables</h4>
-<p>The Prism theme in this template is driven by variables so it can follow light/dark mode.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Variable</th>
-<th>Used for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--lunet-code-bg</code></td>
-<td>Code block background.</td>
-</tr>
-<tr>
-<td><code>--lunet-code-selection-bg</code></td>
-<td>Text selection background inside code blocks.</td>
-</tr>
-<tr>
-<td><code>--lunet-code-inline-bg</code></td>
-<td>Inline code background.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-text</code></td>
-<td>Default code text.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-inline-color</code></td>
-<td>Inline code text color.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-comment</code></td>
-<td>Comments/doc comments.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-string</code></td>
-<td>Strings/chars.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-number</code></td>
-<td>Numbers.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-keyword</code></td>
-<td>Keywords.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-function</code></td>
-<td>Function names.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-keyword-alt</code></td>
-<td>Secondary keyword color.</td>
-</tr>
-<tr>
-<td><code>--lunet-prism-class-name</code></td>
-<td>Class/type identifiers.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="4-concrete-override-patterns">4) Concrete override patterns</h3>
-<h4 id="make-the-whole-site-slightly-brighter-dark-mode">Make the whole site slightly brighter (dark mode)</h4>
-<pre><code class="language-scss">:root[data-bs-theme=&quot;dark&quot;] {
-  --lunet-color-background: #0c1822;
-  --lunet-color-surface-1: #122235;
-}
-</code></pre>
-<h4 id="change-only-link--gradient-accents">Change only link + gradient accents</h4>
-<pre><code class="language-scss">:root {
-  --lunet-color-blue: #4aa3ff;
-  --lunet-color-magenta: #ff4bd8;
-}
-</code></pre>
-<h4 id="make-code-blocks-more-readable">Make code blocks more readable</h4>
-<pre><code class="language-scss">:root[data-bs-theme=&quot;dark&quot;] {
-  --lunet-code-bg: #0b1426;
-  --lunet-prism-comment: #8b97b2;
-  --lunet-prism-text: #e9eeff;
-}
-</code></pre>
-<h3 id="5-guidance-upgrade-safe-customization">5) Guidance (upgrade-safe customization)</h3>
+<h2 id="why-choose-blazor-ssr">Why Choose Blazor SSR?</h2>
+<h3 id="advantages">Advantages</h3>
+<p>✅ <strong>Fast Time to First Byte (TTFB)</strong> - HTML is rendered on the server<br />
+✅ <strong>Excellent SEO</strong> - Content available immediately to crawlers<br />
+✅ <strong>Full .NET API Access</strong> - Use any .NET library server-side<br />
+✅ <strong>Small Payload</strong> - No WebAssembly runtime to download<br />
+✅ <strong>Thin Client Support</strong> - Works on low-powered devices<br />
+✅ <strong>Code Security</strong> - Application logic stays on the server</p>
+<h3 id="considerations">Considerations</h3>
+<p>⚠️ <strong>Server Resources</strong> - Requires server-side processing<br />
+⚠️ <strong>Network Latency</strong> - User interactions require server round-trip<br />
+⚠️ <strong>No Offline Support</strong> - Requires active server connection</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="prerequisites">Prerequisites</h3>
 <ul>
-<li>Prefer overriding <code>--lunet-*</code> variables over targeting deep selectors (theme internals change more often).</li>
-<li>Keep overrides scoped to your own file(s) referenced by <code>template_theme_override_styles</code>.</li>
-<li>If you need layout changes, do them in your own CSS (but keep them minimal so theme updates don’t break your site).</li>
+<li><a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET 8.0 SDK</a> or later</li>
+<li>Your favorite code editor (Visual Studio, VS Code, etc.)</li>
 </ul>
-<h2 id="2-create-top-navigation-menuyml">2) Create top navigation <code>menu.yml</code></h2>
-<p>Define the left and right navbar menus:</p>
-<pre><code class="language-yml">home:
-  - {path: readme.md, title: &quot;&lt;i class='bi bi-house-door' aria-hidden='true'&gt;&lt;/i&gt; Home&quot;}
-  - {path: docs/readme.md, title: &quot;&lt;i class='bi bi-book' aria-hidden='true'&gt;&lt;/i&gt; Docs&quot;, folder: true}
+<h3 id="create-your-first-blazor-ssr-app">Create Your First Blazor SSR App</h3>
+<pre><code class="language-bash"># Create a new Blazor Web App (includes SSR support)
+dotnet new blazor -o MyBlazorApp --interactivity Server
 
-home2:
-  - {url: &quot;https://github.com/&lt;org&gt;/&lt;repo&gt;/&quot;, title: '&lt;i class=&quot;bi bi-github&quot;&gt;&lt;/i&gt; GitHub', link_class: btn btn-info}
+# Navigate to the project
+cd MyBlazorApp
+
+# Run the application
+dotnet run
 </code></pre>
+<p>Open your browser to <code>https://localhost:5001</code> to see your Blazor SSR app in action!</p>
+<h3 id="understanding-render-modes">Understanding Render Modes</h3>
+<p>In your <code>_Imports.razor</code> file, you can set default render modes:</p>
+<pre><code class="language-razor">@using static Microsoft.AspNetCore.Components.Web.RenderMode
+
+// For static SSR (no interactivity)
+@attribute [rendermode: Static]
+
+// For interactive SSR
+@attribute [rendermode: InteractiveServer]
+
+// Per-page override
+@page &quot;/mypage&quot;
+@rendermode InteractiveServer
+</code></pre>
+<h2 id="documentation-sections">Documentation Sections</h2>
+<h3 id="-getting-started">🚀 <a href="/getting-started">Getting Started</a></h3>
+<p>Learn the basics of Blazor SSR and get up and running quickly.</p>
+<p><strong>Topics:</strong></p>
 <ul>
-<li><code>home</code> is rendered on the left.</li>
-<li><code>home2</code> is rendered on the right.</li>
+<li><a href="/getting-started/what-is-ssr">What is Blazor SSR?</a></li>
+<li><a href="/getting-started/quick-start">Quick Start Guide</a></li>
+<li><a href="/getting-started/comparison">SSR vs WebAssembly vs Hybrid</a></li>
 </ul>
-<h2 id="3-add-content-pages">3) Add content pages</h2>
-<p>Typical starting structure:</p>
-<pre><code class="language-text">site/
-  config.scriban
-  menu.yml
-  readme.md
-  img/
-    myproject-logo.png
-    favicon.ico
-  docs/
-    readme.md
-    getting-started.md
-    menu.yml
-</code></pre>
-<h2 id="4-add-docs-menu-docsmenuyml">4) Add docs menu (<code>docs/menu.yml</code>)</h2>
-<p>For docs pages, define a local docs menu:</p>
-<pre><code class="language-yml">doc:
-  - {path: readme.md, title: &quot;&lt;i class='bi bi-book' aria-hidden='true'&gt;&lt;/i&gt; User Guide&quot;}
-  - {path: getting-started.md, title: &quot;&lt;i class='bi bi-rocket-takeoff' aria-hidden='true'&gt;&lt;/i&gt; Getting Started&quot;}
-</code></pre>
-<h2 id="5-replace-this-default-homepage">5) Replace this default homepage</h2>
-<p><code>readme.md</code> is the homepage (<code>/</code>). Keep frontmatter and replace this body with project-specific content.</p>
-<h2 id="build-locally">Build locally</h2>
-<pre><code class="language-bash">lunet build
-</code></pre>
-<p>or:</p>
-<pre><code class="language-bash">lunet serve
-</code></pre>
+<h3 id="-fundamentals">📚 <a href="/fundamentals">Fundamentals</a></h3>
+<p>Understand core concepts and architecture of Blazor SSR.</p>
+<p><strong>Topics:</strong></p>
+<ul>
+<li><a href="/fundamentals/render-modes">Render Modes</a> - Static vs Interactive</li>
+<li><a href="/fundamentals/routing">Routing</a> - Navigation and URL handling</li>
+<li><a href="/fundamentals/dependency-injection">Dependency Injection</a> - Service management</li>
+<li><a href="/fundamentals/configuration">Configuration</a> - App settings</li>
+</ul>
+<h3 id="-components">🧩 <a href="/components">Components</a></h3>
+<p>Deep dive into Razor components and how they work in SSR.</p>
+<p><strong>Topics:</strong></p>
+<ul>
+<li><a href="/components/index">Component Basics</a> - Structure and syntax</li>
+<li><a href="/components/render-modes">Render Modes</a> - Component-level control</li>
+<li><a href="/components/lifecycle">Lifecycle</a> - Component events</li>
+<li><a href="/components/prerender">Prerendering</a> - Optimization techniques</li>
+</ul>
+<h3 id="-forms">📝 <a href="/forms">Forms</a></h3>
+<p>Handle user input with forms and validation in SSR.</p>
+<h3 id="-security">🔒 <a href="/security">Security</a></h3>
+<p>Implement authentication and authorization for your SSR apps.</p>
+<h3 id="-advanced">⚡ <a href="/advanced">Advanced</a></h3>
+<p>Performance optimization, deployment, and advanced scenarios.</p>
+<h2 id="example-static-ssr-page">Example: Static SSR Page</h2>
+<pre><code class="language-razor">@page &quot;/products&quot;
+@attribute [RenderMode.Static]
 
+&lt;h1&gt;Products&lt;/h1&gt;
+
+@if (products == null)
+{
+    &lt;p&gt;Loading...&lt;/p&gt;
+}
+else
+{
+    &lt;ul&gt;
+    @foreach (var product in products)
+    {
+        &lt;li&gt;
+            &lt;h2&gt;@product.Name&lt;/h2&gt;
+            &lt;p&gt;@product.Description&lt;/p&gt;
+            &lt;p&gt;Price: $@product.Price&lt;/p&gt;
+        &lt;/li&gt;
+    }
+    &lt;/ul&gt;
+}
+
+@code {
+    private Product[]? products;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // Runs on the server during rendering
+        products = await ProductService.GetProductsAsync();
+    }
+}
+</code></pre>
+<h2 id="example-interactive-ssr-component">Example: Interactive SSR Component</h2>
+<pre><code class="language-razor">@page &quot;/todos&quot;
+@rendermode InteractiveServer
+@inject TodoService TodoService
+
+&lt;h1&gt;Todo List (@todos.Count(t =&gt; !t.IsComplete))&lt;/h1&gt;
+
+&lt;ul&gt;
+    @foreach (var todo in todos)
+    {
+        &lt;li&gt;
+            &lt;input type=&quot;checkbox&quot; @bind=&quot;todo.IsComplete&quot; /&gt;
+            &lt;span&gt;@todo.Title&lt;/span&gt;
+            &lt;button @onclick=&quot;() =&gt; DeleteTodo(todo)&quot;&gt;Delete&lt;/button&gt;
+        &lt;/li&gt;
+    }
+&lt;/ul&gt;
+
+&lt;input @bind=&quot;newTodoTitle&quot; placeholder=&quot;Add todo...&quot; /&gt;
+&lt;button @onclick=&quot;AddTodo&quot;&gt;Add&lt;/button&gt;
+
+@code {
+    private List&lt;Todo&gt; todos = new();
+    private string newTodoTitle = &quot;&quot;;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await TodoService.GetTodosAsync();
+    }
+    
+    private async Task AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodoTitle))
+        {
+            var todo = await TodoService.AddTodoAsync(newTodoTitle);
+            todos.Add(todo);
+            newTodoTitle = &quot;&quot;;
+        }
+    }
+    
+    private async Task DeleteTodo(Todo todo)
+    {
+        await TodoService.DeleteTodoAsync(todo.Id);
+        todos.Remove(todo);
+    }
+}
+</code></pre>
+<h2 id="resources">Resources</h2>
+<h3 id="official-documentation">Official Documentation</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/blazor">ASP.NET Core Blazor</a> - Complete official docs</li>
+<li><a href="https://github.com/dotnet/aspnetcore">Blazor GitHub Repository</a> - Source code and issues</li>
+</ul>
+<h3 id="learning-resources">Learning Resources</h3>
+<ul>
+<li><a href="https://github.com/dotnet-presentations/blazor-workshop/">Blazor Workshop</a> - Hands-on tutorial</li>
+<li><a href="https://blazor-university.com/">Blazor University</a> - Community tutorials</li>
+</ul>
+<h3 id="community">Community</h3>
+<ul>
+<li><a href="https://gitter.im/aspnet/Blazor">Blazor Gitter</a> - Chat with the community</li>
+<li><a href="https://stackoverflow.com/questions/tagged/blazor">Stack Overflow</a> - Q&amp;A</li>
+<li><a href="https://reddit.com/r/blazor">Reddit r/blazor</a> - Community discussions</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>This documentation is extracted from the <a href="https://github.com/dotnet/AspNetCore.Docs">official ASP.NET Core documentation</a>.</p>
+<p>To contribute to the source documentation:</p>
+<ol>
+<li>Visit the <a href="https://github.com/dotnet/AspNetCore.Docs">AspNetCore.Docs repository</a></li>
+<li>Fork the repository</li>
+<li>Make your changes</li>
+<li>Submit a pull request</li>
+</ol>
+<h2 id="license">License</h2>
+<p>Documentation content is sourced from Microsoft's ASP.NET Core Documentation under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International Public License</a>.</p>
+<hr />
+<h2 id="get-started-now">Get Started Now!</h2>
+<p>Ready to build your first Blazor SSR application?</p>
+<div class="call-to-action">
+<p><a href="/getting-started/quick-start"><strong>🚀 Quick Start Guide</strong></a> | <a href="/getting-started"><strong>📖 Full Documentation</strong></a></p>
 </div>
+
+      </div>
+  </div>
+</div>
+
         </section>
         <footer>
           <hr>
