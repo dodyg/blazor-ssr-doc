@@ -13,13 +13,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@your-handle">
 <meta name="twitter:title" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
-<meta name="twitter:description" content="ASP.NET Core Blazor configuration This article explains how to configure Blazor apps, including app settings, authentication, and logging configuration. This guidance applies to client-side project configuration in a Blazor Web App or a standalone Blazor WebAssembly app. Default behavior in Blazor Web Apps: For server-side configuration:See index for guidance. Only configuration in the project's root app settings files is loaded. The remainder of this article only applies to client-side configuration...">
+<meta name="twitter:description" content="ASP.NET Core Blazor Configuration This article explains how to configure Blazor Static SSR apps using ASP.NET Core configuration patterns. Configuration in Static SSR In Blazor Static SSR, configuration follows standard ASP.NET Core patterns. Configuration is loaded on the server for each request. App Settings Files Configuration is loaded from: appsettings.json - Default configuration appsettings.{Environment}.json - Environment-specific configuration Environment variables Command-line arguments Custom configuration providers...">
 <meta name="twitter:image" content="http://localhost:4000/img/project-banner.png">
 <meta name="twitter:image:alt" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
 <meta property="og:title" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:4000/">
-<meta property="og:description" content="ASP.NET Core Blazor configuration This article explains how to configure Blazor apps, including app settings, authentication, and logging configuration. This guidance applies to client-side project configuration in a Blazor Web App or a standalone Blazor WebAssembly app. Default behavior in Blazor Web Apps: For server-side configuration:See index for guidance. Only configuration in the project's root app settings files is loaded. The remainder of this article only applies to client-side configuration...">
+<meta property="og:description" content="ASP.NET Core Blazor Configuration This article explains how to configure Blazor Static SSR apps using ASP.NET Core configuration patterns. Configuration in Static SSR In Blazor Static SSR, configuration follows standard ASP.NET Core patterns. Configuration is loaded on the server for each request. App Settings Files Configuration is loaded from: appsettings.json - Default configuration appsettings.{Environment}.json - Environment-specific configuration Environment variables Command-line arguments Custom configuration providers...">
 <meta property="og:image" content="http://localhost:4000/img/project-banner.png">
 <meta property="og:image:alt" content="ASP.NET Core Blazor configuration | Blazor SSR Documentation">
     <script>(function() {var ws = new WebSocket("ws://localhost:4000/__livereload__"); ws.onmessage = function(event) { if (event.data === "reload") { location.reload(); } }; })(); </script>
@@ -167,286 +167,299 @@
           </button>
         </div>
 <!-- lunet:summarize -->
-<h1 id="aspnet-core-blazor-configuration">ASP.NET Core Blazor configuration</h1>
-<p>This article explains how to configure Blazor apps, including app settings, authentication, and logging configuration.</p>
-<p>This guidance applies to client-side project configuration in a Blazor Web App or a standalone Blazor WebAssembly app.</p>
-<p>Default behavior in Blazor Web Apps:</p>
+<h1 id="aspnet-core-blazor-configuration">ASP.NET Core Blazor Configuration</h1>
+<p>This article explains how to configure Blazor Static SSR apps using ASP.NET Core configuration patterns.</p>
+<h2 id="configuration-in-static-ssr">Configuration in Static SSR</h2>
+<p>In Blazor Static SSR, configuration follows standard ASP.NET Core patterns. Configuration is loaded on the server for each request.</p>
+<h3 id="app-settings-files">App Settings Files</h3>
+<p>Configuration is loaded from:</p>
 <ul>
-<li>For server-side configuration:
-<ul>
-<li>See <a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/index">index</a> for guidance.</li>
-<li>Only configuration in the project's root app settings files is loaded.</li>
-<li>The remainder of this article only applies to client-side configuration in the <code>.Client</code> project.</li>
+<li><code>appsettings.json</code> - Default configuration</li>
+<li><code>appsettings.{Environment}.json</code> - Environment-specific configuration</li>
+<li>Environment variables</li>
+<li>Command-line arguments</li>
+<li>Custom configuration providers</li>
 </ul>
-</li>
-<li>For client-side configuration (<code>.Client</code> project), configuration is loaded from the following app settings files:
-<ul>
-<li><code>wwwroot/appsettings.json</code>.</li>
-<li><code>wwwroot/appsettings.{ENVIRONMENT}.json</code>, where the <code>{ENVIRONMENT}</code> placeholder is the app's <a href="https://learn.microsoft.com/aspnet/core/fundamentals/environments">runtime environment</a>.</li>
-</ul>
-</li>
-</ul>
-<p>In standalone Blazor WebAssembly apps, configuration is loaded from the following app settings files:</p>
-<ul>
-<li><code>wwwroot/appsettings.json</code>.</li>
-<li><code>wwwroot/appsettings.{ENVIRONMENT}.json</code>, where the <code>{ENVIRONMENT}</code> placeholder is the app's <a href="https://learn.microsoft.com/aspnet/core/fundamentals/environments">runtime environment</a>.</li>
-</ul>
-<div class="markdown-alert markdown-alert-note alert alert-primary lunet-alert-note" role="alert">
-<div class='lunet-alert-note-heading'>
-<span class='lunet-alert-note-icon'></span><span class='lunet-alert-note-heading-text'></span>
-</div><div class='lunet-alert-note-content'>
-<p>Logging configuration placed into an app settings file in <code>wwwroot</code> isn't loaded by default. For more information, see the <a href="#logging-configuration">Logging configuration</a> section later in this article.</p>
-<p class="mb-0">In some scenarios, such as with Azure services, it's important to use an environment file name segment that exactly matches the environment name. For example, use the file name <code>appsettings.Staging.json</code> with a capital &quot;:<span>no-loc text=&quot;S&quot;:&quot; for the <code>Staging</code> environment. For recommended conventions, see the opening remarks of <a href="https://learn.microsoft.com/aspnet/core/blazor/fundamentals/environments">environments</a>.</span></p>
-</div></div>
-<p>Other configuration providers registered by the app can also provide configuration, but not all providers or provider features are appropriate:</p>
-<ul>
-<li><a href="https://learn.microsoft.com/aspnet/core/security/key-vault-configuration">Azure Key Vault configuration provider</a>: The provider isn't supported for managed identity and application ID (client ID) with client secret scenarios. Application ID with a client secret isn't recommended for any ASP.NET Core app, especially client-side apps because the client secret can't be secured client-side to access the Azure Key Vault service.</li>
-<li><a href="/azure/azure-app-configuration/quickstart-aspnet-core-app">Azure App configuration provider</a>: The provider isn't appropriate for a client-side app because the app doesn't run on a server in Azure.</li>
-</ul>
-<p>For more information on configuration providers, see <a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/index">index</a>.</p>
-<div class="markdown-alert markdown-alert-warning alert alert-warning lunet-alert-warning" role="alert">
-<div class='lunet-alert-warning-heading'>
-<span class='lunet-alert-warning-icon'></span><span class='lunet-alert-warning-heading-text'></span>
-</div><div class='lunet-alert-warning-content'>
-<p class="mb-0">Configuration and settings files in the web root (<code>wwwroot</code> folder) are visible to users on the client, and users can tamper with the data. <strong>Don't store app secrets, credentials, or any other sensitive data in any web root file.</strong></p>
-</div></div>
-<h2 id="app-settings-configuration">App settings configuration</h2>
-<p>Configuration in app settings files are loaded by default. In the following example, a UI configuration value is stored in an app settings file and loaded by the Blazor framework automatically. The value is read by a component.</p>
-<p><code>wwwroot/appsettings.json</code>:</p>
-<pre><code class="language-json">{
-    &quot;h1FontSize&quot;: &quot;50px&quot;
-}
-</code></pre>
-<p>Inject an <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration">Microsoft.Extensions.Configuration.IConfiguration</a> instance into a component to access the configuration data.</p>
-<p><code>ConfigExample.razor</code>:</p>
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end"><p>Client security restrictions prevent direct access to files via user code, including settings files for app configuration. To read configuration files in addition to <code>appsettings.json</code>/<code>appsettings.{ENVIRONMENT}.json</code> from the <code>wwwroot</code> folder into configuration, use an <a href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">System.Net.Http.HttpClient</a>.</p>
-<blockquote class="blockquote">
-<p>[!WARNING]
-Configuration and settings files in the web root (<code>wwwroot</code> folder) are visible to users on the client, and users can tamper with the data. <strong>Don't store app secrets, credentials, or any other sensitive data in any web root file.</strong></p>
-</blockquote>
-<p>The following example reads a configuration file (<code>cars.json</code>) into the app's configuration.</p>
-<p><code>wwwroot/cars.json</code>:</p>
-<pre><code class="language-json">{
-    &quot;size&quot;: &quot;tiny&quot;
-}
-</code></pre>
-<p>Add the namespace for <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration?displayproperty=fullname">Microsoft.Extensions.Configuration?displayProperty=fullName</a> to the <code>Program</code> file:</p>
-<pre><code class="language-csharp">using Microsoft.Extensions.Configuration;
-</code></pre>
-<p>Modify the existing <a href="https://learn.microsoft.com/dotnet/api/system.net.http.httpclient">System.Net.Http.HttpClient</a> service registration to use the client to read the file:</p>
-<pre><code class="language-csharp">var http = new HttpClient()
-{
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-};
-
-builder.Services.AddScoped(sp =&gt; http);
-
-using var response = await http.GetAsync(&quot;cars.json&quot;);
-using var stream = await response.Content.ReadAsStreamAsync();
-
-builder.Configuration.AddJsonStream(stream);
-</code></pre>
-<p>The preceding example sets the base address with <code>builder.HostEnvironment.BaseAddress</code> (<a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment.baseaddress%2a?displayproperty=namewithtype">Microsoft.AspNetCore.Components.WebAssembly.Hosting.IWebAssemblyHostEnvironment.BaseAddress *?displayProperty=nameWithType</a>), which gets the base address for the app and is typically derived from the <code>&lt;base&gt;</code> tag's <code>href</code> value in the host page.</p>
-<h2 id="memory-configuration-source">Memory Configuration Source</h2>
-<p>The following example uses a <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.memory.memoryconfigurationsource">Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource</a> in the <code>Program</code> file to supply additional configuration.</p>
-<p>Add the namespace for <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.memory?displayproperty=fullname">Microsoft.Extensions.Configuration.Memory?displayProperty=fullName</a> to the <code>Program</code> file:</p>
-<pre><code class="language-csharp">using Microsoft.Extensions.Configuration.Memory;
-</code></pre>
-<p>In the <code>Program</code> file:</p>
-<pre><code class="language-csharp">var vehicleData = new Dictionary&lt;string, string?&gt;()
-{
-    { &quot;color&quot;, &quot;blue&quot; },
-    { &quot;type&quot;, &quot;car&quot; },
-    { &quot;wheels:count&quot;, &quot;3&quot; },
-    { &quot;wheels:brand&quot;, &quot;Blazin&quot; },
-    { &quot;wheels:brand:type&quot;, &quot;rally&quot; },
-    { &quot;wheels:year&quot;, &quot;2008&quot; },
-};
-
-var memoryConfig = new MemoryConfigurationSource { InitialData = vehicleData };
-
-builder.Configuration.Add(memoryConfig);
-</code></pre>
-<p>Inject an <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration">Microsoft.Extensions.Configuration.IConfiguration</a> instance into a component to access the configuration data.</p>
-<p><code>MemoryConfig.razor</code>:</p>
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end">
-<div class="moniker">
-<div class="code">
-<div class="moniker-end"><p>Obtain a section of the configuration in C# code with <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration.getsection%2a?displayproperty=namewithtype">Microsoft.Extensions.Configuration.IConfiguration.GetSection *?displayProperty=nameWithType</a>. The following example obtains the <code>wheels</code> section for the configuration in the preceding example:</p>
-<pre><code class="language-razor">@code {
-    protected override void OnInitialized()
-    {
-        var wheelsSection = Configuration.GetSection(&quot;wheels&quot;);
-
-        ...
-    }
-}
-</code></pre>
-<h2 id="authentication-configuration">Authentication configuration</h2>
-<p>Provide <em><strong>public</strong></em> authentication configuration in an app settings file.</p>
-<p><code>wwwroot/appsettings.json</code>:</p>
-<pre><code class="language-json">{
-  &quot;Local&quot;: {
-    &quot;Authority&quot;: &quot;{AUTHORITY}&quot;,
-    &quot;ClientId&quot;: &quot;{CLIENT ID}&quot;
-  }
-}
-</code></pre>
-<p>Load the configuration for an Identity provider with <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.configurationbinder.bind%2a?displayproperty=namewithtype">Microsoft.Extensions.Configuration.ConfigurationBinder.Bind *?displayProperty=nameWithType</a> in the <code>Program</code> file. The following example loads configuration for an <a href="https://learn.microsoft.com/aspnet/core/blazor/security/webassembly/standalone-with-authentication-library">OIDC provider</a>:</p>
-<pre><code class="language-csharp">builder.Services.AddOidcAuthentication(options =&gt;
-    builder.Configuration.Bind(&quot;Local&quot;, options.ProviderOptions));
-</code></pre>
-<blockquote class="blockquote">
-<p>[!WARNING]
-Configuration and settings files in the web root (<code>wwwroot</code> folder) are visible to users on the client, and users can tamper with the data. <strong>Don't store app secrets, credentials, or any other sensitive data in any web root file.</strong></p>
-</blockquote>
-<h2 id="logging-configuration">Logging configuration</h2>
-<p><em>This section applies to apps that configure logging via an app settings file in the <code>wwwroot</code> folder.</em></p>
-<p>Add the <a href="https://www.nuget.org/packages/Microsoft.Extensions.Logging.Configuration"><code>Microsoft.Extensions.Logging.Configuration</code></a> package to the app.</p>
-<p>In the app settings file, provide logging configuration. The logging configuration is loaded in the <code>Program</code> file.</p>
-<p><code>wwwroot/appsettings.json</code>:</p>
+<h3 id="example-configuration">Example Configuration</h3>
+<p><code>appsettings.json</code>:</p>
 <pre><code class="language-json">{
   &quot;Logging&quot;: {
     &quot;LogLevel&quot;: {
       &quot;Default&quot;: &quot;Information&quot;,
       &quot;Microsoft.AspNetCore&quot;: &quot;Warning&quot;
     }
+  },
+  &quot;ConnectionStrings&quot;: {
+    &quot;DefaultConnection&quot;: &quot;Server=(localdb)\\mssqllocaldb;Database=MyApp;Trusted_Connection=True;&quot;
+  },
+  &quot;ApiSettings&quot;: {
+    &quot;BaseUrl&quot;: &quot;https://api.example.com&quot;,
+    &quot;ApiKey&quot;: &quot;your-api-key&quot;,
+    &quot;Timeout&quot;: 30
+  },
+  &quot;Features&quot;: {
+    &quot;EnableNewDashboard&quot;: true,
+    &quot;MaxItemsPerPage&quot;: 50
   }
 }
 </code></pre>
-<p>In the <code>Program</code> file:</p>
-<pre><code class="language-csharp">builder.Logging.AddConfiguration(
-    builder.Configuration.GetSection(&quot;Logging&quot;));
+<p><code>appsettings.Development.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Debug&quot;,
+      &quot;Microsoft.AspNetCore&quot;: &quot;Information&quot;
+    }
+  },
+  &quot;ApiSettings&quot;: {
+    &quot;BaseUrl&quot;: &quot;https://dev-api.example.com&quot;
+  }
+}
 </code></pre>
-<h2 id="host-builder-configuration">Host builder configuration</h2>
-<p>Read host builder configuration from <a href="https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.webassemblyhostbuilder.configuration?displayproperty=namewithtype">Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.Configuration?displayProperty=nameWithType</a> in the <code>Program</code> file:</p>
-<pre><code class="language-csharp">var hostname = builder.Configuration[&quot;HostName&quot;];
+<h2 id="access-configuration-in-components">Access Configuration in Components</h2>
+<p>Inject <code>IConfiguration</code> into components:</p>
+<pre><code class="language-razor">@page &quot;/settings&quot;
+@inject IConfiguration Configuration
+
+&lt;h1&gt;Application Settings&lt;/h1&gt;
+
+&lt;p&gt;API Base URL: @apiBaseUrl&lt;/p&gt;
+&lt;p&gt;Max Items: @maxItems&lt;/p&gt;
+
+@code {
+    private string? apiBaseUrl;
+    private int maxItems;
+
+    protected override void OnInitialized()
+    {
+        apiBaseUrl = Configuration[&quot;ApiSettings:BaseUrl&quot;];
+        maxItems = Configuration.GetValue&lt;int&gt;(&quot;Features:MaxItemsPerPage&quot;);
+    }
+}
 </code></pre>
-<h2 id="cached-configuration">Cached configuration</h2>
-<p>Configuration files are cached for offline use. With <a href="https://learn.microsoft.com/aspnet/core/blazor/progressive-web-app/index">Progressive Web Applications (PWAs)</a>, you can only update configuration files when creating a new deployment. Editing configuration files between deployments has no effect because:</p>
-<ul>
-<li>Users have cached versions of the files that they continue to use.</li>
-<li>The PWA's <code>service-worker.js</code> and <code>service-worker-assets.js</code> files must be rebuilt on compilation, which signal to the app on the user's next online visit that the app has been redeployed.</li>
-</ul>
-<p>For more information on how background updates are handled by PWAs, see <a href="https://learn.microsoft.com/aspnet/core/blazor/progressive-web-app/index#background-updates">index</a>.</p>
-<h2 id="options-configuration">Options configuration</h2>
-<p><a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options">Options configuration</a> uses API in the <a href="https://www.nuget.org/packages/Microsoft.Extensions.Options.ConfigurationExtensions"><code>Microsoft.Extensions.Options.ConfigurationExtensions</code></a> NuGet package.</p>
-<p>Example:</p>
-<p><code>OptionsExample.cs</code>:</p>
-<pre><code class="language-csharp">public class OptionsExample
+<h2 id="options-pattern">Options Pattern</h2>
+<p>Use the Options pattern for strongly-typed configuration:</p>
+<h3 id="define-options-class">Define Options Class</h3>
+<pre><code class="language-csharp">public class ApiSettings
 {
-    public string? Option1 { get; set; }
-    public string? Option2 { get; set; }
+    public string BaseUrl { get; set; } = &quot;&quot;;
+    public string ApiKey { get; set; } = &quot;&quot;;
+    public int Timeout { get; set; } = 30;
+}
+
+public class FeatureSettings
+{
+    public bool EnableNewDashboard { get; set; }
+    public int MaxItemsPerPage { get; set; } = 20;
 }
 </code></pre>
-<p>In <code>appsettings.json</code>:</p>
-<pre><code class="language-json">&quot;OptionsExample&quot;: {
-  &quot;Option1&quot;: &quot;Option1 Value&quot;,
-  &quot;Option2&quot;: &quot;Option2 Value&quot;
+<h3 id="register-options">Register Options</h3>
+<pre><code class="language-csharp">// Program.cs
+builder.Services.Configure&lt;ApiSettings&gt;(
+    builder.Configuration.GetSection(&quot;ApiSettings&quot;));
+
+builder.Services.Configure&lt;FeatureSettings&gt;(
+    builder.Configuration.GetSection(&quot;Features&quot;));
+</code></pre>
+<h3 id="use-options-in-components">Use Options in Components</h3>
+<pre><code class="language-razor">@page &quot;/api-data&quot;
+@inject IOptions&lt;ApiSettings&gt; ApiSettings
+@inject IOptions&lt;FeatureSettings&gt; FeatureSettings
+
+&lt;h1&gt;API Data&lt;/h1&gt;
+
+&lt;p&gt;API URL: @ApiSettings.Value.BaseUrl&lt;/p&gt;
+&lt;p&gt;Timeout: @ApiSettings.Value.Timeout seconds&lt;/p&gt;
+&lt;p&gt;Max Items: @FeatureSettings.Value.MaxItemsPerPage&lt;/p&gt;
+
+@code {
+    // Options are available via the Value property
 }
 </code></pre>
-<pre><code class="language-csharp">builder.Services.Configure&lt;OptionsExample&gt;(
-    builder.Configuration.GetSection(&quot;OptionsExample&quot;));
+<h3 id="use-options-in-services">Use Options in Services</h3>
+<pre><code class="language-csharp">public class ProductService
+{
+    private readonly HttpClient _httpClient;
+    private readonly ApiSettings _settings;
+
+    public ProductService(
+        HttpClient httpClient,
+        IOptions&lt;ApiSettings&gt; apiSettings)
+    {
+        _httpClient = httpClient;
+        _settings = apiSettings.Value;
+        
+        _httpClient.BaseAddress = new Uri(_settings.BaseUrl);
+        _httpClient.Timeout = TimeSpan.FromSeconds(_settings.Timeout);
+    }
+
+    public async Task&lt;List&lt;Product&gt;&gt; GetProductsAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, &quot;products&quot;);
+        request.Headers.Add(&quot;X-API-Key&quot;, _settings.ApiKey);
+        
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        
+        return await response.Content.ReadFromJsonAsync&lt;List&lt;Product&gt;&gt;() ?? new();
+    }
+}
 </code></pre>
-<p>The following Razor component retrieves the settings with the <a href="https://learn.microsoft.com/aspnet/core/mvc/views/razor#inject"><code>@inject</code></a> directive or <a href="https://docs.microsoft.com/en-us/dotnet/api/Microsoft.AspNetCore.Components.InjectAttribute"><code>[Inject]</code> attribute</a>.</p>
-<p><code>Options.razor</code>:</p>
-<pre><code class="language-razor">@page &quot;/options&quot;
-@using Microsoft.Extensions.Options
-@inject IOptions&lt;OptionsExample&gt;? OptionsExample1
+<h2 id="connection-strings">Connection Strings</h2>
+<p>Access connection strings for database operations:</p>
+<pre><code class="language-csharp">// Program.cs
+var connectionString = builder.Configuration.GetConnectionString(&quot;DefaultConnection&quot;);
 
-&lt;h1&gt;Options&lt;/h1&gt;
+builder.Services.AddDbContextFactory&lt;AppDbContext&gt;(options =&gt;
+    options.UseSqlServer(connectionString));
+</code></pre>
+<pre><code class="language-razor">@page &quot;/products&quot;
+@inject IDbContextFactory&lt;AppDbContext&gt; DbContextFactory
 
-&lt;h2&gt;
-    &amp;commat;inject approach
-&lt;/h2&gt;
-
-&lt;ul&gt;
-    &lt;li&gt;@OptionsExample1?.Value.Option1&lt;/li&gt;
-    &lt;li&gt;@OptionsExample1?.Value.Option2&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;
-    [Inject] approach
-&lt;/h2&gt;
+&lt;h1&gt;Products&lt;/h1&gt;
 
 &lt;ul&gt;
-    &lt;li&gt;@OptionsExample2?.Value.Option1&lt;/li&gt;
-    &lt;li&gt;@OptionsExample2?.Value.Option2&lt;/li&gt;
+    @foreach (var product in products)
+    {
+        &lt;li&gt;@product.Name&lt;/li&gt;
+    }
 &lt;/ul&gt;
 
 @code {
-    [Inject]
-    public IOptions&lt;OptionsExample&gt;? OptionsExample2 { get; set; }
+    private List&lt;Product&gt; products = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await using var dbContext = await DbContextFactory.CreateDbContextAsync();
+        products = await dbContext.Products.ToListAsync();
+    }
 }
 </code></pre>
-<p>Not all of the ASP.NET Core Options features are supported in Razor components. For example, <a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionsmonitor%601">Microsoft.Extensions.Options.IOptionsSnapshot<code>1](https://learn.microsoft.com/dotnet/api/microsoft.extensions.options.ioptionssnapshot%601) and [Microsoft.Extensions.Options.IOptionsMonitor</code>1</a> configuration is supported, but recomputing option values for these interfaces isn't supported outside of reloading the app by either requesting the app in a new browser tab or selecting the browser's reload button. Merely calling <a href="https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#state-changes-statehaschanged"><code>StateHasChanged</code></a> doesn't update snapshot or monitored option values when the underlying configuration changes.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<h2 id="environment-specific-configuration">Environment-Specific Configuration</h2>
+<p>Access the current environment:</p>
+<pre><code class="language-razor">@page &quot;/&quot;
+@inject IWebHostEnvironment Environment
+
+&lt;h1&gt;Environment: @Environment.EnvironmentName&lt;/h1&gt;
+
+@if (Environment.IsDevelopment())
+{
+    &lt;p&gt;Running in development mode&lt;/p&gt;
+}
+else if (Environment.IsProduction())
+{
+    &lt;p&gt;Running in production mode&lt;/p&gt;
+}
+</code></pre>
+<h2 id="logging-configuration">Logging Configuration</h2>
+<p>Configure logging in <code>appsettings.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,
+      &quot;Microsoft.AspNetCore&quot;: &quot;Warning&quot;,
+      &quot;Microsoft.EntityFrameworkCore&quot;: &quot;Warning&quot;
+    }
+  }
+}
+</code></pre>
+<p>Use logging in components:</p>
+<pre><code class="language-razor">@page &quot;/checkout&quot;
+@inject ILogger&lt;Checkout&gt; Logger
+@inject OrderService OrderService
+
+&lt;h1&gt;Checkout&lt;/h1&gt;
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation(&quot;Checkout page initialized&quot;);
+    }
+
+    private async Task ProcessOrder()
+    {
+        Logger.LogInformation(&quot;Processing order for user {UserId}&quot;, userId);
+        
+        try
+        {
+            await OrderService.ProcessOrderAsync();
+            Logger.LogInformation(&quot;Order processed successfully&quot;);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, &quot;Order processing failed&quot;);
+        }
+    }
+}
+</code></pre>
+<h2 id="custom-configuration-providers">Custom Configuration Providers</h2>
+<p>Add custom configuration sources:</p>
+<pre><code class="language-csharp">// Program.cs
+
+// Add environment variables
+builder.Configuration.AddEnvironmentVariables();
+
+// Add user secrets (development only)
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets&lt;Program&gt;();
+}
+
+// Add command-line arguments
+builder.Configuration.AddCommandLine(args);
+
+// Add in-memory collection
+builder.Configuration.AddInMemoryCollection(new Dictionary&lt;string, string?&gt;
+{
+    [&quot;CustomSetting&quot;] = &quot;CustomValue&quot;
+});
+</code></pre>
+<h2 id="configuration-best-practices">Configuration Best Practices</h2>
+<ol>
+<li><strong>Use the Options pattern</strong> for strongly-typed settings</li>
+<li><strong>Separate concerns</strong> - different options classes for different features</li>
+<li><strong>Never store secrets</strong> in appsettings.json - use:
+<ul>
+<li>User Secrets (development)</li>
+<li>Azure Key Vault (production)</li>
+<li>Environment variables</li>
+</ul>
+</li>
+<li><strong>Validate configuration</strong> on startup</li>
+</ol>
+<h3 id="validate-options">Validate Options</h3>
+<pre><code class="language-csharp">using Microsoft.Extensions.Options;
+
+public class ApiSettingsValidation : IValidateOptions&lt;ApiSettings&gt;
+{
+    public ValidateOptionsResult Validate(string? name, ApiSettings options)
+    {
+        if (string.IsNullOrEmpty(options.BaseUrl))
+        {
+            return ValidateOptionsResult.Fail(&quot;BaseUrl is required&quot;);
+        }
+
+        if (!Uri.TryCreate(options.BaseUrl, UriKind.Absolute, out _))
+        {
+            return ValidateOptionsResult.Fail(&quot;BaseUrl must be a valid URL&quot;);
+        }
+
+        return ValidateOptionsResult.Success;
+    }
+}
+
+// Program.cs
+builder.Services.AddSingleton&lt;IValidateOptions&lt;ApiSettings&gt;, ApiSettingsValidation&gt;();
+builder.Services.AddOptions&lt;ApiSettings&gt;()
+    .Bind(builder.Configuration.GetSection(&quot;ApiSettings&quot;))
+    .ValidateOnStart();
+</code></pre>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/">Configuration in ASP.NET Core</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/configuration/options">Options pattern in ASP.NET Core</a></li>
+<li><a href="https://learn.microsoft.com/aspnet/core/fundamentals/logging/">Logging in ASP.NET Core</a></li>
+</ul>
 
       </div>
   </div>
