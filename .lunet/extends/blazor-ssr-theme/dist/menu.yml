@@ -1,0 +1,6 @@
+home:
+  - {path: readme.md, title: "<i class='bi bi-house-door' aria-hidden='true'></i> Home", self: true }
+  # - {url: "#placeholder", title: "<i class='bi bi-grid-3x3-gap' aria-hidden='true'></i> Placeholder"}
+
+home2:
+  - {url: "https://github.com/lunet-io/templates", title: '<i class="bi bi-github"></i> Templates Repo', link_class: btn btn-info}
