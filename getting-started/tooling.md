@@ -2,7 +2,7 @@
 title: Tooling for ASP.NET Core Blazor
 description: Learn about the tools available to build Blazor apps and how to use them.
 
-section: Documentation
+section: Getting Started
 toc: true
 ---
 
@@ -361,13 +361,13 @@ Press <kbd>Ctrl</kbd>+<kbd>F5</kbd> on the keyboard to run the app without the d
 
 Visual Studio displays the following dialog when a project isn't configured to use SSL:
 
-![Trust self-signed certificate dialog](/tooling/_static/trust-certificate.png)
+![Trust self-signed certificate dialog](/assets/images/trust-certificate.png)
 
 Select **Yes** if you trust the ASP.NET Core SSL certificate.
 
 The following dialog is displayed:
 
-![Security warning dialog](/tooling/_static/install-certificate.png)
+![Security warning dialog](/assets/images/install-certificate.png)
 
 Select **Yes** to acknowledge the risk and install the certificate.
 
@@ -420,7 +420,7 @@ Stop the app using either of the following approaches:
 * In Visual Studio, either:
   * Use the Stop button in Visual Studio's menu bar:
 
-    ![Stop button in Visual Studio's menu bar](/tooling/_static/stop-button.png)
+    ![Stop button in Visual Studio's menu bar](/assets/images/stop-button.png)
 
   * Press <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard.
 

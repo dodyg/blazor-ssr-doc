@@ -23,7 +23,7 @@ For supported events, see [Microsoft.AspNetCore.Components.Web.EventHandlers](ht
 For event handling:
 
 
-* Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the `App` component. For more information, see </fundamentals/render-modes#apply-a-render-mode-to-the-entire-app>.
+* Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the `App` component. For more information, see [Apply a render mode to the entire app](/fundamentals/render-modes#apply-a-render-mode-to-the-entire-app).
 * Asynchronous delegate event handlers that return a [System.Threading.Tasks.Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task) (`async Task`) are supported by Blazor and adopted by Blazor Web App and Blazor WebAssembly documentation examples.
 * Delegate event handlers automatically trigger a UI render, so there's no need to manually call [`StateHasChanged`](https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#state-changes-statehaschanged).
 * Exceptions are logged.

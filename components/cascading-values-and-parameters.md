@@ -580,7 +580,7 @@ public interface ITab
 ```
 
 > [!NOTE]
-> For more information on [Microsoft.AspNetCore.Components.RenderFragment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.renderfragment), see </components/index#child-content-render-fragments>.
+> For more information on [Microsoft.AspNetCore.Components.RenderFragment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.renderfragment), see [Child content render fragments](/components/index#child-content-render-fragments).
 
 The following `TabSet` component maintains a set of tabs. The tab set's `Tab` components, which are created later in this section, supply the list items (`<li>...</li>`) for the list (`<ul>...</ul>`).
 

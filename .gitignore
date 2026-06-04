@@ -1,1 +1,6 @@
 .lunet/build/
+.env
+.playwright/
+.playwright-cli/
+.DS_Store
+Thumbs.db

@@ -69,10 +69,10 @@ echo "Updating image references in markdown..."
 echo "========================================="
 
 # Update image references in all markdown files
-find "$CONTENT_DIR" -name "*.md" -type f | while read -r file; do
+while IFS= read -r -d '' file; do
     # Update image paths to point to assets directory
     sed -i 's|!\[\(.*\)\](.*/\(.*\.\(png\|jpg\|gif\|svg\)\)|![\1](/assets/images/\2)|g' "$file"
-done
+done < <(find "$CONTENT_DIR" -name "*.md" -type f -print0)
 
 echo ""
 echo "========================================="

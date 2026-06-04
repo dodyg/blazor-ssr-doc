@@ -12,7 +12,7 @@ echo "========================================="
 echo "Processing directory: $CONTENT_DIR"
 echo ""
 
-find "$CONTENT_DIR" -name "*.md" -type f | while read -r file; do
+while IFS= read -r -d '' file; do
     echo "Processing: $file"
     
     # Use awk to process moniker blocks
@@ -60,7 +60,7 @@ find "$CONTENT_DIR" -name "*.md" -type f | while read -r file; do
     ' "$file" > "$file.tmp"
     
     mv "$file.tmp" "$file"
-done
+done < <(find "$CONTENT_DIR" -name "*.md" -type f -print0)
 
 echo ""
 echo "========================================="

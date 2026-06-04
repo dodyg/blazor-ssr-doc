@@ -231,7 +231,7 @@ In releases prior to .NET 8, Blazor framework static files, such as the Blazor s
 
 In standalone Blazor WebAssembly apps during build and publish, the framework overrides placeholders in `index.html` with values computed during build to fingerprint static assets for client-side rendering. A [fingerprint](https://wikipedia.org/wiki/Fingerprint_(computing)) is placed into the `blazor.webassembly.js` script file name, and an import map is generated for other .NET assets.
 
-The following configuration must be present in the `wwwwoot/index.html` file of a standalone Blazor WebAssembly app to adopt fingerprinting:
+The following configuration must be present in the `wwwroot/index.html` file of a standalone Blazor WebAssembly app to adopt fingerprinting:
 
 ```html
 <head>
@@ -459,6 +459,6 @@ Run the app.
 
 
 * [app-base-path](https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/app-base-path)
-* [Avoid file capture in a route parameter](/fundamentals/routing#avoid-file-capture-in-a-route-parameter)
+* [ASP.NET Core Blazor routing and navigation](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/routing)
 
 

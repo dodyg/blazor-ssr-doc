@@ -16,7 +16,7 @@ echo ""
 processed=0
 
 # Process each markdown file (excluding index.md which is custom)
-find "$CONTENT_DIR" -name "*.md" -type f ! -name "index.md" | while read -r file; do
+while IFS= read -r -d '' file; do
     echo "Processing: $file"
     
     # Get the relative path from content directory
@@ -83,7 +83,7 @@ EOF
     mv "$temp_file" "$file"
     
     processed=$((processed + 1))
-done
+done < <(find "$CONTENT_DIR" -name "*.md" -type f ! -name "index.md" -print0)
 
 echo ""
 echo "========================================="

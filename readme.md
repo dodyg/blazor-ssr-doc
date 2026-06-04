@@ -1,7 +1,8 @@
 ---
 title: Blazor Static SSR Documentation
 description: Comprehensive guide to Blazor Static Server-Side Rendering - Build fast, SEO-friendly web applications with Blazor
-
+section: Home
+toc: true
 ---
 
 # Welcome to Blazor Static SSR Documentation

@@ -26,24 +26,27 @@ declare -A LINK_MAP=(
     ["signalr/introduction"]="https://learn.microsoft.com/aspnet/core/signalr/introduction"
 )
 
-find "$CONTENT_DIR" -name "*.md" -type f | while read -r file; do
+while IFS= read -r -d '' file; do
     echo "Processing: $file"
     
     # Convert <xref:...> links
     for key in "${!LINK_MAP[@]}"; do
-        sed -i "s|<xref:${key}>|[${key##*/}](${LINK_MAP[$key]})|g" "$file"
-        sed -i "s|xref:${key}|${LINK_MAP[$key]}|g" "$file"
+        sed -i.bak "s|<xref:${key}>|[${key##*/}](${LINK_MAP[$key]})|g" "$file"
+        sed -i.bak "s|xref:${key}|${LINK_MAP[$key]}|g" "$file"
     done
     
     # Convert common patterns
-    sed -i 's|\[!\[|![|g' "$file"
-    sed -i 's|\](~/blazor/|](/|g' "$file"
-    sed -i 's|\](~/|](/|g' "$file"
+    sed -i.bak 's|\[!\[|![|g' "$file"
+    sed -i.bak 's|\](~/blazor/|](/|g' "$file"
+    sed -i.bak 's|\](~/|](/|g' "$file"
     
     # Remove INCLUDE statements
-    sed -i '/\[!INCLUDE\[/d' "$file"
+    sed -i.bak '/\[!INCLUDE\[/d' "$file"
     
-done
+    # Clean up backup files
+    rm -f "$file.bak"
+    
+done < <(find "$CONTENT_DIR" -name "*.md" -type f -print0)
 
 echo ""
 echo "========================================="

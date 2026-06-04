@@ -2,7 +2,7 @@
 title: ASP.NET Core Blazor supported platforms
 description: Learn about the supported platforms for ASP.NET Core Blazor.
 
-section: Documentation
+section: Getting Started
 toc: true
 ---
 
