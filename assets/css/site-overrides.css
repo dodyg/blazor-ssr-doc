@@ -1,26 +1,151 @@
 :root {
-    --ssr-ink: #17233d;
-    --ssr-blue: #1769aa;
-    --ssr-cyan: #20a7bd;
-    --ssr-wash: #edf8fa;
-    --ssr-line: rgba(23, 105, 170, 0.18);
+    --ssr-ink: #17233d !important;
+    --ssr-heading: #101a31 !important;
+    --ssr-link: #005293 !important;
+    --ssr-link-hover: #003f73 !important;
+    --ssr-accent: #087990 !important;
+    --ssr-wash: #edf8fa !important;
+    --ssr-surface: #ffffff !important;
+    --ssr-line: rgba(23, 35, 61, 0.24) !important;
+    --ssr-focus: #713f00 !important;
+    --bs-link-color: var(--ssr-link) !important;
+    --bs-link-color-rgb: 0, 82, 147 !important;
+    --bs-link-hover-color: var(--ssr-link-hover) !important;
+    --bs-secondary-color: #465268 !important;
+    --lunet-code-bg: #f5f7fa !important;
+    --lunet-code-inline-bg: #e1e9f0 !important;
+    --lunet-prism-text: #172033 !important;
+    --lunet-prism-inline-color: #8f1537 !important;
+    --lunet-prism-comment: #3e6129 !important;
+    --lunet-prism-punctuation: #303846 !important;
+    --lunet-prism-number: #00665e !important;
+    --lunet-prism-string: #854000 !important;
+    --lunet-prism-operator: #303846 !important;
+    --lunet-prism-keyword: #00449e !important;
+    --lunet-prism-keyword-alt: #68258d !important;
+    --lunet-prism-function: #664700 !important;
+    --lunet-prism-class-name: #005d70 !important;
+    --lunet-prism-tag: #004da8 !important;
+    --lunet-prism-tag-punctuation: #48515f !important;
+    --lunet-prism-attr-name: #00596b !important;
+    --lunet-prism-attr-value: #854000 !important;
+    --lunet-prism-regex: #941332 !important;
+    --lunet-prism-important: #003f92 !important;
+}
+
+:root[data-bs-theme="dark"] {
+    --ssr-ink: #e7eefc !important;
+    --ssr-heading: #f5f8ff !important;
+    --ssr-link: #8dccff !important;
+    --ssr-link-hover: #b9e2ff !important;
+    --ssr-accent: #72d8ea !important;
+    --ssr-wash: #101827 !important;
+    --ssr-surface: #0d1a25 !important;
+    --ssr-line: rgba(231, 238, 252, 0.3) !important;
+    --ssr-focus: #ffd166 !important;
+    --bs-link-color: var(--ssr-link) !important;
+    --bs-link-color-rgb: 141, 204, 255 !important;
+    --bs-link-hover-color: var(--ssr-link-hover) !important;
+    --bs-secondary-color: #bec9dc !important;
+    --lunet-code-bg: #07111c !important;
+    --lunet-code-inline-bg: #132638 !important;
+    --lunet-prism-text: #f1f5f9 !important;
+    --lunet-prism-inline-color: #ff9db6 !important;
+    --lunet-prism-comment: #b2d498 !important;
+    --lunet-prism-punctuation: #e2e8f0 !important;
+    --lunet-prism-number: #b8d7a8 !important;
+    --lunet-prism-string: #ffc09f !important;
+    --lunet-prism-operator: #e2e8f0 !important;
+    --lunet-prism-keyword: #9dccff !important;
+    --lunet-prism-keyword-alt: #edb5ff !important;
+    --lunet-prism-function: #ffe18a !important;
+    --lunet-prism-class-name: #89e2d0 !important;
+    --lunet-prism-tag: #9dccff !important;
+    --lunet-prism-tag-punctuation: #cbd5e1 !important;
+    --lunet-prism-attr-name: #aee6ff !important;
+    --lunet-prism-attr-value: #ffc09f !important;
+    --lunet-prism-regex: #ffaaa8 !important;
+    --lunet-prism-important: #a9d2ff !important;
+}
+
+html {
+    min-width: 320px;
+    scroll-padding-top: 7rem;
 }
 
 body {
-    background:
-        radial-gradient(circle at 8% 4%, rgba(32, 167, 189, 0.12), transparent 24rem),
-        linear-gradient(180deg, var(--ssr-wash) 0, var(--bs-body-bg) 18rem);
+    width: auto !important;
+    min-width: 320px;
+    overflow-x: hidden;
     color: var(--ssr-ink);
+    line-height: 1.6;
+    background:
+        radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--ssr-accent) 12%, transparent), transparent 24rem),
+        linear-gradient(180deg, var(--ssr-wash) 0, var(--bs-body-bg) 18rem);
 }
 
-#lunet > .navbar {
+a {
+    color: var(--ssr-link);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+}
+
+a:hover {
+    color: var(--ssr-link-hover);
+}
+
+#main-content a:not(.btn),
+footer a {
+    color: var(--ssr-link) !important;
+}
+
+#main-content a:not(.btn):hover,
+footer a:hover {
+    color: var(--ssr-link-hover) !important;
+}
+
+.skip-link {
+    position: fixed;
+    z-index: 2000;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid currentColor;
+    border-radius: 0.4rem;
+    color: var(--ssr-heading);
+    background: var(--ssr-surface);
+    transform: translateY(-150%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+.skip-link:focus-visible,
+#lunet :focus-visible {
+    outline: 3px solid var(--ssr-focus) !important;
+    outline-offset: 3px !important;
+    box-shadow: none !important;
+}
+
+#lunet {
+    width: min(calc(100% - 2rem), 100rem);
+    max-width: none;
+    padding-inline: 0;
+}
+
+#lunet > header > .navbar {
     margin: 1rem 0 1.5rem;
     padding: 0.75rem 1rem;
     border: 1px solid var(--ssr-line);
     border-radius: 1rem;
-    background: color-mix(in srgb, var(--bs-body-bg) 90%, transparent);
-    box-shadow: 0 0.75rem 2rem rgba(23, 35, 61, 0.08);
+    background: color-mix(in srgb, var(--bs-body-bg) 92%, transparent);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(12px);
+}
+
+#lunet > header > .navbar.sticky-top {
+    top: 0.5rem;
 }
 
 .navbar-brand {
@@ -34,75 +159,238 @@ body {
     height: 2.75rem;
 }
 
-.lunet-home h1,
-.lunet-docs h1 {
-    color: var(--ssr-ink);
-    font-weight: 750;
-    letter-spacing: -0.035em;
+.site-search-nav {
+    padding-inline: 0.75rem;
+}
+
+#search-results {
+    max-height: min(50vh, 24rem);
+    overflow-y: auto;
+}
+
+.navbar-right .navbar-nav {
+    gap: 0.35rem;
+}
+
+.docs-layout {
+    max-width: none;
+    padding-inline: 0;
+}
+
+.menu-sidebar {
+    max-height: calc(100vh - 7rem);
+    max-height: calc(100dvh - 7rem);
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+    scrollbar-width: thin;
 }
 
 .js-toc-content {
     min-width: 0;
+    max-width: 100%;
+}
+
+.lunet-home h1,
+.lunet-docs h1,
+.js-toc-content h1,
+.js-toc-content h2,
+.js-toc-content h3,
+.js-toc-content h4,
+.js-toc-content h5,
+.js-toc-content h6 {
+    color: var(--ssr-heading);
+}
+
+.lunet-home h1,
+.lunet-docs h1,
+.js-toc-content h1 {
+    font-weight: 750;
+    letter-spacing: -0.025em;
 }
 
 .js-toc-content > h1:first-of-type {
     padding-bottom: 0.75rem;
-    border-bottom: 3px solid var(--ssr-cyan);
+    border-bottom: 3px solid var(--ssr-accent);
 }
 
 .js-toc-content h2 {
     margin-top: 2.25rem;
-    color: var(--ssr-blue);
 }
 
-.js-toc-content img {
+.js-toc-content :is(h1, h2, h3, h4, h5, h6),
+#main-content {
+    scroll-margin-top: 7rem;
+}
+
+.js-toc-content img,
+.js-toc-content video,
+.js-toc-content svg {
     display: block;
     max-width: 100%;
     height: auto;
     margin: 1.5rem auto;
 }
 
-.js-toc-content table {
-    display: block;
+.table-scroll {
     width: 100%;
+    margin-block: 1rem;
     overflow-x: auto;
+    border: 1px solid var(--ssr-line);
+    border-radius: 0.5rem;
+}
+
+.table-scroll table {
+    width: 100%;
+    min-width: max-content;
+    margin-bottom: 0;
 }
 
 .js-toc-content pre {
+    max-width: 100%;
     border: 1px solid var(--ssr-line);
     border-radius: 0.75rem;
+    white-space: pre;
+    overflow: auto;
+}
+
+.js-toc-content :not(pre) > code {
+    color: var(--lunet-prism-inline-color);
+    background: var(--lunet-code-inline-bg);
+}
+
+.js-toc-content .token.namespace {
+    opacity: 1 !important;
 }
 
 .js-toc-content blockquote {
     padding: 0.85rem 1rem;
-    border-left: 4px solid var(--ssr-cyan);
+    border-left: 4px solid var(--ssr-accent);
     border-radius: 0 0.5rem 0.5rem 0;
+    color: var(--ssr-ink);
     background: color-mix(in srgb, var(--ssr-wash) 65%, var(--bs-body-bg));
 }
 
-.menu-sidebar {
-    scrollbar-width: thin;
+.copy-to-clipboard-button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+}
+
+.btn,
+.navbar-toggler,
+.dropdown-item {
+    min-height: 2.75rem;
+}
+
+.breadcrumb .active {
+    color: var(--bs-secondary-color);
 }
 
 footer {
     margin-top: 3rem;
+    padding-block: 1.5rem;
     border-top: 1px solid var(--ssr-line);
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 1399.98px) {
+    #navbarSupportedContent {
+        max-height: calc(100vh - 6rem);
+        max-height: calc(100dvh - 6rem);
+        overflow-y: auto;
+        padding: 0.75rem 0.25rem 0.25rem;
+    }
+
+    #navbarSupportedContent .navbar-nav,
+    .navbar-right {
+        width: 100%;
+    }
+
+    .site-search-nav {
+        padding: 0.75rem 0;
+    }
+
+    .navbar-right {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .navbar-right .dropdown,
+    .navbar-right .btn,
+    .navbar-right .nav-link {
+        width: 100%;
+    }
 }
 
 @media (max-width: 767.98px) {
     #lunet {
-        padding-inline: 0.75rem;
+        width: min(calc(100% - 1rem), 100rem);
     }
 
-    #lunet > .navbar {
-        margin-top: 0.75rem;
-    }
-
-    .js-toc-content h1 {
-        font-size: clamp(2rem, 9vw, 2.65rem);
+    #lunet > header > .navbar {
+        margin-top: 0.5rem;
+        padding: 0.6rem 0.75rem;
+        border-radius: 0.75rem;
     }
 
     .js-toc-content {
         overflow-wrap: anywhere;
+    }
+
+    .js-toc-content h1 {
+        font-size: clamp(1.85rem, 9vw, 2.5rem);
+    }
+
+    .js-toc-content h2 {
+        font-size: clamp(1.45rem, 7vw, 2rem);
+    }
+
+    .docs-mobile-controls {
+        position: sticky;
+        z-index: 100;
+        top: 0.5rem;
+        padding: 0.5rem;
+        border: 1px solid var(--ssr-line);
+        border-radius: 0.5rem;
+        background: var(--bs-body-bg);
+    }
+
+    footer {
+        font-size: 0.95rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+@media (forced-colors: active) {
+    .skip-link,
+    #lunet > header > .navbar,
+    .table-scroll,
+    .js-toc-content pre {
+        border: 1px solid CanvasText;
+    }
+}
+
+@media print {
+    .skip-link,
+    header,
+    .menu-sidebar,
+    .docs-mobile-controls,
+    .copy-to-clipboard-button {
+        display: none !important;
+    }
+
+    #lunet,
+    #main-content {
+        width: 100%;
+        max-width: none;
     }
 }

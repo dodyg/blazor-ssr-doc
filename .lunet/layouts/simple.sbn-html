@@ -1,0 +1,7 @@
+---
+layout: base
+---
+<main id="main-content" class="container" tabindex="-1">
+<!-- lunet:summarize -->
+{{ content }}
+</main>

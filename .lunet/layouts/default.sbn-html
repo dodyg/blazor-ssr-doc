@@ -1,0 +1,49 @@
+---
+layout: base
+---
+<div class="container-xxl docs-layout">
+  {{~
+    menu = page.menu
+    menu_width = 3
+    if menu != null
+      menu_width = menu.width ?? 3
+    end
+    if menu_width < 2; menu_width = 2; end
+    if menu_width > 4; menu_width = 4; end
+    sidebar_xxl_width = menu_width - 1
+    if sidebar_xxl_width < 1; sidebar_xxl_width = 1; end
+    content_xxl_width = 10 - sidebar_xxl_width
+    sidebar_col_classes = "col-md-3 col-lg-3 col-xl-3 col-xxl-" + sidebar_xxl_width
+    content_col_classes = "col-12 col-md-9 col-lg-9 col-xl-9 col-xxl-" + content_xxl_width
+  ~}}
+  <div class="row">
+      {{~ if menu != null ~}}
+      <nav id="docs-sidebar-menu" class="{{ sidebar_col_classes }} offcanvas-md offcanvas-start sticky-md-top menu-sidebar align-self-start order-1 order-md-0" tabindex="-1" aria-labelledby="docs-sidebar-menu-label">
+        <div class="offcanvas-header">
+          <h2 class="offcanvas-title h5" id="docs-sidebar-menu-label">{{ site.docs_menu_label }}</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#docs-sidebar-menu" aria-label="Close documentation menu"></button>
+        </div>
+        <div class="offcanvas-body">
+          {{~ menu_depth = page.section == "api" ? 6 : 2 ~}}
+          {{ menu.render { kind: "menu", collapsible: true, depth: menu_depth } }}
+        </div>
+      </nav>
+      {{~ end ~}}
+      <aside id="docs-sidebar-toc" class="col-12 col-xxl-2 sticky-xxl-top menu-sidebar align-self-start order-0 order-xxl-2 collapse d-xxl-block" aria-labelledby="docs-sidebar-toc-label">
+        <h2 class="toc-title h5" id="docs-sidebar-toc-label">{{ site.docs_toc_label }}</h2>
+        <nav class="js-toc" aria-label="Table of contents"></nav>
+      </aside>
+      <main id="main-content" class="{{ content_col_classes }} order-2 order-md-1 js-toc-content" tabindex="-1">
+        {{ if menu != null }}<nav aria-label="Breadcrumb">{{ menu.breadcrumb }}</nav>{{ end }}
+        <p id="lunet-results" aria-live="polite"></p>
+        <div class="docs-mobile-controls d-flex flex-wrap gap-2 mb-3 d-xxl-none">
+          {{~ if menu != null ~}}
+          <button class="btn btn-outline-secondary d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#docs-sidebar-menu" aria-controls="docs-sidebar-menu" aria-label="Open documentation menu">{{ site.docs_menu_label }}</button>
+          {{~ end ~}}
+          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#docs-sidebar-toc" aria-controls="docs-sidebar-toc" aria-expanded="false" aria-label="Toggle table of contents">{{ site.docs_toc_label }}</button>
+        </div>
+<!-- lunet:summarize -->
+{{ content }}
+      </main>
+  </div>
+</div>

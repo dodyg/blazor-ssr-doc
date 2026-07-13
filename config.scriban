@@ -19,3 +19,4 @@ site_project_basepath = "/blazor-ssr-doc"
 
 site_project_init
 html.head.metas.add $"<link rel='stylesheet' href='{basepath}/assets/css/site-overrides.css'>"
+html.head.metas.add $"<script src='{basepath}/assets/js/accessibility.js' defer></script>"
