@@ -27,7 +27,7 @@ Learn about the advantages and limitations of Static SSR and when it's the right
 Understand how a Blazor Static SSR project is organized and what each file does.
 
 ### [Tooling](/getting-started/tooling)
-Get familiar with the development tools available for building Blazor applications.
+Get familiar with the development tools available for building Blazor Static SSR applications.
 
 ### [Supported Platforms](/getting-started/supported-platforms)
 Learn about the platform requirements and browser compatibility for Blazor Static SSR.
@@ -45,8 +45,8 @@ Before you begin, ensure you have:
 Create your first Blazor Static SSR application:
 
 ```bash
-# Create a new Blazor Web App (Static SSR by default)
-dotnet new blazor -o MyBlazorApp
+# Create a new Blazor Web App without interactivity
+dotnet new blazor --interactivity None -o MyBlazorApp
 
 # Navigate to the project
 cd MyBlazorApp
@@ -55,7 +55,7 @@ cd MyBlazorApp
 dotnet run
 ```
 
-Open your browser to the URL shown in the console output to see your Blazor Static SSR app!
+Open the URL shown in the console output to see your Blazor Static SSR app.
 
 ## Key Concepts
 

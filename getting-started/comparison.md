@@ -224,14 +224,14 @@ This hybrid approach gives you the best of both worlds.
 To create a Blazor Web App focused on Static SSR:
 
 ```bash
-# Create a new Blazor Web App (Static SSR by default)
-dotnet new blazor -o MyStaticApp
+# Create a new Blazor Web App without interactivity
+dotnet new blazor --interactivity None -o MyStaticApp
 
 cd MyStaticApp
 dotnet run
 ```
 
-By default, the template creates an app that uses Static SSR without interactive rendering.
+The `--interactivity None` option creates an app that uses Static SSR without interactive rendering.
 
 ## Additional Resources
 

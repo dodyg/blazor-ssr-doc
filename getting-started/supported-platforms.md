@@ -1,68 +1,58 @@
 ---
-title: ASP.NET Core Blazor supported platforms
-description: Learn about the supported platforms for ASP.NET Core Blazor.
+title: Supported platforms for Blazor Static SSR
+description: Browser, server, and hosting requirements for Blazor Static SSR apps.
 
 section: Getting Started
 toc: true
 ---
 
-# ASP.NET Core Blazor supported platforms
+# Supported platforms for Blazor Static SSR
 
+Blazor Static SSR runs as an ASP.NET Core server app. The browser receives HTML, CSS, static assets, and optional progressive-enhancement JavaScript.
 
-:::moniker range=">= aspnetcore-5.0"
+## Browsers
 
-Blazor is supported in the browsers shown in the following table on both mobile and desktop platforms.
+Static SSR pages work in current desktop and mobile browsers that support ordinary HTML forms and navigation:
 
-| Browser         | Version         |
-| --------------- | --------------- |
-| Apple Safari    | Current&dagger; |
-| Google Chrome   | Current&dagger; |
-| Microsoft Edge  | Current&dagger; |
-| Mozilla Firefox | Current&dagger; |
+| Browser | Version |
+| ------- | ------- |
+| Apple Safari | Current |
+| Google Chrome | Current |
+| Microsoft Edge | Current |
+| Mozilla Firefox | Current |
 
-&dagger;*Current* refers to the latest version of the browser.
+The `Current` version means the latest stable browser version. Static SSR doesn't require WebAssembly support.
 
-:::moniker-end
+## Server runtime
 
-:::moniker range="< aspnetcore-5.0"
+Use the target .NET SDK and runtime for the app. For this guide, that means .NET 10:
 
-## Blazor WebAssembly
+```bash
+dotnet --version
+```
 
-| Browser                     | Version         |
-| --------------------------- | --------------- |
-| Apple Safari                | Current&dagger; |
-| Google Chrome               | Current&dagger; |
-| Microsoft Edge              | Current&dagger; |
-| Microsoft Internet Explorer | Not Supported   |
-| Mozilla Firefox             | Current&dagger; |
+A deployed Static SSR app needs an ASP.NET Core host. The published output isn't a static-file-only site, because Razor components execute on the server for each request.
 
-&dagger;*Current* refers to the latest version of the browser.
+## Hosting
 
-## Blazor Server
+Static SSR can run anywhere ASP.NET Core apps are supported, including:
 
-| Browser                     | Version         |
-| --------------------------- | --------------- |
-| Apple Safari                | Current&dagger; |
-| Google Chrome               | Current&dagger; |
-| Microsoft Edge              | Current&dagger; |
-| Microsoft Internet Explorer | Not Supported   |
-| Mozilla Firefox             | Current&dagger; |
+- Kestrel behind a reverse proxy
+- IIS on Windows
+- Linux services
+- Containers
+- Cloud app hosting platforms that support ASP.NET Core
 
-&dagger;*Current* refers to the latest version of the browser.
+Enable HTTPS in production and configure normal ASP.NET Core hosting concerns such as forwarded headers, logging, health checks, and secret storage.
 
-:::moniker-end
+## Progressive enhancement
 
-:::moniker range=">= aspnetcore-6.0"
+Enhanced navigation, enhanced forms, streaming rendering, and JavaScript initializers require `_framework/blazor.web.js`. This script doesn't create a SignalR circuit by itself and doesn't require an interactive render mode.
 
-For [Blazor Hybrid apps](https://learn.microsoft.com/aspnet/core/blazor/hybrid/index), we test on and support the latest platform Web View control versions:
-
-* [Microsoft Edge `WebView2` on Windows](https://learn.microsoft.com/microsoft-edge/webview2/)
-* [Chrome on Android](https://play.google.com/store/apps/details?id=com.android.chrome)
-* [Safari on iOS and macOS](https://www.apple.com/safari/)
-
-:::moniker-end
+If JavaScript is unavailable, ordinary links and form posts still work when the page is designed with a proper HTML fallback.
 
 ## Additional resources
 
-* [hosting-models](/getting-started/comparison)
-* [supported-platforms](https://learn.microsoft.com/aspnet/core/signalr/supported-platforms)
+- [Tooling for Blazor Static SSR](/getting-started/tooling)
+- [Static files](/fundamentals/static-files)
+- [Routing and enhanced navigation](/fundamentals/routing)

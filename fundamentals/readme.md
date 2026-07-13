@@ -1,6 +1,6 @@
 ---
 title: Fundamentals
-description: Core concepts of Blazor SSR including render modes, routing, and dependency injection
+description: Core concepts of Blazor Static SSR including routing, dependency injection, configuration, and static files
 
 section: Fundamentals
 toc: true
@@ -8,41 +8,40 @@ toc: true
 
 # Fundamentals
 
-Learn the core concepts that power Blazor Server-Side Rendering applications.
+Learn the core concepts that power Blazor Static SSR applications.
 
 ## Topics
 
 ### [Render Modes](/fundamentals/render-modes)
-Understand the different render modes available in Blazor: Static SSR, Interactive Server, and Interactive Auto. Learn when to use each mode and how they affect your application's behavior.
+Understand Static SSR as the absence of an assigned interactive render mode and learn how to avoid accidentally enabling interactivity.
 
 ### [Routing](/fundamentals/routing)
-Master URL navigation and routing in Blazor SSR. Learn how to define routes, handle parameters, and navigate between pages.
+Master URL navigation and routing in Static SSR. Learn how to define routes, handle parameters, redirects, Not Found responses, and enhanced navigation.
 
 ### [Dependency Injection](/fundamentals/dependency-injection)
-Learn how to use dependency injection in your Blazor SSR applications. Understand service lifetimes and how to inject services into components.
+Learn how to use dependency injection in Static SSR applications. Understand service lifetimes and how to inject services into components.
 
 ### [Configuration](/fundamentals/configuration)
-Configure your Blazor SSR application using appsettings.json, environment variables, and other configuration sources.
+Configure your Static SSR application using appsettings.json, environment variables, and other configuration sources.
 
 ### [Static Files](/fundamentals/static-files)
-Serve static assets like CSS, JavaScript, and images in your Blazor SSR application.
+Serve static assets like CSS, JavaScript, images, and downloads in your Static SSR application.
 
 ## Core Concepts
 
-Blazor SSR is built on several fundamental concepts:
+Blazor Static SSR is built on several fundamental concepts:
 
-### Render Modes
-Blazor components can be rendered in different modes:
-- **Static SSR**: Renders as static HTML with no interactivity
-- **Interactive Server**: Renders with full interactivity via SignalR
-- **Interactive Auto**: Chooses the best render mode based on capabilities
+### Static SSR
+
+Static SSR renders Razor components to HTML on the server for each request. There is no `@rendermode Static`; a component renders statically when no interactive render mode is assigned or inherited.
 
 ### Component Model
 Blazor uses Razor components (.razor files) that combine HTML markup with C# code. Components are the building blocks of your application.
 
-### Server-Side Execution
-In SSR mode, components execute on the server. HTML is generated and sent to the browser, providing fast initial load times and excellent SEO.
+### Server-side execution
+
+In Static SSR, components execute on the server. HTML is generated and sent to the browser, providing fast initial load times and excellent SEO.
 
 ## Next Steps
 
-After understanding the fundamentals, dive into [Components](/components/) to learn how to build interactive and reusable UI elements.
+After understanding the fundamentals, dive into [Components](/components/) to learn how to build reusable request-rendered UI.

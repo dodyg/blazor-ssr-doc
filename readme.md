@@ -58,7 +58,7 @@ Static SSR is ideal for:
 
 ```bash
 # Create a new Blazor Web App without interactivity
-dotnet new blazor -o MyBlazorApp
+dotnet new blazor --interactivity None -o MyBlazorApp
 
 # Navigate to the project
 cd MyBlazorApp
@@ -67,7 +67,7 @@ cd MyBlazorApp
 dotnet run
 ```
 
-Open your browser to `https://localhost:5001` to see your Blazor Static SSR app!
+Open the URL printed by `dotnet run` to see your Blazor Static SSR app.
 
 ### Understanding Static SSR
 
@@ -170,6 +170,7 @@ else
 
 ```razor
 @page "/contact"
+@using System.ComponentModel.DataAnnotations
 @inject EmailService EmailService
 
 <h1>Contact Us</h1>
@@ -199,7 +200,9 @@ else
 }
 
 @code {
-    private ContactForm contactForm = new();
+    [SupplyParameterFromForm]
+    private ContactForm contactForm { get; set; } = new();
+
     private bool messageSent = false;
 
     private async Task HandleSubmit()

@@ -1,6 +1,6 @@
 ---
 title: Advanced Topics
-description: Performance optimization, deployment, and advanced scenarios for Blazor SSR
+description: Performance, deployment, and advanced scenarios for Blazor Static SSR
 
 section: Advanced
 toc: true
@@ -8,43 +8,46 @@ toc: true
 
 # Advanced Topics
 
-Take your Blazor SSR applications to the next level with advanced techniques, performance optimization, and deployment strategies.
+Advanced techniques for Blazor Static SSR apps.
 
 ## Topics
 
 ### [Advanced Scenarios](/advanced/advanced-scenarios)
-Explore advanced scenarios including JavaScript interop, dynamic component loading, and custom renderers.
+Explore dynamic component rendering and manual render-tree construction.
 
 ### [JavaScript with Static SSR](/advanced/javascript)
 Initialize and dispose page-specific JavaScript correctly across enhanced navigation updates.
 
 ### [Globalization and Localization](/advanced/globalization-localization)
-Make your Blazor SSR application global-ready with support for multiple languages and cultures.
+Configure server-side cultures, formatting, and localized resources.
 
 ## Performance Optimization
 
-Optimize your Blazor SSR applications for speed and efficiency:
+Optimize Static SSR applications for request throughput and response size:
 
-### Rendering Optimization
-- Minimize component re-renders
-- Use `ShouldRender` to control when components update
-- Leverage prerendering for faster perceived performance
-- Implement lazy loading for large components
+### Rendering optimization
 
-### Memory Management
-- Dispose resources properly using `IDisposable`
-- Avoid memory leaks in long-running circuits
-- Monitor circuit memory usage
+- Load data asynchronously during component initialization.
+- Use streaming rendering for slow server work when partial output improves perceived performance.
+- Keep expensive work out of layouts that render on every page.
+- Cache data that is safe to reuse across requests.
 
-### Network Optimization
-- Enable compression
-- Implement caching strategies
-- Optimize SignalR connections
-- Use CDN for static assets
+### Memory management
+
+- Dispose request-scoped resources properly.
+- Avoid storing per-user request state in singletons.
+- Don't retain `HttpContext` after the request completes.
+
+### Network optimization
+
+- Enable response compression where appropriate.
+- Cache public static assets aggressively.
+- Use a CDN for large static assets.
+- Keep rendered HTML and CSS payloads focused.
 
 ## Deployment
 
-Deploy your Blazor SSR application to various hosting platforms:
+Deploy a Static SSR app as an ASP.NET Core server app:
 
 ### Azure App Service
 - Configure for production
@@ -98,10 +101,10 @@ For the full guidance, see [Handle errors in ASP.NET Core Blazor](https://learn.
 
 Plan for scale:
 
-- **State Management**: Use distributed caches (Redis)
-- **Load Balancing**: Configure for multiple instances
-- **Session Affinity**: Understand sticky sessions for Blazor Server
-- **Database Scaling**: Optimize database connections and queries
+- **State management**: Store durable state outside component instances.
+- **Load balancing**: Use normal ASP.NET Core load balancing patterns.
+- **Caching**: Cache shared read-heavy data when safe.
+- **Database scaling**: Optimize database connections and queries.
 
 ## Best Practices
 
@@ -114,9 +117,7 @@ Plan for scale:
 
 ## Additional Resources
 
-- [Blazor Performance Best Practices](https://learn.microsoft.com/aspnet/core/blazor/performance)
+- [Blazor performance best practices](https://learn.microsoft.com/aspnet/core/blazor/performance)
 - [ASP.NET Core Deployment](https://learn.microsoft.com/aspnet/core/host-and-deploy/)
-
----
 
 Ready to deploy your application? Check the [official deployment documentation](https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/) for detailed guidance.

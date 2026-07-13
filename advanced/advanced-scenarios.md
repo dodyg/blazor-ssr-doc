@@ -1,138 +1,106 @@
 ---
-title: ASP.NET Core Blazor advanced scenarios (render tree construction)
-description: Learn how to incorporate manual logic for building Blazor render trees (RenderTreeBuilder).
+title: Advanced Static SSR scenarios
+description: Advanced implementation notes for Blazor Static SSR components.
 
 section: Advanced
 toc: true
 ---
 
-# ASP.NET Core Blazor advanced scenarios (render tree construction)
+# Advanced Static SSR scenarios
 
+Most Static SSR components should be written as `.razor` files. The compiler generates efficient render-tree code and keeps the markup readable. Use lower-level rendering APIs only when ordinary components can't express the scenario.
 
-This article describes the advanced scenario for building Blazor render trees manually with [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder).
+## Manual render tree construction
 
-> **Warning:**
-> Use of [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) to create components is an *advanced scenario*. A malformed component (for example, an unclosed markup tag) can result in undefined behavior. Undefined behavior includes broken content rendering, loss of app features, and ***compromised security***.
-
-## Manually build a render tree (`RenderTreeBuilder`)
-
-[RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) provides methods for manipulating components and elements, including building components manually in C# code.
-
-Consider the following `PetDetails` component, which can be manually rendered in another component.
-
-`PetDetails.razor`:
-
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/PetDetails.razor":::
-
-In the following `BuiltContent` component, the loop in the `CreateComponent` method generates three `PetDetails` components.
-
-In [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) methods with a sequence number, sequence numbers are source code line numbers. The Blazor difference algorithm relies on the sequence numbers corresponding to distinct lines of code, not distinct call invocations. When creating a component with [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) methods, hardcode the arguments for sequence numbers. **Using a calculation or counter to generate the sequence number can lead to poor performance.** For more information, see the [Sequence numbers relate to code line numbers and not execution order](#sequence-numbers-relate-to-code-line-numbers-and-not-execution-order) section.
-
-`BuiltContent.razor`:
-
-:::moniker range=">= aspnetcore-9.0"
-
-:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/BuiltContent.razor":::
-
-:::moniker-end
-
-:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
-
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/BuiltContent.razor":::
-
-:::moniker-end
-
-
-> **Warning:**
-> The types in [RenderTree](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendertree) allow processing of the *results* of rendering operations. These are internal details of the Blazor framework implementation. These types should be considered *unstable* and subject to change in future releases.
-
-### Sequence numbers relate to code line numbers and not execution order
-
-Razor component files (`.razor`) are always compiled. Executing compiled code has a potential advantage over interpreting code because the compile step that yields the compiled code can be used to inject information that improves app performance at runtime.
-
-A key example of these improvements involves *sequence numbers*. Sequence numbers indicate to the runtime which outputs came from which distinct and ordered lines of code. The runtime uses this information to generate efficient tree diffs in linear time, which is far faster than is normally possible for a general tree diff algorithm.
-
-Consider the following Razor component file (`.razor`):
-
-```razor
-@if (someFlag)
-{
-    <text>First</text>
-}
-
-Second
-```
-
-The preceding Razor markup and text content compiles into C# code similar to the following:
+`RenderTreeBuilder` can build component output manually:
 
 ```csharp
-if (someFlag)
-{
-    builder.AddContent(0, "First");
-}
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
 
-builder.AddContent(1, "Second");
+public sealed class ProductSummary : ComponentBase
+{
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public decimal Price { get; set; }
+
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+        builder.OpenElement(0, "article");
+        builder.OpenElement(1, "h2");
+        builder.AddContent(2, Name);
+        builder.CloseElement();
+        builder.OpenElement(3, "p");
+        builder.AddContent(4, Price.ToString("C"));
+        builder.CloseElement();
+        builder.CloseElement();
+    }
+}
 ```
 
-When the code executes for the first time and `someFlag` is `true`, the builder receives the sequence in the following table.
+This works in Static SSR because rendering occurs on the server during the request.
 
-Sequence | Type      | Data
-:------: | --------- | ------
-0        | Text node | First
-1        | Text node | Second
+## Sequence numbers
 
-Imagine that `someFlag` becomes `false` and the markup is rendered again. This time, the builder receives the sequence in the following table.
+Hardcode sequence numbers. They represent source locations, not runtime execution order:
 
-Sequence | Type      | Data
-:------: | --------- | ------
-1        | Text node | Second
+```csharp
+if (showDetails)
+{
+    builder.AddContent(10, "Details");
+}
 
-When the runtime performs a diff, it sees that the item at sequence `0` was removed, so it generates the following trivial *edit script* with a single step:
+builder.AddContent(20, "Summary");
+```
 
-* Remove the first text node.
-
-### The problem with generating sequence numbers programmatically
-
-Imagine instead that you wrote the following render tree builder logic:
+Do not generate sequence numbers with a counter:
 
 ```csharp
 var seq = 0;
-
-if (someFlag)
-{
-    builder.AddContent(seq++, "First");
-}
-
-builder.AddContent(seq++, "Second");
+builder.AddContent(seq++, "Summary");
 ```
 
-The first output is reflected in the following table.
+Generated sequence numbers hide useful structure from Blazor's diffing algorithm. Even in Static SSR, components can rerender during a request, and the same component code might later be used interactively.
 
-Sequence | Type      | Data
-:------: | --------- | ------
-0        | Text node | First
-1        | Text node | Second
+## Prefer regions for generated blocks
 
-This outcome is identical to the prior case, so no negative issues exist. `someFlag` is `false` on the second rendering, and the output is seen in the following table.
+If a helper method emits a repeated or generated block, wrap it in a region so sequence numbers inside the helper have a separate range:
 
-Sequence | Type      | Data
-:------: | --------- | ------
-0        | Text node | Second
+```csharp
+builder.OpenRegion(100);
+BuildProductRows(builder, products);
+builder.CloseRegion();
+```
 
-This time, the diff algorithm sees that *two* changes have occurred. The algorithm generates the following edit script:
+## Dynamic components
 
-* Change the value of the first text node to `Second`.
-* Remove the second text node.
+Use `DynamicComponent` when choosing a component type at runtime:
 
-Generating the sequence numbers has lost all the useful information about where the `if/else` branches and loops were present in the original code. This results in a diff **twice as long** as before.
+```razor
+<DynamicComponent Type="selectedComponent"
+                  Parameters="parameters" />
 
-This is a trivial example. In more realistic cases with complex and deeply nested structures, and especially with loops, the performance cost is usually higher. Instead of immediately identifying which loop blocks or branches have been inserted or removed, the diff algorithm must recurse deeply into the render trees. This usually results in building longer edit scripts because the diff algorithm is misinformed about how the old and new structures relate to each other.
+@code {
+    private Type selectedComponent = typeof(ProductSummary);
 
-### Guidance and conclusions
+    private Dictionary<string, object?> parameters = new()
+    {
+        ["Name"] = "Trail map",
+        ["Price"] = 12.50m
+    };
+}
+```
 
-* App performance suffers if sequence numbers are generated dynamically.
-* The necessary information doesn't exist to permit the framework to generate sequence numbers automatically at runtime unless the information is captured at compile time.
-* Don't write long blocks of manually-implemented [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) logic. Prefer `.razor` files and allow the compiler to deal with the sequence numbers. If you're unable to avoid manual [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) logic, split long blocks of code into smaller pieces wrapped in [RenderTreeBuilder.OpenRegion](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder.openregion%2a)/[RenderTreeBuilder.CloseRegion](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder.closeregion%2a) calls. Each region has its own separate space of sequence numbers, so you can restart from zero (or any other arbitrary number) inside each region.
-* If sequence numbers are hardcoded, the diff algorithm only requires that sequence numbers increase in value. The initial value and gaps are irrelevant. One legitimate option is to use the code line number as the sequence number, or start from zero and increase by ones or hundreds (or any preferred interval).
-* For loops, the sequence numbers should increase in your source code, not in terms of runtime behavior. The fact that, at runtime, the numbers repeat is how the diffing system realises you're in a loop.
-* Blazor uses sequence numbers, while other tree-diffing UI frameworks don't use them. Diffing is far faster when sequence numbers are used, and Blazor has the advantage of a compile step that deals with sequence numbers automatically for developers authoring `.razor` files.
+The selected component still renders statically unless it or an ancestor is assigned an interactive render mode.
+
+## Security warning
+
+Manual render-tree construction can produce invalid markup or unsafe output if used carelessly. Prefer normal Razor syntax and let Razor encode untrusted text. When emitting markup manually, don't pass untrusted HTML through `MarkupString` unless it has been sanitized by a trusted HTML sanitizer.
+
+## Additional resources
+
+- [Components](/components/)
+- [Rendering](/components/rendering)
+- [Threat mitigation](/security/threat-mitigation)
