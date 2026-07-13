@@ -21,6 +21,12 @@ Understand how components are rendered in Blazor Static SSR. Learn about renderi
 ### [Prerendering](/components/prerender)
 Improve perceived performance with prerendering. Learn how to pre-render components to static HTML.
 
+### [HTTP Context](/components/http-context)
+Use request and response data safely during Static SSR.
+
+### [Razor Class Libraries](/components/class-libraries)
+Design reusable components that work with Static SSR and progressive enhancement.
+
 ### [Lifecycle](/components/lifecycle)
 Master the component lifecycle methods. Learn when to use OnInitialized, OnParametersSet, and other lifecycle events.
 

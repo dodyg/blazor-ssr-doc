@@ -15,6 +15,9 @@ Take your Blazor SSR applications to the next level with advanced techniques, pe
 ### [Advanced Scenarios](/advanced/advanced-scenarios)
 Explore advanced scenarios including JavaScript interop, dynamic component loading, and custom renderers.
 
+### [JavaScript with Static SSR](/advanced/javascript)
+Initialize and dispose page-specific JavaScript correctly across enhanced navigation updates.
+
 ### [Globalization and Localization](/advanced/globalization-localization)
 Make your Blazor SSR application global-ready with support for multiple languages and cultures.
 
@@ -67,6 +70,29 @@ Monitor your application in production:
 - **Logging**: Implement structured logging
 - **Health Checks**: Monitor application health
 - **Error Tracking**: Capture and analyze exceptions
+
+## Error Handling in Static SSR
+
+Keep detailed Razor component errors limited to development:
+
+```csharp
+builder.Services.AddRazorComponents(options =>
+    options.DetailedErrors = builder.Environment.IsDevelopment());
+```
+
+An [`ErrorBoundary`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.web.errorboundary) around statically rendered content catches exceptions from component construction, lifecycle methods, and rendering during that HTTP request:
+
+```razor
+<ErrorBoundary>
+    @Body
+</ErrorBoundary>
+```
+
+A boundary in a static layout only applies during Static SSR. It doesn't catch later event-handler failures in an interactive descendant. Scope boundaries near the content they protect and let ASP.NET Core exception handling middleware handle errors that escape component rendering.
+
+After streaming rendering starts, the status code and headers may already be committed. Production responses therefore show generic streamed error content; log the exception server-side without exposing its details.
+
+For the full guidance, see [Handle errors in ASP.NET Core Blazor](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/handle-errors?view=aspnetcore-10.0).
 
 ## Scalability Considerations
 

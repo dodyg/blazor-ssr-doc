@@ -55,26 +55,33 @@ app.Run();
 
 This configuration renders all components using Static SSR by default.
 
-### Per-Page Static SSR
+### No `Static` Render Mode Exists
 
-To explicitly use Static SSR for a specific page, you can use the `@attribute` directive:
+Static SSR is the absence of an interactive render mode. There is no `RenderMode.Static`, `@rendermode Static`, or equivalent directive. A component renders statically when no interactive render mode is assigned by the component or inherited from an ancestor.
 
-```razor
-@page "/about"
-@attribute [RenderMode.Static]
-
-<h1>About Us</h1>
-<p>This page is rendered using Static SSR.</p>
-```
-
-Or apply it via the `@rendermode` directive:
+In an otherwise interactive app, use [`[ExcludeFromInteractiveRouting]`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.excludefrominteractiveroutingattribute) on a page that must return to request/response rendering:
 
 ```razor
-@page "/about"
-@rendermode Static
-
-<h1>About Us</h1>
+@page "/account/profile"
+@attribute [ExcludeFromInteractiveRouting]
 ```
+
+The attribute forces inbound navigation to perform a full-page request. The app's root component must then assign no interactive render mode when the endpoint rejects interactive routing:
+
+```razor
+<HeadOutlet @rendermode="PageRenderMode" />
+<Routes @rendermode="PageRenderMode" />
+
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    private IComponentRenderMode? PageRenderMode =>
+        HttpContext.AcceptsInteractiveRouting() ? InteractiveServer : null;
+}
+```
+
+This pattern is useful for pages that must read or write cookies, such as Identity pages. A `null` mode works here because the root `App` component itself renders statically; on a child of an interactive component, `null` merely inherits the parent's interactive mode.
 
 ## Component Rendering
 
@@ -174,18 +181,19 @@ In Static SSR, forms use traditional POST requests:
 }
 
 @code {
-    private ContactModel model = new();
+    [SupplyParameterFromForm]
+    private ContactModel? model { get; set; }
+
     private bool submitted;
 
     protected override void OnInitialized()
     {
-        // Check if form was submitted (POST request)
-        submitted = HttpContext?.Request.Method == "POST";
+        model ??= new();
     }
 
     private async Task HandleSubmit()
     {
-        await EmailService.SendAsync(model);
+        await EmailService.SendAsync(model!);
         submitted = true;
     }
 
@@ -282,14 +290,37 @@ Blazor provides enhanced navigation for Static SSR pages that intercepts link cl
 
 ```csharp
 // Program.cs
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents(); // Required for enhanced navigation
+builder.Services.AddRazorComponents();
+
+// App.razor also loads _framework/blazor.web.js.
 ```
 
 Enhanced navigation provides:
 - Smooth transitions between pages
 - Preserved scroll position
 - Faster perceived navigation
+
+Interactive Server services aren't required for enhanced navigation. The feature comes from `blazor.web.js` and Razor component endpoints.
+
+## Detect Static SSR at Runtime
+
+.NET 10 components can inspect their renderer and assigned mode:
+
+```razor
+@if (RendererInfo.Name == "Static")
+{
+    <p>This request is using Static SSR.</p>
+}
+
+@code {
+    private bool IsStaticallyRendered =>
+        RendererInfo.Name == "Static" && !RendererInfo.IsInteractive;
+}
+```
+
+`RendererInfo.IsInteractive` is `false` both for Static SSR and while an interactive component is prerendering. Use `RendererInfo.Name == "Static"` when the distinction matters. `AssignedRenderMode is null` indicates that the component wasn't assigned an interactive mode, but it may still inherit one from an ancestor.
+
+During Static SSR, ASP.NET Core middleware handles endpoint authorization. Router `<NotAuthorized>` content isn't used for a rejected request; configure the authentication and authorization middleware to produce the appropriate login, access-denied, or status response.
 
 ## Limitations of Static SSR
 

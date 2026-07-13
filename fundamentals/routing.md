@@ -224,12 +224,14 @@ Use standard anchor tags for navigation:
 
 ## Enhanced Navigation
 
-Blazor provides enhanced navigation that updates content without full page reloads:
+Blazor provides enhanced navigation that updates content without full page reloads. It is available when the app loads `_framework/blazor.web.js`, the destination is inside the app's base URI, and the feature hasn't been disabled. No interactive render mode or SignalR circuit is required.
 
 ```csharp
 // Program.cs
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents();
+
+// Later in the pipeline:
+app.MapRazorComponents<App>();
 ```
 
 Enhanced navigation:
@@ -237,6 +239,34 @@ Enhanced navigation:
 - Fetches content via enhanced navigation request
 - Updates DOM without full page reload
 - Preserves scroll position
+
+Disable it for one link or for a hierarchy of links with `data-enhance-nav="false"`:
+
+```html
+<a href="/reports" data-enhance-nav="false">Full-load reports</a>
+
+<nav data-enhance-nav="false">
+    <a href="/account">Account</a>
+    <a href="/sign-out">Sign out</a>
+</nav>
+```
+
+If the destination isn't a Blazor endpoint, the browser falls back to a full-page load. `NavigationManager.NavigateTo` uses enhanced navigation when available unless `forceLoad` is `true`. `NavigationManager.Refresh()` also prefers enhancement; call `NavigationManager.Refresh(forceLoad: true)` to guarantee a full request.
+
+### Enhanced Form Posts
+
+Enhanced forms post to the server and patch the response into the document:
+
+```razor
+<EditForm Model="Model" FormName="Search" Enhance
+          OnValidSubmit="Search">
+    ...
+</EditForm>
+```
+
+For an HTML form, add `data-enhance` directly to the `<form>` element. Unlike link enhancement, form enhancement isn't inherited from an ancestor. Enhanced posts only work with Blazor endpoints.
+
+JavaScript changes that aren't part of the server-rendered response may be undone by DOM patching. Add `data-permanent` to narrowly preserve a client-managed element, and use the `enhancedload` event to reapply page behavior. See [JavaScript with Static SSR](/advanced/javascript).
 
 ## Link Helpers
 
@@ -327,27 +357,74 @@ In Static SSR:
 - Each navigation triggers an HTTP request
 - Server renders fresh HTML for each page
 - Full page lifecycle executes per request
+- Enhanced navigation can make the request with `fetch` and patch the returned HTML without creating an interactive router
+
+## Redirects During Static SSR
+
+Historically, `NavigationManager.NavigateTo` implemented a Static SSR redirect by throwing `NavigationException`, which the framework converted into a redirect response. In a .NET 10 project, opt into the non-throwing behavior with the following project property (new .NET 10 templates enable it by default):
+
+```xml
+<PropertyGroup>
+  <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+</PropertyGroup>
+```
+
+With the property enabled, code after `NavigateTo` runs. Without it, control doesn't return to the caller during Static SSR and a debugger may break on the framework-handled exception.
 
 ## Not Found Pages
 
-Handle 404 scenarios:
+In .NET 10, call `NavigationManager.NotFound()` when a requested resource doesn't exist. During Static SSR this sets the HTTP response status to 404:
+
+```razor
+@page "/products/{Id:int}"
+@inject NavigationManager Navigation
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var product = await Products.FindAsync(Id);
+
+        if (product is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}
+```
+
+The .NET 10 `Router` no longer supports the old `<NotFound>...</NotFound>` render fragment. Assign a routable Not Found component to `NotFoundPage`:
 
 ```razor
 @* Routes.razor *@
-<Router AppAssembly="typeof(Program).Assembly">
+<Router AppAssembly="typeof(Program).Assembly"
+        NotFoundPage="typeof(Pages.NotFound)">
     <Found Context="routeData">
         <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
     </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="typeof(MainLayout)">
-            <h1>Page not found</h1>
-            <p>The page you're looking for doesn't exist.</p>
-            <a href="/">Go home</a>
-        </LayoutView>
-    </NotFound>
 </Router>
 ```
+
+```razor
+@* Pages/NotFound.razor *@
+@page "/not-found"
+@layout MainLayout
+
+<PageTitle>Not found</PageTitle>
+<h1>Page not found</h1>
+<p>The requested content doesn't exist.</p>
+```
+
+For unknown browser URLs and non-Blazor endpoints, configure Status Code Pages re-execution before mapping components:
+
+```csharp
+app.UseStatusCodePagesWithReExecute(
+    "/not-found", createScopeForStatusCodePages: true);
+```
+
+A routable page is also required to display Not Found content after a streaming response begins. With enhanced navigation, Blazor can patch that page into the document; without enhancement, it reloads the Not Found URL.
 
 ## Best Practices
 

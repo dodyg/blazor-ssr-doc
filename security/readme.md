@@ -21,6 +21,10 @@ Security is a critical aspect of any web application. Blazor SSR integrates seam
 
 ## Topics
 
+### [Static SSR Threat Mitigation](/security/threat-mitigation)
+
+Validate untrusted input, protect form posts, isolate request state, and bound server work.
+
 ### Authentication
 
 Implement user authentication in your Blazor SSR applications:

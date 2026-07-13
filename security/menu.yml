@@ -1,2 +1,3 @@
 doc:
   - {path: readme.md, title: "<i class='bi bi-book' aria-hidden='true'></i> Overview"}
+  - {path: threat-mitigation.md, title: "<i class='bi bi-shield-check' aria-hidden='true'></i> Threat Mitigation"}

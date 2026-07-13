@@ -249,9 +249,10 @@ Blazor provides enhanced navigation that intercepts link clicks and updates cont
 
 ```csharp
 // Program.cs
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents(); // Required for enhanced nav
+builder.Services.AddRazorComponents();
 ```
+
+The app must also load `_framework/blazor.web.js`. Interactive Server services aren't required.
 
 ### How It Works
 
