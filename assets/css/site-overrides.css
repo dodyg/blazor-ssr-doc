@@ -129,7 +129,7 @@ footer a:hover {
 }
 
 #lunet {
-    width: min(calc(100% - 2rem), 100rem);
+    width: calc(100% - 2rem);
     max-width: none;
     padding-inline: 0;
 }
@@ -173,7 +173,8 @@ footer a:hover {
 }
 
 .docs-layout {
-    max-width: none;
+    width: 100%;
+    max-width: none !important;
     padding-inline: 0;
 }
 
@@ -321,9 +322,38 @@ footer {
     }
 }
 
+@media (min-width: 1400px) {
+    .docs-layout > .row {
+        display: grid;
+        grid-template-columns: minmax(12rem, 14rem) minmax(0, 1fr) minmax(11rem, 12rem);
+        gap: clamp(1.25rem, 2vw, 2.5rem);
+        margin-inline: 0;
+    }
+
+    .docs-layout > .row > #docs-sidebar-menu,
+    .docs-layout > .row > #main-content,
+    .docs-layout > .row > #docs-sidebar-toc {
+        width: auto;
+        max-width: none;
+        padding-inline: 0;
+    }
+
+    #docs-sidebar-menu {
+        grid-column: 1;
+    }
+
+    #main-content {
+        grid-column: 2;
+    }
+
+    #docs-sidebar-toc {
+        grid-column: 3;
+    }
+}
+
 @media (max-width: 767.98px) {
     #lunet {
-        width: min(calc(100% - 1rem), 100rem);
+        width: calc(100% - 1rem);
     }
 
     #lunet > header > .navbar {
