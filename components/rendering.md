@@ -22,6 +22,20 @@ In Static SSR, rendering is straightforward:
 
 Unlike interactive Blazor, there's no circuit, no SignalR connection, and no client-side runtime.
 
+## Embed a Static Component in MVC or Razor Pages
+
+Existing MVC and Razor Pages applications can render a noninteractive Razor component with the Component Tag Helper. `render-mode="Static"` is valid Tag Helper syntax (it isn't the Blazor `@rendermode` directive):
+
+```cshtml
+<component type="typeof(ProductSummary)"
+           render-mode="Static"
+           param-Product="Model.Product" />
+```
+
+The component runs while the page or view renders and contributes HTML to the same response. Razor event handlers don't remain active in the browser. Use the containing Razor Page/MVC form or links for request-driven behavior.
+
+For configuration and namespace guidance, see [Integrate Razor components with MVC or Razor Pages](https://learn.microsoft.com/aspnet/core/blazor/components/integration?view=aspnetcore-10.0#render-noninteractive-components).
+
 ## Streaming Rendering
 
 Streaming rendering improves perceived performance by sending initial HTML immediately, then streaming content updates as async operations complete.

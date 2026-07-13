@@ -11,6 +11,20 @@ toc: true
 
 This article describes Blazor app configuration for serving static files.
 
+## File Downloads in Static SSR
+
+Static SSR can't use .NET-to-JavaScript streaming interop after rendering. Serve downloadable content from a URL and use an ordinary anchor so the browser performs the download:
+
+```razor
+<a href="/downloads/invoice/@InvoiceId" download>
+    Download invoice
+</a>
+```
+
+The URL can map to a static asset or to an authorized endpoint that returns a file. Always validate authorization on the server, keep user-controlled file names out of physical paths, disable execute permission in upload/download storage, and apply size and rate limits. Cross-origin download URLs also require an appropriate CORS policy.
+
+If a design requires a button instead of a link, attach a browser JavaScript listener using the [Static SSR JavaScript lifecycle pattern](/advanced/javascript), then create and click an anchor in JavaScript. For the full guidance, see [ASP.NET Core Blazor file downloads](https://learn.microsoft.com/aspnet/core/blazor/file-downloads?view=aspnetcore-10.0).
+
 :::moniker range=">= aspnetcore-9.0"
 
 For general information on serving static files with Map Static Assets routing endpoint conventions, see [static-files](https://learn.microsoft.com/aspnet/core/fundamentals/static-files) before reading this article.
@@ -460,5 +474,4 @@ Run the app.
 
 * [app-base-path](https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/app-base-path)
 * [ASP.NET Core Blazor routing and navigation](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/routing)
-
 
