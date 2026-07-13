@@ -1,0 +1,108 @@
+:root {
+    --ssr-ink: #17233d;
+    --ssr-blue: #1769aa;
+    --ssr-cyan: #20a7bd;
+    --ssr-wash: #edf8fa;
+    --ssr-line: rgba(23, 105, 170, 0.18);
+}
+
+body {
+    background:
+        radial-gradient(circle at 8% 4%, rgba(32, 167, 189, 0.12), transparent 24rem),
+        linear-gradient(180deg, var(--ssr-wash) 0, var(--bs-body-bg) 18rem);
+    color: var(--ssr-ink);
+}
+
+#lunet > .navbar {
+    margin: 1rem 0 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--ssr-line);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--bs-body-bg) 90%, transparent);
+    box-shadow: 0 0.75rem 2rem rgba(23, 35, 61, 0.08);
+    backdrop-filter: blur(12px);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.navbar-brand .lunet-logo {
+    width: 2.75rem;
+    height: 2.75rem;
+}
+
+.lunet-home h1,
+.lunet-docs h1 {
+    color: var(--ssr-ink);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+}
+
+.js-toc-content {
+    min-width: 0;
+}
+
+.js-toc-content > h1:first-of-type {
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--ssr-cyan);
+}
+
+.js-toc-content h2 {
+    margin-top: 2.25rem;
+    color: var(--ssr-blue);
+}
+
+.js-toc-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem auto;
+}
+
+.js-toc-content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.js-toc-content pre {
+    border: 1px solid var(--ssr-line);
+    border-radius: 0.75rem;
+}
+
+.js-toc-content blockquote {
+    padding: 0.85rem 1rem;
+    border-left: 4px solid var(--ssr-cyan);
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: color-mix(in srgb, var(--ssr-wash) 65%, var(--bs-body-bg));
+}
+
+.menu-sidebar {
+    scrollbar-width: thin;
+}
+
+footer {
+    margin-top: 3rem;
+    border-top: 1px solid var(--ssr-line);
+}
+
+@media (max-width: 767.98px) {
+    #lunet {
+        padding-inline: 0.75rem;
+    }
+
+    #lunet > .navbar {
+        margin-top: 0.75rem;
+    }
+
+    .js-toc-content h1 {
+        font-size: clamp(2rem, 9vw, 2.65rem);
+    }
+
+    .js-toc-content {
+        overflow-wrap: anywhere;
+    }
+}

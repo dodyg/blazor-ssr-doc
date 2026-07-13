@@ -39,7 +39,7 @@ The following class is used in this section's examples.
 :::moniker-end
 
 
-The following registrations are made in the app's `Program` file with [Microsoft.Extensions.DependencyInjection.CascadingValueServiceCollectionExtensions.AddCascadingValue *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a):
+The following registrations are made in the app's `Program` file with [CascadingValueServiceCollectionExtensions.AddCascadingValue](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a):
 
 * `Dalek` with a property value for `Units` is registered as a fixed cascading value.
 * A second `Dalek` registration with a different property value for `Units` is named "`AlphaGroup`".
@@ -67,7 +67,7 @@ The following `Daleks` component displays the cascaded values.
 :::moniker-end
 
 
-In the following example, `Dalek` is registered as a cascading value using [`CascadingValueSource<T>`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601), where `<T>` is the type. The `isFixed` flag indicates whether the value is fixed. If `false`, all recipients are subscribed for update notifications. Subscriptions create overhead and reduce performance, so set `isFixed` to `true` if the value doesn't change.
+In the following example, `Dalek` is registered as a cascading value using [`CascadingValueSource<T>`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1?view=aspnetcore-9.0), where `<T>` is the type. The `isFixed` flag indicates whether the value is fixed. If `false`, all recipients are subscribed for update notifications. Subscriptions create overhead and reduce performance, so set `isFixed` to `true` if the value doesn't change.
 
 ```csharp
 builder.Services.AddCascadingValue(sp =>
@@ -84,15 +84,15 @@ builder.Services.AddCascadingValue(sp =>
 >
 > Treat required services separately from cascading values, registering them separately from the cascaded type.
 >
-> Avoid using [Microsoft.Extensions.DependencyInjection.CascadingValueServiceCollectionExtensions.AddCascadingValue *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a) to register a component type as a cascading value. Instead, wrap the `<Router>...</Router>` in the `Routes` component (`Components/Routes.razor`) with the component and adopt global interactive server-side rendering (interactive SSR). For an example, see the [`CascadingValue` component](#cascadingvalue-component) section.
+> Avoid using [CascadingValueServiceCollectionExtensions.AddCascadingValue](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a) to register a component type as a cascading value. Instead, wrap the `<Router>...</Router>` in the `Routes` component (`Components/Routes.razor`) with the component and adopt global interactive server-side rendering (interactive SSR). For an example, see the [`CascadingValue` component](#cascadingvalue-component) section.
 
 ## Root-level cascading values with notifications
 
-Calling [Microsoft.AspNetCore.Components.CascadingValueSource`1.NotifyChangedAsync *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601.notifychangedasync%2a) to issue update notifications can be used to signal multiple Razor component subscribers that a cascading value has changed. Notifications aren't possible for subscribers that adopt static server-side rendering (static SSR), so subscribers must adopt an interactive render mode. 
+Calling [CascadingValueSource&lt;TValue&gt;.NotifyChangedAsync](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1.notifychangedasync?view=aspnetcore-9.0) to issue update notifications can be used to signal multiple Razor component subscribers that a cascading value has changed. Notifications aren't possible for subscribers that adopt static server-side rendering (static SSR), so subscribers must adopt an interactive render mode.
 
 In the following example:
 
-* `NotifyingDalek` implements [System.ComponentModel.INotifyPropertyChanged](https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged) to notify clients that a property value has changed. When the `Units` property is set, the [System.ComponentModel.PropertyChangedEventHandler](https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler) (`PropertyChanged`) is invoked.
+* `NotifyingDalek` implements [INotifyPropertyChanged](https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged) to notify clients that a property value has changed. When the `Units` property is set, the [PropertyChangedEventHandler](https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler) (`PropertyChanged`) is invoked.
 * The `SetUnitsToOneThousandAsync` method can be triggered by subscribers to set `Units` to 1,000 with a simulated processing delay.
 
 Keep in mind for production code that any change in state (any property value change of the class) causes all subscribed components to rerender, regardless of which part of the state they use. We recommend creating granular classes, cascading them separately with specific subscriptions to ensure that only components subscribed to a specific portion of the application state are affected by changes.
@@ -138,7 +138,7 @@ public class NotifyingDalek : INotifyPropertyChanged
 }
 ```
 
-The following `CascadingStateServiceCollectionExtensions` creates a [Microsoft.AspNetCore.Components.CascadingValueSource`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601) from a type that implements [System.ComponentModel.INotifyPropertyChanged](https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged).
+The following `CascadingStateServiceCollectionExtensions` creates a [CascadingValueSource&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1?view=aspnetcore-9.0) from a type that implements [INotifyPropertyChanged](https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged).
 
 > [!NOTE]
 > For a Blazor Web App solution consisting of server and client (`.Client`) projects, the following `CascadingStateServiceCollectionExtensions.cs` file is placed in the `.Client` project.
@@ -190,9 +190,9 @@ public static class CascadingStateServiceCollectionExtensions
 }
 ```
 
-The type's [System.ComponentModel.PropertyChangedEventHandler](https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler) (`HandlePropertyChanged`) calls the [Microsoft.AspNetCore.Components.CascadingValueSource`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601)'s [Microsoft.AspNetCore.Components.CascadingValueSource`1.NotifyChangedAsync *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601.notifychangedasync%2a) method to notify subscribers that the cascading value has changed. The [System.Threading.Tasks.Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task) is discarded when calling [Microsoft.AspNetCore.Components.CascadingValueSource`1.NotifyChangedAsync *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601.notifychangedasync%2a) because the call only represents the duration of the dispatch to the synchronous context. Exceptions are handled internally by dispatching them to the renderer within the context of whichever component threw when receiving the update. This is the same way that exceptions are processed with a [Microsoft.AspNetCore.Components.CascadingValue`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601), which isn't notified about exceptions that happen inside notification recipients. The event handler is disconnected in the `Dispose` method to prevent a memory leak.
+The type's [PropertyChangedEventHandler](https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler) (`HandlePropertyChanged`) calls the [CascadingValueSource&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1?view=aspnetcore-9.0)'s [CascadingValueSource&lt;TValue&gt;.NotifyChangedAsync](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1.notifychangedasync?view=aspnetcore-9.0) method to notify subscribers that the cascading value has changed. The [Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task) is discarded when calling [CascadingValueSource&lt;TValue&gt;.NotifyChangedAsync](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1.notifychangedasync?view=aspnetcore-9.0) because the call only represents the duration of the dispatch to the synchronous context. Exceptions are handled internally by dispatching them to the renderer within the context of whichever component threw when receiving the update. This is the same way that exceptions are processed with a [CascadingValue&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601), which isn't notified about exceptions that happen inside notification recipients. The event handler is disconnected in the `Dispose` method to prevent a memory leak.
 
-In the `Program` file, `NotifyingDalek` is passed to create a [Microsoft.AspNetCore.Components.CascadingValueSource`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601) with an initial `Unit` value of 888 units:
+In the `Program` file, `NotifyingDalek` is passed to create a [CascadingValueSource&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1?view=aspnetcore-9.0) with an initial `Unit` value of 888 units:
 
 ```csharp
 builder.Services.AddNotifyingCascadingValue(new NotifyingDalek() { Units = 888 });
@@ -282,7 +282,7 @@ Add a navigation link to the `DaleksMain` component in `NavMenu.razor`:
 </div>
 ```
 
-Because the [Microsoft.AspNetCore.Components.CascadingValueSource`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource%601)'s type in this example (`NotifyingDalek`) is a class type, you can meet virtually any state management feature specification requirement. However, subscriptions create overhead and reduce performance, so benchmark the performance of this approach in your app and compare it to other [state management approaches](https://learn.microsoft.com/aspnet/core/blazor/state-management/index) before adopting it in a production app with constrained processing and memory resources.
+Because the [CascadingValueSource&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1?view=aspnetcore-9.0)'s type in this example (`NotifyingDalek`) is a class type, you can meet virtually any state management feature specification requirement. However, subscriptions create overhead and reduce performance, so benchmark the performance of this approach in your app and compare it to other [state management approaches](https://learn.microsoft.com/aspnet/core/blazor/state-management/index) before adopting it in a production app with constrained processing and memory resources.
 
 Any change in state (any property value change of the class) causes all subscribed components to rerender, regardless of which part of the state they use. **Avoid creating a single large class representing the entire global application state.** Instead, create granular classes and cascade them separately with specific subscriptions to cascading parameters, ensuring that only components subscribed to a specific portion of the application state are affected by changes.
 
@@ -336,7 +336,7 @@ The following `ThemeInfo` C# class specifies the theme information.
 
 :::moniker-end
 
-The following [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts) specifies theme information (`ThemeInfo`) as a cascading value for all components that make up the layout body of the [Microsoft.AspNetCore.Components.LayoutComponentBase.Body](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.layoutcomponentbase.body) property. `ButtonClass` is assigned a value of [`btn-success`](https://getbootstrap.com/docs/5.0/components/buttons/), which is a Bootstrap button style. Any descendent component in the component hierarchy can use the `ButtonClass` property through the `ThemeInfo` cascading value.
+The following [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts) specifies theme information (`ThemeInfo`) as a cascading value for all components that make up the layout body of the [Body](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.layoutcomponentbase.body) property. `ButtonClass` is assigned a value of [`btn-success`](https://getbootstrap.com/docs/5.0/components/buttons/), which is a Bootstrap button style. Any descendent component in the component hierarchy can use the `ButtonClass` property through the `ThemeInfo` cascading value.
 
 `MainLayout.razor`:
 
@@ -400,14 +400,14 @@ Blazor Web Apps provide alternative approaches for cascading values that apply m
   > [!NOTE]
   > Wrapping the `Routes` component instance in the `App` component (`Components/App.razor`) with a [`CascadingValue`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601) component isn't supported.
 
-* Specify a *root-level cascading value* as a service by calling the [Microsoft.Extensions.DependencyInjection.CascadingValueServiceCollectionExtensions.AddCascadingValue *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a) extension method on the service collection builder.
+* Specify a *root-level cascading value* as a service by calling the [CascadingValueServiceCollectionExtensions.AddCascadingValue](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a) extension method on the service collection builder.
 
   The following example cascades `ThemeInfo` data from the `Program` file.
 
   `Program.cs`
 
   ```csharp
-  builder.Services.AddCascadingValue(sp => 
+  builder.Services.AddCascadingValue(sp =>
       new ThemeInfo() { ButtonClass = "btn-primary" });
   ```
 
@@ -420,7 +420,7 @@ For more information, see the following sections of this article:
 
 ## `[CascadingParameter]` attribute
 
-To make use of cascading values, descendent components declare cascading parameters using the [`[CascadingParameter]` attribute](xref:Microsoft.AspNetCore.Components.CascadingParameterAttribute). Cascading values are bound to cascading parameters **by type**. Cascading multiple values of the same type is covered in the [Cascade multiple values](#cascade-multiple-values) section later in this article.
+To make use of cascading values, descendent components declare cascading parameters using the [`[CascadingParameter]` attribute](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingparameterattribute). Cascading values are bound to cascading parameters **by type**. Cascading multiple values of the same type is covered in the [Cascade multiple values](#cascade-multiple-values) section later in this article.
 
 The `private` access modifier is recommended for cascading parameters because the parameter should be scoped for use only within the component's class in most cases. When subclassing is required, use the `protected` access modifier.
 
@@ -486,7 +486,7 @@ Similar to a regular component parameter, components accepting a cascading param
 
 @code {
     private ThemeInfo theme = new() { ButtonClass = "btn-success" };
-    
+
     private void ChangeToDarkTheme()
     {
         theme = new() { ButtonClass = "btn-secondary" };
@@ -494,7 +494,7 @@ Similar to a regular component parameter, components accepting a cascading param
 }
 ```
 
-[Microsoft.AspNetCore.Components.CascadingValue`1.IsFixed *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601.isfixed%2a?displayproperty=namewithtype) can be used to indicate that a cascading parameter doesn't change after initialization. 
+[CascadingValue&lt;TValue&gt;.IsFixed](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601.isfixed%2a?displayproperty=namewithtype) can be used to indicate that a cascading parameter doesn't change after initialization.
 
 :::moniker-end
 
@@ -526,7 +526,7 @@ Recommendations:
 
 ## Cascade multiple values
 
-To cascade multiple values of the same type within the same subtree, provide a unique [Microsoft.AspNetCore.Components.CascadingValue`1.Name *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601.name%2a) string to each [`CascadingValue`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601) component and their corresponding [`[CascadingParameter]` attributes](xref:Microsoft.AspNetCore.Components.CascadingParameterAttribute).
+To cascade multiple values of the same type within the same subtree, provide a unique [CascadingValue&lt;TValue&gt;.Name](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601.name%2a) string to each [`CascadingValue`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601) component and their corresponding [`[CascadingParameter]` attributes](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingparameterattribute).
 
 In the following example, two [`CascadingValue`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601) components cascade different instances of `CascadingType`:
 
@@ -545,7 +545,7 @@ In the following example, two [`CascadingValue`](https://learn.microsoft.com/dot
 }
 ```
 
-In a descendant component, the cascaded parameters receive their cascaded values from the ancestor component by [Microsoft.AspNetCore.Components.CascadingValue`1.Name *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601.name%2a):
+In a descendant component, the cascaded parameters receive their cascaded values from the ancestor component by [CascadingValue&lt;TValue&gt;.Name](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601.name%2a):
 
 ```razor
 @code {
@@ -580,7 +580,7 @@ public interface ITab
 ```
 
 > [!NOTE]
-> For more information on [Microsoft.AspNetCore.Components.RenderFragment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.renderfragment), see [Child content render fragments](https://learn.microsoft.com/aspnet/core/blazor/components/#child-content-render-fragments).
+> For more information on [RenderFragment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.renderfragment), see [Child content render fragments](https://learn.microsoft.com/aspnet/core/blazor/components/#child-content-render-fragments).
 
 The following `TabSet` component maintains a set of tabs. The tab set's `Tab` components, which are created later in this section, supply the list items (`<li>...</li>`) for the list (`<ul>...</ul>`).
 
@@ -654,7 +654,7 @@ Descendent `Tab` components capture the containing `TabSet` as a cascading param
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    private string? TitleCssClass => 
+    private string? TitleCssClass =>
         ContainerTabSet?.ActiveTab == this ? "active" : null;
 
     protected override void OnInitialized()

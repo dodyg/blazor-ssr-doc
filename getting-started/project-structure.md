@@ -33,7 +33,7 @@ Based on the interactive render mode selected at app creation, the `Layout` fold
 
 * The `MainLayout` component (`MainLayout.razor`) is the app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
 * The `MainLayout.razor.css` is the collocated (next to the component) stylesheet for the app's main layout.
-* The `NavMenu` component (`NavMenu.razor`) implements sidebar navigation. The component includes [`NavLink` components](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which render navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component indicates to the user which component is currently displayed.
+* The `NavMenu` component (`NavMenu.razor`) implements sidebar navigation. The component includes [`NavLink` components](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which render navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component indicates to the user which component is currently displayed.
 * The `NavMenu.razor.css` is the collocated stylesheet for the app's navigation menu.
 * The `ReconnectModal` component reflects the server-side connection state in the UI and is included when the app's interactive render mode is either Interactive Server or Interactive Auto. For more information, see [signalr](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/signalr#reflect-the-server-side-connection-state-in-the-ui).
 * The `ReconnectModal.razor.css` is the collocated stylesheet for the `ReconnectModal` component.
@@ -45,13 +45,13 @@ Based on the interactive render mode selected at app creation, the `Layout` fold
 
 * The `MainLayout` component (`MainLayout.razor`) is the app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
 * The `MainLayout.razor.css` is the collocated (next to the component) stylesheet for the app's main layout.
-* The `NavMenu` component (`NavMenu.razor`) implements sidebar navigation. The component includes [`NavLink` components](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which render navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component indicates to the user which component is currently displayed.
+* The `NavMenu` component (`NavMenu.razor`) implements sidebar navigation. The component includes [`NavLink` components](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which render navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component indicates to the user which component is currently displayed.
 * The `NavMenu.razor.css` is the collocated stylesheet for the app's navigation menu.
 
 :::moniker-end
 
 
-The `Routes` component (`Routes.razor`) is either in the server project or the `.Client` project and sets up routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. For client-side interactive components, the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+The `Routes` component (`Routes.razor`) is either in the server project or the `.Client` project and sets up routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. For client-side interactive components, the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 The `Components` folder of the server project holds the app's server-side Razor components. Shared components are often placed at the root of the `Components` folder, while layout and page components are usually placed in folders within the `Components` folder.
 
@@ -78,10 +78,10 @@ The `wwwroot` folder of the server project is the [Web Root](https://learn.micro
 
 The `Program.cs` file of the server project is the project's entry point that sets up the ASP.NET Core web application [host](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host#host-definition) and contains the app's startup logic, including service registrations, configuration, logging, and request processing pipeline:
 
-* Services for Razor components are added by calling [Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.razorcomponentsservicecollectionextensions.addrazorcomponents%2a). [Microsoft.Extensions.DependencyInjection.ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.serverrazorcomponentsbuilderextensions.addinteractiveservercomponents%2a) adds services to support rendering Interactive Server components. [Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.webassemblyrazorcomponentsbuilderextensions.addinteractivewebassemblycomponents%2a) adds services to support rendering Interactive WebAssembly components.
-* [Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointroutebuilderextensions.maprazorcomponents%2a) discovers available components and specifies the root component for the app (the first component loaded), which by default is the `App` component (`App.razor`). [Microsoft.AspNetCore.Builder.ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.serverrazorcomponentsendpointconventionbuilderextensions.addinteractiveserverrendermode%2a) configures interactive server-side rendering (interactive SSR) for the app. [Microsoft.AspNetCore.Builder.WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.webassemblyrazorcomponentsendpointconventionbuilderextensions.addinteractivewebassemblyrendermode%2a) configures the Interactive WebAssembly render mode for the app.
+* Services for Razor components are added by calling [RazorComponentsServiceCollectionExtensions.AddRazorComponents](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.razorcomponentsservicecollectionextensions.addrazorcomponents%2a). [ServerRazorComponentsBuilderExtensions.AddInteractiveServerComponents](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.serverrazorcomponentsbuilderextensions.addinteractiveservercomponents%2a) adds services to support rendering Interactive Server components. [WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.webassemblyrazorcomponentsbuilderextensions.addinteractivewebassemblycomponents%2a) adds services to support rendering Interactive WebAssembly components.
+* [RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorcomponentsendpointroutebuilderextensions.maprazorcomponents%2a) discovers available components and specifies the root component for the app (the first component loaded), which by default is the `App` component (`App.razor`). [ServerRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveServerRenderMode](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.serverrazorcomponentsendpointconventionbuilderextensions.addinteractiveserverrendermode%2a) configures interactive server-side rendering (interactive SSR) for the app. [WebAssemblyRazorComponentsEndpointConventionBuilderExtensions.AddInteractiveWebAssemblyRenderMode](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.webassemblyrazorcomponentsendpointconventionbuilderextensions.addinteractivewebassemblyrendermode%2a) configures the Interactive WebAssembly render mode for the app.
 
-The app settings files (`appsettings.Development.json`, `appsettings.json`) in either the server or `.Client` project provide [configuration settings](/fundamentals/configuration). In the server project, settings files are at the root of the project. In the `.Client` project, settings files are consumed from the [Web Root](https://learn.microsoft.com/aspnet/core/fundamentals/index#web-root) folder, `wwwroot`. 
+The app settings files (`appsettings.Development.json`, `appsettings.json`) in either the server or `.Client` project provide [configuration settings](/fundamentals/configuration). In the server project, settings files are at the root of the project. In the `.Client` project, settings files are consumed from the [Web Root](https://learn.microsoft.com/aspnet/core/fundamentals/index#web-root) folder, `wwwroot`.
 
 In the `.Client` project:
 
@@ -124,7 +124,7 @@ Project structure:
 * `Shared` folder: Contains the following shared components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
@@ -132,15 +132,15 @@ Project structure:
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `appsettings.json` and environmental app settings files: Provide [configuration settings](/fundamentals/configuration) for the app.
 
 * `Program.cs`: The app's entry point that sets up the ASP.NET Core [host](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host) and contains the app's startup logic, including service registrations and request processing pipeline configuration:
 
-  * Specifies the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
+  * Specifies the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [ComponentServiceCollectionExtensions.AddServerSideBlazor](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
   * Configures the app's request handling pipeline:
-    * [Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
+    * [ComponentEndpointRouteBuilderExtensions.MapBlazorHub](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
     * [`MapFallbackToPage("/_Host")`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorpagesendpointroutebuilderextensions.mapfallbacktopage%2a) is called to set up the root page of the app (`Pages/_Host.cshtml`) and enable navigation.
 
 Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.
@@ -170,7 +170,7 @@ The Blazor Server template creates the initial files and directory structure for
 * `Shared` folder: Contains the following shared components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
@@ -178,15 +178,15 @@ The Blazor Server template creates the initial files and directory structure for
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `appsettings.json` and environmental app settings files: Provide [configuration settings](/fundamentals/configuration) for the app.
 
 * `Program.cs`: The app's entry point that sets up the ASP.NET Core [host](https://learn.microsoft.com/aspnet/core/fundamentals/host/generic-host) and contains the app's startup logic, including service registrations and request processing pipeline configuration:
 
-  * Specifies the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
+  * Specifies the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [ComponentServiceCollectionExtensions.AddServerSideBlazor](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
   * Configures the app's request handling pipeline:
-    * [Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
+    * [ComponentEndpointRouteBuilderExtensions.MapBlazorHub](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
     * [`MapFallbackToPage("/_Host")`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorpagesendpointroutebuilderextensions.mapfallbacktopage%2a) is called to set up the root page of the app (`Pages/_Host.cshtml`) and enable navigation.
 
 Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.
@@ -215,7 +215,7 @@ The Blazor Server template creates the initial files and directory structure for
 * `Shared` folder: Contains the following shared components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
@@ -223,7 +223,7 @@ The Blazor Server template creates the initial files and directory structure for
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `appsettings.json` and environmental app settings files: Provide [configuration settings](/fundamentals/configuration) for the app.
 
@@ -231,9 +231,9 @@ The Blazor Server template creates the initial files and directory structure for
 
 * `Startup.cs`: Contains the app's startup logic. The `Startup` class defines two methods:
 
-  * `ConfigureServices`: Configures the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
+  * `ConfigureServices`: Configures the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [ComponentServiceCollectionExtensions.AddServerSideBlazor](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
   * `Configure`: Configures the app's request handling pipeline:
-    * [Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
+    * [ComponentEndpointRouteBuilderExtensions.MapBlazorHub](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
     * [`MapFallbackToPage("/_Host")`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorpagesendpointroutebuilderextensions.mapfallbacktopage%2a) is called to set up the root page of the app (`Pages/_Host.cshtml`) and enable navigation.
 
 Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.
@@ -261,14 +261,14 @@ The Blazor Server template creates the initial files and directory structure for
 
 * `Shared` folder: Contains the following shared components:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
 * `wwwroot` folder: The [Web Root](https://learn.microsoft.com/aspnet/core/fundamentals/index#web-root) folder for the app containing the app's public static assets.
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `appsettings.json` and environmental app settings files: Provide [configuration settings](/fundamentals/configuration) for the app.
 
@@ -276,9 +276,9 @@ The Blazor Server template creates the initial files and directory structure for
 
 * `Startup.cs`: Contains the app's startup logic. The `Startup` class defines two methods:
 
-  * `ConfigureServices`: Configures the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [Microsoft.Extensions.DependencyInjection.ComponentServiceCollectionExtensions.AddServerSideBlazor *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
+  * `ConfigureServices`: Configures the app's [dependency injection (DI)](https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection) services. Services are added by calling [ComponentServiceCollectionExtensions.AddServerSideBlazor](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.componentservicecollectionextensions.addserversideblazor%2a), and the `WeatherForecastService` is added to the service container for use by the example `FetchData` component.
   * `Configure`: Configures the app's request handling pipeline:
-    * [Microsoft.AspNetCore.Builder.ComponentEndpointRouteBuilderExtensions.MapBlazorHub *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
+    * [ComponentEndpointRouteBuilderExtensions.MapBlazorHub](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.componentendpointroutebuilderextensions.mapblazorhub%2a) is called to set up an endpoint for the real-time connection with the browser. The connection is created with [SignalR](https://learn.microsoft.com/aspnet/core/signalr/introduction), which is a framework for adding real-time web functionality to apps.
     * [`MapFallbackToPage("/_Host")`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.builder.razorpagesendpointroutebuilderextensions.mapfallbacktopage%2a) is called to set up the root page of the app (`Pages/_Host.cshtml`) and enable navigation.
 
 Additional files and folders may appear in an app produced from a Blazor Server project template when additional options are configured. For example, generating an app with ASP.NET Core Identity includes additional assets for authentication and authorization features.
@@ -302,7 +302,7 @@ Project structure:
 * `Layout` folder: Contains the following layout components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
 
 
@@ -328,8 +328,8 @@ Project structure:
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
-  
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+
 * `Properties` folder: Holds [development environment configuration](https://learn.microsoft.com/aspnet/core/fundamentals/environments#development-and-launchsettingsjson) in the `launchSettings.json` file.
 
   > [!NOTE]
@@ -340,7 +340,7 @@ Project structure:
   * The page specifies where the root `App` component is rendered. The component is rendered at the location of the `div` DOM element with an `id` of `app` (`<div id="app">Loading...</div>`).
 
 * `Program.cs`: The app's entry point that sets up the WebAssembly host:
-  
+
   * The `App` component is the root component of the app. The `App` component is specified as the `div` DOM element with an `id` of `app` (`<div id="app">Loading...</div>` in `wwwroot/index.html`) to the root component collection (`builder.RootComponents.Add<App>("#app")`).
   * [Services](/fundamentals/dependency-injection) are added and configured (for example, `builder.Services.AddSingleton<IMyDependency, MyDependency>()`).
 
@@ -366,13 +366,13 @@ Project structure:
   * `Counter` component (`Counter.razor`): Implements the Counter page.
   * `FetchData` component (`FetchData.razor`): Implements the Fetch data page.
   * `Index` component (`Index.razor`): Implements the Home page.
-  
+
 * `Properties` folder: Holds [development environment configuration](https://learn.microsoft.com/aspnet/core/fundamentals/environments#development-and-launchsettingsjson) in the `launchSettings.json` file.
 
 * `Shared` folder: Contains the following shared components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
   * `SurveyPrompt` component (`SurveyPrompt.razor`) (*ASP.NET Core in .NET 7 or earlier*): Blazor survey component.
 
@@ -382,10 +382,10 @@ Project structure:
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `Program.cs`: The app's entry point that sets up the WebAssembly host:
-  
+
   * The `App` component is the root component of the app. The `App` component is specified as the `div` DOM element with an `id` of `app` (`<div id="app">Loading...</div>` in `wwwroot/index.html`) to the root component collection (`builder.RootComponents.Add<App>("#app")`).
   * [Services](/fundamentals/dependency-injection) are added and configured (for example, `builder.Services.AddSingleton<IMyDependency, MyDependency>()`).
 
@@ -422,13 +422,13 @@ The Blazor WebAssembly template creates the initial files and directory structur
   * `Counter` component (`Counter.razor`): Implements the Counter page.
   * `FetchData` component (`FetchData.razor`): Implements the Fetch data page.
   * `Index` component (`Index.razor`): Implements the Home page.
-  
+
 * `Properties` folder: Holds [development environment configuration](https://learn.microsoft.com/aspnet/core/fundamentals/environments#development-and-launchsettingsjson) in the `launchSettings.json` file.
 
 * `Shared` folder: Contains the following shared components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
@@ -438,10 +438,10 @@ The Blazor WebAssembly template creates the initial files and directory structur
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `Program.cs`: The app's entry point that sets up the WebAssembly host:
-  
+
   * The `App` component is the root component of the app. The `App` component is specified as the `div` DOM element with an `id` of `app` (`<div id="app">Loading...</div>` in `wwwroot/index.html`) to the root component collection (`builder.RootComponents.Add<App>("#app")`).
   * [Services](/fundamentals/dependency-injection) are added and configured (for example, `builder.Services.AddSingleton<IMyDependency, MyDependency>()`).
 
@@ -474,13 +474,13 @@ The Blazor WebAssembly template creates the initial files and directory structur
   * `Counter` component (`Counter.razor`): Implements the Counter page.
   * `FetchData` component (`FetchData.razor`): Implements the Fetch data page.
   * `Index` component (`Index.razor`): Implements the Home page.
-  
+
 * `Properties` folder: Holds [development environment configuration](https://learn.microsoft.com/aspnet/core/fundamentals/environments#development-and-launchsettingsjson) in the `launchSettings.json` file.
 
 * `Shared` folder: Contains the following shared components and stylesheets:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
   * `MainLayout.razor.css`: Stylesheet for the app's main layout.
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `NavMenu.razor.css`: Stylesheet for the app's navigation menu.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
@@ -490,10 +490,10 @@ The Blazor WebAssembly template creates the initial files and directory structur
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `Program.cs`: The app's entry point that sets up the WebAssembly host:
-  
+
   * The `App` component is the root component of the app. The `App` component is specified as the `div` DOM element with an `id` of `app` (`<div id="app">Loading...</div>` in `wwwroot/index.html`) to the root component collection (`builder.RootComponents.Add<App>("#app")`).
   * [Services](/fundamentals/dependency-injection) are added and configured (for example, `builder.Services.AddSingleton<IMyDependency, MyDependency>()`).
 
@@ -526,12 +526,12 @@ The Blazor WebAssembly template creates the initial files and directory structur
   * `Counter` component (`Counter.razor`): Implements the Counter page.
   * `FetchData` component (`FetchData.razor`): Implements the Fetch data page.
   * `Index` component (`Index.razor`): Implements the Home page.
-  
+
 * `Properties` folder: Holds [development environment configuration](https://learn.microsoft.com/aspnet/core/fundamentals/environments#development-and-launchsettingsjson) in the `launchSettings.json` file.
 
 * `Shared` folder: Contains the following shared components:
   * `MainLayout` component (`MainLayout.razor`): The app's [layout component](https://learn.microsoft.com/aspnet/core/blazor/components/layouts).
-  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [Microsoft.AspNetCore.Components.Routing.NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
+  * `NavMenu` component (`NavMenu.razor`): Implements sidebar navigation. Includes the [`NavLink` component](https://learn.microsoft.com/aspnet/core/blazor/fundamentals/navigation#navlink-component) ([NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink)), which renders navigation links to other Razor components. The [NavLink](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.navlink) component automatically indicates a selected state when its component is loaded, which helps the user understand which component is currently displayed.
   * `SurveyPrompt` component (`SurveyPrompt.razor`): Blazor survey component.
 
 * `wwwroot` folder: The [Web Root](https://learn.microsoft.com/aspnet/core/fundamentals/index#web-root) folder for the app containing the app's public static assets, including `appsettings.json` and environmental app settings files for [configuration settings](/fundamentals/configuration). The `index.html` webpage is the root page of the app implemented as an HTML page:
@@ -540,7 +540,7 @@ The Blazor WebAssembly template creates the initial files and directory structur
 
 * `_Imports.razor`: Includes common Razor directives to include in the app's components (`.razor`), such as [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directives for namespaces.
 
-* `App.razor`: The root component of the app that sets up client-side routing using the [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Microsoft.AspNetCore.Components.Routing.Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
+* `App.razor`: The root component of the app that sets up client-side routing using the [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component. The [Router](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.routing.router) component intercepts browser navigation and renders the page that matches the requested address.
 
 * `Program.cs`: The app's entry point that sets up the WebAssembly host:
 

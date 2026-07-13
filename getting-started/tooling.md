@@ -471,7 +471,7 @@ The Blazor framework provides project templates for creating new apps. The templ
 > The "Hosted" Blazor WebAssembly project template option isn't available in .NET 8 or later. To create a hosted Blazor WebAssembly app, a **Framework** option earlier than .NET 8 must be selected with the **ASP.NET Core Hosted** checkbox. However, we recommend a Blazor Web App for all new Blazor development in .NET 8 or later. For more information, see the following resources:
 >
 > * [index](https://learn.microsoft.com/aspnet/core/blazor/index#build-a-full-stack-web-app-with-blazor)
-> * [aspnetcore-8](https://learn.microsoft.com/aspnet/core/aspnetcore-8#new-blazor-web-app-template)
+> * [What's new in ASP.NET Core in .NET 8](https://learn.microsoft.com/aspnet/core/release-notes/aspnetcore-8.0#new-blazor-web-app-template)
 > * [project-structure](https://learn.microsoft.com/aspnet/core/blazor/project-structure#blazor-web-app)
 > * [70-to-80](https://learn.microsoft.com/aspnet/core/migration/70-to-80#convert-a-hosted-blazor-webassembly-app-into-a-blazor-web-app)
 
@@ -573,7 +573,7 @@ For more information on template options, see the following resources:
 
 * [Visual Studio](https://visualstudio.microsoft.com)
 * [Visual Studio Code](https://code.visualstudio.com)
-* [webassembly](https://learn.microsoft.com/aspnet/core/blazor/tooling/webassembly)
+* [Tooling for ASP.NET Core Blazor](https://learn.microsoft.com/aspnet/core/blazor/tooling)
 * [.NET command-line interface (CLI)](https://learn.microsoft.com/dotnet/core/tools/)
 * [.NET SDK](https://learn.microsoft.com/dotnet/core/sdk)
 * [hot-reload](https://learn.microsoft.com/aspnet/core/test/hot-reload)

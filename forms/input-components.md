@@ -13,7 +13,7 @@ This article describes Blazor's built-in input components.
 
 ## Input components
 
-The Blazor framework provides built-in input components to receive and validate user input. The built-in input components in the following table are supported in an [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) with an [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext).
+The Blazor framework provides built-in input components to receive and validate user input. The built-in input components in the following table are supported in an [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) with an [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext).
 
 :::moniker range=">= aspnetcore-7.0"
 
@@ -25,18 +25,18 @@ The components in the table are also supported outside of a form in Razor compon
 
 | Input component | Rendered as&hellip; |
 | --------------- | ------------------- |
-| [Microsoft.AspNetCore.Components.Forms.InputCheckbox](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputcheckbox) | `<input type="checkbox">` |
-| [Microsoft.AspNetCore.Components.Forms.InputDate`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) | `<input type="date">` |
-| [Microsoft.AspNetCore.Components.Forms.InputFile](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputfile) | `<input type="file">` |
-| [Microsoft.AspNetCore.Components.Forms.InputNumber`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) | `<input type="number">` |
-| [Microsoft.AspNetCore.Components.Forms.InputRadio`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) | `<input type="radio">` |
-| [Microsoft.AspNetCore.Components.Forms.InputRadioGroup`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradiogroup%601) | Group of child [Microsoft.AspNetCore.Components.Forms.InputRadio`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) |
-| [Microsoft.AspNetCore.Components.Forms.InputSelect`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) | `<select>` |
-| [Microsoft.AspNetCore.Components.Forms.InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) | `<input>` |
-| [Microsoft.AspNetCore.Components.Forms.InputTextArea](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtextarea) | `<textarea>` |
+| [InputCheckbox](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputcheckbox) | `<input type="checkbox">` |
+| [InputDate&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) | `<input type="date">` |
+| [InputFile](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputfile) | `<input type="file">` |
+| [InputNumber&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) | `<input type="number">` |
+| [InputRadio&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) | `<input type="radio">` |
+| [InputRadioGroup&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradiogroup%601) | Group of child [InputRadio&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) |
+| [InputSelect&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) | `<select>` |
+| [InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) | `<input>` |
+| [InputTextArea](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtextarea) | `<textarea>` |
 | [`Label<TValue>`](#label-component) (.NET 11 or later) | `<label>` |
 
-For more information on the [Microsoft.AspNetCore.Components.Forms.InputFile](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputfile) component, see [file-uploads](https://learn.microsoft.com/aspnet/core/blazor/file-uploads).
+For more information on the [InputFile](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputfile) component, see [file-uploads](https://learn.microsoft.com/aspnet/core/blazor/file-uploads).
 
 :::moniker-end
 
@@ -44,30 +44,30 @@ For more information on the [Microsoft.AspNetCore.Components.Forms.InputFile](ht
 
 | Input component | Rendered as&hellip; |
 | --------------- | ------------------- |
-| [Microsoft.AspNetCore.Components.Forms.InputCheckbox](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputcheckbox) | `<input type="checkbox">` |
-| [Microsoft.AspNetCore.Components.Forms.InputDate`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) | `<input type="date">` |
-| [Microsoft.AspNetCore.Components.Forms.InputNumber`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) | `<input type="number">` |
-| [Microsoft.AspNetCore.Components.Forms.InputSelect`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) | `<select>` |
-| [Microsoft.AspNetCore.Components.Forms.InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) | `<input>` |
-| [Microsoft.AspNetCore.Components.Forms.InputTextArea](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtextarea) | `<textarea>` |
+| [InputCheckbox](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputcheckbox) | `<input type="checkbox">` |
+| [InputDate&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) | `<input type="date">` |
+| [InputNumber&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) | `<input type="number">` |
+| [InputSelect&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) | `<select>` |
+| [InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) | `<input>` |
+| [InputTextArea](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtextarea) | `<textarea>` |
 
 > [!NOTE]
-> [Microsoft.AspNetCore.Components.Forms.InputRadio`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) and [Microsoft.AspNetCore.Components.Forms.InputRadioGroup`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradiogroup%601) components are available in .NET 5 or later. For more information, select a .NET 5 or later version of this article.
+> [InputRadio&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) and [InputRadioGroup&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradiogroup%601) components are available in .NET 5 or later. For more information, select a .NET 5 or later version of this article.
 
 :::moniker-end
 
-All of the input components, including [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform), support arbitrary attributes. Any attribute that doesn't match a component parameter is added to the rendered HTML element.
+All of the input components, including [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform), support arbitrary attributes. Any attribute that doesn't match a component parameter is added to the rendered HTML element.
 
 Input components provide default behavior for validating when a field is changed:
 
-* For input components in a form with an [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext), the default validation behavior includes updating the field CSS class to reflect the field's state as valid or invalid with validation styling of the underlying HTML element.
-* For controls that don't have an [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext), the default validation reflects the valid or invalid state but doesn't provide validation styling to the underlying HTML element.
+* For input components in a form with an [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext), the default validation behavior includes updating the field CSS class to reflect the field's state as valid or invalid with validation styling of the underlying HTML element.
+* For controls that don't have an [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext), the default validation reflects the valid or invalid state but doesn't provide validation styling to the underlying HTML element.
 
-Some components include useful parsing logic. For example, [Microsoft.AspNetCore.Components.Forms.InputDate`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) and [Microsoft.AspNetCore.Components.Forms.InputNumber`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) handle unparseable values gracefully by registering unparseable values as validation errors. Types that can accept null values also support nullability of the target field (for example, `int?` for a nullable integer).
+Some components include useful parsing logic. For example, [InputDate&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) and [InputNumber&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) handle unparseable values gracefully by registering unparseable values as validation errors. Types that can accept null values also support nullability of the target field (for example, `int?` for a nullable integer).
 
 :::moniker range=">= aspnetcore-9.0"
 
-The [Microsoft.AspNetCore.Components.Forms.InputNumber`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) component supports the [`type="range"` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/input/range), which creates a range input that supports model binding and form validation, typically rendered as a slider or dial control rather than a text box:
+The [InputNumber&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) component supports the [`type="range"` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/input/range), which creates a range input that supports model binding and form validation, typically rendered as a slider or dial control rather than a text box:
 
 ```razor
 <InputNumber @bind-Value="..." max="..." min="..." step="..." type="range" />
@@ -77,7 +77,7 @@ The [Microsoft.AspNetCore.Components.Forms.InputNumber`1](https://learn.microsof
 
 :::moniker range=">= aspnetcore-5.0"
 
-For more information on the [Microsoft.AspNetCore.Components.Forms.InputFile](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputfile) component, see [file-uploads](https://learn.microsoft.com/aspnet/core/blazor/file-uploads).
+For more information on the [InputFile](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputfile) component, see [file-uploads](https://learn.microsoft.com/aspnet/core/blazor/file-uploads).
 
 :::moniker-end
 
@@ -85,12 +85,12 @@ For more information on the [Microsoft.AspNetCore.Components.Forms.InputFile](ht
 
 The following `Starship` type, which is used in several of this article's examples and examples in other *Forms* node articles, defines a diverse set of properties with data annotations:
 
-* `Id` is required because it's annotated with the [System.ComponentModel.DataAnnotations.RequiredAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.requiredattribute). `Id` requires a value of at least one character but no more than 16 characters using the [System.ComponentModel.DataAnnotations.StringLengthAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.stringlengthattribute).
-* `Description` is optional because it isn't annotated with the [System.ComponentModel.DataAnnotations.RequiredAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.requiredattribute).
+* `Id` is required because it's annotated with the [RequiredAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.requiredattribute). `Id` requires a value of at least one character but no more than 16 characters using the [StringLengthAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.stringlengthattribute).
+* `Description` is optional because it isn't annotated with the [RequiredAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.requiredattribute).
 * `Classification` is required.
-* The `MaximumAccommodation` property defaults to zero but requires a value from one to 100,000 per its [System.ComponentModel.DataAnnotations.RangeAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.rangeattribute).
+* The `MaximumAccommodation` property defaults to zero but requires a value from one to 100,000 per its [RangeAttribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.rangeattribute).
 * `IsValidatedDesign` requires that the property have a `true` value, which matches a selected state when the property is bound to a checkbox in the UI (`<input type="checkbox">`).
-* `ProductionDate` is a [System.DateTime](https://learn.microsoft.com/dotnet/api/system.datetime) and required.
+* `ProductionDate` is a [DateTime](https://learn.microsoft.com/dotnet/api/system.datetime) and required.
 
 `Starship.cs`:
 
@@ -152,13 +152,13 @@ When the model property for the ship's classification (`Classification`) is set,
 :::moniker-end
 
 
-The [Microsoft.AspNetCore.Components.Forms.EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) in the preceding example creates an [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) based on the assigned `Starship` instance (`Model="..."`) and handles a valid form. The next example demonstrates how to assign an [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) to a form and validate when the form is submitted.
+The [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) in the preceding example creates an [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) based on the assigned `Starship` instance (`Model="..."`) and handles a valid form. The next example demonstrates how to assign an [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) to a form and validate when the form is submitted.
 
 In the following example:
 
 * A shortened version of the earlier `Starfleet Starship Database` form (`Starship3` component) is used that only accepts a value for the starship's Id. The other `Starship` properties receive valid default values when an instance of the `Starship` type is created.
 * The `Submit` method executes when the **`Submit`** button is selected.
-* The form is validated by calling [Microsoft.AspNetCore.Components.Forms.EditContext.Validate *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.validate%2a?displayproperty=namewithtype) in the `Submit` method.
+* The form is validated by calling [EditContext.Validate](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext.validate%2a?displayproperty=namewithtype) in the `Submit` method.
 * Logging is executed depending on the validation result.
 
 `Starship4.razor`:
@@ -177,13 +177,13 @@ In the following example:
 
 
 > [!NOTE]
-> Changing the [Microsoft.AspNetCore.Components.Forms.EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) after it's assigned is **not** supported.
+> Changing the [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) after it's assigned is **not** supported.
 
 :::moniker range=">= aspnetcore-6.0"
 
 ## Multiple option selection with the `InputSelect` component
 
-Binding supports [`multiple`](https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple) option selection with the [Microsoft.AspNetCore.Components.Forms.InputSelect`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) component. The [`@onchange`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#onevent) event provides an array of the selected options via [event arguments (`ChangeEventArgs`)](https://learn.microsoft.com/aspnet/core/blazor/components/event-handling#event-arguments). The value must be bound to an array type, which results in the [Microsoft.AspNetCore.Components.Forms.InputSelect`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) component automatically adding the [`multiple` attribute](https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple) to the `<select>` element when the component is rendered.
+Binding supports [`multiple`](https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple) option selection with the [InputSelect&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) component. The [`@onchange`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#onevent) event provides an array of the selected options via [event arguments (`ChangeEventArgs`)](https://learn.microsoft.com/aspnet/core/blazor/components/event-handling#event-arguments). The value must be bound to an array type, which results in the [InputSelect&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputselect%601) component automatically adding the [`multiple` attribute](https://developer.mozilla.org/docs/Web/HTML/Attributes/multiple) to the `<select>` element when the component is rendered.
 
 In the following example, the user must select at least two starship classifications but no more than three classifications.
 
@@ -283,7 +283,7 @@ For information on how empty strings and `null` values are handled in data bindi
 
 ## Display name support
 
-Several built-in components support display names with the [Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a?displayproperty=namewithtype) parameter.
+Several built-in components support display names with the [InputBase&lt;TValue&gt;.DisplayName](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a?displayproperty=namewithtype) parameter.
 
 In the `Starfleet Starship Database` form (`Starship3` component) of the [Example form](#example-form) section, the production date of a new starship doesn't specify a display name:
 
@@ -298,12 +298,12 @@ If the field contains an invalid date when the form is submitted, the error mess
 
 > The ProductionDate field must be a date.
 
-Set the [Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a) property to a friendly name with a space between the words "`Production`" and "`Date`":
+Set the [InputBase&lt;TValue&gt;.DisplayName](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a) property to a friendly name with a space between the words "`Production`" and "`Date`":
 
 ```razor
 <label>
     Production Date:
-    <InputDate @bind-Value="Model!.ProductionDate" 
+    <InputDate @bind-Value="Model!.ProductionDate"
         DisplayName="Production Date" />
 </label>
 ```
@@ -316,9 +316,9 @@ The validation summary displays the friendly name when the field's value is inva
 
 :::moniker range=">= aspnetcore-11.0"
 
-<!-- UPDATE 11.0 - API cross-link 
+<!-- UPDATE 11.0 - API cross-link
 
-                   [Microsoft.AspNetCore.Components.Forms.DisplayName`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.displayname%601)
+                   [DisplayName&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.displayname%601)
 -->
 The `DisplayName` component can be used to display property names from metadata attributes
 
@@ -327,7 +327,7 @@ The `DisplayName` component can be used to display property names from metadata 
 public DateTime ProductionDate { get; set; }
 ```
 
-The [`[Display]` attribute](xref:System.ComponentModel.DataAnnotations.DisplayAttribute) on the model class property is supported:
+The [`[Display]` attribute](https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.displayattribute) on the model class property is supported:
 
 ```csharp
 [Required, Display(Name = "Production Date")]
@@ -351,9 +351,9 @@ Use the `DisplayName` component in labels or table headers:
 
 ## `Label` component
 
-<!-- UPDATE 11.0 - API cross-link 
+<!-- UPDATE 11.0 - API cross-link
 
-                   [Microsoft.AspNetCore.Components.Forms.Label`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.label%601)
+                   [Label&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.label%601)
 -->
 
 The `Label` component renders a `<label>` element that automatically extracts the display name from a model property using `[Display]` or `[DisplayName]` attributes. This simplifies form creation by eliminating the need to manually specify label text.
@@ -403,10 +403,10 @@ Input components automatically generate an `id` attribute based on the bound exp
 
 ## Error message template support
 
-[Microsoft.AspNetCore.Components.Forms.InputDate`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) and [Microsoft.AspNetCore.Components.Forms.InputNumber`1](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) support error message templates:
+[InputDate&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601) and [InputNumber&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601) support error message templates:
 
-* [Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601.parsingerrormessage%2a?displayproperty=namewithtype)
-* [Microsoft.AspNetCore.Components.Forms.InputNumber`1.ParsingErrorMessage *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601.parsingerrormessage%2a?displayproperty=namewithtype)
+* [InputDate&lt;TValue&gt;.ParsingErrorMessage](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601.parsingerrormessage%2a?displayproperty=namewithtype)
+* [InputNumber&lt;TValue&gt;.ParsingErrorMessage](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputnumber%601.parsingerrormessage%2a?displayproperty=namewithtype)
 
 :::moniker range=">= aspnetcore-5.0"
 
@@ -416,25 +416,25 @@ In the `Starfleet Starship Database` form (`Starship3` component) of the [Exampl
 The {0} field must be a date.
 ```
 
-The position of the `{0}` placeholder is where the value of the [Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a) property appears when the error is displayed to the user.
+The position of the `{0}` placeholder is where the value of the [InputBase&lt;TValue&gt;.DisplayName](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a) property appears when the error is displayed to the user.
 
 ```razor
 <label>
     Production Date:
-    <InputDate @bind-Value="Model!.ProductionDate" 
+    <InputDate @bind-Value="Model!.ProductionDate"
         DisplayName="Production Date" />
 </label>
 ```
 
 > The Production Date field must be a date.
 
-Assign a custom template to [Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601.parsingerrormessage%2a) to provide a custom message:
+Assign a custom template to [InputDate&lt;TValue&gt;.ParsingErrorMessage](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601.parsingerrormessage%2a) to provide a custom message:
 
 ```razor
 <label>
     Production Date:
-    <InputDate @bind-Value="Model!.ProductionDate" 
-        DisplayName="Production Date" 
+    <InputDate @bind-Value="Model!.ProductionDate"
+        DisplayName="Production Date"
         ParsingErrorMessage="The {0} field has an incorrect date value." />
 </label>
 ```
@@ -451,7 +451,7 @@ In the `Starfleet Starship Database` form (`Starship3` component) of the [Exampl
 The {0} field must be a date.
 ```
 
-The position of the `{0}` placeholder is where the value of the [Microsoft.AspNetCore.Components.Forms.InputBase`1.DisplayName *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a) property appears when the error is displayed to the user.
+The position of the `{0}` placeholder is where the value of the [InputBase&lt;TValue&gt;.DisplayName](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputbase%601.displayname%2a) property appears when the error is displayed to the user.
 
 ```razor
 <label>
@@ -462,12 +462,12 @@ The position of the `{0}` placeholder is where the value of the [Microsoft.AspNe
 
 > The ProductionDate field must be a date.
 
-Assign a custom template to [Microsoft.AspNetCore.Components.Forms.InputDate`1.ParsingErrorMessage *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601.parsingerrormessage%2a) to provide a custom message:
+Assign a custom template to [InputDate&lt;TValue&gt;.ParsingErrorMessage](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputdate%601.parsingerrormessage%2a) to provide a custom message:
 
 ```razor
 <label>
     Production Date:
-    <InputDate @bind-Value="Model!.ProductionDate" 
+    <InputDate @bind-Value="Model!.ProductionDate"
         ParsingErrorMessage="The {0} field has an incorrect date value." />
 </label>
 ```
@@ -498,7 +498,7 @@ In the following example, a hidden input field is created for the form's `Parame
 @code {
     private bool submitted;
 
-    [SupplyParameterFromForm] 
+    [SupplyParameterFromForm]
     public string Parameter { get; set; } = "stranger";
 
     private void Submit() => submitted = true;

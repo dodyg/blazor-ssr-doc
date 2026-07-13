@@ -18,10 +18,10 @@ The services shown in the following table are commonly used in Blazor Static SSR
 
 | Service | Lifetime | Description |
 | ------- | -------- | ----------- |
-| [System.Net.Http.HttpClient](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient) | Scoped | Provides methods for sending HTTP requests. Register with `AddHttpClient()`. |
-| [Microsoft.AspNetCore.Components.NavigationManager](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.navigationmanager) | Scoped | Contains helpers for working with URIs and navigation. |
-| [Microsoft.Extensions.Configuration.IConfiguration](https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration) | Singleton | Application configuration. |
-| [Microsoft.Extensions.Logging.ILogger](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger) | Scoped | Logging service. |
+| [HttpClient](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient) | Scoped | Provides methods for sending HTTP requests. Register with `AddHttpClient()`. |
+| [NavigationManager](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.navigationmanager) | Scoped | Contains helpers for working with URIs and navigation. |
+| [IConfiguration](https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfiguration) | Singleton | Application configuration. |
+| [ILogger](https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger) | Scoped | Logging service. |
 
 ## Register Services
 
