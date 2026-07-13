@@ -79,9 +79,7 @@ body {
     overflow-x: hidden;
     color: var(--ssr-ink);
     line-height: 1.6;
-    background:
-        radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--ssr-accent) 12%, transparent), transparent 24rem),
-        linear-gradient(180deg, var(--ssr-wash) 0, var(--bs-body-bg) 18rem);
+    background: var(--bs-body-bg);
 }
 
 a {
@@ -280,6 +278,19 @@ footer a:hover {
 .navbar-toggler,
 .dropdown-item {
     min-height: 2.75rem;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--ssr-heading) !important;
+    --bs-btn-border-color: var(--ssr-heading) !important;
+    --bs-btn-hover-color: var(--ssr-surface) !important;
+    --bs-btn-hover-bg: var(--ssr-heading) !important;
+    --bs-btn-hover-border-color: var(--ssr-heading) !important;
+    --bs-btn-active-color: var(--ssr-surface) !important;
+    --bs-btn-active-bg: var(--ssr-heading) !important;
+    --bs-btn-active-border-color: var(--ssr-heading) !important;
+    --bs-btn-disabled-color: var(--bs-secondary-color) !important;
+    --bs-btn-disabled-border-color: var(--bs-secondary-color) !important;
 }
 
 .breadcrumb .active {
