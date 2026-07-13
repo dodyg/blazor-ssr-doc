@@ -51,7 +51,7 @@ For more information on the [InputFile](https://learn.microsoft.com/dotnet/api/m
 | [InputText](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtext) | `<input>` |
 | [InputTextArea](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputtextarea) | `<textarea>` |
 
-> [!NOTE]
+> **Note:**
 > [InputRadio&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) and [InputRadioGroup&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradiogroup%601) components are available in .NET 5 or later. For more information, select a .NET 5 or later version of this article.
 
 :::moniker-end
@@ -176,7 +176,7 @@ In the following example:
 :::moniker-end
 
 
-> [!NOTE]
+> **Note:**
 > Changing the [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) after it's assigned is **not** supported.
 
 :::moniker range=">= aspnetcore-6.0"

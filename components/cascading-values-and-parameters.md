@@ -13,7 +13,7 @@ This article explains how to flow data from an ancestor Razor component to desce
 
 *Cascading values and parameters* provide a convenient way to flow data down a component hierarchy from an ancestor component to any number of descendent components. Unlike [Component parameters](https://learn.microsoft.com/aspnet/core/blazor/components/#component-parameters), cascading values and parameters don't require an attribute assignment for each descendent component where the data is consumed. Cascading values and parameters also allow components to coordinate with each other across a component hierarchy.
 
-> [!NOTE]
+> **Note:**
 > The code examples in this article adopt [nullable reference types (NRTs) and .NET compiler null-state static analysis](https://learn.microsoft.com/aspnet/core/migration/50-to-60#nullable-reference-types-nrts-and-net-compiler-null-state-static-analysis), which are supported in ASP.NET Core in .NET 6 or later. When targeting .NET 5 or earlier, remove the null type designation (`?`) from the `CascadingType?`, `@ActiveTab?`, `RenderFragment?`, `ITab?`, `TabSet?`, and `string?` types in the article's examples.
 
 
@@ -79,7 +79,7 @@ builder.Services.AddCascadingValue(sp =>
 });
 ```
 
-> [!WARNING]
+> **Warning:**
 > Registering a component type as a root-level cascading value doesn't register additional services for the type or permit service activation in the component.
 >
 > Treat required services separately from cascading values, registering them separately from the cascaded type.
@@ -97,7 +97,7 @@ In the following example:
 
 Keep in mind for production code that any change in state (any property value change of the class) causes all subscribed components to rerender, regardless of which part of the state they use. We recommend creating granular classes, cascading them separately with specific subscriptions to ensure that only components subscribed to a specific portion of the application state are affected by changes.
 
-> [!NOTE]
+> **Note:**
 > For a Blazor Web App solution consisting of server and client (`.Client`) projects, the following `NotifyingDalek.cs` file is placed in the `.Client` project.
 
 `NotifyingDalek.cs`:
@@ -140,7 +140,7 @@ public class NotifyingDalek : INotifyPropertyChanged
 
 The following `CascadingStateServiceCollectionExtensions` creates a [CascadingValueSource&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvaluesource-1?view=aspnetcore-9.0) from a type that implements [INotifyPropertyChanged](https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged).
 
-> [!NOTE]
+> **Note:**
 > For a Blazor Web App solution consisting of server and client (`.Client`) projects, the following `CascadingStateServiceCollectionExtensions.cs` file is placed in the `.Client` project.
 
 `CascadingStateServiceCollectionExtensions.cs`:
@@ -198,7 +198,7 @@ In the `Program` file, `NotifyingDalek` is passed to create a [CascadingValueSou
 builder.Services.AddNotifyingCascadingValue(new NotifyingDalek() { Units = 888 });
 ```
 
-> [!NOTE]
+> **Note:**
 > For a Blazor Web App solution consisting of server and client (`.Client`) projects, the preceding code is placed into each project's `Program` file.
 
 The following component is used to demonstrate how changing the value of `NotifyingDalek.Units` notifies subscribers.
@@ -295,7 +295,7 @@ The following example demonstrates the flow of theme information down the compon
 
 The following `ThemeInfo` C# class specifies the theme information.
 
-> [!NOTE]
+> **Note:**
 > For the examples in this section, the app's namespace is `BlazorSample`. When experimenting with the code in your own sample app, change the app's namespace to your sample app's namespace.
 
 `ThemeInfo.cs`:
@@ -397,7 +397,7 @@ Blazor Web Apps provide alternative approaches for cascading values that apply m
   }
   ```
 
-  > [!NOTE]
+  > **Note:**
   > Wrapping the `Routes` component instance in the `App` component (`Components/App.razor`) with a [`CascadingValue`](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.cascadingvalue%601) component isn't supported.
 
 * Specify a *root-level cascading value* as a service by calling the [CascadingValueServiceCollectionExtensions.AddCascadingValue](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.cascadingvalueservicecollectionextensions.addcascadingvalue%2a) extension method on the service collection builder.
@@ -561,7 +561,7 @@ In a descendant component, the cascaded parameters receive their cascaded values
 
 Cascading parameters also enable components to pass data across a component hierarchy. Consider the following UI tab set example, where a tab set component maintains a series of individual tabs.
 
-> [!NOTE]
+> **Note:**
 > For the examples in this section, the app's namespace is `BlazorSample`. When experimenting with the code in your own sample app, change the namespace to your sample app's namespace.
 
 Create an `ITab` interface that tabs implement in a folder named `UIInterfaces`.
@@ -579,7 +579,7 @@ public interface ITab
 }
 ```
 
-> [!NOTE]
+> **Note:**
 > For more information on [RenderFragment](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.renderfragment), see [Child content render fragments](https://learn.microsoft.com/aspnet/core/blazor/components/#child-content-render-fragments).
 
 The following `TabSet` component maintains a set of tabs. The tab set's `Tab` components, which are created later in this section, supply the list items (`<li>...</li>`) for the list (`<ul>...</ul>`).

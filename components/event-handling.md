@@ -30,7 +30,7 @@ For event handling:
 
 
 
-> [!IMPORTANT]
+> **Important:**
 > The Blazor framework doesn't track `void`-returning asynchronous methods (`async`). As a result, the entire process fails when an exception isn't caught if `void` is returned. Always return a [Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task)/[ValueTask](https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask) from asynchronous methods.
 
 The following code:
@@ -355,7 +355,7 @@ export function afterStarted(blazor) {
 
 In the preceding example, the `{PACKAGE ID/ASSEMBLY NAME}` placeholder of the file name represents the package ID or assembly name of the app.
 
-> [!NOTE]
+> **Note:**
 > For the call to `registerCustomEventType`, use the `blazor` parameter (lowercase `b`) provided by the Blazor start event. Although the registration is valid when using the `Blazor` object (uppercase `B`), the preferred approach is to use the parameter.
 
 The preceding code tells the browser that when a native [`paste`](https://developer.mozilla.org/docs/Web/API/Element/paste_event) event occurs:

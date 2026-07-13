@@ -11,7 +11,7 @@ toc: true
 
 This article describes the advanced scenario for building Blazor render trees manually with [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder).
 
-> [!WARNING]
+> **Warning:**
 > Use of [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendering.rendertreebuilder) to create components is an *advanced scenario*. A malformed component (for example, an unclosed markup tag) can result in undefined behavior. Undefined behavior includes broken content rendering, loss of app features, and ***compromised security***.
 
 ## Manually build a render tree (`RenderTreeBuilder`)
@@ -43,7 +43,7 @@ In [RenderTreeBuilder](https://learn.microsoft.com/dotnet/api/microsoft.aspnetco
 :::moniker-end
 
 
-> [!WARNING]
+> **Warning:**
 > The types in [RenderTree](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.rendertree) allow processing of the *results* of rendering operations. These are internal details of the Blazor framework implementation. These types should be considered *unstable* and subject to change in future releases.
 
 ### Sequence numbers relate to code line numbers and not execution order

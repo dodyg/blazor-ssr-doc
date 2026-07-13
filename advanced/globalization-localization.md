@@ -42,7 +42,7 @@ In this article, *language* refers to selections made by a user in their browser
 
 The guidance in this article doesn't cover setting the page's HTML language attribute ([`<html lang="...">`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/lang)), which accessibility tools use. You can set the value statically by assigning a language to the `lang` attribute of the `<html>` tag or to `document.documentElement.lang` in JavaScript. You can dynamically set the value of `document.documentElement.lang` with [JS interop](https://learn.microsoft.com/aspnet/core/blazor/javascript-interoperability/).
 
-> [!NOTE]
+> **Note:**
 > The code examples in this article adopt [nullable reference types (NRTs) and .NET compiler null-state static analysis](https://learn.microsoft.com/aspnet/core/migration/50-to-60#nullable-reference-types-nrts-and-net-compiler-null-state-static-analysis), which are supported in ASP.NET Core in .NET 6 or later. When targeting .NET 5 or earlier, remove the null type designation (`?`) from the article's examples.
 
 ## Globalization
@@ -154,7 +154,7 @@ Adopting [invariant globalization](#invariant-globalization) only results in usi
 </PropertyGroup>
 ```
 
-> [!NOTE]
+> **Note:**
 > [`<BlazorEnableTimeZoneSupport>`](https://learn.microsoft.com/aspnet/core/blazor/performance/app-download-size#disable-unused-features) overrides an earlier `<InvariantTimezone>` setting. We recommend removing the `<BlazorEnableTimeZoneSupport>` setting.
 
 
@@ -245,7 +245,7 @@ In ***client-side development***, dynamically setting the culture from the `Acce
 
 :::moniker-end
 
-> [!NOTE]
+> **Note:**
 > If the app's specification requires limiting the supported cultures to an explicit list, see the [Dynamically set the client-side culture by user preference](#dynamically-set-the-client-side-culture-by-user-preference) section of this article.
 
 Apps are localized using [Localization Middleware](https://learn.microsoft.com/aspnet/core/fundamentals/localization#localization-middleware). Add localization services to the app with [LocalizationServiceCollectionExtensions.AddLocalization](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.localizationservicecollectionextensions.addlocalization%2a).
@@ -388,7 +388,7 @@ CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
 
 :::moniker range="< aspnetcore-10.0"
 
-> [!NOTE]
+> **Note:**
 > In .NET 9 or earlier, standalone Blazor WebAssembly apps load UI globalization resources based on [CultureInfo.DefaultThreadCurrentCulture](https://learn.microsoft.com/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentculture?displayproperty=namewithtype). If you want to additionally load globalization data for your localization culture defined by [CultureInfo.DefaultThreadCurrentUICulture](https://learn.microsoft.com/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentuiculture?displayproperty=namewithtype), [upgrade the app to .NET 10 or later](https://learn.microsoft.com/aspnet/core/migration/index).
 
 :::moniker-end
@@ -489,7 +489,7 @@ Provide JS functions after [Blazor's `<script>` tag](https://learn.microsoft.com
 
 :::moniker range=">= aspnetcore-5.0"
 
-> [!NOTE]
+> **Note:**
 > The preceding example pollutes the client with global functions. For a better approach in production apps, see [JavaScript isolation in JavaScript modules](https://learn.microsoft.com/aspnet/core/blazor/javascript-interoperability/call-javascript-from-dotnet#javascript-isolation-in-javascript-modules).
 
 :::moniker-end
@@ -533,7 +533,7 @@ await host.RunAsync();
 
 :::moniker range="< aspnetcore-10.0"
 
-> [!NOTE]
+> **Note:**
 > In .NET 9 or earlier, standalone Blazor WebAssembly apps load UI globalization resources based on [CultureInfo.DefaultThreadCurrentCulture](https://learn.microsoft.com/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentculture?displayproperty=namewithtype). If you want to additionally load globalization data for your localization culture defined by [CultureInfo.DefaultThreadCurrentUICulture](https://learn.microsoft.com/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentuiculture?displayproperty=namewithtype), [upgrade the app to .NET 10 or later](https://learn.microsoft.com/aspnet/core/migration/index).
 
 :::moniker-end
@@ -643,7 +643,7 @@ The following `CultureSelector` component shows how to perform the following act
 
 :::moniker-end
 
-> [!NOTE]
+> **Note:**
 > For more information on [IJSInProcessRuntime](https://learn.microsoft.com/dotnet/api/microsoft.jsinterop.ijsinprocessruntime), see [call-javascript-from-dotnet](https://learn.microsoft.com/aspnet/core/blazor/javascript-interoperability/call-javascript-from-dotnet#invoke-javascript-functions-without-reading-a-returned-value-invokevoidasync).
 
 Inside the closing tag of the `</main>` element in the `MainLayout` component (`MainLayout.razor`), add the `CultureSelector` component:
@@ -661,7 +661,7 @@ Use the `CultureExample1` component shown in the [Demonstration component](#demo
 Examples of locations where an app might store a user's preference include in [browser local storage](https://developer.mozilla.org/docs/Web/API/Window/localStorage) (common for client-side scenarios), in a localization cookie or database (common for server-side scenarios), or in an external service attached to an external database and accessed by a [web API](https://learn.microsoft.com/aspnet/core/blazor/call-web-api). The following example demonstrates how to use a localization cookie.
 
 
-> [!NOTE]
+> **Note:**
 > The following example assumes that the app adopts ***global*** interactivity by specifying the interactive server-side rendering (interactive SSR) on the `Routes` component in the `App` component (`Components/App.razor`):
 >
 > ```razor
@@ -779,7 +779,7 @@ public class CultureController : Controller
 }
 ```
 
-> [!WARNING]
+> **Warning:**
 > Use the [ControllerBase.LocalRedirect](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.controllerbase.localredirect%2a) action result, as shown in the preceding example, to prevent open redirect attacks. For more information, see [preventing-open-redirects](https://learn.microsoft.com/aspnet/core/security/preventing-open-redirects).
 
 The following `CultureSelector` component shows how to call the `Set` method of the `CultureController` with the new culture. The component is placed in the `Shared` folder for use throughout the app.
@@ -989,7 +989,7 @@ await host.RunAsync();
 
 :::moniker range=">= aspnetcore-8.0 < aspnetcore-10.0"
 
-> [!NOTE]
+> **Note:**
 > In .NET 9 or earlier, standalone Blazor WebAssembly apps load UI globalization resources based on [CultureInfo.DefaultThreadCurrentCulture](https://learn.microsoft.com/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentculture?displayproperty=namewithtype). If you want to additionally load globalization data for your localization culture defined by [CultureInfo.DefaultThreadCurrentUICulture](https://learn.microsoft.com/dotnet/api/system.globalization.cultureinfo.defaultthreadcurrentuiculture?displayproperty=namewithtype), [upgrade the app to .NET 10 or later](https://learn.microsoft.com/aspnet/core/migration/index).
 
 :::moniker-end
@@ -1068,7 +1068,7 @@ In the `.Client` project's `_Imports` file (`_Imports.razor`), add the namespace
 @using BlazorSample.Client.Pages
 ```
 
-> [!NOTE]
+> **Note:**
 > For more information on [IJSInProcessRuntime](https://learn.microsoft.com/dotnet/api/microsoft.jsinterop.ijsinprocessruntime), see [call-javascript-from-dotnet](https://learn.microsoft.com/aspnet/core/blazor/javascript-interoperability/call-javascript-from-dotnet#invoke-javascript-functions-without-reading-a-returned-value-invokevoidasync).
 
 In the `.Client` project, add the `CultureSelector` component to the `MainLayout` component. Place the following markup inside the closing `</main>` tag in the `Layout/MainLayout.razor` file:
@@ -1265,7 +1265,7 @@ After the [Blazor's `<script>` tag](https://learn.microsoft.com/aspnet/core/blaz
 </script>
 ```
 
-> [!NOTE]
+> **Note:**
 > The preceding example pollutes the client with global functions. For a better approach in production apps, see [JavaScript isolation in JavaScript modules](https://learn.microsoft.com/aspnet/core/blazor/javascript-interoperability/call-javascript-from-dotnet#javascript-isolation-in-javascript-modules).
 
 Add the following `@code` block to the bottom of the `App` component file:
@@ -1327,7 +1327,7 @@ public class CultureController : Controller
 }
 ```
 
-> [!WARNING]
+> **Warning:**
 > Use the [ControllerBase.LocalRedirect](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.controllerbase.localredirect%2a) action result, as shown in the preceding example, to prevent open redirect attacks. For more information, see [preventing-open-redirects](https://learn.microsoft.com/aspnet/core/security/preventing-open-redirects).
 
 ### Interactive Auto components
@@ -1451,7 +1451,7 @@ Create a resource file for each locale. In the following example, resources are 
 * English (`en`): `Hello, World!`
 * Spanish (`es`): `¡Hola, Mundo!`
 
-> [!NOTE]
+> **Note:**
 > The following resource file can be added in Visual Studio by right-clicking the `Pages` folder and selecting **Add** > **New Item** > **Resources File**. Name the file `CultureExample2.resx`. When the editor appears, provide data for a new entry. Set the **Name** to `Greeting` and **Value** to `Hello, World!`. Save the file.
 >
 > If using Visual Studio Code, we recommend installing [Tim Heuer's ResX Viewer and Editor](https://marketplace.visualstudio.com/items?itemName=TimHeuer.resx-editor). Add an empty `CultureExample2.resx` file to the `Pages` folder. The extension automatically takes over managing the file in the UI. Select the **Add New Resource** button. Follow the instructions to add an entry for `Greeting` (key), `Hello, World!` (value), and `None` (comment). Save the file. If you close and re-open the file, you can see the `Greeting` resource.
@@ -1529,7 +1529,7 @@ The following demonstrates a typical resource file. You can manually place resou
 </root>
 ```
 
-> [!NOTE]
+> **Note:**
 > The following resource file can be added in Visual Studio by right-clicking the `Pages` folder and selecting **Add** > **New Item** > **Resources File**. Name the file `CultureExample2.es.resx`. When the editor appears, provide data for a new entry. Set the **Name** to `Greeting` and **Value** to `¡Hola, Mundo!`. Save the file.
 >
 > If using Visual Studio Code, we recommend installing [Tim Heuer's ResX Viewer and Editor](https://marketplace.visualstudio.com/items?itemName=TimHeuer.resx-editor). Add an empty `CultureExample2.resx` file to the `Pages` folder. The extension automatically takes over managing the file in the UI. Select the **Add New Resource** button. Follow the instructions to add an entry for `Greeting` (key), `¡Hola, Mundo!` (value), and `None` (comment). Save the file. If you close and re-open the file, you can see the `Greeting` resource.
@@ -1677,7 +1677,7 @@ To create localization shared resources, adopt the following approach.
   * The dummy class is named `SharedResource`.
   * The class file is placed in a `Localization` folder at the root of the app.
 
-  > [!NOTE]
+  > **Note:**
   > Don't use an autogenerated designer file (for example, `SharedResources.Designer.cs`). The dummy class is meant to act as the shared resource class. The presence of a designer file results in a namespace collision.
 
   `Localization/SharedResource.cs`:
@@ -1698,7 +1698,7 @@ To create localization shared resources, adopt the following approach.
   * `Localization/SharedResource.resx`
   * `Localization/SharedResource.es.resx`
 
-  > [!WARNING]
+  > **Warning:**
   > When following the approach in this section, you can't simultaneously set [LocalizationOptions.ResourcesPath](https://learn.microsoft.com/dotnet/api/microsoft.extensions.localization.localizationoptions.resourcespath%2a?displayproperty=namewithtype) and use [IStringLocalizerFactory.Create](https://learn.microsoft.com/dotnet/api/microsoft.extensions.localization.istringlocalizerfactory.create%2a?displayproperty=namewithtype) to load resources.
 
 * To reference the dummy class for an injected [IStringLocalizer&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.extensions.localization.istringlocalizer%601) in a Razor component, either place an [`@using`](https://learn.microsoft.com/aspnet/core/mvc/views/razor#using) directive for the localization namespace or include the localization namespace in the dummy class reference. In the following examples:

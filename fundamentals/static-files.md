@@ -95,7 +95,7 @@ The `ImportMap` component ([ImportMap](https://learn.microsoft.com/dotnet/api/mi
 
 If a custom [ImportMapDefinition](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmapdefinition) isn't assigned to an Import Map component, the import map is generated based on the app's assets.
 
-> [!NOTE]
+> **Note:**
 > [ImportMapDefinition](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.importmapdefinition) instances are expensive to create, so we recommended caching them when creating an additional instance.
 
 The following examples demonstrate custom import map definitions and the import maps that they create.

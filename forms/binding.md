@@ -557,10 +557,10 @@ Update the `Starfleet Starship Database` form (`Starship3` component) of the [Ex
 * A radio button group for the ship manufacturer.
 * A nested radio button group for engine and ship color.
 
-> [!NOTE]
+> **Note:**
 > Nested radio button groups aren't often used in forms because they can result in a disorganized layout of form controls that may confuse users. However, there are cases when they make sense in UI design, such as in the following example that pairs recommendations for two user inputs, ship engine and ship color. One engine and one color are required by the form's validation. The form's layout uses nested [InputRadioGroup&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradiogroup%601)s to pair engine and color recommendations. However, the user can combine any engine with any color to submit the form.
 
-> [!NOTE]
+> **Note:**
 > Be sure to make the `ComponentEnums` class available to the component for the following example:
 >
 > ```razor
@@ -652,7 +652,7 @@ Update the `Starfleet Starship Database` form (`Starship3` component) of the [Ex
 </fieldset>
 ```
 
-> [!NOTE]
+> **Note:**
 > If `Name` is omitted, [InputRadio&lt;TValue&gt;](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.inputradio%601) components are grouped by their most recent ancestor.
 
 If you implemented the preceding Razor markup in the `Starship3` component of the [Example form](https://learn.microsoft.com/aspnet/core/blazor/forms/input-components#example-form) section of the *Input components* article, update the logging for the `Submit` method:
