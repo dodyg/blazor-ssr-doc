@@ -521,7 +521,7 @@ The `EngineeringApprovalInputStandalone` component is also functional outside of
 
 The example in this section is based on the `Starfleet Starship Database` form (`Starship3` component) of the [Example form](https://learn.microsoft.com/aspnet/core/blazor/forms/input-components#example-form) section of this article.
 
-Add the following [`enum` types](/dotnet/csharp/language-reference/language-specification/enums) to the app. Create a new file to hold them or add them to the `Starship.cs` file.
+Add the following [`enum` types](https://learn.microsoft.com/dotnet/csharp/language-reference/language-specification/enums) to the app. Create a new file to hold them or add them to the `Starship.cs` file.
 
 ```csharp
 public class ComponentEnums
@@ -724,7 +724,7 @@ When working with radio buttons in a form, data binding is handled differently t
 For more information on generic type parameters (`@typeparam`), see the following articles:
 
 * [razor](https://learn.microsoft.com/aspnet/core/mvc/views/razor#typeparam)
-* [Generic type parameter support](/components/index#generic-type-parameter-support)
+* [Generic type parameter support](https://learn.microsoft.com/aspnet/core/blazor/components/#generic-type-parameter-support)
 * [templated-components](https://learn.microsoft.com/aspnet/core/blazor/components/templated-components)
 
 Use the following example model.

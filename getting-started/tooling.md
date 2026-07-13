@@ -13,7 +13,7 @@ This article describes tools for building Blazor apps using several tools:
 
 * [Visual Studio (VS)](https://visualstudio.microsoft.com): The most comprehensive integrated development environment (IDE) for .NET developers on Windows. Includes an array of tools and features to elevate and enhance every stage of software development.
 * [Visual Studio Code (VS Code)](https://code.visualstudio.com) is an open source, cross-platform code editor that can be used to develop Blazor apps.
-* [.NET CLI](/dotnet/core/tools/): The .NET command-line interface (CLI) is a cross-platform toolchain for developing, building, running, and publishing .NET applications. The .NET CLI is included with the [.NET SDK](/dotnet/core/sdk) and runs on any platform supported by the SDK.
+* [.NET CLI](https://learn.microsoft.com/dotnet/core/tools/): The .NET command-line interface (CLI) is a cross-platform toolchain for developing, building, running, and publishing .NET applications. The .NET CLI is included with the [.NET SDK](https://learn.microsoft.com/dotnet/core/sdk) and runs on any platform supported by the SDK.
 
 Select the pivot of this article that matches your tooling choice.
 
@@ -69,7 +69,7 @@ Install the latest version of [Visual Studio Code](https://code.visualstudio.com
 
 Install the [C# Dev Kit for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit). For more information, see [debug](https://learn.microsoft.com/aspnet/core/blazor/debug#visual-studio-code-prerequisites).
 
-If you're new to VS Code, see the [VS Code documentation](https://code.visualstudio.com/docs). If you're new to the .NET SDK, see [What is the .NET SDK?](/dotnet/core/sdk) and the associated articles in the .NET SDK documentation.
+If you're new to VS Code, see the [VS Code documentation](https://code.visualstudio.com/docs). If you're new to the .NET SDK, see [What is the .NET SDK?](https://learn.microsoft.com/dotnet/core/sdk) and the associated articles in the .NET SDK documentation.
 
 Create a new project:
 
@@ -93,7 +93,7 @@ Create a new project:
 
 * To stop the app, press <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard.
 
-The Visual Studio Code (VS Code) instructions for ASP.NET Core development in some parts of the Blazor documentation use the [.NET CLI](/dotnet/core/tools/), which is part of the .NET SDK. .NET CLI commands are issued in VS Code's integrated [**Terminal**](https://code.visualstudio.com/docs/editor/integrated-terminal), which defaults to a [PowerShell command shell](/powershell/). The **Terminal** is opened by selecting **New Terminal** from the **Terminal** menu in the menu bar.
+The Visual Studio Code (VS Code) instructions for ASP.NET Core development in some parts of the Blazor documentation use the [.NET CLI](https://learn.microsoft.com/dotnet/core/tools/), which is part of the .NET SDK. .NET CLI commands are issued in VS Code's integrated [**Terminal**](https://code.visualstudio.com/docs/editor/integrated-terminal), which defaults to a [PowerShell command shell](https://learn.microsoft.com/powershell/). The **Terminal** is opened by selecting **New Terminal** from the **Terminal** menu in the menu bar.
 
 For more information on Visual Studio Code configuration and use, see the [Visual Studio Code documentation](https://code.visualstudio.com/docs).
 
@@ -216,7 +216,7 @@ Example for a project folder of :::no-loc text="Server"::: and that spawns Micro
 ...
 ```
 
-**`.vscode/tasks.json`** ([`dotnet` command](/dotnet/core/tools/dotnet) arguments):
+**`.vscode/tasks.json`** ([`dotnet` command](https://learn.microsoft.com/dotnet/core/tools/dotnet) arguments):
 
 ```json
 ...
@@ -249,7 +249,7 @@ The following example from the [tutorial for using SignalR with a Blazor WebAsse
 
 The .NET SDK is a set of libraries and tools that developers use to create .NET applications and libraries.
 
-Install the [.NET SDK](https://dotnet.microsoft.com/download). Commands are issued in a command shell using the [.NET CLI](/dotnet/core/tools/).
+Install the [.NET SDK](https://dotnet.microsoft.com/download). Commands are issued in a command shell using the [.NET CLI](https://learn.microsoft.com/dotnet/core/tools/).
 
 If you previously installed one or more .NET SDKs and want to see your active version, execute the following command in a command shell:
 
@@ -257,7 +257,7 @@ If you previously installed one or more .NET SDKs and want to see your active ve
 dotnet --version
 ```
 
-If you're new to the .NET SDK, see [What is the .NET SDK?](/dotnet/core/sdk) and the associated articles in the .NET SDK documentation.
+If you're new to the .NET SDK, see [What is the .NET SDK?](https://learn.microsoft.com/dotnet/core/sdk) and the associated articles in the .NET SDK documentation.
 
 
 Create a new project:
@@ -390,7 +390,7 @@ The default browser is launched at `https://localhost:{PORT}`, which displays th
 
 :::zone pivot="cli"
 
-In a command shell opened to the project's root folder, execute the [`dotnet watch`](/dotnet/core/tools/dotnet-watch) command to compile and start the app:
+In a command shell opened to the project's root folder, execute the [`dotnet watch`](https://learn.microsoft.com/dotnet/core/tools/dotnet-watch) command to compile and start the app:
 
 ```dotnetcli
 dotnet watch
@@ -400,7 +400,7 @@ The default browser is launched at `https://localhost:{PORT}`, which displays th
 
 When an app created from the Blazor Web App project template is run with the .NET CLI, the app runs at an HTTP (insecure) endpoint because the first profile found in the app's launch settings file (`Properties/launchSettings.json`) is the HTTP (insecure) profile, which is named `http`. The HTTP profile was placed in the first position to ease the transition of adopting SSL/HTTPS security for non-Windows users.
 
-One approach for running the app with SSL/HTTPS is to pass the [`-lp`|`--launch-profile` option](/dotnet/core/tools/dotnet-run#options) with the `https` profile name to the `dotnet watch` command:
+One approach for running the app with SSL/HTTPS is to pass the [`-lp`|`--launch-profile` option](https://learn.microsoft.com/dotnet/core/tools/dotnet-run#options) with the `https` profile name to the `dotnet watch` command:
 
 ```dotnetcli
 dotnet watch -lp https
@@ -450,18 +450,18 @@ Stop the app using the following approach:
 
 A *solution* is a container to organize one or more related code projects. Solution files use a unique format and aren't intended to be edited directly.
 
-[Visual Studio](https://visualstudio.microsoft.com/vs/) and [Visual Studio Code (VS Code)](https://code.visualstudio.com) use a solution file (`.sln`) to store settings for a solution. The [.NET CLI](/dotnet/core/tools/) doesn't organize projects using a solution file, but it can create solution files and list/modify the projects in solution files via the [`dotnet sln` command](/dotnet/core/tools/dotnet-sln). Other .NET CLI commands use the path of the solution file for various publishing, testing, and packaging commands.
+[Visual Studio](https://visualstudio.microsoft.com/vs/) and [Visual Studio Code (VS Code)](https://code.visualstudio.com) use a solution file (`.sln`) to store settings for a solution. The [.NET CLI](https://learn.microsoft.com/dotnet/core/tools/) doesn't organize projects using a solution file, but it can create solution files and list/modify the projects in solution files via the [`dotnet sln` command](https://learn.microsoft.com/dotnet/core/tools/dotnet-sln). Other .NET CLI commands use the path of the solution file for various publishing, testing, and packaging commands.
 
 
 For more information, see the following resources:
 
-* [Introduction to projects and solutions (Visual Studio documentation)](/visualstudio/get-started/tutorial-projects-solutions)
-* [What are solutions and projects in Visual Studio? (Visual Studio documentation)](/visualstudio/ide/solutions-and-projects-in-visual-studio)
+* [Introduction to projects and solutions (Visual Studio documentation)](https://learn.microsoft.com/visualstudio/get-started/tutorial-projects-solutions)
+* [What are solutions and projects in Visual Studio? (Visual Studio documentation)](https://learn.microsoft.com/visualstudio/ide/solutions-and-projects-in-visual-studio)
 * [Project management (VS Code documentation)](https://code.visualstudio.com/docs/csharp/project-management)
 
 ## Blazor project templates and template options
 
-The Blazor framework provides project templates for creating new apps. The templates are used to create new Blazor projects and solutions regardless of the tooling that you select for Blazor development (Visual Studio, Visual Studio Code, or the [.NET command-line interface (CLI)](/dotnet/core/tools/)):
+The Blazor framework provides project templates for creating new apps. The templates are used to create new Blazor projects and solutions regardless of the tooling that you select for Blazor development (Visual Studio, Visual Studio Code, or the [.NET command-line interface (CLI)](https://learn.microsoft.com/dotnet/core/tools/)):
 
 
 * Blazor Web App project template: `blazor`
@@ -532,9 +532,9 @@ To include sample pages and a layout based on Bootstrap styling, use the **Inclu
 
 * [render-modes](/fundamentals/render-modes)
 * The *.NET default templates for dotnet new* article in the .NET documentation:
-  * [`blazor`](/dotnet/core/tools/dotnet-new-sdk-templates#blazor)
-  * [`blazorwasm`](/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm)
-* Passing the help option (`-h` or `--help`) to the [`dotnet new`](/dotnet/core/tools/dotnet-new) CLI command in a command shell:
+  * [`blazor`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates#blazor)
+  * [`blazorwasm`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm)
+* Passing the help option (`-h` or `--help`) to the [`dotnet new`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new) CLI command in a command shell:
   * `dotnet new blazor -h`
   * `dotnet new blazorwasm -h`
 
@@ -544,9 +544,9 @@ To include sample pages and a layout based on Bootstrap styling, use the **Inclu
 For more information on template options, see the following resources:
 
 * The *.NET default templates for dotnet new* article in the .NET documentation:
-  * [`blazorserver`](/dotnet/core/tools/dotnet-new-sdk-templates#blazorserver) (includes `blazorserver-empty` options)
-  * [`blazorwasm`](/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm) (includes `blazorwasm-empty` options)
-* Passing the help option (`-h` or `--help`) to the [`dotnet new`](/dotnet/core/tools/dotnet-new) CLI command in a command shell:
+  * [`blazorserver`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates#blazorserver) (includes `blazorserver-empty` options)
+  * [`blazorwasm`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm) (includes `blazorwasm-empty` options)
+* Passing the help option (`-h` or `--help`) to the [`dotnet new`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new) CLI command in a command shell:
   * `dotnet new blazorserver -h`
   * `dotnet new blazorserver-empty -h`
   * `dotnet new blazorwasm -h`
@@ -559,9 +559,9 @@ For more information on template options, see the following resources:
 For more information on template options, see the following resources:
 
 * The *.NET default templates for dotnet new* article in the .NET documentation:
-  * [`blazorserver`](/dotnet/core/tools/dotnet-new-sdk-templates#blazorserver)
-  * [`blazorwasm`](/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm)
-* Passing the help option (`-h` or `--help`) to the [`dotnet new`](/dotnet/core/tools/dotnet-new) CLI command in a command shell:
+  * [`blazorserver`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates#blazorserver)
+  * [`blazorwasm`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new-sdk-templates#blazorwasm)
+* Passing the help option (`-h` or `--help`) to the [`dotnet new`](https://learn.microsoft.com/dotnet/core/tools/dotnet-new) CLI command in a command shell:
   * `dotnet new blazorserver -h`
   * `dotnet new blazorwasm -h`
 
@@ -574,8 +574,8 @@ For more information on template options, see the following resources:
 * [Visual Studio](https://visualstudio.microsoft.com)
 * [Visual Studio Code](https://code.visualstudio.com)
 * [webassembly](https://learn.microsoft.com/aspnet/core/blazor/tooling/webassembly)
-* [.NET command-line interface (CLI)](/dotnet/core/tools/)
-* [.NET SDK](/dotnet/core/sdk)
+* [.NET command-line interface (CLI)](https://learn.microsoft.com/dotnet/core/tools/)
+* [.NET SDK](https://learn.microsoft.com/dotnet/core/sdk)
 * [hot-reload](https://learn.microsoft.com/aspnet/core/test/hot-reload)
 * [hosting-models](/getting-started/comparison)
 * [project-structure](https://learn.microsoft.com/aspnet/core/blazor/project-structure)
@@ -587,8 +587,8 @@ For more information on template options, see the following resources:
 
 * [Visual Studio](https://visualstudio.microsoft.com)
 * [Visual Studio Code](https://code.visualstudio.com)
-* [.NET command-line interface (CLI)](/dotnet/core/tools/)
-* [.NET SDK](/dotnet/core/sdk)
+* [.NET command-line interface (CLI)](https://learn.microsoft.com/dotnet/core/tools/)
+* [.NET SDK](https://learn.microsoft.com/dotnet/core/sdk)
 * [hosting-models](/getting-started/comparison)
 * [project-structure](https://learn.microsoft.com/aspnet/core/blazor/project-structure)
 

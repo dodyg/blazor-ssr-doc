@@ -13,7 +13,7 @@ This article explains how to render globalized and localized content to users in
 
 ## Globalization and localization
 
-For [globalization](/dotnet/core/extensions/globalization), Blazor provides number and date formatting. For [localization](/dotnet/core/extensions/localization), Blazor renders content using the [.NET Resources system](/dotnet/framework/resources/).
+For [globalization](https://learn.microsoft.com/dotnet/core/extensions/globalization), Blazor provides number and date formatting. For [localization](https://learn.microsoft.com/dotnet/core/extensions/localization), Blazor renders content using the [.NET Resources system](https://learn.microsoft.com/dotnet/framework/resources/).
 
 A limited set of ASP.NET Core's localization features are supported:
 
@@ -31,8 +31,8 @@ This article describes how to use Blazor's globalization and localization featur
 For additional general information, see the following resources:
 
 * [localization](https://learn.microsoft.com/aspnet/core/fundamentals/localization)
-* [.NET Fundamentals: Globalization](/dotnet/core/extensions/globalization)
-* [.NET Fundamentals: Localization](/dotnet/core/extensions/localization)
+* [.NET Fundamentals: Globalization](https://learn.microsoft.com/dotnet/core/extensions/globalization)
+* [.NET Fundamentals: Localization](https://learn.microsoft.com/dotnet/core/extensions/localization)
 
 Often, the terms *language* and *culture* are used interchangeably when dealing with globalization and localization concepts.
 
@@ -104,7 +104,7 @@ Specify one file to load with the `<BlazorIcuDataFileName>` MSBuild property in 
 
 If a file isn't specified with `<BlazorIcuDataFileName>`, the app's culture is checked, and the corresponding ICU file is loaded for its culture. For example, the `en-US` culture results in loading the `icudt_EFIGS.dat` file. For `zh-CN`, the `icudt_CJK.dat` file is used.
 
-For more information, see [.NET globalization and ICU: ICU on WebAssembly](/dotnet/core/extensions/globalization-icu#icu-on-webassembly).
+For more information, see [.NET globalization and ICU: ICU on WebAssembly](https://learn.microsoft.com/dotnet/core/extensions/globalization-icu#icu-on-webassembly).
 
 
 
@@ -139,7 +139,7 @@ Alternatively, configure invariant globalization with the following approaches:
   * Key: `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT`
   * Value: `true` or `1`
 
-For more information, see [Runtime configuration options for globalization (.NET documentation)](/dotnet/core/run-time-config/globalization).
+For more information, see [Runtime configuration options for globalization (.NET documentation)](https://learn.microsoft.com/dotnet/core/run-time-config/globalization).
 
 
 ## Timezone information
@@ -213,7 +213,7 @@ The following `CultureExample1` component can be used to demonstrate Blazor glob
 }
 ```
 
-The number string format (`N2`) in the preceding example (`.ToString("N2")`) is a [standard .NET numeric format specifier](/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n). The `N2` format is supported for all numeric types, includes a group separator, and renders up to two decimal places.
+The number string format (`N2`) in the preceding example (`.ToString("N2")`) is a [standard .NET numeric format specifier](https://learn.microsoft.com/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n). The `N2` format is supported for all numeric types, includes a group separator, and renders up to two decimal places.
 
 Optionally, add a menu item to the navigation in the `NavMenu` component (`NavMenu.razor`) for the `CultureExample1` component.
 
@@ -1729,8 +1729,8 @@ For more information, see [Blazor Localization does not work with InteractiveSer
 
 * [app-base-path](https://learn.microsoft.com/aspnet/core/blazor/host-and-deploy/app-base-path)
 * [localization](https://learn.microsoft.com/aspnet/core/fundamentals/localization)
-* [Globalizing and localizing .NET applications](/dotnet/core/extensions/globalization-and-localization)
-* [Resources in .resx Files](/dotnet/framework/resources/working-with-resx-files-programmatically)
+* [Globalizing and localizing .NET applications](https://learn.microsoft.com/dotnet/core/extensions/globalization-and-localization)
+* [Resources in .resx Files](https://learn.microsoft.com/dotnet/framework/resources/working-with-resx-files-programmatically)
 * [Localization & Generics](http://hishambinateya.com/localization-and-generics)
 * [Calling `InvokeAsync(StateHasChanged)` causes page to fallback to default culture (dotnet/aspnetcore #28521)](https://github.com/dotnet/aspnetcore/issues/28521)
 * [Blazor Localization does not work with InteractiveServer (`dotnet/aspnetcore` #53707)](https://github.com/dotnet/aspnetcore/issues/53707) ([Location override using "Sensors" pane](#location-override-using-sensors-pane-in-developer-tools))

@@ -232,7 +232,7 @@ The validation for the `Defense` ship classification only occurs on the server i
 > For more information on security, see:
 >
 > * [index](/security/index) (and the other articles in the Blazor *Security and Identity* node)
-> * [Microsoft identity platform documentation](/entra/identity-platform/)
+> * [Microsoft identity platform documentation](https://learn.microsoft.com/entra/identity-platform/)
 
 `Controllers/StarshipValidation.cs`:
 
@@ -375,7 +375,7 @@ In the following component, update the namespace of the shared project (`@using 
 
 
 > [!NOTE]
-> Forms based on [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) automatically enable [antiforgery support](/forms/index#antiforgery-support). The controller should use [AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) to register controller services and automatically enable antiforgery support for the web API.
+> Forms based on [EditForm](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform) automatically enable [antiforgery support](https://learn.microsoft.com/aspnet/core/blazor/forms/#antiforgery-support). The controller should use [AddControllersWithViews *](https://learn.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollerswithviews%2a) to register controller services and automatically enable antiforgery support for the web API.
 
 ```razor
 @page "/starship-10"
@@ -515,15 +515,11 @@ builder.Services.AddScoped(sp =>
 
 The preceding example sets the base address with `builder.HostEnvironment.BaseAddress` ([BaseAddress *?displayProperty=nameWithType](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.webassembly.hosting.iwebassemblyhostenvironment.baseaddress%2a?displayproperty=namewithtype)), which gets the base address for the app and is typically derived from the `<base>` tag's `href` value in the host page.
 
-<!--
-:::code language="razor" source="~/../blazor-samples/8.0/BlazorWebAppSample/Components/Pages/Starship10.razor":::
--->
 
 
 
-<!--
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/forms-and-validation/Starship10.razor":::
--->
+
+
 
 > [!NOTE]
 > As an alternative to the use of a [validation component](#validator-components), data annotation validation attributes can be used. Custom attributes applied to the form's model activate with the use of the [DataAnnotationsValidator](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.dataannotationsvalidator) component. When used with server validation, the attributes must be executable on the server. For more information, see the [Custom validation attributes](#custom-validation-attributes) section.
@@ -772,9 +768,7 @@ public class CustomFieldClassProvider : FieldCssClassProvider
 
 :::moniker range=">= aspnetcore-7.0"
 
-<!--
-:::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/CustomFieldClassProvider.cs":::
--->
+
 
 Set the `CustomFieldClassProvider` class as the Field CSS Class Provider on the form's [EditContext](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontext) instance with [SetFieldCssClassProvider *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editcontextfieldclassextensions.setfieldcssclassprovider%2a).
 
@@ -834,15 +828,13 @@ Set the `CustomFieldClassProvider` class as the Field CSS Class Provider on the 
 }
 ```
 
-<!--
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/forms-and-validation/Starship13.razor":::
--->
+
 
 :::moniker-end
 
 :::moniker range=">= aspnetcore-7.0"
 
-The preceding example checks the validity of all form fields and applies a style to each field. If the form should only apply custom styles to a subset of the fields, make `CustomFieldClassProvider` apply styles conditionally. The following `CustomFieldClassProvider2` example only applies a style to the `Name` field. For any fields with names not matching `Name`, `string.Empty` is returned, and no style is applied. Using [reflection](/dotnet/csharp/advanced-topics/reflection-and-attributes/), the field is matched to the model member's property or field name, not an `id` assigned to the HTML entity.
+The preceding example checks the validity of all form fields and applies a style to each field. If the form should only apply custom styles to a subset of the fields, make `CustomFieldClassProvider` apply styles conditionally. The following `CustomFieldClassProvider2` example only applies a style to the `Name` field. For any fields with names not matching `Name`, `string.Empty` is returned, and no style is applied. Using [reflection](https://learn.microsoft.com/dotnet/csharp/advanced-topics/reflection-and-attributes/), the field is matched to the model member's property or field name, not an `id` assigned to the HTML entity.
 
 `CustomFieldClassProvider2.cs`:
 
@@ -896,9 +888,7 @@ public class CustomFieldClassProvider2 : FieldCssClassProvider
 
 :::moniker range=">= aspnetcore-7.0"
 
-<!--
-:::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/CustomFieldClassProvider2.cs":::
--->
+
 
 > [!NOTE]
 > Matching the field name in the preceding example is case sensitive, so a model property member designated "`Name`" must match a conditional check on "`Name`":
@@ -1016,9 +1006,7 @@ public class CustomFieldClassProvider3 : FieldCssClassProvider
 
 :::moniker range=">= aspnetcore-7.0"
 
-<!--
-:::code language="csharp" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/CustomFieldClassProvider3.cs":::
--->
+
 
 Update the [EditContext *](https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.components.forms.editform.editcontext%2a) instance in the component's `OnInitialized` method to use the preceding Field CSS Class Provider:
 
@@ -1298,7 +1286,7 @@ The warning can be suppressed using any of the following approaches:
   </PropertyGroup>
   ```
 
-* A [`pragma` directive](/cpp/preprocessor/pragma-directives-and-the-pragma-keyword) where the attribute is used:
+* A [`pragma` directive](https://learn.microsoft.com/cpp/preprocessor/pragma-directives-and-the-pragma-keyword) where the attribute is used:
 
   ```csharp
   #pragma warning disable ASP0029
@@ -1306,7 +1294,7 @@ The warning can be suppressed using any of the following approaches:
   #pragma warning restore ASP0029
   ```
 
-* An [EditorConfig file (`.editorconfig`)](/visualstudio/ide/create-portable-custom-editor-options) rule:
+* An [EditorConfig file (`.editorconfig`)](https://learn.microsoft.com/visualstudio/ide/create-portable-custom-editor-options) rule:
 
   ```
   dotnet_diagnostic.ASP0029.severity = none

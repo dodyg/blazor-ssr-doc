@@ -67,7 +67,7 @@ Static File Middleware ([Microsoft.AspNetCore.Builder.StaticFileExtensions.UseSt
 
 * Serving files from disk that aren't part of the build or publish process, for example, files added to the application folder during or after deployment.
 * Applying a path prefix to Blazor WebAssembly static asset files, which is covered in the [Prefix for Blazor WebAssembly assets](#prefix-for-blazor-webassembly-assets) section.
-* Configuring file mappings of extensions to specific content types and setting static file options, which is covered in the [File mappings and static file options](#file-mappings-and-static-file-options) section.
+* Configuring file mappings of extensions to specific content types and setting static file options, which is covered in the [File mappings and static file options](#deliver-assets-with-map-static-assets-routing-endpoint-conventions) section.
       
 For more information, see [static-files](https://learn.microsoft.com/aspnet/core/fundamentals/static-files).
 
@@ -391,7 +391,7 @@ In the preceding example, the `{PATH}` placeholder is the path.
 
 Without setting the `<StaticWebAssetBasePath>` property, a standalone app is published at `/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/`.
 
-In the preceding example, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks).
+In the preceding example, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](https://learn.microsoft.com/dotnet/standard/frameworks).
 
 If the `<StaticWebAssetBasePath>` property in a standalone Blazor WebAssembly app sets the published static asset path to `app1`, the root path to the app in published output is `/app1`.
 
@@ -405,7 +405,7 @@ In the standalone Blazor WebAssembly app's project file (`.csproj`):
 
 In published output, the path to the standalone Blazor WebAssembly app is `/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/app1/`.
 
-In the preceding example, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks).
+In the preceding example, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](https://learn.microsoft.com/dotnet/standard/frameworks).
 
 
 

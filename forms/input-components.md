@@ -265,9 +265,7 @@ In the following example, the user must select at least two starship classificat
 }
 ```
 
-<!--
-:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/forms-and-validation/Starship5.razor":::
--->
+
 
 :::moniker-end
 

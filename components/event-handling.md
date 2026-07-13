@@ -23,7 +23,7 @@ For supported events, see [Microsoft.AspNetCore.Components.Web.EventHandlers](ht
 For event handling:
 
 
-* Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the `App` component. For more information, see [Apply a render mode to the entire app](/fundamentals/render-modes#apply-a-render-mode-to-the-entire-app).
+* Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the `App` component. For more information, see [Apply a render mode to the entire app](https://learn.microsoft.com/aspnet/core/blazor/components/render-modes#apply-a-render-mode-to-the-entire-app).
 * Asynchronous delegate event handlers that return a [System.Threading.Tasks.Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task) (`async Task`) are supported by Blazor and adopted by Blazor Web App and Blazor WebAssembly documentation examples.
 * Delegate event handlers automatically trigger a UI render, so there's no need to manually call [`StateHasChanged`](https://learn.microsoft.com/aspnet/core/blazor/components/lifecycle#state-changes-statehaschanged).
 * Exceptions are logged.
@@ -281,7 +281,7 @@ Register the event handler on one or more HTML elements. Access the data that wa
 }
 ```
 
-If the `@oncustomevent` attribute isn't recognized by [IntelliSense](/visualstudio/ide/using-intellisense), make sure that the component or the `_Imports.razor` file contains an `@using` statement for the namespace containing the `EventHandler` class.
+If the `@oncustomevent` attribute isn't recognized by [IntelliSense](https://learn.microsoft.com/visualstudio/ide/using-intellisense), make sure that the component or the `_Imports.razor` file contains an `@using` statement for the namespace containing the `EventHandler` class.
 
 Whenever the custom event is fired on the DOM, the event handler is called with the data passed from the JavaScript.
 
@@ -401,7 +401,7 @@ In a Razor component, attach the custom handler to an element.
 
 ## Lambda expressions
 
-[Lambda expressions](/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions) are supported as the delegate event handler.
+[Lambda expressions](https://learn.microsoft.com/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions) are supported as the delegate event handler.
 
 
 `EventHandler4.razor`:

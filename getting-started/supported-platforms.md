@@ -56,7 +56,7 @@ Blazor is supported in the browsers shown in the following table on both mobile 
 
 For [Blazor Hybrid apps](https://learn.microsoft.com/aspnet/core/blazor/hybrid/index), we test on and support the latest platform Web View control versions:
 
-* [Microsoft Edge `WebView2` on Windows](/microsoft-edge/webview2/)
+* [Microsoft Edge `WebView2` on Windows](https://learn.microsoft.com/microsoft-edge/webview2/)
 * [Chrome on Android](https://play.google.com/store/apps/details?id=com.android.chrome)
 * [Safari on iOS and macOS](https://www.apple.com/safari/)
 
